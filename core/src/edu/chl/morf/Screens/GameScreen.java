@@ -21,7 +21,7 @@ public class GameScreen implements Screen{
 
     @Override
     public void render(float delta) {
-
+        stage.draw();
     }
 
     @Override
