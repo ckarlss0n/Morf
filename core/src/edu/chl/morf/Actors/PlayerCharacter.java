@@ -1,4 +1,4 @@
-package edu.chl.morf;
+package edu.chl.morf.Actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class PlayerCharacter extends Image{
 
     private Texture texture;
+
 
     public PlayerCharacter(){
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
