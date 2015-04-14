@@ -25,6 +25,7 @@ public class GameScreen implements Screen{
         Gdx.gl.glClear(Gdx.gl20.GL_COLOR_BUFFER_BIT);       //Clear screen
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();                                       //Redraw screen
+        stage.fall();
     }
 
     @Override

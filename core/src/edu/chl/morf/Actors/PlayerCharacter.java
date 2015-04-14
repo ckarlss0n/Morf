@@ -29,10 +29,11 @@ public class PlayerCharacter extends Image{
     @Override
     public void act(float delta){
         super.act(delta);
-        this.moveBy(velocity.x,velocity.y);
+        this.moveBy(velocity.x, velocity.y);
     }
 
     public void setVelocity(Vector2 velocity){
         this.velocity = velocity;
     }
+
 }

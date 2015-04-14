@@ -16,9 +16,8 @@ public class Ground extends Image{
     private Texture texture;
 
     public Ground(){
-        setHeight(100);
-        setWidth(GAME_WIDTH);
-        setZIndex(0);
+        setHeight(200);
+        setWidth(100);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class Ground extends Image{
         batch.end();
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(Color.GREEN);
-        renderer.rect(0, 0, getWidth(), getHeight());
+        renderer.rect(300, 0, getWidth(), getHeight());
         renderer.end();
         batch.begin();
     }
