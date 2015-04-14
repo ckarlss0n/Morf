@@ -1,5 +1,6 @@
 package edu.chl.morf.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import edu.chl.morf.Stages.GameStage;
 
@@ -21,7 +22,9 @@ public class GameScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        stage.draw();
+        Gdx.gl.glClear(Gdx.gl20.GL_COLOR_BUFFER_BIT);       //Clear screen
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();                                       //Redraw screen
     }
 
     @Override

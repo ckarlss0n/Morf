@@ -18,6 +18,6 @@ public class PlayerCharacter extends Image{
 
     @Override
     public void draw(Batch batch, float parentAlpha){
-        batch.draw(texture,0,0);
+        batch.draw(texture,getX(),getY());
     }
 }
