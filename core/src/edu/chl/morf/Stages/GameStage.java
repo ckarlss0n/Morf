@@ -16,6 +16,7 @@ public class GameStage extends Stage {
 
     public GameStage(){
         Gdx.input.setInputProcessor(this);
+        addActor(new Ground());
         playerCharacter = new PlayerCharacter();
         addActor(playerCharacter);
         setKeyboardFocus(playerCharacter);
@@ -32,8 +33,6 @@ public class GameStage extends Stage {
                 return true;
             }
         });
-        addActor(new Ground());
-        addActor(new PlayerCharacter());
     }
 
 
