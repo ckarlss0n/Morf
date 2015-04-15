@@ -85,7 +85,7 @@ public class PlayerCharacter extends Image{
     }
 
     public void moveLeft(){
-        facingRight=false;
+        facingRight=true;
         moving=true;
         if(body.getLinearVelocity().x >= 0){
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
@@ -104,10 +104,16 @@ public class PlayerCharacter extends Image{
         moving=false;
         if(!(pressedKeys.get(Input.Keys.LEFT) || pressedKeys.get(Input.Keys.RIGHT))) {
             movementVector = new Vector2(0, 0);
+        } else if(pressedKeys.get(Input.Keys.LEFT) && !pressedKeys.get(Input.Keys.RIGHT)) {
+            moveLeft();
+        } else {
+            moveRight();
         }
     }
     public void jump(){
-        body.applyForceToCenter(new Vector2(0, 5000), true);
+        if(body.getLinearVelocity().y == 0) {
+            body.applyForceToCenter(new Vector2(0, 5000), true);
+        }
     }
     public void doAction(){
         body.setTransform(10,5,0);
@@ -123,8 +129,9 @@ public class PlayerCharacter extends Image{
     @Override
     public void act(float delta){
         super.act(delta);
-        body.applyForceToCenter(movementVector, true);
-        //System.out.println(body.getLinearVelocity());
+        if(Math.abs(body.getLinearVelocity().x) < 5) {
+            body.applyForceToCenter(movementVector, true);
+        }
     }
 
     public void setVelocity(Vector2 velocity){
