@@ -8,6 +8,7 @@ import static edu.chl.morf.Constants.*;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        //Window width and height
 		config.width = GAME_WIDTH;
 		config.height = GAME_HEIGHT;
 		new LwjglApplication(new Morf(), config);

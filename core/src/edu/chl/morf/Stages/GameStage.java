@@ -24,27 +24,20 @@ public class GameStage extends Stage {
     public GameStage() {
         world = WorldUtils.createWorld();
         accumulator = 0f;
-
         playerCharacter = WorldUtils.createPlayerCharacter(world);
-        ground = WorldUtils.createGround(world);
-
+        WorldUtils.createGround(world);
         Gdx.input.setInputProcessor(this);
-        addActor(ground);
         addActor(playerCharacter);
         setKeyboardFocus(playerCharacter);
-
         renderer = new Box2DDebugRenderer();
-
         camera = new OrthographicCamera(20, 13);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
-
-    public void updateCamera() {
-        camera.position.set(playerCharacter.getBody().getPosition(), 0f);
+    public void updateCamera (){
+        camera.position.set(playerCharacter.getBody().getPosition(),0f);
         camera.update();
     }
-
     @Override
     public void act(float delta) {
         super.act(delta);

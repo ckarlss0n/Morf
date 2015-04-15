@@ -9,14 +9,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Lage on 2015-04-13.
  */
-public class PlayerCharacter extends Image{
+public class PlayerCharacter extends Image {
 
     private boolean facingRight=true;
     private boolean moving=false;
@@ -31,7 +30,6 @@ public class PlayerCharacter extends Image{
         pressedKeys.put(Input.Keys.LEFT, false);
         pressedKeys.put(Input.Keys.RIGHT, false);
         pressedKeys.put(Input.Keys.UP, false);
-
         addListener(new InputListener() {
             public boolean keyDown(InputEvent event, int keycode) {
                 switch (keycode) {
