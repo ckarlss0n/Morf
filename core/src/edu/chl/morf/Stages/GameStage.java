@@ -32,22 +32,6 @@ public class GameStage extends Stage {
     private Box2DDebugRenderer renderer;
     private OrthographicCamera camera;
 
-    public boolean isIdleY(){
-        if(currentVector.y == 0){
-            return true;
-        }
-        return false;
-    }
-
-    public void fall(){
-        if(playerCharacter.getY() > 0f) {
-            playerCharacter.setVelocity(currentVector.add(down));
-        } else {
-            setYVelocity(0f);
-            playerCharacter.setY(0f);
-        }
-    }
-
     public GameStage() {
 
         world  = new World(Constants.WORLD_GRAVITY, true);
@@ -58,6 +42,7 @@ public class GameStage extends Stage {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(new Vector2(10, 50));        //PlayerCharacter position
+        bodyDef.fixedRotation = true;
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(1, 1);                       //PlayerCharacter Width/Height
         Body body = world.createBody(bodyDef);
@@ -66,9 +51,12 @@ public class GameStage extends Stage {
         fixDef.shape = shape;
         fixDef.filter.categoryBits = 2;
         fixDef.filter.maskBits = 4;
+        fixDef.friction = 2f;
         body.createFixture(fixDef);                //PlayerCharacter shape and density
         body.resetMassData();
         shape.dispose();
+
+
         playerCharacter = new PlayerCharacter(body);
 
         //Create Ground body
@@ -79,13 +67,15 @@ public class GameStage extends Stage {
         shape.setAsBox(50, 2);                       //Ground Width/Height
         body = world.createBody(bodyDef);
         fixDef = new FixtureDef();
-        fixDef.density = 0.5f;
+        fixDef.density = 5;
         fixDef.shape = shape;
         fixDef.filter.categoryBits = 4;
         fixDef.filter.maskBits = 2;
+        fixDef.friction = 0.1f;
         body.createFixture(fixDef);                //Ground shape and density
         body.resetMassData();
         shape.dispose();
+        bodyDef.fixedRotation = true;
         ground = new Ground(body);
 
         Gdx.input.setInputProcessor(this);
@@ -96,19 +86,13 @@ public class GameStage extends Stage {
             public boolean keyDown(InputEvent event, int keycode) {
                 switch (keycode) {
                     case Input.Keys.LEFT:
-                        currentVector = currentVector.add(left);
-                        ((PlayerCharacter) event.getTarget()).setVelocity(currentVector);
-                        ((PlayerCharacter) event.getTarget()).moveLeft();
+                        playerCharacter.moveLeft();
                         break;
                     case Input.Keys.RIGHT:
-                        currentVector = currentVector.add(right);
-                        ((PlayerCharacter) event.getTarget()).setVelocity(currentVector);
-                        ((PlayerCharacter) event.getTarget()).moveRight();
+                        playerCharacter.moveRight();
                         break;
                     case Input.Keys.UP:
-                        currentVector = currentVector.add(up);
-                        ((PlayerCharacter) event.getTarget()).setVelocity(currentVector);
-                        ((PlayerCharacter) event.getTarget()).stop();
+                        playerCharacter.stop();
                         break;
                 }
                 return true;
@@ -117,11 +101,11 @@ public class GameStage extends Stage {
         playerCharacter.addListener(new InputListener() {
             public boolean keyUp(InputEvent event, int keycode) {
                 if (keycode == Input.Keys.LEFT) {
-                    ((PlayerCharacter) event.getTarget()).setVelocity(currentVector.sub(left));
+                    playerCharacter.stop();
                 } else if (keycode == Input.Keys.RIGHT) {
-                    ((PlayerCharacter) event.getTarget()).setVelocity(currentVector.sub(right));
+                    playerCharacter.stop();
                 } else if (keycode == Input.Keys.UP) {
-                    ((PlayerCharacter) event.getTarget()).setVelocity(currentVector.sub(up));
+                    playerCharacter.stop();
                 }
                 return true;
             }

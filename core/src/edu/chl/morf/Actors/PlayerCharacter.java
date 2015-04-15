@@ -16,6 +16,7 @@ public class PlayerCharacter extends Image{
     private Texture texture;
     private Vector2 acceleration;
     private Vector2 velocity;
+    private Vector2 movementVector = new Vector2(0,0);
     private int direction;
 
     public PlayerCharacter(){
@@ -32,13 +33,13 @@ public class PlayerCharacter extends Image{
     }
 
     public void moveLeft(){
-        direction = -1;
+        movementVector = new Vector2(-100, 0);
     }
     public void moveRight(){
-        direction = 1;
+        movementVector = new Vector2(100, 0);
     }
     public void stop(){
-        direction = 0;
+        movementVector = new Vector2(0,0);
     }
 
     @Override
@@ -47,11 +48,12 @@ public class PlayerCharacter extends Image{
         //batch.draw(texture,body.getPosition().x,body.getPosition().y);
     }
 
-
     @Override
     public void act(float delta){
         super.act(delta);
-        this.body.applyForceToCenter(new Vector2(20*direction,0),true);
+        if(Math.abs(this.getBody().getLinearVelocity().x) < 5) {
+            this.body.applyForceToCenter(movementVector, true);
+        }
     }
 
     public void setVelocity(Vector2 velocity){
