@@ -28,7 +28,7 @@ public class PlayerCharacter extends Image{
     public PlayerCharacter(Body body){
         this();
         this.body = body;
-        this.setSize(100,100);
+        this.setSize(10,10);
         this.setPosition(310, 400);
     }
 
