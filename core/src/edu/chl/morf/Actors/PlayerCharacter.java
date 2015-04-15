@@ -1,10 +1,13 @@
 package edu.chl.morf.Actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
@@ -30,6 +33,24 @@ public class PlayerCharacter extends Image{
         this.body = body;
         this.setSize(10,10);
         this.setPosition(310, 400);
+
+        addListener(new InputListener() {
+            public boolean keyDown(InputEvent event, int keycode) {
+                switch (keycode) {
+                    case Input.Keys.LEFT:
+                        ((PlayerCharacter) event.getTarget()).moveLeft();
+                        break;
+                    case Input.Keys.RIGHT:
+                        ((PlayerCharacter) event.getTarget()).moveRight();
+                        break;
+                    case Input.Keys.UP:
+                        ((PlayerCharacter) event.getTarget()).stop();
+                        break;
+                }
+                return true;
+            }
+        });
+
     }
 
     public void moveLeft(){
