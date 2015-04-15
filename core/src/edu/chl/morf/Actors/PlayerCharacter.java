@@ -27,15 +27,15 @@ public class PlayerCharacter extends Image{
     public PlayerCharacter(Body body){
         this();
         this.body = body;
-        this.setSize(100,100);
+        this.setSize(10,10);
         this.setPosition(310, 400);
     }
 
     public void moveLeft(){
-        direction = -1;
+        direction = -2;
     }
     public void moveRight(){
-        direction = 1;
+        direction = 2;
     }
     public void stop(){
         direction = 0;
