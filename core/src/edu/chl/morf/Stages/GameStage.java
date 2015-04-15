@@ -13,6 +13,9 @@ import edu.chl.morf.Actors.Blocks.Ground;
 import edu.chl.morf.Actors.PlayerCharacter;
 import edu.chl.morf.Constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Lage on 2015-04-13.
  */
@@ -37,6 +40,8 @@ public class GameStage extends Stage {
         world  = new World(Constants.WORLD_GRAVITY, true);
 
         accumulator = 0f;
+
+
 
         //Create PlayerCharacter body
         BodyDef bodyDef = new BodyDef();
@@ -82,34 +87,6 @@ public class GameStage extends Stage {
         addActor(ground);
         addActor(playerCharacter);
         setKeyboardFocus(playerCharacter);
-        playerCharacter.addListener(new InputListener() {
-            public boolean keyDown(InputEvent event, int keycode) {
-                switch (keycode) {
-                    case Input.Keys.LEFT:
-                        playerCharacter.moveLeft();
-                        break;
-                    case Input.Keys.RIGHT:
-                        playerCharacter.moveRight();
-                        break;
-                    case Input.Keys.UP:
-                        playerCharacter.stop();
-                        break;
-                }
-                return true;
-            }
-        });
-        playerCharacter.addListener(new InputListener() {
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.LEFT) {
-                    playerCharacter.stop();
-                } else if (keycode == Input.Keys.RIGHT) {
-                    playerCharacter.stop();
-                } else if (keycode == Input.Keys.UP) {
-                    playerCharacter.stop();
-                }
-                return true;
-            }
-        });
 
         renderer = new Box2DDebugRenderer();
 
