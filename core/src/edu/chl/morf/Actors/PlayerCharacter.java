@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import edu.chl.morf.Stages.GameStage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,8 @@ import java.util.Map;
  */
 public class PlayerCharacter extends Image{
 
+    private boolean facingRight=true;
+    private boolean moving=false;
     private Body body;
     private Texture texture;
     private Vector2 acceleration;
@@ -50,6 +53,9 @@ public class PlayerCharacter extends Image{
                         pressedKeys.put(Input.Keys.UP, true);
                         jump();
                         break;
+                    case Input.Keys.SPACE:
+                        doAction();
+                        break;
                 }
                 return true;
             }
@@ -79,18 +85,23 @@ public class PlayerCharacter extends Image{
     }
 
     public void moveLeft(){
-        if (body.getLinearVelocity().x >= 0) {
+        facingRight=true;
+        moving=true;
+        if(body.getLinearVelocity().x >= 0){
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
         movementVector = new Vector2(-100, 0);
     }
     public void moveRight(){
+        facingRight=true;
+        moving=true;
         if(body.getLinearVelocity().x <= 0){
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
         movementVector = new Vector2(100, 0);
     }
     public void stop(){
+        moving=false;
         if(!(pressedKeys.get(Input.Keys.LEFT) || pressedKeys.get(Input.Keys.RIGHT))) {
             movementVector = new Vector2(0, 0);
         } else if(pressedKeys.get(Input.Keys.LEFT) && !pressedKeys.get(Input.Keys.RIGHT)) {
@@ -104,7 +115,9 @@ public class PlayerCharacter extends Image{
             body.applyForceToCenter(new Vector2(0, 5000), true);
         }
     }
-
+    public void doAction(){
+        
+    }
     @Override
     public void draw(Batch batch, float parentAlpha){
         //batch.draw(texture,getX(),getY());
