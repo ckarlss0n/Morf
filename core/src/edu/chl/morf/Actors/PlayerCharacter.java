@@ -74,26 +74,8 @@ public class PlayerCharacter extends Image{
     public PlayerCharacter(Body body){
         this();
         this.body = body;
-        this.setSize(10,10);
+        this.setSize(10, 10);
         this.setPosition(310, 400);
-
-        addListener(new InputListener() {
-            public boolean keyDown(InputEvent event, int keycode) {
-                switch (keycode) {
-                    case Input.Keys.LEFT:
-                        ((PlayerCharacter) event.getTarget()).moveLeft();
-                        break;
-                    case Input.Keys.RIGHT:
-                        ((PlayerCharacter) event.getTarget()).moveRight();
-                        break;
-                    case Input.Keys.UP:
-                        ((PlayerCharacter) event.getTarget()).stop();
-                        break;
-                }
-                return true;
-            }
-        });
-
     }
 
     public void moveLeft(){
@@ -109,7 +91,9 @@ public class PlayerCharacter extends Image{
         movementVector = new Vector2(100, 0);
     }
     public void stop(){
-       movementVector = new Vector2(0,0);
+        if(!(pressedKeys.get(Input.Keys.LEFT) || pressedKeys.get(Input.Keys.RIGHT))) {
+            movementVector = new Vector2(0, 0);
+        }
     }
     public void jump(){
         body.applyForceToCenter(new Vector2(0, 5000), true);

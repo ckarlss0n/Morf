@@ -12,11 +12,11 @@ import edu.chl.morf.Stages.TestStage;
  */
 public class GameScreen implements Screen{
 
-    private Stage stage;
+    private GameStage stage;
 
     public GameScreen(){
     	//stage = new GameStage();
-        stage = new TestStage();
+        stage = new GameStage();
     }
 
     @Override
