@@ -2,8 +2,9 @@ package edu.chl.morf;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import edu.chl.morf.Actors.Blocks.Ground;
 import edu.chl.morf.Actors.PlayerCharacter;
+
+import static edu.chl.morf.Constants.WORLD_GRAVITY;
 
 /**
  * Created by Lage on 2015-04-15.
@@ -11,7 +12,7 @@ import edu.chl.morf.Actors.PlayerCharacter;
 public class WorldUtils {
 
     public static World createWorld() {
-        return new World(Constants.WORLD_GRAVITY, true);
+        return new World(WORLD_GRAVITY, true);
     }
 
     public static PlayerCharacter createPlayerCharacter(World world){
@@ -21,11 +22,11 @@ public class WorldUtils {
         return new PlayerCharacter(body);
     }
 
-    public static Ground createGround(World world){
+    public static Body createGround(World world){
         //Create Ground body
         Body body = createBody(new Vector2(0,0),0.5f,500,2,0.1f,(short)4,(short)2, world);
         body.setType(BodyDef.BodyType.StaticBody);
-        return new Ground(body);
+        return body;
     }
 
     public static Body createBody(Vector2 position, float density, int width, int height,

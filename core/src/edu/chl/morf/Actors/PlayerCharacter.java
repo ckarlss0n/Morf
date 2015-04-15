@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import edu.chl.morf.Stages.GameStage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,19 +20,14 @@ public class PlayerCharacter extends Image{
 
     private boolean facingRight=true;
     private boolean moving=false;
-    private Body body;
     private Texture texture;
-    private Vector2 acceleration;
-    private Vector2 velocity;
+    private Body body;
     private Vector2 movementVector = new Vector2(0,0);
-    private int direction;
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
 
-    public PlayerCharacter(){
+    public PlayerCharacter(Body body){
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
-        acceleration = new Vector2(0,0);
-        velocity = new Vector2(0,0);
-
+        this.body = body;
         pressedKeys.put(Input.Keys.LEFT, false);
         pressedKeys.put(Input.Keys.RIGHT, false);
         pressedKeys.put(Input.Keys.UP, false);
@@ -60,6 +54,7 @@ public class PlayerCharacter extends Image{
                 return true;
             }
         });
+
         addListener(new InputListener() {
             public boolean keyUp(InputEvent event, int keycode) {
                 if (keycode == Input.Keys.LEFT) {
@@ -77,17 +72,10 @@ public class PlayerCharacter extends Image{
         });
     }
 
-    public PlayerCharacter(Body body){
-        this();
-        this.body = body;
-        this.setSize(10, 10);
-        this.setPosition(310, 400);
-    }
-
     public void moveLeft(){
-        facingRight=true;
+        facingRight=false;
         moving=true;
-        if(body.getLinearVelocity().x >= 0){
+        if(body.getLinearVelocity().x >= 0){    //If moving right
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
         movementVector = new Vector2(-100, 0);
@@ -95,7 +83,7 @@ public class PlayerCharacter extends Image{
     public void moveRight(){
         facingRight=true;
         moving=true;
-        if(body.getLinearVelocity().x <= 0){
+        if(body.getLinearVelocity().x <= 0){    //If moving left
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
         movementVector = new Vector2(100, 0);
@@ -111,13 +99,15 @@ public class PlayerCharacter extends Image{
         }
     }
     public void jump(){
-        if(body.getLinearVelocity().y == 0) {
+        if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
             body.applyForceToCenter(new Vector2(0, 5000), true);
         }
     }
+
     public void doAction(){
-        
+        System.out.println("Pour water!");
     }
+
     @Override
     public void draw(Batch batch, float parentAlpha){
         //batch.draw(texture,getX(),getY());
@@ -131,10 +121,6 @@ public class PlayerCharacter extends Image{
             body.applyForceToCenter(movementVector, true);
         }
         System.out.println(body.getLinearVelocity());
-    }
-
-    public void setVelocity(Vector2 velocity){
-        this.velocity = velocity;
     }
 
     public Body getBody(){
