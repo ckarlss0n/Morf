@@ -26,6 +26,7 @@ public class GameScreen implements Screen{
         stage.act(delta);
         stage.draw();                                       //Redraw screen
         //stage.fall();
+        stage.updateCamera();
     }
 
     @Override
