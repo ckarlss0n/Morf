@@ -110,7 +110,9 @@ public class PlayerCharacter extends Image{
         body.applyForceToCenter(new Vector2(0, 5000), true);
     }
     public void doAction(){
-        
+        body.setTransform(10,5,0);
+        body.setLinearVelocity(0,0);
+        System.out.println("reset");
     }
     @Override
     public void draw(Batch batch, float parentAlpha){
@@ -122,7 +124,7 @@ public class PlayerCharacter extends Image{
     public void act(float delta){
         super.act(delta);
         body.applyForceToCenter(movementVector, true);
-        System.out.println(body.getLinearVelocity());
+        //System.out.println(body.getLinearVelocity());
     }
 
     public void setVelocity(Vector2 velocity){
