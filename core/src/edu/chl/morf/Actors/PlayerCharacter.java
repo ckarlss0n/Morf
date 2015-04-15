@@ -76,6 +76,24 @@ public class PlayerCharacter extends Image{
         this.body = body;
         this.setSize(10,10);
         this.setPosition(310, 400);
+
+        addListener(new InputListener() {
+            public boolean keyDown(InputEvent event, int keycode) {
+                switch (keycode) {
+                    case Input.Keys.LEFT:
+                        ((PlayerCharacter) event.getTarget()).moveLeft();
+                        break;
+                    case Input.Keys.RIGHT:
+                        ((PlayerCharacter) event.getTarget()).moveRight();
+                        break;
+                    case Input.Keys.UP:
+                        ((PlayerCharacter) event.getTarget()).stop();
+                        break;
+                }
+                return true;
+            }
+        });
+
     }
 
     public void moveLeft(){

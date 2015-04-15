@@ -2,17 +2,21 @@ package edu.chl.morf.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import edu.chl.morf.Stages.GameStage;
+import edu.chl.morf.Stages.TestStage;
 
 /**
  * Created by Christoffer on 2015-04-13.
  */
 public class GameScreen implements Screen{
 
-    private GameStage stage;
+    private Stage stage;
 
     public GameScreen(){
-        stage = new GameStage();
+    	//stage = new GameStage();
+        stage = new TestStage();
     }
 
     @Override
@@ -26,6 +30,7 @@ public class GameScreen implements Screen{
         stage.act(delta);
         stage.draw();                                       //Redraw screen
         //stage.fall();
+        stage.updateCamera();
     }
 
     @Override
