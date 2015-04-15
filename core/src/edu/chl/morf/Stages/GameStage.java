@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl.morf.Actors.Blocks.Ground;
 import edu.chl.morf.Actors.PlayerCharacter;
 import edu.chl.morf.Constants;
+import edu.chl.morf.WorldUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,20 +37,11 @@ public class GameStage extends Stage {
     private OrthographicCamera camera;
 
     public GameStage() {
-        world  = new World(Constants.WORLD_GRAVITY, true);
+        world  = WorldUtils.createWorld();
         accumulator = 0f;
 
-
-
-        //Create PlayerCharacter body
-        Body body = createBody(new Vector2(10,4),0.5f,1,1,2f,(short)2,(short)4);
-        body.setType(BodyDef.BodyType.DynamicBody);
-        playerCharacter = new PlayerCharacter(body);
-
-        //Create Ground body
-        body = createBody(new Vector2(0,0),0.5f,500,2,0.1f,(short)4,(short)2);
-        body.setType(BodyDef.BodyType.StaticBody);
-        ground = new Ground(body);
+        playerCharacter = WorldUtils.createPlayerCharacter(world);
+        ground = WorldUtils.createGround(world);
 
         Gdx.input.setInputProcessor(this);
         addActor(ground);
@@ -69,26 +61,6 @@ public class GameStage extends Stage {
 
     public void setYVelocity(float f){
         this.currentVector = new Vector2(this.currentVector.x, f);
-    }
-
-    public Body createBody(Vector2 position, float density, int width, int height,
-                           float friction, short categoryBits, short maskBits){
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width, height);
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(position);
-        bodyDef.fixedRotation = true;
-        Body body = world.createBody(bodyDef);
-        FixtureDef fixDef = new FixtureDef();
-        fixDef.density = density;
-        fixDef.shape = shape;
-        fixDef.friction = friction;
-        fixDef.filter.categoryBits = categoryBits;
-        fixDef.filter.maskBits = maskBits;
-        body.createFixture(fixDef);
-        body.resetMassData();
-        shape.dispose();
-        return body;
     }
 
     @Override
