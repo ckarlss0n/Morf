@@ -1,37 +1,27 @@
 package edu.chl.morf.Stages;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
 import edu.chl.morf.Constants;
 import edu.chl.morf.Actors.PlayerCharacter;
-import edu.chl.morf.Actors.Blocks.Ground;
+import edu.chl.morf.Constants;
 
 public class TestStage extends Stage{
     private PlayerCharacter playerCharacter;
-    private Vector2 left = new Vector2(-10,0);
-    private Vector2 right = new Vector2(10,0);
-    private Vector2 up = new Vector2(0,6);
-    private Vector2 down = new Vector2(0,-0.2f);
     private Vector2 currentVector = new Vector2(0,0);
     private World world;
     
@@ -43,22 +33,6 @@ public class TestStage extends Stage{
 
     private Box2DDebugRenderer renderer;
     private OrthographicCamera camera;
-
-    public boolean isIdleY(){
-        if(currentVector.y == 0){
-            return true;
-        }
-        return false;
-    }
-
-    public void fall(){
-        if(playerCharacter.getY() > 0f) {
-            playerCharacter.setVelocity(currentVector.add(down));
-        } else {
-            setYVelocity(0f);
-            playerCharacter.setY(0f);
-        }
-    }
 
     public TestStage() {
 
@@ -88,8 +62,6 @@ public class TestStage extends Stage{
         
         TiledMapTileLayer layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
 
-       
-        
         tileSize = layer.getTileWidth();
         for(int row = 0; row < layer.getHeight(); row++){
         	for(int col = 0; col < layer.getWidth(); col++){
@@ -120,40 +92,6 @@ public class TestStage extends Stage{
         Gdx.input.setInputProcessor(this);
         addActor(playerCharacter);
         setKeyboardFocus(playerCharacter);
-        playerCharacter.addListener(new InputListener() {
-            public boolean keyDown(InputEvent event, int keycode) {
-                switch (keycode) {
-                    case Input.Keys.LEFT:
-                        currentVector = currentVector.add(left);
-                        ((PlayerCharacter) event.getTarget()).setVelocity(currentVector);
-                        ((PlayerCharacter) event.getTarget()).moveLeft();
-                        break;
-                    case Input.Keys.RIGHT:
-                        currentVector = currentVector.add(right);
-                        ((PlayerCharacter) event.getTarget()).setVelocity(currentVector);
-                        ((PlayerCharacter) event.getTarget()).moveRight();
-                        break;
-                    case Input.Keys.UP:
-                        currentVector = currentVector.add(up);
-                        ((PlayerCharacter) event.getTarget()).setVelocity(currentVector);
-                        ((PlayerCharacter) event.getTarget()).stop();
-                        break;
-                }
-                return true;
-            }
-        });
-        playerCharacter.addListener(new InputListener() {
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.LEFT) {
-                    ((PlayerCharacter) event.getTarget()).setVelocity(currentVector.sub(left));
-                } else if (keycode == Input.Keys.RIGHT) {
-                    ((PlayerCharacter) event.getTarget()).setVelocity(currentVector.sub(right));
-                } else if (keycode == Input.Keys.UP) {
-                    ((PlayerCharacter) event.getTarget()).setVelocity(currentVector.sub(up));
-                }
-                return true;
-            }
-        });
 
         renderer = new Box2DDebugRenderer();
 
@@ -181,7 +119,6 @@ public class TestStage extends Stage{
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
-
     }
 
     @Override
