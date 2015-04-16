@@ -106,6 +106,8 @@ public class TestStage2 extends Stage{
         
         b2dCam = new OrthographicCamera();
 		b2dCam.setToOrtho(false, Constants.GAME_WIDTH / 100f, Constants.GAME_HEIGHT / 100f);
+		
+		playerCharacter.setCamera(b2dCam);
 
 	}
 	

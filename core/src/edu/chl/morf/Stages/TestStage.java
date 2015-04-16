@@ -70,6 +70,8 @@ public class TestStage extends Stage{
 		renderer = new Box2DDebugRenderer();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.GAME_WIDTH / 100f, Constants.GAME_HEIGHT / 100f);
+		
+		playerCharacter.setCamera(camera);
 	}
 
 	public void updateCamera (){
