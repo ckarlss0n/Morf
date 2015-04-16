@@ -37,6 +37,8 @@ public class PlayerCharacter extends Image {
     private OrthographicCamera camera;
 
     public PlayerCharacter(Body body){
+
+        //Load sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
         TextureRegion[] runningFrames = new TextureRegion[Constants.RUNNER_RUNNING_REGION_NAMES.length];
         for (int i = 0; i < Constants.RUNNER_RUNNING_REGION_NAMES.length; i++) {
@@ -45,6 +47,7 @@ public class PlayerCharacter extends Image {
         }
         runningAnimation = new Animation(0.1f, runningFrames);
         stateTime = 0f;
+
         this.body = body;
         pressedKeys.put(Input.Keys.LEFT, false);
         pressedKeys.put(Input.Keys.RIGHT, false);
@@ -153,11 +156,11 @@ public class PlayerCharacter extends Image {
 
     @Override
     public void draw(Batch batch, float parentAlpha){
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);                         //Tells the spritebatch to render according to camera
         super.draw(batch, parentAlpha);
         stateTime += Gdx.graphics.getDeltaTime();
-        batch.draw(runningAnimation.getKeyFrame(stateTime, true), body.getPosition().x - 1,body.getPosition().y - 1,
-                2,2);
+        batch.draw(runningAnimation.getKeyFrame(stateTime, true),
+                body.getPosition().x - 1,body.getPosition().y - 1, 2,2);    //Draw correct frame at player character position
     }
 
     @Override
