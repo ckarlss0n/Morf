@@ -1,17 +1,18 @@
 package edu.chl.morf.Stages;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+<<<<<<< HEAD
 
+=======
+import edu.chl.morf.Actors.Background;
+>>>>>>> origin/master
 import edu.chl.morf.Actors.PlayerCharacter;
 import edu.chl.morf.Constants;
 import edu.chl.morf.WorldUtils;
-
-import java.awt.*;
 
 /**
  * Created by Lage on 2015-04-13.
@@ -23,9 +24,12 @@ public class GameStage extends Stage {
     private World world;
     private Box2DDebugRenderer renderer;
     private OrthographicCamera camera;
+    private Background background;
 
     public GameStage() {
         world = WorldUtils.createWorld();
+        background = new Background();
+        addActor(background);
         accumulator = 0f;
         playerCharacter = WorldUtils.createPlayerCharacter(world);
         WorldUtils.createGround(world);
@@ -41,13 +45,13 @@ public class GameStage extends Stage {
     }
 
     public void updateCamera() {
-        camera.position.set(playerCharacter.getBody().getPosition(),0f);
+        camera.position.set(playerCharacter.getBody().getPosition(), 0f);
         camera.update();
     }
     @Override
     public void act(float delta) {
         super.act(delta);
-
+        background.setSpeed(playerCharacter.getBody().getLinearVelocity().x*-10+20);
         // Fixed timestep
         float TIME_STEP = 1 / 300f;
         accumulator += delta;

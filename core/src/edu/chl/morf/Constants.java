@@ -15,6 +15,6 @@ public final class Constants {
     public static final String[] PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES = new String[] {"runningLeft1", "runningLeft2", "runningLeft3"};
     public static final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[] {"runningRight1", "runningRight2", "runningRight3"};
     public static final String PLAYERCHARACTER_IDLE_REGION_NAME = "idle";
-
-
+    public static final String BACKGROUND_IMAGE_PATH = "background.png";
+    public static final int BACKGROUND_SCROLLING_SPEED = 50;
 }
