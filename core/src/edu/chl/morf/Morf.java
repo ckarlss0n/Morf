@@ -16,12 +16,12 @@ public class Morf extends Game implements PropertyChangeListener{
 	public void create () {
         gameScreen = new GameScreen();
         mainMenuScreen = new MainMenuScreen();
-        mainMenuScreen.addObserver(this);
         setScreen(gameScreen);
+        mainMenuScreen.addObserver(this);
 	}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        
     }
 }

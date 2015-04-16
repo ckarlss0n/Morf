@@ -11,6 +11,7 @@ public class GameScreen extends ObservableScreen{
     private GameStage stage;
 
     public GameScreen(){
+        super();
         stage = new GameStage();
     }
 

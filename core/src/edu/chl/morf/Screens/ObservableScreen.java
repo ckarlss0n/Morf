@@ -12,6 +12,10 @@ public abstract class ObservableScreen implements Screen{
 
     private PropertyChangeSupport pcs;
 
+    public ObservableScreen(){
+        pcs = new PropertyChangeSupport(this);
+    }
+
     public void addObserver(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
     }
