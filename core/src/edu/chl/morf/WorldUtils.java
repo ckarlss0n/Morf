@@ -22,11 +22,21 @@ public class WorldUtils {
         return new PlayerCharacter(body);
     }
 
-    public static Body createGround(World world){
+    public static void createGround(World world){
         //Create Ground body
         Body body = createBody(new Vector2(0,0),0.5f,500,2,0.1f,(short)4,(short)2, world);
         body.setType(BodyDef.BodyType.StaticBody);
-        return body;
+        Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)2,world);
+        block.setType(BodyDef.BodyType.StaticBody);
+    }
+
+    public static void addBlock(PlayerCharacter playerCharacter, Vector2 position, int blockWidth, int blockHeight){
+        int facingRight = -1;
+        if(playerCharacter.isFacingRight()){
+            facingRight = 1;
+        }
+        Body block = createBody(new Vector2(position.x+blockWidth*2*facingRight,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
+        block.setType(BodyDef.BodyType.StaticBody);
     }
 
     public static Body createBody(Vector2 position, float density, int width, int height,

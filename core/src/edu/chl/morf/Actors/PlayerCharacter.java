@@ -2,6 +2,7 @@ package edu.chl.morf.Actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -9,8 +10,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import edu.chl.morf.WorldUtils;
+
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import static edu.chl.morf.Constants.*;
 
 /**
  * Created by Lage on 2015-04-13.
@@ -23,6 +28,8 @@ public class PlayerCharacter extends Image {
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
+    private int blockWidth = 1;
+    private int blockHeight = 1;
 
     public PlayerCharacter(Body body){
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -48,6 +55,11 @@ public class PlayerCharacter extends Image {
                     case Input.Keys.SPACE:
                         doAction();
                         break;
+                    case Input.Keys.SHIFT_LEFT:
+                        fly();
+                        break;
+                    case Input.Keys.X:
+                        addBlock(getBody().getPosition());
                 }
                 return true;
             }
@@ -64,10 +76,20 @@ public class PlayerCharacter extends Image {
                 } else if (keycode == Input.Keys.UP) {
                     pressedKeys.put(Input.Keys.UP, false);
                     stop();
-                }
+                } else if (keycode == Input.Keys.SHIFT_LEFT) {
+                    stop();
+            }
                 return true;
             }
         });
+    }
+
+    public void addBlock(Vector2 position) {
+        WorldUtils.addBlock(this, position, blockWidth, blockHeight);
+    }
+
+    public boolean isFacingRight(){
+        return facingRight;
     }
 
     public void moveLeft(){
@@ -76,7 +98,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x >= 0){    //If moving right
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(-100, 0);
+        movementVector = new Vector2(-200, 0);
     }
     public void moveRight(){
         facingRight=true;
@@ -84,7 +106,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x <= 0){    //If moving left
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(100, 0);
+        movementVector = new Vector2(200, 0);
     }
     public void stop(){
         moving=false;
@@ -99,6 +121,11 @@ public class PlayerCharacter extends Image {
     public void jump(){
         if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
             body.applyForceToCenter(new Vector2(0, 5000), true);
+        }
+    }
+    public void fly(){
+        if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
+            movementVector = new Vector2(0, 200);
         }
     }
 
@@ -117,7 +144,7 @@ public class PlayerCharacter extends Image {
     @Override
     public void act(float delta){
         super.act(delta);
-        if(Math.abs(body.getLinearVelocity().x) < 5) {
+        if(Math.abs(body.getLinearVelocity().x) < MAX_SPEED) {
             body.applyForceToCenter(movementVector, true);
         }
     }

@@ -2,7 +2,12 @@ package edu.chl.morf.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import edu.chl.morf.Stages.GameStage;
+
+import java.awt.*;
 
 /**
  * Created by Christoffer on 2015-04-13.
@@ -16,7 +21,8 @@ public class GameScreen implements Screen{
     }
 
     @Override
-    public void show() {}
+    public void show() {
+    }
 
     @Override
     public void render(float delta) {
