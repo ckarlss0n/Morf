@@ -2,6 +2,7 @@ package edu.chl.morf.Actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -9,6 +10,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import edu.chl.morf.WorldUtils;
+
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import static edu.chl.morf.Constants.*;
@@ -24,6 +28,7 @@ public class PlayerCharacter extends Image {
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
+
 
     public PlayerCharacter(Body body){
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -50,6 +55,7 @@ public class PlayerCharacter extends Image {
                         doAction();
                         break;
                     case Input.Keys.SHIFT_LEFT:
+                        addBlock();
                         fly();
                         break;
                 }
@@ -74,6 +80,10 @@ public class PlayerCharacter extends Image {
                 return true;
             }
         });
+    }
+
+    public void addBlock(){
+        WorldUtils.addBlock(this);
     }
 
     public void moveLeft(){

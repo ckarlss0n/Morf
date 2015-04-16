@@ -30,6 +30,11 @@ public class WorldUtils {
         block.setType(BodyDef.BodyType.StaticBody);
     }
 
+    public static void addBlock(PlayerCharacter playerCharacter){
+        Body block = createBody(new Vector2(15,3),1,2,1,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
+        block.setType(BodyDef.BodyType.StaticBody);
+    }
+
     public static Body createBody(Vector2 position, float density, int width, int height,
                            float friction, short categoryBits, short maskBits, World world){
         PolygonShape shape = new PolygonShape();
