@@ -11,11 +11,11 @@ import edu.chl.morf.Stages.TestStage2;
  */
 public class GameScreen extends ObservableScreen{
 
-    private TestStage2 stage;
+    private GameStage stage;
 
     public GameScreen(){
         super();
-        stage = new TestStage2();
+        stage = new GameStage();
     }
 
     @Override
