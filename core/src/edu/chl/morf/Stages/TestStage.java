@@ -10,121 +10,91 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import edu.chl.morf.Constants;
+import edu.chl.morf.WorldUtils;
 import edu.chl.morf.Actors.PlayerCharacter;
 import edu.chl.morf.Constants;
 
 public class TestStage extends Stage{
-    private PlayerCharacter playerCharacter;
-    private Vector2 currentVector = new Vector2(0,0);
-    private World world;
-    
-    private TiledMap tileMap;
-    private float tileSize;
-    private OrthogonalTiledMapRenderer tmr;
+	float accumulator;
+	private PlayerCharacter playerCharacter;
+	private World world;
+	private Box2DDebugRenderer renderer;
+	private OrthographicCamera camera;
 
-    float accumulator;
+	public TestStage() {
+		world = WorldUtils.createWorld();
+		accumulator = 0f;
+		
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(10 / 100f, 10 / 100f);
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.position.set(400 / 100f, 400 / 100f);
+		bodyDef.fixedRotation = true;
+		bodyDef.type = BodyType.DynamicBody;
+		Body body = world.createBody(bodyDef);
+		
+		FixtureDef fixDef = new FixtureDef();
+		fixDef.shape = shape;
+		fixDef.filter.categoryBits = 2;
+		fixDef.filter.maskBits = 4;
+		body.createFixture(fixDef);
+		
+		playerCharacter = new PlayerCharacter(body);
+		
+		shape.setAsBox(500 / 100f, 2 / 100f);
+		bodyDef.position.set(100 / 100f, 100 / 100f);
+		bodyDef.type = BodyType.StaticBody;
+		body = world.createBody(bodyDef);
+		
+		fixDef.shape = shape;
+		fixDef.filter.categoryBits = 4;
+		fixDef.filter.maskBits = 2;
+		body.createFixture(fixDef);
 
-    private Box2DDebugRenderer renderer;
-    private OrthographicCamera camera;
 
-    public TestStage() {
+		
+		
+		Gdx.input.setInputProcessor(this);
+		addActor(playerCharacter);
+		setKeyboardFocus(playerCharacter);
+		renderer = new Box2DDebugRenderer();
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Constants.GAME_WIDTH / 100f, Constants.GAME_HEIGHT / 100f);
+	}
 
-        world  = new World(Constants.WORLD_GRAVITY, true);
+	public void updateCamera (){
+		camera.position.set(playerCharacter.getBody().getPosition(),0f);
+		camera.update();
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
 
-        accumulator = 0f;
+		// Fixed timestep
+		float TIME_STEP = 1 / 300f;
+		accumulator += delta;
 
-        //Create PlayerCharacter body
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(new Vector2(10, 100));        //PlayerCharacter position
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10, 10);                       //PlayerCharacter Width/Height
-        Body body = world.createBody(bodyDef);
-        FixtureDef fixDef = new FixtureDef();
-        fixDef.density = 0.5f;
-        fixDef.shape = shape;
-        fixDef.filter.categoryBits = 2;
-        fixDef.filter.maskBits = 4;
-        body.createFixture(fixDef);                //PlayerCharacter shape and density
-        body.resetMassData();
-        shape.dispose();
-        playerCharacter = new PlayerCharacter(body);
+		while (accumulator >= delta) {
+			world.step(TIME_STEP, 6, 2);
+			accumulator -= TIME_STEP;
+		}
+	}
 
-        tileMap = new TmxMapLoader().load("testmap.tmx");
-        tmr = new OrthogonalTiledMapRenderer(tileMap);
-        
-        TiledMapTileLayer layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
-
-        tileSize = layer.getTileWidth();
-        for(int row = 0; row < layer.getHeight(); row++){
-        	for(int col = 0; col < layer.getWidth(); col++){
-        		TiledMapTileLayer.Cell cell = layer.getCell(col, row);
-        		
-        		if(cell == null) continue;
-        		if(cell.getTile() == null) continue;
-        		
-        		bodyDef.type = BodyType.StaticBody;
-        		bodyDef.position.set((col + 0.5f)*tileSize, (row + 0.5f)*tileSize);
-        		
-        		ChainShape cs = new ChainShape();
-        		Vector2[] v = new Vector2[3];
-        		v[0] = new Vector2(-tileSize / 2, -tileSize / 2);
-        		v[1] = new Vector2(-tileSize / 2, tileSize / 2);
-        		v[2] = new Vector2(tileSize / 2, tileSize / 2);
-        		
-        		cs.createChain(v);
-        		fixDef.friction = 0;
-        		fixDef.shape = cs;
-        		fixDef.filter.categoryBits = 4;
-        		fixDef.filter.maskBits = -1;
-        		fixDef.isSensor = false;
-        		world.createBody(bodyDef).createFixture(fixDef);
-        	}
-        }
-        
-        Gdx.input.setInputProcessor(this);
-        addActor(playerCharacter);
-        setKeyboardFocus(playerCharacter);
-
-        renderer = new Box2DDebugRenderer();
-
-        camera = new OrthographicCamera(800,600);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
-        camera.update();
-    }
-
-    public void setYVelocity(float f){
-        this.currentVector = new Vector2(this.currentVector.x, f);
-    }
-
-    @Override
-    public void act(float delta){
-        super.act(delta);
-
-        // Fixed timestep
-        float TIME_STEP = 1/300f;
-        accumulator += delta;
-        
-        tmr.setView(camera);
-        tmr.render();
-
-        while (accumulator >= delta) {
-            world.step(TIME_STEP, 6, 2);
-            accumulator -= TIME_STEP;
-        }
-    }
-
-    @Override
-    public void draw(){
-        super.draw();
-        renderer.render(world, camera.combined);
-    }
+	@Override
+	public void draw() {
+		super.draw();
+		renderer.render(world, camera.combined);
+	}
 }
 
