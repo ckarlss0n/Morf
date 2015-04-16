@@ -1,12 +1,15 @@
 package edu.chl.morf.Stages;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl.morf.Actors.PlayerCharacter;
 import edu.chl.morf.WorldUtils;
+
+import java.awt.*;
 
 /**
  * Created by Lage on 2015-04-13.
