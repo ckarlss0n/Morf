@@ -5,4 +5,11 @@ package edu.chl.morf.Screens;
  */
 public class MainMenuScreen extends ObservableScreen{
 
+    public void showGame(){
+        try {
+            changeToScreen("gamescreen");
+        }catch (IllegalArgumentException e){
+
+        }
+    }
 }

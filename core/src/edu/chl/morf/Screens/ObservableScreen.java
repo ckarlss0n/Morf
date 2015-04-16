@@ -16,6 +16,18 @@ public abstract class ObservableScreen implements Screen{
         pcs = new PropertyChangeSupport(this);
     }
 
+    public void notifyObservers(String propertyName, boolean oldValue, boolean newValue){
+        pcs.firePropertyChange(propertyName,oldValue,newValue);
+    }
+
+    public void changeToScreen(String screenName) throws IllegalArgumentException{
+        if(screenName.equals("gamescreen")||screenName.equals("mainmenuscreen")){
+            notifyObservers(screenName,false,true);
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }
+
     public void addObserver(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
     }
