@@ -43,9 +43,9 @@ public class TestStage2 extends Stage{
 
         
         PolygonShape shape = new PolygonShape();
-		shape.setAsBox(10 / 100f, 10 / 100f);
+		shape.setAsBox(32 / 2 / 100f, 32 / 2 / 100f);
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(400 / 100f, 400 / 100f);
+		bodyDef.position.set(100 / 100f, 200 / 100f);
 		bodyDef.fixedRotation = true;
 		bodyDef.type = BodyType.DynamicBody;
 		Body body = world.createBody(bodyDef);
@@ -65,6 +65,7 @@ public class TestStage2 extends Stage{
         TiledMapTileLayer layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
 
         tileSize = layer.getTileWidth();
+        System.out.println(tileSize);
 
         
         for(int row = 0; row < layer.getHeight(); row++){
@@ -84,6 +85,7 @@ public class TestStage2 extends Stage{
         		v[2] = new Vector2(tileSize / 2 / 100f, tileSize / 2 / 100f);
         		v[3] = new Vector2(tileSize / 2 / 100f, -tileSize / 2 / 100f);
         		v[4] = new Vector2(-tileSize / 2 / 100f, -tileSize / 2 / 100f);
+        		
         		
         		cs.createChain(v);
         		fixDef.friction = 0;

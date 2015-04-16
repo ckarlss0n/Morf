@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import edu.chl.morf.Actors.PlayerCharacter;
+import edu.chl.morf.Constants;
 import edu.chl.morf.WorldUtils;
 
 import java.awt.*;
@@ -31,9 +33,8 @@ public class GameStage extends Stage {
         addActor(playerCharacter);
         setKeyboardFocus(playerCharacter);
         renderer = new Box2DDebugRenderer();
-        camera = new OrthographicCamera(20, 15);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
-        camera.update();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Constants.GAME_WIDTH / 100f, Constants.GAME_HEIGHT / 100f);
 
 
         playerCharacter.setCamera(camera);

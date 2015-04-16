@@ -17,14 +17,14 @@ public class WorldUtils {
 
     public static PlayerCharacter createPlayerCharacter(World world){
         //Create PlayerCharacter body
-        Body body = createBody(new Vector2(10,4),0.5f,1,1,2f,(short)2,(short)4, world);
+        Body body = createBody(new Vector2(1,1),0.5f,15/100f,15/100f,2f,(short)2,(short)4, world);
         body.setType(BodyDef.BodyType.DynamicBody);
         return new PlayerCharacter(body);
     }
 
     public static void createGround(World world){
         //Create Ground body
-        Body body = createBody(new Vector2(0,0),0.5f,500,2,0.1f,(short)4,(short)2, world);
+        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)2, world);
         body.setType(BodyDef.BodyType.StaticBody);
         Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)2,world);
         block.setType(BodyDef.BodyType.StaticBody);
