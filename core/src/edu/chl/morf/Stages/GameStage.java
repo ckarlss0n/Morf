@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl.morf.Actors.PlayerCharacter;
 import edu.chl.morf.WorldUtils;
 
@@ -16,7 +15,6 @@ public class GameStage extends Stage {
 
     float accumulator;
     private PlayerCharacter playerCharacter;
-    private Image ground;
     private World world;
     private Box2DDebugRenderer renderer;
     private OrthographicCamera camera;
@@ -34,6 +32,7 @@ public class GameStage extends Stage {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
+
     public void updateCamera (){
         camera.position.set(playerCharacter.getBody().getPosition(),0f);
         camera.update();
