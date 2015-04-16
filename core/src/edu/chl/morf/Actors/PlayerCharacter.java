@@ -2,20 +2,23 @@ package edu.chl.morf.Actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import edu.chl.morf.Constants;
 import edu.chl.morf.WorldUtils;
 
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-import static edu.chl.morf.Constants.*;
+
+import static edu.chl.morf.Constants.MAX_SPEED;
 
 /**
  * Created by Lage on 2015-04-13.
@@ -24,15 +27,24 @@ public class PlayerCharacter extends Image {
 
     private boolean facingRight=true;
     private boolean moving=false;
-    private Texture texture;
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
     private int blockWidth = 1;
     private int blockHeight = 1;
+    private Animation runningAnimation;
+    private float stateTime;
+    private OrthographicCamera camera;
 
     public PlayerCharacter(Body body){
-        texture = new Texture(Gdx.files.internal("badlogic.jpg"));
+        TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
+        TextureRegion[] runningFrames = new TextureRegion[Constants.RUNNER_RUNNING_REGION_NAMES.length];
+        for (int i = 0; i < Constants.RUNNER_RUNNING_REGION_NAMES.length; i++) {
+            String path = Constants.RUNNER_RUNNING_REGION_NAMES[i];
+            runningFrames[i] = textureAtlas.findRegion(path);
+        }
+        runningAnimation = new Animation(0.1f, runningFrames);
+        stateTime = 0f;
         this.body = body;
         pressedKeys.put(Input.Keys.LEFT, false);
         pressedKeys.put(Input.Keys.RIGHT, false);
@@ -130,15 +142,22 @@ public class PlayerCharacter extends Image {
     }
 
     public void doAction(){
-        body.setTransform(10,5,0);
+        body.setTransform(10, 5, 0);
         body.setLinearVelocity(0,0);
         System.out.println("reset");
     }
 
+    public void setCamera(OrthographicCamera camera){
+        this.camera = camera;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha){
-        //batch.draw(texture,getX(),getY());
-        //batch.draw(texture,body.getPosition().x,body.getPosition().y);
+        batch.setProjectionMatrix(camera.combined);
+        super.draw(batch, parentAlpha);
+        stateTime += Gdx.graphics.getDeltaTime();
+        batch.draw(runningAnimation.getKeyFrame(stateTime, true), body.getPosition().x - 1,body.getPosition().y - 1,
+                2,2);
     }
 
     @Override

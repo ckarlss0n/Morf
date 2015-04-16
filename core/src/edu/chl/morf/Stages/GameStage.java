@@ -28,12 +28,15 @@ public class GameStage extends Stage {
         addActor(playerCharacter);
         setKeyboardFocus(playerCharacter);
         renderer = new Box2DDebugRenderer();
-        camera = new OrthographicCamera(20, 13);
+        camera = new OrthographicCamera(20, 15);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
+
+
+        playerCharacter.setCamera(camera);
     }
 
-    public void updateCamera (){
+    public void updateCamera() {
         camera.position.set(playerCharacter.getBody().getPosition(),0f);
         camera.update();
     }
