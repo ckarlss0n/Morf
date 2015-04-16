@@ -35,7 +35,7 @@ public class WorldUtils {
         if(playerCharacter.isFacingRight()){
             facingRight = 1;
         }
-        Body block = createBody(new Vector2(position.x+blockWidth*2*facingRight,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
+        Body block = createBody(new Vector2(position.x+blockWidth*2*facingRight+1/40f*facingRight,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
         block.setType(BodyDef.BodyType.StaticBody);
     }
 
