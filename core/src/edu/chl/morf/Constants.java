@@ -9,6 +9,6 @@ public final class Constants {
     public static final String GAME_NAME = "Morf";
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0,-10);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0,-15);
     public static final int MAX_SPEED = 5;
 }
