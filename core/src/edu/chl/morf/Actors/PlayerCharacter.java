@@ -32,7 +32,9 @@ public class PlayerCharacter extends Image {
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
     private int blockWidth = 1;
     private int blockHeight = 1;
-    private Animation runningAnimation;
+    private Animation runningRightAnimation;
+    private Animation runningLeftAnimation;
+    private TextureRegion idleTexture;
     private float stateTime;
     private OrthographicCamera camera;
 
@@ -40,12 +42,21 @@ public class PlayerCharacter extends Image {
 
         //Load sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
-        TextureRegion[] runningFrames = new TextureRegion[Constants.RUNNER_RUNNING_REGION_NAMES.length];
-        for (int i = 0; i < Constants.RUNNER_RUNNING_REGION_NAMES.length; i++) {
-            String path = Constants.RUNNER_RUNNING_REGION_NAMES[i];
+        TextureRegion[] runningFrames = new TextureRegion[Constants.PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
+        for (int i = 0; i < Constants.PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length; i++) {
+            String path = Constants.PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES[i];
             runningFrames[i] = textureAtlas.findRegion(path);
         }
-        runningAnimation = new Animation(0.1f, runningFrames);
+        runningLeftAnimation = new Animation(0.1f, runningFrames);
+
+        runningFrames = new TextureRegion[Constants.PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length];
+        for (int i = 0; i < Constants.PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length; i++) {
+            String path = Constants.PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES [i];
+            runningFrames[i] = textureAtlas.findRegion(path);
+        }
+        runningRightAnimation = new Animation(0.1f, runningFrames);
+
+        idleTexture = textureAtlas.findRegion(Constants.PLAYERCHARACTER_IDLE_REGION_NAME);
         stateTime = 0f;
 
         this.body = body;
@@ -159,8 +170,19 @@ public class PlayerCharacter extends Image {
         batch.setProjectionMatrix(camera.combined);                         //Tells the spritebatch to render according to camera
         super.draw(batch, parentAlpha);
         stateTime += Gdx.graphics.getDeltaTime();
-        batch.draw(runningAnimation.getKeyFrame(stateTime, true),
-                body.getPosition().x - 1,body.getPosition().y - 1, 2,2);    //Draw correct frame at player character position
+
+        //Draw correct animation at player character position
+        if(moving) {
+            if(facingRight) {
+                batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
+                        body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
+            }else{
+                batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
+                        body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
+            }
+        }else{
+            batch.draw(idleTexture, body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
+        }
     }
 
     @Override
