@@ -181,6 +181,7 @@ public class PlayerCharacter extends Image {
                         body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
             }
         }else{
+            System.out.println(body.getFixtureList().get(0).getShape().getRadius());
             batch.draw(idleTexture, body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
         }
     }
