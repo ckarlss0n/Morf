@@ -124,7 +124,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x >= 0){    //If moving right
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(-200, 0);
+        movementVector = new Vector2(-50, 0);
     }
     public void moveRight(){
         facingRight=true;
@@ -132,7 +132,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x <= 0){    //If moving left
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(200, 0);
+        movementVector = new Vector2(50, 0);
     }
     public void stop(){
         moving=false;
@@ -146,12 +146,12 @@ public class PlayerCharacter extends Image {
     }
     public void jump(){
         if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
-            body.applyForceToCenter(new Vector2(0, 5000), true);
+            body.applyForceToCenter(new Vector2(0, 1000), true);
         }
     }
     public void fly(){
         if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
-            movementVector = new Vector2(0, 200);
+            movementVector = new Vector2(0, 100);
         }
     }
 
@@ -175,14 +175,14 @@ public class PlayerCharacter extends Image {
         if(moving) {
             if(facingRight) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
+                        body.getPosition().x - 10/100f, body.getPosition().y - 10/100f, 20/100f, 20/100f);
             }else{
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
+                        body.getPosition().x - 10/100f, body.getPosition().y - 10/100f, 20/100f, 20/100f);
             }
         }else{
             System.out.println(body.getFixtureList().get(0).getShape().getRadius());
-            batch.draw(idleTexture, body.getPosition().x - 1, body.getPosition().y - 1, 2, 2);
+            batch.draw(idleTexture, body.getPosition().x - 10/100f, body.getPosition().y - 10/100f, 20/100f, 20/100f);
         }
     }
 

@@ -35,11 +35,11 @@ public class WorldUtils {
         if(playerCharacter.isFacingRight()){
             facingRight = 1;
         }
-        Body block = createBody(new Vector2(position.x+blockWidth*2*facingRight+1/40f*facingRight,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
+        Body block = createBody(new Vector2(position.x+blockWidth*2*facingRight+1/40f*facingRight,position.y),1,32/100f,32/100f,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
         block.setType(BodyDef.BodyType.StaticBody);
     }
 
-    public static Body createBody(Vector2 position, float density, int width, int height,
+    public static Body createBody(Vector2 position, float density, float width, float height,
                            float friction, short categoryBits, short maskBits, World world){
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width, height);
