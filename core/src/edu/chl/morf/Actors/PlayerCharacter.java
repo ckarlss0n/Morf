@@ -28,7 +28,8 @@ public class PlayerCharacter extends Image {
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
-
+    private int blockWidth = 1;
+    private int blockHeight = 1;
 
     public PlayerCharacter(Body body){
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -55,9 +56,10 @@ public class PlayerCharacter extends Image {
                         doAction();
                         break;
                     case Input.Keys.SHIFT_LEFT:
-                        addBlock();
                         fly();
                         break;
+                    case Input.Keys.X:
+                        addBlock(getBody().getPosition());
                 }
                 return true;
             }
@@ -82,8 +84,12 @@ public class PlayerCharacter extends Image {
         });
     }
 
-    public void addBlock(){
-        WorldUtils.addBlock(this);
+    public void addBlock(Vector2 position) {
+        WorldUtils.addBlock(this, position, blockWidth, blockHeight);
+    }
+
+    public boolean isFacingRight(){
+        return facingRight;
     }
 
     public void moveLeft(){
