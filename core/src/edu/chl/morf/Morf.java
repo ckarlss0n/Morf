@@ -7,21 +7,21 @@ import edu.chl.morf.Screens.MainMenuScreen;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class Morf extends Game {
+public class Morf extends Game implements PropertyChangeListener{
 
-    PropertyChangeListener pcs;
-    GameScreen gameScreen;
-    MainMenuScreen mainMenuScreen;
+    private GameScreen gameScreen;
+    private MainMenuScreen mainMenuScreen;
+
 	@Override
 	public void create () {
         gameScreen = new GameScreen();
         mainMenuScreen = new MainMenuScreen();
-        pcs = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-
-            }
-        };
+        mainMenuScreen.addObserver(this);
         setScreen(gameScreen);
 	}
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }

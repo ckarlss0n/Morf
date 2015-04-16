@@ -1,27 +1,17 @@
 package edu.chl.morf.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import edu.chl.morf.Stages.GameStage;
-
-import java.awt.*;
 
 /**
  * Created by Christoffer on 2015-04-13.
  */
-public class GameScreen implements Screen{
+public class GameScreen extends ObservableScreen{
 
     private GameStage stage;
 
     public GameScreen(){
         stage = new GameStage();
-    }
-
-    @Override
-    public void show() {
     }
 
     @Override
@@ -31,19 +21,4 @@ public class GameScreen implements Screen{
         stage.draw();                                       //Redraw screen
         stage.updateCamera();
     }
-
-    @Override
-    public void resize(int width, int height) {}
-
-    @Override
-    public void pause() {}
-
-    @Override
-    public void resume() {}
-
-    @Override
-    public void hide() {}
-
-    @Override
-    public void dispose() {}
 }
