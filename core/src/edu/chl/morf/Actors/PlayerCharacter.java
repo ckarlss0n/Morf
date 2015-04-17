@@ -193,13 +193,13 @@ public class PlayerCharacter extends Image {
         if(moving) {
             if(facingRight) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        body.getPosition().x - 10/100f, body.getPosition().y - 10/100f, 20/100f, 20/100f);
+                        body.getPosition().x - 15/100f, body.getPosition().y - 15/100f, 30/100f, 30/100f);
             }else{
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        body.getPosition().x - 10/100f, body.getPosition().y - 10/100f, 20/100f, 20/100f);
+                        body.getPosition().x - 15/100f, body.getPosition().y - 15/100f, 30/100f, 30/100f);
             }
         }else{
-            batch.draw(idleTexture, body.getPosition().x - 10/100f, body.getPosition().y - 10/100f, 20/100f, 20/100f);
+            batch.draw(idleTexture, body.getPosition().x - 15/100f, body.getPosition().y - 15/100f, 30/100f, 30/100f);
         }
     }
 
