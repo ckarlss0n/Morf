@@ -2,8 +2,6 @@ package edu.chl.morf.Screens;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import javax.swing.*;
-
 /**
  * Created by Christoffer on 2015-04-13.
  */
