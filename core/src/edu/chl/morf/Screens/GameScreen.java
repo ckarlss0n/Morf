@@ -16,6 +16,10 @@ public class GameScreen extends ObservableScreen{
         stage = new GameStage();
     }
 
+    public void setStageInputHandler(){
+        Gdx.input.setInputProcessor(this.stage);
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(Gdx.gl20.GL_COLOR_BUFFER_BIT);       //Clear screen

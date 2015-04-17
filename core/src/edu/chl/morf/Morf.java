@@ -26,6 +26,7 @@ public class Morf extends Game implements PropertyChangeListener{
         String screenName = evt.getPropertyName();
         if(screenName.equals("gamescreen")){
             System.out.println("Byter till skärm");
+            gameScreen.setStageInputHandler();
             gameScreen.show();
             setScreen(gameScreen);
         }

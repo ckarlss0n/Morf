@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 public final class Constants {
     //Game/project constants
     public static final String GAME_NAME = "Morf";
-    public static final int GAME_WIDTH = 1280;
-    public static final int GAME_HEIGHT = 720;
+    public static final int GAME_WIDTH = 800;
+    public static final int GAME_HEIGHT = 600;
     public static final boolean FULLSCREEN = false;
 
     //Game play constants

@@ -24,9 +24,9 @@ public class WorldUtils {
 
     public static PlayerCharacter createPlayerCharacter(World world){
         //Create PlayerCharacter body
-        Body body = createBody(new Vector2(1,1),0.5f,15/100f,15/100f,2f,(short)2,(short)4, world);
+        UserData userData=new UserData(UserDataType.PLAYERCHARACTER);
+        Body body = createBody(new Vector2(1,1),0.5f,15/100f,15/100f,2f,(short)2,(short)4, world,userData);
         body.setType(BodyDef.BodyType.DynamicBody);
-        body.setUserData(new UserData(UserDataType.PLAYERCHARACTER));
         PolygonShape shapeLeft = new PolygonShape();
         shapeLeft.setAsBox(14/100f,14/100f,new Vector2(-1 * 0.3f,0),0);
         FixtureDef fixDef = new FixtureDef();
@@ -83,25 +83,32 @@ public class WorldUtils {
 
     public static void createGround(World world){
         //Create Ground body
-        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)6, world);
+        UserData userData=new UserData(UserDataType.GROUND);
+        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)2, world,userData);
         body.setType(BodyDef.BodyType.StaticBody);
-        body.setUserData(new UserData(UserDataType.GROUND));
-        Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)2,world);
+        Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)2,world,userData);
         block.setType(BodyDef.BodyType.StaticBody);
     }
 
-    public static void addBlock(PlayerCharacter playerCharacter, Vector2 position, float blockWidth, float blockHeight,boolean facingRight){
+    public static void addBlock(PlayerCharacter playerCharacter, Vector2 position, float blockWidth, float blockHeight,boolean facingRight,UserData userData){
         int direction=-1;
         if(facingRight){
             direction = 1;
         }
-
-        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+2/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)6,playerCharacter.getBody().getWorld());
-        block.setType(BodyDef.BodyType.DynamicBody);
+        if(userData.getUserDataType()==UserDataType.SPIKE){
+            position.x=position.x+7/100f*direction;
+        }
+        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+1/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld(),userData);
+        if(userData.getUserDataType()==UserDataType.SPIKE){
+            block.setType(BodyDef.BodyType.KinematicBody);
+        } else {
+            block.setType(BodyDef.BodyType.StaticBody);
+        }
+        block.setUserData(userData);
     }
 
     public static Body createBody(Vector2 position, float density, float width, float height,
-                           float friction, short categoryBits, short maskBits, World world){
+                           float friction, short categoryBits, short maskBits, World world,UserData userData){
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width, height);
         BodyDef bodyDef = new BodyDef();
@@ -114,7 +121,7 @@ public class WorldUtils {
         fixDef.friction = friction;
         fixDef.filter.categoryBits = categoryBits;
         fixDef.filter.maskBits = maskBits;
-        body.createFixture(fixDef);
+        body.createFixture(fixDef).setUserData(userData);
         body.resetMassData();
         shape.dispose();
         return body;
