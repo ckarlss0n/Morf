@@ -126,7 +126,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x >= 0){    //If moving right
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(-50, 0);
+        movementVector = new Vector2(-30, 0);
     }
     public void moveRight(){
         facingRight=true;
@@ -134,7 +134,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x <= 0){    //If moving left
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(50, 0);
+        movementVector = new Vector2(30, 0);
     }
     public void stop(){
         moving=false;
@@ -148,12 +148,12 @@ public class PlayerCharacter extends Image {
     }
     public void jump(){
         if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
-            body.applyForceToCenter(new Vector2(0, 1000), true);
+            body.applyForceToCenter(new Vector2(0, 50), true);
         }
     }
     public void fly(){
         if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
-            movementVector = new Vector2(0, 100);
+            movementVector = new Vector2(0, 4);
         }
     }
     public void setEmptyRight(boolean b){

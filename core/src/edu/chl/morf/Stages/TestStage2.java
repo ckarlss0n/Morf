@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import edu.chl.morf.Constants;
+import edu.chl.morf.MyMap;
 import edu.chl.morf.WorldUtils;
 import edu.chl.morf.Actors.PlayerCharacter;
 
@@ -28,18 +29,22 @@ public class TestStage2 extends Stage{
     private World world;
     float accumulator;
     
-    private TiledMap tileMap;
-    private float tileSize;
-    private OrthogonalTiledMapRenderer tmr;
+    private MyMap map;
+    
+//    private TiledMap tileMap;
+//    private float tileSize;
+//    private OrthogonalTiledMapRenderer tmr;
 
     private Box2DDebugRenderer renderer;
     private OrthographicCamera b2dCam;
     
-    private OrthographicCamera cam;
+//    private OrthographicCamera cam;
 	
 	public TestStage2(){
         world = WorldUtils.createWorld();
         accumulator = 0f;
+        
+        map = new MyMap();
 
         
         PolygonShape shape = new PolygonShape();
@@ -59,13 +64,15 @@ public class TestStage2 extends Stage{
 		playerCharacter = new PlayerCharacter(body);
         
         
-        tileMap = new TmxMapLoader().load("testmap.tmx");
-        tmr = new OrthogonalTiledMapRenderer(tileMap);
+//        tileMap = new TmxMapLoader().load("testmap.tmx");
+//        tmr = new OrthogonalTiledMapRenderer(tileMap);
         
-        TiledMapTileLayer layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
-
-        tileSize = layer.getTileWidth();
-        System.out.println(tileSize);
+//        TiledMapTileLayer layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
+//
+//        tileSize = layer.getTileWidth();
+//        System.out.println(tileSize);
+		
+		TiledMapTileLayer layer = map.getLayer();
 
         
         for(int row = 0; row < layer.getHeight(); row++){
@@ -74,6 +81,8 @@ public class TestStage2 extends Stage{
         		
         		if(cell == null) continue;
         		if(cell.getTile() == null) continue;
+        		
+        		float tileSize = map.getTileSize();
         		
         		bodyDef.type = BodyType.StaticBody;
         		bodyDef.position.set((col + 0.5f)*tileSize / 100f, (row + 0.5f)*tileSize / 100f);
@@ -102,8 +111,8 @@ public class TestStage2 extends Stage{
         setKeyboardFocus(playerCharacter);
         renderer = new Box2DDebugRenderer();
         
-        cam = new OrthographicCamera();
-        cam.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+//        cam = new OrthographicCamera();
+//        cam.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         
         
         b2dCam = new OrthographicCamera();
@@ -125,8 +134,10 @@ public class TestStage2 extends Stage{
         float TIME_STEP = 1 / 300f;
         accumulator += delta;
 
-        tmr.setView(cam);
-        tmr.render();
+        
+        map.render();
+//        tmr.setView(map.getCam());
+//        tmr.render();
         
         while (accumulator >= delta) {
             world.step(TIME_STEP, 6, 2);

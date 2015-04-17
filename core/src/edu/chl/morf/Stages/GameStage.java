@@ -2,14 +2,17 @@ package edu.chl.morf.Stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import edu.chl.morf.Actors.Background;
+import edu.chl.morf.Actors.BackgroundLayer;
 import edu.chl.morf.Actors.PlayerCharacter;
 import edu.chl.morf.Constants;
 import edu.chl.morf.UserData.UserData;
 import edu.chl.morf.UserData.UserDataType;
 import edu.chl.morf.WorldUtils;
+
+import static edu.chl.morf.Constants.*;
 
 /**
  * Created by Lage on 2015-04-13.
@@ -21,12 +24,18 @@ public class GameStage extends Stage implements ContactListener{
     private World world;
     private Box2DDebugRenderer renderer;
     private OrthographicCamera camera;
-    private Background background;
+    private BackgroundLayer background;
+    private BackgroundLayer bottomClouds;
+    private BackgroundLayer topClouds;
 
     public GameStage() {
         world = WorldUtils.createWorld();
-        background = new Background();
+        background = new BackgroundLayer(BACKGROUND_IMAGE_PATH);
+        bottomClouds = new BackgroundLayer(BOTTOM_CLOUDS_IMAGE_PATH);
+        topClouds = new BackgroundLayer(TOP_CLOUDS_IMAGE_PATH);
         addActor(background);
+        addActor(bottomClouds);
+        addActor(topClouds);
         accumulator = 0f;
         playerCharacter = WorldUtils.createPlayerCharacter(world);
         WorldUtils.createGround(world);
@@ -50,7 +59,12 @@ public class GameStage extends Stage implements ContactListener{
     @Override
     public void act(float delta) {
         super.act(delta);
-        background.setSpeed(playerCharacter.getBody().getLinearVelocity().x * -10 + 20);
+        //background.setSpeed(playerCharacter.getBody().getLinearVelocity().x * -10 + 20);
+        Vector2 playerVelocity = playerCharacter.getBody().getLinearVelocity();
+        background.setSpeed(playerVelocity.x * -10);        //Only move if player is moving
+        bottomClouds.setSpeed(playerVelocity.x * -10 + 5);  //Slow scroll
+        topClouds.setSpeed(playerVelocity.x * -10 + 20);    //Faster scroll
+
         // Fixed timestep
         float TIME_STEP = 1 / 300f;
         accumulator += delta;
