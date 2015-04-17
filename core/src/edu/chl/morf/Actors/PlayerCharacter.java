@@ -3,10 +3,7 @@ package edu.chl.morf.Actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,6 +15,7 @@ import edu.chl.morf.WorldUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import static edu.chl.morf.Constants.GAME_HEIGHT;
 import static edu.chl.morf.Constants.MAX_SPEED;
 
 /**
@@ -29,6 +27,7 @@ public class PlayerCharacter extends Image {
     private boolean emptyLeft=true;
     private boolean facingRight=true;
     private boolean moving=false;
+    private boolean alive = true;
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
@@ -41,7 +40,6 @@ public class PlayerCharacter extends Image {
     private OrthographicCamera camera;
 
     public PlayerCharacter(Body body){
-
         //Load sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
         TextureRegion[] runningFrames = new TextureRegion[Constants.PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
@@ -118,10 +116,6 @@ public class PlayerCharacter extends Image {
         }
     }
 
-    public boolean isFacingRight(){
-        return facingRight;
-    }
-
     public void moveLeft(){
         facingRight=false;
         moving=true;
@@ -173,7 +167,12 @@ public class PlayerCharacter extends Image {
     }
 
     public void die(){
+        alive = false;
         System.out.println("You have died. Game over!");
+    }
+
+    public boolean isAlive(){
+        return alive;
     }
 
     public Vector2 getVelocity(){
