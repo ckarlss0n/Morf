@@ -172,6 +172,14 @@ public class PlayerCharacter extends Image {
         System.out.println("reset");
     }
 
+    public void die(){
+        System.out.println("You have died. Game over!");
+    }
+
+    public Vector2 getVelocity(){
+        return body.getLinearVelocity();
+    }
+
     public void setCamera(OrthographicCamera camera){
         this.camera = camera;
     }
