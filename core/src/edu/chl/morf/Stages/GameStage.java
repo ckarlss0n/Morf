@@ -60,7 +60,7 @@ public class GameStage extends Stage implements ContactListener{
     public void act(float delta) {
         super.act(delta);
         //background.setSpeed(playerCharacter.getBody().getLinearVelocity().x * -10 + 20);
-        Vector2 playerVelocity = playerCharacter.getBody().getLinearVelocity();
+        Vector2 playerVelocity = playerCharacter.getVelocity();
         background.setSpeed(playerVelocity.x * -10);        //Only move if player is moving
         bottomClouds.setSpeed(playerVelocity.x * -10 + 5);  //Slow scroll
         topClouds.setSpeed(playerVelocity.x * -10 + 20);    //Faster scroll
@@ -85,12 +85,19 @@ public class GameStage extends Stage implements ContactListener{
     public void beginContact(Contact contact) {
         Body a=contact.getFixtureA().getBody();
         Body b=contact.getFixtureB().getBody();
-
+        boolean fallingBeforeTouch = false;
         Fixture fa=contact.getFixtureA();
         Fixture fb=contact.getFixtureB();
         System.out.println("contact");
-        if(contact.isTouching()==true){
-            System.out.println("touch");
+        if(playerCharacter.getVelocity().y < -10){
+            fallingBeforeTouch = true;
+        }
+        if(fallingBeforeTouch && contact.isTouching()==true){
+            playerCharacter.die();
+            playerCharacter.remove();
+        }
+        else if(contact.isTouching()==true){
+            System.out.println("Touch!");
         }
         else {
             System.out.println("no touch");
