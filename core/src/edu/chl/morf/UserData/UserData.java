@@ -5,6 +5,7 @@ package edu.chl.morf.UserData;
  */
 public class UserData {
     private UserDataType userDataType;
+    private int numOfContacts;
     public UserData(){
 
     }
@@ -14,5 +15,14 @@ public class UserData {
 
     public UserDataType getUserDataType(){
         return userDataType;
+    }
+    public int getNumOfContacts(){
+        return numOfContacts;
+    }
+    public void increment(){
+        numOfContacts=numOfContacts+1;
+    }
+    public void decrement(){
+        numOfContacts=numOfContacts-1;
     }
 }

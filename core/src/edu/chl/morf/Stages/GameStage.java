@@ -98,17 +98,22 @@ public class GameStage extends Stage implements ContactListener{
         boolean fallingBeforeTouch = false;
         Fixture fa=contact.getFixtureA();
         Fixture fb=contact.getFixtureB();
-        System.out.println("contact");
         if(contact.isTouching()==true) {
-            System.out.println("touch");
-            if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT ||
-                    (fb.getUserData()) != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT) {
+            if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT){
                 playerCharacter.setEmptyLeft(false);
-                System.out.println("full Left");
-            } else if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT ||
-                    (fb.getUserData()) != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT) {
+                ((UserData) fa.getUserData()).increment();
+            }
+            else if(fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT) {
+                playerCharacter.setEmptyLeft(false);
+                ((UserData) fb.getUserData()).increment();
+            }
+            else if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT){
                 playerCharacter.setEmptyRight(false);
-                System.out.println("full Right");
+                ((UserData) fa.getUserData()).increment();
+            }
+            else if(fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT) {
+                playerCharacter.setEmptyRight(false);
+                ((UserData) fb.getUserData()).increment();
             }
             else if((fa.getUserData()!=null && ((UserData)fa.getUserData()).getUserDataType()==UserDataType.SPIKE) &&
                     (fb.getUserData()!=null && ((UserData)fb.getUserData()).getUserDataType()==UserDataType.PLAYERCHARACTER)){
@@ -137,15 +142,29 @@ public class GameStage extends Stage implements ContactListener{
         Fixture fb=contact.getFixtureB();
         System.out.println("end contact");
 
-        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT ||
-                (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
-            playerCharacter.setEmptyLeft(true);
-            System.out.println("empty Left");
+        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
+            ((UserData) fa.getUserData()).decrement();
+            if (((UserData) fa.getUserData()).getNumOfContacts()==0){
+                playerCharacter.setEmptyLeft(true);
+            }
         }
-        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT ||
-                (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT){
-            playerCharacter.setEmptyRight(true);
-            System.out.println("empty Right");
+        else if(fb.getUserData()!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
+            ((UserData) fb.getUserData()).decrement();
+            if (((UserData) fb.getUserData()).getNumOfContacts()==0){
+                playerCharacter.setEmptyLeft(true);
+            }
+        }
+        else if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT){
+            ((UserData) fa.getUserData()).decrement();
+            if (((UserData) fa.getUserData()).getNumOfContacts()==0){
+                playerCharacter.setEmptyRight(true);
+            }
+        }
+        else if(fb.getUserData()!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT){
+            ((UserData) fb.getUserData()).decrement();
+            if (((UserData) fb.getUserData()).getNumOfContacts()==0) {
+                playerCharacter.setEmptyRight(true);
+            }
         }
     }
 
