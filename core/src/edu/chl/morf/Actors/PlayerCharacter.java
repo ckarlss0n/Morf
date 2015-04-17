@@ -40,6 +40,7 @@ public class PlayerCharacter extends Image {
     private TextureRegion idleTexture;
     private float stateTime;
     private OrthographicCamera camera;
+    private int waterLevel = 20;
 
     public PlayerCharacter(Body body){
         //Load sprite sheet from assets
@@ -117,10 +118,31 @@ public class PlayerCharacter extends Image {
     }
 
     public void addBlock(Vector2 position,UserDataType userDataType) {
-        if((facingRight&&emptyRight)||(!facingRight&&emptyLeft)) {
-            UserData userData=new UserData(userDataType);
-            WorldUtils.addBlock(this, position, blockWidth, blockHeight, facingRight,userData);
+        if(hasWater()) {
+            if ((facingRight && emptyRight) || (!facingRight && emptyLeft)) {
+                UserData userData = new UserData(userDataType);
+                WorldUtils.addBlock(this, position, blockWidth, blockHeight, facingRight, userData);
+                decreaseWaterLevel();
+            }
+        } else {
+            System.out.println("You are out of water!");
         }
+    }
+
+    public void setWaterLevel(int waterLevel) {
+        this.waterLevel = waterLevel;
+    }
+
+    public int getWaterLevel() {
+        return waterLevel;
+    }
+
+    public void decreaseWaterLevel(){
+        setWaterLevel(getWaterLevel()-1);
+    }
+
+    public boolean hasWater(){
+        return waterLevel > 0;
     }
 
     public void moveLeft(){
@@ -207,7 +229,7 @@ public class PlayerCharacter extends Image {
                         body.getPosition().x - 15/100f, body.getPosition().y - 15/100f, 30/100f, 30/100f);
             }
         }else{
-            batch.draw(idleTexture, body.getPosition().x - 15/100f, body.getPosition().y - 15/100f, 30/100f, 30/100f);
+            batch.draw(idleTexture, body.getPosition().x - 15 / 100f, body.getPosition().y - 15 / 100f, 30 / 100f, 30 / 100f);
         }
     }
 
