@@ -9,16 +9,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import edu.chl.morf.Constants;
 import edu.chl.morf.UserData.UserData;
 import edu.chl.morf.UserData.UserDataType;
 import edu.chl.morf.WorldUtils;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import static edu.chl.morf.Constants.GAME_HEIGHT;
-import static edu.chl.morf.Constants.MAX_SPEED;
+import static edu.chl.morf.Constants.*;
 
 /**
  * Created by Lage on 2015-04-13.
@@ -41,25 +37,26 @@ public class PlayerCharacter extends Image {
     private float stateTime;
     private OrthographicCamera camera;
     private int waterLevel = 20;
+    private int deltaFly = 0;
 
     public PlayerCharacter(Body body){
         //Load sprite sheet from assets
-        TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
-        TextureRegion[] runningFrames = new TextureRegion[Constants.PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
-        for (int i = 0; i < Constants.PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length; i++) {
-            String path = Constants.PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES[i];
+        TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
+        TextureRegion[] runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
+        for (int i = 0; i < PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length; i++) {
+            String path = PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES[i];
             runningFrames[i] = textureAtlas.findRegion(path);
         }
         runningLeftAnimation = new Animation(0.1f, runningFrames);
 
-        runningFrames = new TextureRegion[Constants.PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length];
-        for (int i = 0; i < Constants.PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length; i++) {
-            String path = Constants.PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES [i];
+        runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length];
+        for (int i = 0; i < PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length; i++) {
+            String path = PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES [i];
             runningFrames[i] = textureAtlas.findRegion(path);
         }
         runningRightAnimation = new Animation(0.1f, runningFrames);
 
-        idleTexture = textureAtlas.findRegion(Constants.PLAYERCHARACTER_IDLE_REGION_NAME);
+        idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
         stateTime = 0f;
 
         this.body = body;
@@ -177,10 +174,19 @@ public class PlayerCharacter extends Image {
         }
     }
     public void fly(){
-        if(Math.abs(body.getLinearVelocity().y) < 0.01f && Math.abs(body.getLinearVelocity().x) < 0.01f) {
+        if (Math.abs(body.getLinearVelocity().y) < 0.01f && Math.abs(body.getLinearVelocity().x) < 0.01f) {
             movementVector = new Vector2(0, 4);
         }
     }
+
+    public boolean isMoving(){
+        return moving;
+    }
+
+    public boolean isFlying(){
+        return movementVector.equals(new Vector2(0, 4));
+    }
+
     public void setEmptyRight(boolean b){
         emptyRight=b;
     }
@@ -218,6 +224,12 @@ public class PlayerCharacter extends Image {
         batch.setProjectionMatrix(camera.combined);                         //Tells the spritebatch to render according to camera
         super.draw(batch, parentAlpha);
         stateTime += Gdx.graphics.getDeltaTime();
+
+        if(isFlying()){
+            if(getVelocity().y > MAX_FLYING_SPEED){
+                stop();
+            }
+        }
 
         //Draw correct animation at player character position
         if(moving) {
