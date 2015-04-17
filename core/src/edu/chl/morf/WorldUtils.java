@@ -98,7 +98,6 @@ public class WorldUtils {
 
         Body block = createBody(new Vector2(position.x+blockWidth*2*direction+1/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
         block.setType(BodyDef.BodyType.StaticBody);
-
     }
 
     public static Body createBody(Vector2 position, float density, float width, float height,

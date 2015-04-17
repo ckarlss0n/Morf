@@ -1,13 +1,13 @@
 package edu.chl.morf.Actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +28,7 @@ public class BackgroundLayer extends Image{
     public Map<String, String> messages = new HashMap<String, String>();
 
     public BackgroundLayer(String imagePath) {
+        font.setColor(Color.BLACK);
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(imagePath)));
         leftBounds = new Rectangle(0 - GAME_WIDTH/2, 0, GAME_WIDTH, GAME_HEIGHT);      //Half rectangle out of bounds on left side of screen
         rightBounds = new Rectangle(GAME_WIDTH/2, 0, GAME_WIDTH, GAME_HEIGHT);         //Half rectangle out of bounds on right side of screen

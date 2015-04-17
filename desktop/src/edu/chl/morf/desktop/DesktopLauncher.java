@@ -11,6 +11,7 @@ public class DesktopLauncher {
         //Window width and height
 		config.width = GAME_WIDTH;
 		config.height = GAME_HEIGHT;
+		config.fullscreen = FULL_SCREEN;
 		new LwjglApplication(new Morf(), config);
 	}
 }
