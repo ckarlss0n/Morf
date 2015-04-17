@@ -56,7 +56,7 @@ public class TestStage2 extends Stage{
 		fixDef.filter.maskBits = 4;
 		body.createFixture(fixDef);
 		
-		playerCharacter = new PlayerCharacter(body, this);
+		playerCharacter = new PlayerCharacter(body);
         
 
 		
