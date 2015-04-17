@@ -60,9 +60,6 @@ public class TestStage extends Stage{
 		fixDef.filter.categoryBits = 4;
 		fixDef.filter.maskBits = 2;
 		body.createFixture(fixDef);
-
-
-		
 		
 		Gdx.input.setInputProcessor(this);
 		addActor(playerCharacter);
