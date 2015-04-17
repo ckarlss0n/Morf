@@ -118,10 +118,6 @@ public class PlayerCharacter extends Image {
         }
     }
 
-    public boolean isFacingRight(){
-        return facingRight;
-    }
-
     public void moveLeft(){
         facingRight=false;
         moving=true;
