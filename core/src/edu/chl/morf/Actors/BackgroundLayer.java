@@ -2,10 +2,17 @@ package edu.chl.morf.Actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import static edu.chl.morf.Constants.*;
 
 /**
@@ -17,6 +24,8 @@ public class BackgroundLayer extends Image{
     private Rectangle leftBounds;
     private Rectangle rightBounds;
     private float speed = BACKGROUND_SCROLLING_SPEED;
+    private BitmapFont font = new BitmapFont();
+    public Map<String, String> messages = new HashMap<String, String>();
 
     public BackgroundLayer(String imagePath) {
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(imagePath)));
@@ -49,10 +58,21 @@ public class BackgroundLayer extends Image{
         scrolledOut();
     }
 
+    public void setMessage(String message, String value){
+        messages.put(value, message);
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha){
         super.draw(batch, parentAlpha);
         batch.draw(textureRegion, leftBounds.x, leftBounds.y, GAME_WIDTH, GAME_HEIGHT);
         batch.draw(textureRegion, rightBounds.x, rightBounds.y, GAME_WIDTH, GAME_HEIGHT);
+        int count = 1;
+        for (Map.Entry<String, String> entry : messages.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            font.draw(batch, key + ": " + value, 10, 20*count);
+            count++;
+        }
     }
 }
