@@ -36,8 +36,7 @@ public class PlayerCharacter extends Image {
     private TextureRegion idleTexture;
     private float stateTime;
     private OrthographicCamera camera;
-    private int waterLevel = 20;
-    private int deltaFly = 0;
+    private int waterLevel = WATER_LEVEL;
 
     public PlayerCharacter(Body body){
         //Load sprite sheet from assets

@@ -16,6 +16,7 @@ public final class Constants {
     public static final Vector2 WORLD_GRAVITY = new Vector2(0,-15);
     public static final int MAX_SPEED = 2;
     public static final int MAX_FLYING_SPEED = 5;
+    public static final int WATER_LEVEL = 20;
 
     //Character animation constants
     public static final String CHARACTERS_ATLAS_PATH = "SpriteSheets/Stickman";
