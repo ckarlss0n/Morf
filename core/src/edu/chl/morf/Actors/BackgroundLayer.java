@@ -11,15 +11,15 @@ import static edu.chl.morf.Constants.*;
 /**
  * Created by Christoffer on 2015-04-16.
  */
-public class Background extends Image{
+public class BackgroundLayer extends Image{
 
     private TextureRegion textureRegion;
     private Rectangle leftBounds;
     private Rectangle rightBounds;
     private float speed = BACKGROUND_SCROLLING_SPEED;
 
-    public Background() {
-        textureRegion = new TextureRegion(new Texture(Gdx.files.internal(BACKGROUND_IMAGE_PATH)));
+    public BackgroundLayer(String imagePath) {
+        textureRegion = new TextureRegion(new Texture(Gdx.files.internal(imagePath)));
         leftBounds = new Rectangle(0 - GAME_WIDTH/2, 0, GAME_WIDTH, GAME_HEIGHT);      //Half rectangle out of bounds on left side of screen
         rightBounds = new Rectangle(GAME_WIDTH/2, 0, GAME_WIDTH, GAME_HEIGHT);         //Half rectangle out of bounds on right side of screen
     }
