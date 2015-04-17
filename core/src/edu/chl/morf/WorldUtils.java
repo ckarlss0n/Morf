@@ -84,9 +84,9 @@ public class WorldUtils {
     public static void createGround(World world){
         //Create Ground body
         UserData userData=new UserData(UserDataType.GROUND);
-        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)2, world,userData);
+        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)6, world,userData);
         body.setType(BodyDef.BodyType.StaticBody);
-        Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)2,world,userData);
+        Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)6,world,userData);
         block.setType(BodyDef.BodyType.StaticBody);
     }
 
@@ -98,11 +98,11 @@ public class WorldUtils {
         if(userData.getUserDataType()==UserDataType.SPIKE){
             position.x=position.x+7/100f*direction;
         }
-        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+1/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld(),userData);
+        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+1/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)6,playerCharacter.getBody().getWorld(),userData);
         if(userData.getUserDataType()==UserDataType.SPIKE){
             block.setType(BodyDef.BodyType.KinematicBody);
         } else {
-            block.setType(BodyDef.BodyType.StaticBody);
+            block.setType(BodyDef.BodyType.DynamicBody);
         }
         block.setUserData(userData);
     }
