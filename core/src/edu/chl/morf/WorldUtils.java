@@ -27,6 +27,19 @@ public class WorldUtils {
         Body body = createBody(new Vector2(1,1),0.5f,15/100f,15/100f,2f,(short)2,(short)4, world);
         body.setType(BodyDef.BodyType.DynamicBody);
         body.setUserData(new UserData(UserDataType.PLAYERCHARACTER));
+        for(int i = -1; i < 2; i += 2) {
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(15/100f,15/100f,new Vector2(i * 0.3f,0),0);
+            FixtureDef fixDef = new FixtureDef();
+            fixDef.shape = shape;
+            fixDef.filter.categoryBits = 2;
+            fixDef.filter.maskBits = 4;
+            fixDef.isSensor = true;
+            /*Fixture fixture = */body.createFixture(fixDef);
+            //fixture.setUserData(new UserData());
+            shape.dispose();
+        }
+
         return new PlayerCharacter(body);
     }
 
