@@ -93,8 +93,6 @@ public class GameStage extends Stage implements ContactListener{
 
     @Override
     public void beginContact(Contact contact) {
-        Body a=contact.getFixtureA().getBody();
-        Body b=contact.getFixtureB().getBody();
         boolean fallingBeforeTouch = false;
         Fixture fa=contact.getFixtureA();
         Fixture fb=contact.getFixtureB();
@@ -110,13 +108,20 @@ public class GameStage extends Stage implements ContactListener{
                 playerCharacter.setEmptyRight(false);
                 System.out.println("full Right");
             }
+            else if((fa.getUserData()!=null && ((UserData)fa.getUserData()).getUserDataType()==UserDataType.SPIKE) &&
+                    (fb.getUserData()!=null && ((UserData)fb.getUserData()).getUserDataType()==UserDataType.PLAYERCHARACTER)){
+                playerCharacter.die();
+            }
+            else if((fa.getUserData()!=null && ((UserData)fa.getUserData()).getUserDataType()==UserDataType.PLAYERCHARACTER) &&
+                    (fb.getUserData()!=null && ((UserData)fb.getUserData()).getUserDataType()==UserDataType.SPIKE)){
+                playerCharacter.die();
+            }
         }
         if(playerCharacter.getVelocity().y < -10){
             fallingBeforeTouch = true;
         }
-        if(fallingBeforeTouch && contact.isTouching()==true) {
+        if(fallingBeforeTouch && contact.isTouching()) {
             playerCharacter.die();
-            playerCharacter.remove();
         }
         else {
             System.out.println("no touch");

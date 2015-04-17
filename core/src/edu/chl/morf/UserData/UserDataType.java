@@ -7,5 +7,6 @@ public enum UserDataType {
     GROUND,
     PLAYERCHARACTER,
     GHOST_LEFT,
-    GHOST_RIGHT
+    GHOST_RIGHT,
+    SPIKE
 }

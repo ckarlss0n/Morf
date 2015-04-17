@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl.morf.Constants;
+import edu.chl.morf.UserData.UserData;
+import edu.chl.morf.UserData.UserDataType;
 import edu.chl.morf.WorldUtils;
 
 import java.util.HashMap;
@@ -85,7 +87,11 @@ public class PlayerCharacter extends Image {
                         fly();
                         break;
                     case Input.Keys.X:
-                        addBlock(getBody().getPosition());
+                        addBlock(getBody().getPosition(),UserDataType.GROUND);
+                        break;
+                    case Input.Keys.C:
+                        addBlock(getBody().getPosition(),UserDataType.SPIKE);
+                        break;
                 }
                 return true;
             }
@@ -110,9 +116,10 @@ public class PlayerCharacter extends Image {
         });
     }
 
-    public void addBlock(Vector2 position) {
+    public void addBlock(Vector2 position,UserDataType userDataType) {
         if((facingRight&&emptyRight)||(!facingRight&&emptyLeft)) {
-            WorldUtils.addBlock(this, position, blockWidth, blockHeight, facingRight);
+            UserData userData=new UserData(userDataType);
+            WorldUtils.addBlock(this, position, blockWidth, blockHeight, facingRight,userData);
         }
     }
 
@@ -167,6 +174,7 @@ public class PlayerCharacter extends Image {
     }
 
     public void die(){
+        remove();
         alive = false;
         System.out.println("You have died. Game over!");
     }
