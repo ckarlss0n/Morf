@@ -31,14 +31,9 @@ public class TestStage2 extends Stage{
     
     private MyMap map;
     
-//    private TiledMap tileMap;
-//    private float tileSize;
-//    private OrthogonalTiledMapRenderer tmr;
-
     private Box2DDebugRenderer renderer;
     private OrthographicCamera b2dCam;
-    
-//    private OrthographicCamera cam;
+
 	
 	public TestStage2(){
         world = WorldUtils.createWorld();
@@ -61,16 +56,9 @@ public class TestStage2 extends Stage{
 		fixDef.filter.maskBits = 4;
 		body.createFixture(fixDef);
 		
-		playerCharacter = new PlayerCharacter(body);
+		playerCharacter = new PlayerCharacter(body, this);
         
-        
-//        tileMap = new TmxMapLoader().load("testmap.tmx");
-//        tmr = new OrthogonalTiledMapRenderer(tileMap);
-        
-//        TiledMapTileLayer layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
-//
-//        tileSize = layer.getTileWidth();
-//        System.out.println(tileSize);
+
 		
 		TiledMapTileLayer layer = map.getLayer();
 
@@ -111,15 +99,25 @@ public class TestStage2 extends Stage{
         setKeyboardFocus(playerCharacter);
         renderer = new Box2DDebugRenderer();
         
-//        cam = new OrthographicCamera();
-//        cam.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-        
+
         
         b2dCam = new OrthographicCamera();
 		b2dCam.setToOrtho(false, Constants.GAME_WIDTH / 100f, Constants.GAME_HEIGHT / 100f);
 		
 		playerCharacter.setCamera(b2dCam);
 
+	}
+	
+	public MyMap getMap(){
+		return map;
+	}
+	
+	public World getWorld(){
+		return world;
+	}
+	
+	public PlayerCharacter getPlayerCharacter(){
+		return playerCharacter;
 	}
 	
     public void updateCamera (){
@@ -136,8 +134,6 @@ public class TestStage2 extends Stage{
 
         
         map.render();
-//        tmr.setView(map.getCam());
-//        tmr.render();
         
         while (accumulator >= delta) {
             world.step(TIME_STEP, 6, 2);

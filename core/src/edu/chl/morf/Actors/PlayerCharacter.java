@@ -150,12 +150,12 @@ public class PlayerCharacter extends Image {
         }
     }
     public void jump(){
-        if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
+        if(Math.abs(body.getLinearVelocity().y) < 0.01f) {   //If standing (could be improved, also 0 at top of jump)
             body.applyForceToCenter(new Vector2(0, 50), true);
         }
     }
     public void fly(){
-        if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
+        if(Math.abs(body.getLinearVelocity().y) < 0.01f && Math.abs(body.getLinearVelocity().x) < 0.01f) {
             movementVector = new Vector2(0, 4);
         }
     }
