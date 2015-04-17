@@ -78,7 +78,10 @@ public class GameStage extends Stage implements ContactListener{
         if(!playerCharacter.isAlive()){
             alive = "No. You are dead.";
         }
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.app.getGraphics().getHeight();
         int fps = Gdx.graphics.getFramesPerSecond();
+        background.setMessage(width + "x" + height, "Resolution");
         background.setMessage(Integer.toString(fps), "FPS");
         background.setMessage(alive, "Alive");
         background.setMessage(playerCharacter.getBody().getPosition().toString(), "Position");

@@ -83,7 +83,7 @@ public class WorldUtils {
 
     public static void createGround(World world){
         //Create Ground body
-        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)2, world);
+        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)6, world);
         body.setType(BodyDef.BodyType.StaticBody);
         body.setUserData(new UserData(UserDataType.GROUND));
         Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)2,world);
@@ -96,8 +96,8 @@ public class WorldUtils {
             direction = 1;
         }
 
-        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+1/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
-        block.setType(BodyDef.BodyType.StaticBody);
+        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+2/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)6,playerCharacter.getBody().getWorld());
+        block.setType(BodyDef.BodyType.DynamicBody);
     }
 
     public static Body createBody(Vector2 position, float density, float width, float height,
