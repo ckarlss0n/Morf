@@ -91,16 +91,21 @@ public class GameStage extends Stage implements ContactListener{
         System.out.println("contact");
         if(contact.isTouching()==true){
             System.out.println("touch");
+            if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT ||
+                    (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
+                playerCharacter.setEmptyLeft(false);
+                System.out.println("full Left");
+            }
+            else if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT ||
+                    (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT){
+                playerCharacter.setEmptyRight(false);
+                System.out.println("full Right");
+            }
         }
         else {
             System.out.println("no touch");
         }
-        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT ||
-           (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
-            playerCharacter.setEmptyLeft(false);
-            System.out.println("full Left");
 
-        }
     }
 
     @Override
@@ -111,8 +116,13 @@ public class GameStage extends Stage implements ContactListener{
 
         if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT ||
                 (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
-            playerCharacter.setEmptyLeft(false);
+            playerCharacter.setEmptyLeft(true);
             System.out.println("empty Left");
+        }
+        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT ||
+                (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT){
+            playerCharacter.setEmptyRight(true);
+            System.out.println("empty Right");
         }
     }
 

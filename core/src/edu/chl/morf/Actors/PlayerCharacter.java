@@ -113,7 +113,9 @@ public class PlayerCharacter extends Image {
     }
 
     public void addBlock(Vector2 position) {
-        WorldUtils.addBlock(this, position, blockWidth, blockHeight);
+        if((facingRight&&emptyRight)||(!facingRight&&emptyLeft)) {
+            WorldUtils.addBlock(this, position, blockWidth, blockHeight, facingRight);
+        }
     }
 
     public boolean isFacingRight(){

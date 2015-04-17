@@ -90,13 +90,13 @@ public class WorldUtils {
         block.setType(BodyDef.BodyType.StaticBody);
     }
 
-    public static void addBlock(PlayerCharacter playerCharacter, Vector2 position, int blockWidth, int blockHeight){
-        int facingRight = -1;
-        if(playerCharacter.isFacingRight()){
-            facingRight = 1;
+    public static void addBlock(PlayerCharacter playerCharacter, Vector2 position, int blockWidth, int blockHeight,boolean facingRight){
+        int direction=-1;
+        if(facingRight){
+            direction = 1;
         }
 
-        Body block = createBody(new Vector2(position.x+blockWidth*2*facingRight+1/40f*facingRight,position.y),1,32/100f,32/100f,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
+        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+1/40f*direction,position.y),1,32/100f,32/100f,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
         block.setType(BodyDef.BodyType.StaticBody);
 
     }
