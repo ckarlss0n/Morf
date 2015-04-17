@@ -31,8 +31,8 @@ public class PlayerCharacter extends Image {
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
-    private int blockWidth = 1;
-    private int blockHeight = 1;
+    private int blockWidth = 15/100;
+    private int blockHeight = 15/100;
     private Animation runningRightAnimation;
     private Animation runningLeftAnimation;
     private TextureRegion idleTexture;
@@ -122,7 +122,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x >= 0){    //If moving right
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(-30, 0);
+        movementVector = new Vector2(-3, 0);
     }
     public void moveRight(){
         facingRight=true;
@@ -130,7 +130,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x <= 0){    //If moving left
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(30, 0);
+        movementVector = new Vector2(3, 0);
     }
     public void stop(){
         moving=false;
