@@ -31,8 +31,8 @@ public class PlayerCharacter extends Image {
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
-    private int blockWidth = 15/100;
-    private int blockHeight = 15/100;
+    private float blockWidth = 15/100f;
+    private float blockHeight = 15/100f;
     private Animation runningRightAnimation;
     private Animation runningLeftAnimation;
     private TextureRegion idleTexture;
