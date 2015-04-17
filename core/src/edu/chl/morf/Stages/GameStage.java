@@ -80,6 +80,8 @@ public class GameStage extends Stage implements ContactListener{
         int width = Gdx.graphics.getWidth();
         int height = Gdx.app.getGraphics().getHeight();
         int fps = Gdx.graphics.getFramesPerSecond();
+
+        background.setMessage(Integer.toString(playerCharacter.getWaterLevel()), "Water level");
         background.setMessage(width + "x" + height, "Resolution");
         background.setMessage(Integer.toString(fps), "FPS");
         background.setMessage(alive, "Alive");
