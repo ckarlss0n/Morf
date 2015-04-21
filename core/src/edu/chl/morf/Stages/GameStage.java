@@ -2,9 +2,13 @@ package edu.chl.morf.Stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl.morf.Actors.BackgroundLayer;
 import edu.chl.morf.Actors.PlayerCharacter;
@@ -16,54 +20,95 @@ import edu.chl.morf.WorldUtils;
 import static edu.chl.morf.Constants.*;
 
 /**
- * Created by Lage on 2015-04-13.
+ * Created by Christoffer on 2015-04-20.
  */
-public class GameStage extends Stage implements ContactListener{
+public class GameStage extends Stage implements ContactListener {
 
-    float accumulator;
-    private PlayerCharacter playerCharacter;
     private World world;
-    private Box2DDebugRenderer renderer;
-    private OrthographicCamera camera;
+    private PlayerCharacter playerCharacter;
+    private float accumulator;
+
     private BackgroundLayer background;
     private BackgroundLayer bottomClouds;
     private BackgroundLayer topClouds;
 
-    public GameStage() {
+    private TiledMap tileMap;
+    private TiledMapTileLayer layer;
+    private float tileSize;
+
+    private Box2DDebugRenderer renderer;
+    private OrthographicCamera b2dCam;
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
+
+    public GameStage(String levelName) {
         world = WorldUtils.createWorld();
+        playerCharacter = WorldUtils.createPlayerCharacter(world);
+        accumulator = 0f;
+
         background = new BackgroundLayer(BACKGROUND_IMAGE_PATH);
         bottomClouds = new BackgroundLayer(BOTTOM_CLOUDS_IMAGE_PATH);
         topClouds = new BackgroundLayer(TOP_CLOUDS_IMAGE_PATH);
+
         addActor(background);
         addActor(bottomClouds);
         addActor(topClouds);
-        accumulator = 0f;
-        playerCharacter = WorldUtils.createPlayerCharacter(world);
-        WorldUtils.createGround(world);
-        world.setContactListener(this);
         addActor(playerCharacter);
+
+        tileMap = new TmxMapLoader().load(LEVEL_PATH+levelName);
+        layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
+        tileSize = layer.getTileWidth();
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, 1/PPM);
+
+        Gdx.input.setInputProcessor(this);
         setKeyboardFocus(playerCharacter);
         renderer = new Box2DDebugRenderer();
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Constants.GAME_WIDTH / 100f, Constants.GAME_HEIGHT / 100f);
-
-
-        playerCharacter.setCamera(camera);
+        b2dCam = new OrthographicCamera();
+        b2dCam.setToOrtho(false, Constants.GAME_WIDTH / PPM, Constants.GAME_HEIGHT / PPM);
+        playerCharacter.setCamera(b2dCam);
+        world.setContactListener(this);
+        generateLevel();
     }
 
-    public void updateCamera() {
-        camera.position.set(playerCharacter.getBody().getPosition(), 0f);
-        camera.update();
+    public void generateLevel(){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.fixedRotation = true;
+        FixtureDef fixDef = new FixtureDef();
+
+        for (int row = 0; row < layer.getHeight(); row++) {
+            for (int col = 0; col < layer.getWidth(); col++) {
+                TiledMapTileLayer.Cell cell = layer.getCell(col, row);
+
+                if (cell == null) continue;
+                if (cell.getTile() == null) continue;
+
+                bodyDef.type = BodyType.StaticBody;
+                bodyDef.position.set((col + 0.5f) * tileSize / PPM, (row + 0.5f) * tileSize / PPM);
+
+                ChainShape chainShape = new ChainShape();
+                Vector2[] v = new Vector2[5];
+                v[0] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
+                v[1] = new Vector2(-tileSize / 2 / PPM, tileSize / 2 / PPM);
+                v[2] = new Vector2(tileSize / 2 / PPM, tileSize / 2 / PPM);
+                v[3] = new Vector2(tileSize / 2 / PPM, -tileSize / 2 / PPM);
+                v[4] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
+
+                chainShape.createChain(v);
+                fixDef.friction = GROUND_FRICTION;
+                fixDef.shape = chainShape;
+                fixDef.filter.categoryBits = 4;
+                fixDef.filter.maskBits = -1;
+                fixDef.isSensor = false;
+                world.createBody(bodyDef).createFixture(fixDef);
+            }
+        }
     }
+
+    public World getWorld() { return world; }
+    public PlayerCharacter getPlayerCharacter() { return playerCharacter; }
+
     @Override
     public void act(float delta) {
         super.act(delta);
-        //background.setSpeed(playerCharacter.getBody().getLinearVelocity().x * -10 + 20);
-        Vector2 playerVelocity = playerCharacter.getVelocity();
-        background.setSpeed(playerVelocity.x * -10);        //Only move if player is moving
-        bottomClouds.setSpeed(playerVelocity.x * -10 + 5);  //Slow scroll
-        topClouds.setSpeed(playerVelocity.x * -10 + 20);    //Faster scroll
 
         // Fixed timestep
         float TIME_STEP = 1 / 300f;
@@ -73,8 +118,14 @@ public class GameStage extends Stage implements ContactListener{
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
+
+        Vector2 playerVelocity = playerCharacter.getVelocity();
+        background.setSpeed(playerVelocity.x * -10);        //Only move if player is moving
+        bottomClouds.setSpeed(playerVelocity.x * -10 + 5);  //Slow scroll
+        topClouds.setSpeed(playerVelocity.x * -10 + 20);    //Faster scroll
+
         String alive = "Yes! You are alive.";
-        if(!playerCharacter.isAlive()){
+        if (!playerCharacter.isAlive()) {
             alive = "No. You are dead.";
         }
         int width = Gdx.graphics.getWidth();
@@ -92,91 +143,88 @@ public class GameStage extends Stage implements ContactListener{
     @Override
     public void draw() {
         super.draw();
-        renderer.render(world, camera.combined);
+        tiledMapRenderer.setView(b2dCam);
+        tiledMapRenderer.render();
+        renderer.render(world, b2dCam.combined);
     }
 
+    public void updateCamera() {
+        b2dCam.position.set(playerCharacter.getBody().getPosition(), 0f);
+        b2dCam.update();
+    }
+
+    //TODO Extract code/tidy up
     @Override
     public void beginContact(Contact contact) {
+        System.out.println("Begin touch");
         boolean fallingBeforeTouch = false;
-        Fixture fa=contact.getFixtureA();
-        Fixture fb=contact.getFixtureB();
-        if(contact.isTouching()==true) {
-            if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT){
+        Fixture fa = contact.getFixtureA();
+        Fixture fb = contact.getFixtureB();
+        if (contact.isTouching()) {
+            if (fa.getUserData() != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT) {
                 playerCharacter.setEmptyLeft(false);
                 ((UserData) fa.getUserData()).increment();
-            }
-            else if(fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT) {
+            } else if (fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT) {
                 playerCharacter.setEmptyLeft(false);
                 ((UserData) fb.getUserData()).increment();
-            }
-            else if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT){
+            } else if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT) {
                 playerCharacter.setEmptyRight(false);
                 ((UserData) fa.getUserData()).increment();
-            }
-            else if(fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT) {
+            } else if (fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT) {
                 playerCharacter.setEmptyRight(false);
                 ((UserData) fb.getUserData()).increment();
-            }
-            else if((fa.getUserData()!=null && ((UserData)fa.getUserData()).getUserDataType()==UserDataType.SPIKE) &&
-                    (fb.getUserData()!=null && ((UserData)fb.getUserData()).getUserDataType()==UserDataType.PLAYERCHARACTER)){
+            } else if ((fa.getUserData() != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.SPIKE) &&
+                    (fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.PLAYERCHARACTER)) {
                 playerCharacter.die();
-            }
-            else if((fa.getUserData()!=null && ((UserData)fa.getUserData()).getUserDataType()==UserDataType.PLAYERCHARACTER) &&
-                    (fb.getUserData()!=null && ((UserData)fb.getUserData()).getUserDataType()==UserDataType.SPIKE)){
+            } else if ((fa.getUserData() != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.PLAYERCHARACTER) &&
+                    (fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.SPIKE)) {
                 playerCharacter.die();
             }
         }
-        if(playerCharacter.getVelocity().y < -10){
+        if (playerCharacter.getVelocity().y < -10) {
             fallingBeforeTouch = true;
         }
-        if(fallingBeforeTouch && contact.isTouching()) {
+        if (fallingBeforeTouch && contact.isTouching()) {
+            System.out.println("DIE");
             playerCharacter.die();
-        }
-        else {
-            System.out.println("no touch");
+        } else {
+            System.out.println("No touch!");
         }
 
     }
 
     @Override
     public void endContact(Contact contact) {
-        Fixture fa=contact.getFixtureA();
-        Fixture fb=contact.getFixtureB();
-        System.out.println("end contact");
+        Fixture fa = contact.getFixtureA();
+        Fixture fb = contact.getFixtureB();
+        System.out.println("End contact!");
 
-        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
+        if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT) {
             ((UserData) fa.getUserData()).decrement();
-            if (((UserData) fa.getUserData()).getNumOfContacts()==0){
+            if (((UserData) fa.getUserData()).getNumOfContacts() == 0) {
                 playerCharacter.setEmptyLeft(true);
             }
-        }
-        else if(fb.getUserData()!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
+        } else if (fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_LEFT) {
             ((UserData) fb.getUserData()).decrement();
-            if (((UserData) fb.getUserData()).getNumOfContacts()==0){
+            if (((UserData) fb.getUserData()).getNumOfContacts() == 0) {
                 playerCharacter.setEmptyLeft(true);
             }
-        }
-        else if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT){
+        } else if ((fa.getUserData()) != null && ((UserData) fa.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT) {
             ((UserData) fa.getUserData()).decrement();
-            if (((UserData) fa.getUserData()).getNumOfContacts()==0){
+            if (((UserData) fa.getUserData()).getNumOfContacts() == 0) {
                 playerCharacter.setEmptyRight(true);
             }
-        }
-        else if(fb.getUserData()!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_RIGHT){
+        } else if (fb.getUserData() != null && ((UserData) fb.getUserData()).getUserDataType() == UserDataType.GHOST_RIGHT) {
             ((UserData) fb.getUserData()).decrement();
-            if (((UserData) fb.getUserData()).getNumOfContacts()==0) {
+            if (((UserData) fb.getUserData()).getNumOfContacts() == 0) {
                 playerCharacter.setEmptyRight(true);
             }
         }
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
+    public void preSolve(Contact contact, Manifold oldManifold) {}
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
-    }
+    public void postSolve(Contact contact, ContactImpulse impulse) {}
 }

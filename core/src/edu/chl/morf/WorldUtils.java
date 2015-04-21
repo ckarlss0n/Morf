@@ -1,17 +1,12 @@
 package edu.chl.morf;
 
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.utils.Array;
 import edu.chl.morf.Actors.PlayerCharacter;
-import edu.chl.morf.Screens.PauseScreen;
 import edu.chl.morf.UserData.UserData;
 import edu.chl.morf.UserData.UserDataType;
 
-import static edu.chl.morf.Constants.WORLD_GRAVITY;
+import static edu.chl.morf.Constants.*;
 
 /**
  * Created by Lage on 2015-04-15.
@@ -22,21 +17,23 @@ public class WorldUtils {
         return new World(WORLD_GRAVITY, true);
     }
 
+    //Create PlayerCharacter body
     public static PlayerCharacter createPlayerCharacter(World world){
-        //Create PlayerCharacter body
         UserData userData=new UserData(UserDataType.PLAYERCHARACTER);
-        Body body = createBody(new Vector2(1,1),0.5f,15/100f,15/100f,2f,(short)2,(short)4, world,userData);
+        Body body = createBody(new Vector2(1,2),0.5f,2f,(short)2,(short)4, world,userData);
         body.setType(BodyDef.BodyType.DynamicBody);
         PolygonShape shapeLeft = new PolygonShape();
-        shapeLeft.setAsBox(14/100f,14/100f,new Vector2(-1 * 0.3f,0),0);
+
+        shapeLeft.setAsBox((REAL_TILE_SIZE-6)/(2*PPM),(REAL_TILE_SIZE-6)/(2*PPM),new Vector2(-1 * (REAL_TILE_SIZE-4)/(PPM),0),0); //Extra margin for ghosting boxes (64-4)
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shapeLeft;
         fixDef.filter.categoryBits = 2;
         fixDef.filter.maskBits = 4;
         fixDef.isSensor = true;
         Fixture fixtureLeft = body.createFixture(fixDef);
+
         PolygonShape shapeRight = new PolygonShape();
-        shapeRight.setAsBox(14/100f,14/100f,new Vector2(1 * 0.3f,0),0);
+        shapeRight.setAsBox((REAL_TILE_SIZE-6)/(2*PPM),(REAL_TILE_SIZE-6)/(2*PPM),new Vector2(1 * (REAL_TILE_SIZE-4)/(PPM),0),0);
         fixDef.shape=shapeRight;
         Fixture fixtureRight = body.createFixture(fixDef);
 
@@ -47,58 +44,14 @@ public class WorldUtils {
         fixtureRight.setUserData(new UserData(UserDataType.GHOST_RIGHT));
         return new PlayerCharacter(body);
     }
-    /*
-        BodyDef bodyDef=new BodyDef();
-        bodyDef.position.set(position.x+blockWidth*2*facingRight,position.y);
-        bodyDef.fixedRotation=true;
-        Body body= playerCharacter.getBody().getWorld().createBody(bodyDef);
-        body.setUserData(new UserData(UserDataType.GHOSTBLOCK));
 
-        FixtureDef fixtureDef=new FixtureDef();
-        fixtureDef.isSensor=false;
-        PolygonShape shape=new PolygonShape();
-        shape.setAsBox(blockWidth,blockHeight);
-        fixtureDef.shape=shape;
-        Fixture fixture=body.createFixture(fixtureDef);
-        fixture.setUserData(playerCharacter);
-        Array<Contact> contactList=playerCharacter.getBody().getWorld().getContactList();
-        Boolean createBlock=false;
-        System.out.println("hej");
-        for(Contact c : contactList) {
-            System.out.println("for");
-            System.out.println(""+c.getFixtureB().getBody().getPosition()+"   "+c.getFixtureA().getBody().getPosition());
-            if(c.getFixtureA().getUserData()!=null||c.getFixtureB().getUserData()!=null){
-                System.out.println("hej");
-                if(c.isTouching()){
-                    createBlock=false;
-                }
-            }
-        }
+    public static void addBlock(PlayerCharacter playerCharacter, Vector2 position,boolean facingRight,UserData userData){
+        int direction = facingRight ? 1 : -1; //1 if facing right, else -1
 
-        if(createBlock) {
-            Body block = createBody(new Vector2(position.x + blockWidth * 2 * facingRight, position.y), 1, blockWidth, blockHeight, 0.1f, (short) 4, (short) 2, playerCharacter.getBody().getWorld());
-            block.setType(BodyDef.BodyType.StaticBody);
-        }
-    */
-
-    public static void createGround(World world){
-        //Create Ground body
-        UserData userData=new UserData(UserDataType.GROUND);
-        Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)6, world,userData);
-        body.setType(BodyDef.BodyType.StaticBody);
-        Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)6,world,userData);
-        block.setType(BodyDef.BodyType.StaticBody);
-    }
-
-    public static void addBlock(PlayerCharacter playerCharacter, Vector2 position, float blockWidth, float blockHeight,boolean facingRight,UserData userData){
-        int direction=-1;
-        if(facingRight){
-            direction = 1;
-        }
         if(userData.getUserDataType()==UserDataType.SPIKE){
-            position.x=position.x+7/100f*direction;
+            position.x=position.x+7/PPM*direction;
         }
-        Body block = createBody(new Vector2(position.x+blockWidth*2*direction+1/100f*direction,position.y),1,blockWidth,blockHeight,0.1f,(short)4,(short)6,playerCharacter.getBody().getWorld(),userData);
+        Body block = createBody(new Vector2(position.x+(REAL_TILE_SIZE/PPM)*direction+1/PPM*direction,position.y),1,0.1f,(short)4,(short)6,playerCharacter.getBody().getWorld(),userData);
         if(userData.getUserDataType()==UserDataType.SPIKE){
             block.setType(BodyDef.BodyType.KinematicBody);
         } else {
@@ -107,10 +60,9 @@ public class WorldUtils {
         block.setUserData(userData);
     }
 
-    public static Body createBody(Vector2 position, float density, float width, float height,
-                           float friction, short categoryBits, short maskBits, World world,UserData userData){
+    public static Body createBody(Vector2 position, float density, float friction, short categoryBits, short maskBits, World world,UserData userData){
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width, height);
+        shape.setAsBox(TILE_SIZE/2, TILE_SIZE/2);
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(position);
         bodyDef.fixedRotation = true;

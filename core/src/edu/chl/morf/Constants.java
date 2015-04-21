@@ -8,15 +8,29 @@ import com.badlogic.gdx.math.Vector2;
 public final class Constants {
     //Game/project constants
     public static final String GAME_NAME = "Morf";
-    public static final int GAME_WIDTH = 800;
-    public static final int GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 1366;
+    public static final int GAME_HEIGHT = 768;
     public static final boolean FULLSCREEN = false;
+    public static final float PPM = 100f; //Pixels per meter
+    public static final float REAL_TILE_SIZE = 64;
+    public static final float TILE_SIZE = (REAL_TILE_SIZE-2)/PPM; //Safe tile size
+
+    //Background constants
+    public static final String BACKGROUND_IMAGE_PATH = "background.png";
+    public static final String BOTTOM_CLOUDS_IMAGE_PATH = "cloudsBottom.png";
+    public static final String TOP_CLOUDS_IMAGE_PATH = "cloudsTop.png";
+    public static final int BACKGROUND_SCROLLING_SPEED = 50;
+
+    //Levels
+    public static final String LEVEL_PATH = "Levels/";
+    public static final String LEVEL_1 = "Level_1.tmx";
 
     //Game play constants
     public static final Vector2 WORLD_GRAVITY = new Vector2(0,-15);
     public static final int MAX_SPEED = 2;
     public static final int MAX_FLYING_SPEED = 5;
-    public static final int WATER_LEVEL = 20;
+    public static final int WATER_LEVEL = 50;
+    public static final float GROUND_FRICTION = 0.1f;
 
     //Character animation constants
     public static final String CHARACTERS_ATLAS_PATH = "SpriteSheets/Stickman";
@@ -28,10 +42,4 @@ public final class Constants {
     public static final String BUTTONS_ATLAS_PATH = "SpriteSheets/Buttons";
     public static final String BUTTON_UNPRESSED_REGION_NAME = "ButtonUnpressed";
     public static final String BUTTON_PRESSED_REGION_NAME = "ButtonPressed";
-
-    //Background constants
-    public static final String BACKGROUND_IMAGE_PATH = "background.png";
-    public static final String BOTTOM_CLOUDS_IMAGE_PATH = "cloudsBottom.png";
-    public static final String TOP_CLOUDS_IMAGE_PATH = "cloudsTop.png";
-    public static final int BACKGROUND_SCROLLING_SPEED = 50;
 }

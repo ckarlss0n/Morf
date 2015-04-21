@@ -1,9 +1,8 @@
 package edu.chl.morf.Screens;
 
 import com.badlogic.gdx.Gdx;
-
 import edu.chl.morf.Stages.GameStage;
-import edu.chl.morf.Stages.TestStage2;
+import static edu.chl.morf.Constants.*;
 
 /**
  * Created by Christoffer on 2015-04-13.
@@ -14,7 +13,7 @@ public class GameScreen extends ObservableScreen{
 
     public GameScreen(){
         super();
-        stage = new GameStage();
+        stage = new GameStage(LEVEL_1);
     }
 
     public void setStageInputHandler(){

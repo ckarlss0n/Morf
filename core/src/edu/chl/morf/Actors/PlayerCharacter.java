@@ -29,8 +29,8 @@ public class PlayerCharacter extends Image {
     private Body body;
     private Vector2 movementVector = new Vector2(0,0);
     private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
-    private float blockWidth = 15/100f;
-    private float blockHeight = 15/100f;
+    private float blockWidth = 64.0f/(2*PPM);
+    private float blockHeight = 64.0f/(2*PPM);
     private Animation runningRightAnimation;
     private Animation runningLeftAnimation;
     private TextureRegion idleTexture;
@@ -114,10 +114,12 @@ public class PlayerCharacter extends Image {
     }
 
     public void addBlock(Vector2 position,UserDataType userDataType) {
-        if(hasWater()) {
+        System.out.println("Empty left: " + emptyLeft);
+        System.out.println("Empty right: " + emptyRight);
+        if (hasWater()) {
             if ((facingRight && emptyRight) || (!facingRight && emptyLeft)) {
                 UserData userData = new UserData(userDataType);
-                WorldUtils.addBlock(this, position, blockWidth, blockHeight, facingRight, userData);
+                WorldUtils.addBlock(this, position, facingRight, userData);
                 decreaseWaterLevel();
             }
         } else {
@@ -147,7 +149,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x >= 0){    //If moving right
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(-3, 0);
+        movementVector = new Vector2(-15, 0);
     }
     public void moveRight(){
         facingRight=true;
@@ -155,7 +157,7 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().x <= 0){    //If moving left
             body.setLinearVelocity(new Vector2(0, body.getLinearVelocity().y));
         }
-        movementVector = new Vector2(3, 0);
+        movementVector = new Vector2(15, 0);
     }
     public void stop(){
         moving=false;
@@ -169,12 +171,12 @@ public class PlayerCharacter extends Image {
     }
     public void jump(){
         if(Math.abs(body.getLinearVelocity().y) < 0.01f) {   //If standing (could be improved, also 0 at top of jump)
-            body.applyForceToCenter(new Vector2(0, 50), true);
+            body.applyForceToCenter(new Vector2(0, 300), true);
         }
     }
     public void fly(){
         if (Math.abs(body.getLinearVelocity().y) < 0.01f && Math.abs(body.getLinearVelocity().x) < 0.01f) {
-            movementVector = new Vector2(0, 4);
+            movementVector = new Vector2(0, 20);
         }
     }
 
