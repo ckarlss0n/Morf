@@ -1,6 +1,7 @@
 package edu.chl.morf.Stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -29,6 +30,9 @@ public class GameStage extends Stage implements ContactListener {
     private float accumulator;
 
     private BackgroundLayer background;
+    private BackgroundLayer mountains;
+    private BackgroundLayer backgroundBottom;
+    private BackgroundLayer backgroundTop;
     private BackgroundLayer bottomClouds;
     private BackgroundLayer topClouds;
 
@@ -46,10 +50,16 @@ public class GameStage extends Stage implements ContactListener {
         accumulator = 0f;
 
         background = new BackgroundLayer(BACKGROUND_IMAGE_PATH);
+        mountains = new BackgroundLayer(MOUNTAINS_IMAGE_PATH);
+        backgroundBottom = new BackgroundLayer(BACKGROUND_BOTTOM_IMAGE_PATH);
+        backgroundTop = new BackgroundLayer(BACKGROUND_TOP_IMAGE_PATH);
         bottomClouds = new BackgroundLayer(BOTTOM_CLOUDS_IMAGE_PATH);
         topClouds = new BackgroundLayer(TOP_CLOUDS_IMAGE_PATH);
 
         addActor(background);
+        addActor(mountains);
+        addActor(backgroundBottom);
+        addActor(backgroundTop);
         addActor(bottomClouds);
         addActor(topClouds);
         addActor(playerCharacter);
@@ -120,7 +130,10 @@ public class GameStage extends Stage implements ContactListener {
         }
 
         Vector2 playerVelocity = playerCharacter.getVelocity();
-        background.setSpeed(playerVelocity.x * -10);        //Only move if player is moving
+        background.setSpeed(0);        //Only move if player is moving
+        mountains.setSpeed(playerVelocity.x * - 10);
+        backgroundBottom.setSpeed(playerVelocity.x * - 30);
+        backgroundTop.setSpeed(playerVelocity.x * - 50);
         bottomClouds.setSpeed(playerVelocity.x * -10 + 5);  //Slow scroll
         topClouds.setSpeed(playerVelocity.x * -10 + 20);    //Faster scroll
 
@@ -143,9 +156,9 @@ public class GameStage extends Stage implements ContactListener {
     @Override
     public void draw() {
         super.draw();
+        renderer.render(world, b2dCam.combined);
         tiledMapRenderer.setView(b2dCam);
         tiledMapRenderer.render();
-        renderer.render(world, b2dCam.combined);
     }
 
     public void updateCamera() {

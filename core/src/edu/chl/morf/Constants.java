@@ -17,6 +17,9 @@ public final class Constants {
 
     //Background constants
     public static final String BACKGROUND_IMAGE_PATH = "background.png";
+    public static final String MOUNTAINS_IMAGE_PATH = "mountains.png";
+    public static final String BACKGROUND_BOTTOM_IMAGE_PATH = "backgroundBottom.png";
+    public static final String BACKGROUND_TOP_IMAGE_PATH = "backgroundTop.png";
     public static final String BOTTOM_CLOUDS_IMAGE_PATH = "cloudsBottom.png";
     public static final String TOP_CLOUDS_IMAGE_PATH = "cloudsTop.png";
     public static final int BACKGROUND_SCROLLING_SPEED = 50;
