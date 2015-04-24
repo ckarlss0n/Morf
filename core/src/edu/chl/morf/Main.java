@@ -1,13 +1,14 @@
 package edu.chl.morf;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl.morf.Screens.GameScreen;
 import edu.chl.morf.Screens.MainMenuScreen;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-public class Main extends Game implements PropertyChangeListener{
+public class Main extends Game implements EventListener{
 
     private GameScreen gameScreen;
     private MainMenuScreen mainMenuScreen;
@@ -16,19 +17,26 @@ public class Main extends Game implements PropertyChangeListener{
 	public void create () {
         gameScreen = new GameScreen();
         mainMenuScreen = new MainMenuScreen();
+        mainMenuScreen.setButtonsListener(this);
         setScreen(mainMenuScreen);
-        mainMenuScreen.addObserver(this);
-	}
+    }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Event " + evt.getPropertyName()+ " mottaget i Morf");
-        String screenName = evt.getPropertyName();
-        if(screenName.equals("gamescreen")){
-            System.out.println("Byter till skärm");
-            gameScreen.setStageInputHandler();
-            gameScreen.show();
-            setScreen(gameScreen);
+    public boolean handle(Event event) {
+        if(event instanceof ChangeListener.ChangeEvent){
+            ChangeListener.ChangeEvent changeEvent = (ChangeListener.ChangeEvent)event;
+            if(changeEvent.getTarget() instanceof TextButton){
+                TextButton button = (TextButton)changeEvent.getTarget();
+                String buttonText = button.getLabel().getText().toString();
+                if(buttonText.equals("PLAY")){
+                    gameScreen.setStageInputHandler();
+                    gameScreen.show();
+                    setScreen(gameScreen);
+                }else if(buttonText.equals("SETTINGS")){
+
+                }
+            }
         }
+        return true;
     }
 }

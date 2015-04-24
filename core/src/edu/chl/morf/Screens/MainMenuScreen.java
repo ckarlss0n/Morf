@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -14,9 +15,9 @@ import edu.chl.morf.Constants;
 /**
  * Created by Christoffer on 2015-04-13.
  */
-public class MainMenuScreen extends ObservableScreen{
+public class MainMenuScreen extends AbstractScreen {
 
-    private Stage stage;
+    private MainMenuStage stage;
 
     private class MainMenuStage extends Stage{
 
@@ -45,12 +46,6 @@ public class MainMenuScreen extends ObservableScreen{
 
             //play button
             playButton = new TextButton("PLAY", textButtonStyle);
-            playButton.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    showGame();
-                }
-            });
             playButton.setPosition(50, 250);
             playButton.setSize(200,100);
             this.addActor(playButton);
@@ -81,25 +76,19 @@ public class MainMenuScreen extends ObservableScreen{
         }
     }
 
+    public void setButtonsListener(EventListener listener){
+        stage.playButton.addListener(listener);
+       // stage.settingsButton.addListener(listener);
+    }
 
     public MainMenuScreen(){
         super();
         stage = new MainMenuStage();
     }
 
-
     @Override
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-    }
-
-    public void showGame(){
-        System.out.println("Event reggat!");
-        try {
-            changeToScreen("gamescreen");
-        }catch (IllegalArgumentException e){
-
-        }
     }
 }

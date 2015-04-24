@@ -7,7 +7,7 @@ import static edu.chl.morf.Constants.*;
 /**
  * Created by Christoffer on 2015-04-13.
  */
-public class GameScreen extends ObservableScreen{
+public class GameScreen extends AbstractScreen {
 
     private GameStage stage;
 
