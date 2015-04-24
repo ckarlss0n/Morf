@@ -2,7 +2,7 @@ package edu.chl.morf.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import edu.chl.morf.Morf;
+import edu.chl.morf.Main;
 
 import static edu.chl.morf.Constants.*;
 
@@ -13,6 +13,6 @@ public class DesktopLauncher {
 		config.width = GAME_WIDTH;
 		config.height = GAME_HEIGHT;
         config.fullscreen = FULLSCREEN;
-		new LwjglApplication(new Morf(), config);
+		new LwjglApplication(new Main(), config);
 	}
 }

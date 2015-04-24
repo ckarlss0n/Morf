@@ -7,7 +7,7 @@ import edu.chl.morf.Screens.MainMenuScreen;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class Morf extends Game implements PropertyChangeListener{
+public class Main extends Game implements PropertyChangeListener{
 
     private GameScreen gameScreen;
     private MainMenuScreen mainMenuScreen;
