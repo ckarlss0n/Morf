@@ -1,4 +1,4 @@
-package edu.chl.morf.Actors;
+package edu.chl.morf.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

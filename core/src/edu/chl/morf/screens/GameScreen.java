@@ -1,7 +1,7 @@
-package edu.chl.morf.Screens;
+package edu.chl.morf.screens;
 
 import com.badlogic.gdx.Gdx;
-import edu.chl.morf.Stages.GameStage;
+import edu.chl.morf.stages.GameStage;
 import static edu.chl.morf.Constants.*;
 
 /**

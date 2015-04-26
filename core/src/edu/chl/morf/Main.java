@@ -5,8 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import edu.chl.morf.Screens.GameScreen;
-import edu.chl.morf.Screens.MainMenuScreen;
+import edu.chl.morf.screens.GameScreen;
+import edu.chl.morf.screens.MainMenuScreen;
 
 public class Main extends Game implements EventListener{
 

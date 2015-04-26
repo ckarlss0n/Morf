@@ -1,4 +1,4 @@
-package edu.chl.morf.Screens;
+package edu.chl.morf.screens;
 
 import com.badlogic.gdx.Screen;
 

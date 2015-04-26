@@ -25,7 +25,7 @@ public final class Constants {
     public static final int BACKGROUND_SCROLLING_SPEED = 50;
 
     //Levels
-    public static final String LEVEL_PATH = "Levels/";
+    public static final String LEVEL_PATH = "levels/";
     public static final String LEVEL_1 = "Level_1.tmx";
 
     //Game play constants
@@ -36,13 +36,13 @@ public final class Constants {
     public static final float GROUND_FRICTION = 0.1f;
 
     //Character animation constants
-    public static final String CHARACTERS_ATLAS_PATH = "SpriteSheets/Stickman";
+    public static final String CHARACTERS_ATLAS_PATH = "spritesheets/Stickman";
     public static final String[] PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES = new String[] {"runningLeft1", "runningLeft2", "runningLeft3"};
     public static final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[] {"runningRight1", "runningRight2", "runningRight3"};
     public static final String PLAYERCHARACTER_IDLE_REGION_NAME = "idle";
 
     //Button constants
-    public static final String BUTTONS_ATLAS_PATH = "SpriteSheets/Buttons";
+    public static final String BUTTONS_ATLAS_PATH = "spritesheets/Buttons";
     public static final String BUTTON_UNPRESSED_REGION_NAME = "ButtonUnpressed";
     public static final String BUTTON_PRESSED_REGION_NAME = "ButtonPressed";
 }

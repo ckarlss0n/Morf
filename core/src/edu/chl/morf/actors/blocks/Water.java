@@ -1,4 +1,4 @@
-package edu.chl.morf.Actors.Blocks;
+package edu.chl.morf.actors.blocks;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

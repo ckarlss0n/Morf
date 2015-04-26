@@ -1,7 +1,6 @@
-package edu.chl.morf.Stages;
+package edu.chl.morf.stages;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -11,8 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import edu.chl.morf.Actors.BackgroundLayer;
-import edu.chl.morf.Actors.PlayerCharacter;
+import edu.chl.morf.actors.BackgroundLayer;
+import edu.chl.morf.actors.PlayerCharacter;
 import edu.chl.morf.Constants;
 import edu.chl.morf.UserData.UserData;
 import edu.chl.morf.UserData.UserDataType;

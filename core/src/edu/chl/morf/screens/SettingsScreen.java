@@ -1,16 +1,21 @@
-package edu.chl.morf.Screens;
+package edu.chl.morf.screens;
 
 import com.badlogic.gdx.Screen;
+
 /**
- * Created by Lage on 2015-04-16.
+ * Created by Christoffer on 2015-04-13.
  */
-public abstract class AbstractScreen implements Screen{
+public class SettingsScreen implements Screen{
 
     @Override
     public void show() {
 
     }
 
+    @Override
+    public void render(float delta) {
+
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -36,5 +41,4 @@ public abstract class AbstractScreen implements Screen{
     public void dispose() {
 
     }
-
 }
