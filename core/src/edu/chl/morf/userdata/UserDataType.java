@@ -1,4 +1,4 @@
-package edu.chl.morf.UserData;
+package edu.chl.morf.userdata;
 
 /**
  * Created by Christoffer on 2015-04-17.

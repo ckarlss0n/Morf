@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl.morf.actors.BackgroundLayer;
 import edu.chl.morf.actors.PlayerCharacter;
 import edu.chl.morf.Constants;
-import edu.chl.morf.UserData.UserData;
-import edu.chl.morf.UserData.UserDataType;
+import edu.chl.morf.userdata.UserData;
+import edu.chl.morf.userdata.UserDataType;
 import edu.chl.morf.WorldUtils;
 
 import static edu.chl.morf.Constants.*;

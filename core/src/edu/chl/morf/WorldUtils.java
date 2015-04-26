@@ -3,8 +3,8 @@ package edu.chl.morf;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import edu.chl.morf.actors.PlayerCharacter;
-import edu.chl.morf.UserData.UserData;
-import edu.chl.morf.UserData.UserDataType;
+import edu.chl.morf.userdata.UserData;
+import edu.chl.morf.userdata.UserDataType;
 
 import static edu.chl.morf.Constants.*;
 
