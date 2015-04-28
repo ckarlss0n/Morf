@@ -11,7 +11,7 @@ public class Water {
     private WaterState state;
 
     public Water(){
-
+        this.state = new LiquidState();
     }
 
     public Point getPosition(){
@@ -28,6 +28,15 @@ public class Water {
         if(state.cool() != null) {
             this.state = state.cool();
         }
+    }
+
+    public WaterState getState(){
+        return this.state;
+    }
+
+    @Override
+    public String toString(){
+        return state.toString();
     }
 
 }

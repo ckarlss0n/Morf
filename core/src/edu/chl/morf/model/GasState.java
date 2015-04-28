@@ -3,6 +3,11 @@ package edu.chl.morf.model;
 public class GasState implements WaterState{
 
     @Override
+    public String toString(){
+        return "gas";
+    }
+
+    @Override
     public WaterState heat() {
         return null;
     }

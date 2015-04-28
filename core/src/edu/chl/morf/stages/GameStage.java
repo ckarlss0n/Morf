@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl.morf.actors.BackgroundLayer;
 import edu.chl.morf.actors.PlayerCharacter;
 import edu.chl.morf.Constants;
+import edu.chl.morf.actors.blocks.Water;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 import edu.chl.morf.WorldUtils;
@@ -76,6 +77,8 @@ public class GameStage extends Stage implements ContactListener {
         playerCharacter.setCamera(b2dCam);
         world.setContactListener(this);
         generateLevel();
+
+        addActor(new Water());
     }
 
     public void generateLevel(){
