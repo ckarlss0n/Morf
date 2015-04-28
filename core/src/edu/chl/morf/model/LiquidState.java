@@ -3,12 +3,12 @@ package edu.chl.morf.model;
 public class LiquidState  implements WaterState{
 
     @Override
-    public void heat() {
-        
+    public WaterState heat() {
+        return new GasState();
     }
 
     @Override
-    public void cool() {
-
+    public WaterState cool() {
+        return new SolidState();
     }
 }
