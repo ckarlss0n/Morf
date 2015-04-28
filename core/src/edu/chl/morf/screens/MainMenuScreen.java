@@ -13,7 +13,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl.morf.Constants;
 
 /**
- * Created by Christoffer on 2015-04-13.
+ * This class represents the main menu screen.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Showing the main menu.
+ * <p>
+ * <li><b>Used by: </b>
+ * {@link edu.chl.morf.Main}
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX classes</li>
+ * <li>{@link edu.chl.morf.Constants}
+ * <li>{@link AbstractScreen}
+ * <p>
+ * @author Christoffer Karlsson
  */
 public class MainMenuScreen extends AbstractScreen {
 

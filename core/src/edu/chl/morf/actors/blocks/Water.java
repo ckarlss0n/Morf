@@ -7,7 +7,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl.morf.model.WaterState;
 
 /**
- * Created by Harald on 2015-04-15.
+ * This class represents water.
+ * Using information from the Water class from the model package, this class can draw itself.
+ * The class contains textures for the different states of water (gas/liquid/solid).
+ * <p>
+ * <li><b>Responsible for: </b>
+ * <li>Representing water.
+ * <li>Drawing the correct texture, depending on the current state of the water
+ * <p>
+ * <li><b>Used by: </b>
+ * <li>{@link edu.chl.morf.stages.GameStage}
+ * <p>
+ * <li><b>Using: </b>
+ * <li>{@link edu.chl.morf.model.Water}
+ * <li>{@link WaterState}
+ * <p>
+ * @author Harald
  */
 public class Water extends Image{
     private Texture iceTexture;

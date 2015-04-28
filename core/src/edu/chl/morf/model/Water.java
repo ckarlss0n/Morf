@@ -3,7 +3,21 @@ package edu.chl.morf.model;
 import java.awt.*;
 
 /**
- * Created by Lage on 2015-04-28.
+ * This class represents water. The water can have one state at a time (gas/liquid/solid).
+ * It transforms to water (liquid state of water) upon heating.
+ * It also contains a position, as this class is used to represent a water block in the game.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Representing water. Transforming to other forms upon interaction.
+ * <p>
+ * <li><b>Used by: </b>
+ * None.
+ * <p>
+ * <li><b>Using: </b>
+ * <li>{@link WaterState}
+ * <li>{@link LiquidState}
+ * <p>
+ * @author Lage Bergman
  */
 public class Water {
 

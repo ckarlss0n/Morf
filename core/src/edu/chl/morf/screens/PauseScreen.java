@@ -3,7 +3,18 @@ package edu.chl.morf.screens;
 import com.badlogic.gdx.Screen;
 
 /**
- * Created by Christoffer on 2015-04-13.
+ * This class represents the screen shown upon pausing the game while playing.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Showing the pause screen.
+ * <p>
+ * <li><b>Used by: </b>
+ * None.
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX classes</li>
+ * <p>
+ * @author Christoffer Karlsson
  */
 public class PauseScreen implements Screen{
 

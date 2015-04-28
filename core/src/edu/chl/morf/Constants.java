@@ -3,7 +3,18 @@ package edu.chl.morf;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Created by Christoffer on 2015-04-13.
+ * This class contains important constants used in the project.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Providing important constants for global usage in the project.
+ * <p>
+ * <li><b>Used by: </b>
+ * Numerous classes.
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX classes</li>
+ * <p>
+ * @author Christoffer Karlsson
  */
 public final class Constants {
     //Game/project constants

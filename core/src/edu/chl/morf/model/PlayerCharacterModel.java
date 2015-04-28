@@ -1,11 +1,22 @@
 package edu.chl.morf.model;
 
 import static edu.chl.morf.Constants.*;
+
 /**
- * Created by Harald on 2015-04-28.
- * Keeps track of information about the PlayerCharacter
- * The PlayerCharacter class updates the information stored
- * The Act method in GameScreen will use the information
+ * This class is used to keep track of information about the player character.
+ * The PlayerCharacter class updates the information stored here.
+ * The Act method in GameScreen will use the information.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Storing and keeping track of information about the player character.
+ * <p>
+ * <li><b>Used by: </b>
+ * None.
+ * <p>
+ * <li><b>Using: </b>
+ * <li>{@link edu.chl.morf.Constants}
+ * <p>
+ * @author Harald
  */
 public class PlayerCharacterModel {
     public PlayerCharacterModel(){

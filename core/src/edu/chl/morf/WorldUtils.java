@@ -9,7 +9,24 @@ import edu.chl.morf.userdata.UserDataType;
 import static edu.chl.morf.Constants.*;
 
 /**
- * Created by Lage on 2015-04-15.
+ * This class is used to create bodies in the world, such as the player character and blocks.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Creating bodies in the world.
+ * <p>
+ * <li><b>Used by: </b>
+ * <li>{@link PlayerCharacter}
+ * <li>{@link edu.chl.morf.stages.GameStage}
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX classes</li>
+ * <li>{@link Constants}
+ * <li>{@link PlayerCharacter}
+ * <li>{@link PlayerCharacter}
+ * <li>{@link UserData}
+ * <li>{@link UserDataType}
+ * <p>
+ * @author Lage Bergman
  */
 public class WorldUtils {
 

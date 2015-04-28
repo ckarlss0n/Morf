@@ -5,7 +5,21 @@ import edu.chl.morf.stages.GameStage;
 import static edu.chl.morf.Constants.*;
 
 /**
- * Created by Christoffer on 2015-04-13.
+ * This class represents the screen shown while playing the game.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Showing the game.
+ * <p>
+ * <li><b>Used by: </b>
+ * {@link edu.chl.morf.Main}
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX classes</li>
+ * <li>{@link edu.chl.morf.Constants}
+ * <li>{@link AbstractScreen}
+ * <li>{@link GameStage}
+ * <p>
+ * @author Christoffer Karlsson
  */
 public class GameScreen extends AbstractScreen {
 

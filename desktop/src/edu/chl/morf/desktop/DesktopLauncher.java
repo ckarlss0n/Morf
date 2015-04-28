@@ -6,6 +6,21 @@ import edu.chl.morf.Main;
 
 import static edu.chl.morf.Constants.*;
 
+/**
+ * This class is used to run Morf in a desktop environment.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Starting and running Morf in a desktop environment.
+ * <p>
+ * <li><b>Used by: </b>
+ * None.
+ * <p>
+ * <li><b>Using: </b>
+ * <li>{@link edu.chl.morf.Constants}
+ * <li>{@link Main}
+ * <p>
+ * @author Christoffer Karlsson
+ */
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

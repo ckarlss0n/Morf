@@ -8,6 +8,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl.morf.screens.GameScreen;
 import edu.chl.morf.screens.MainMenuScreen;
 
+/**
+ * This class is used to create and start the game.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * Creating and starting the game. Also responsible for changing the screen.
+ * <p>
+ * <li><b>Used by: </b>
+ * edu.chl.morf.desktop.DesktopLauncher
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX classes</li>
+ * <li>{@link GameScreen}
+ * <li>{@link MainMenuScreen}
+ * <p>
+ * @author Lage Bergman
+ */
 public class Main extends Game implements EventListener{
 
     private GameScreen gameScreen;

@@ -21,7 +21,30 @@ import edu.chl.morf.WorldUtils;
 import static edu.chl.morf.Constants.*;
 
 /**
- * Created by Christoffer on 2015-04-20.
+ * This class is used to create a new level.
+ * It generates a playable map from a Tiled map editor file.
+ * It adds visual elements, such as different background layers for the parallax scrolling effect.
+ * It also keeps track of collisions in the game.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * <li>Generating a map from a .tmx-file
+ * <li>Adding visual elements, such as background layers
+ * <li>Keeping track of collisions
+ * <p>
+ * <li><b>Used by: </b>
+ * {@link edu.chl.morf.screens.GameScreen}
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX classes</li>
+ * <li>{@link Constants}
+ * <li>{@link WorldUtils}
+ * <li>{@link BackgroundLayer}
+ * <li>{@link PlayerCharacter}
+ * <li>{@link Water}
+ * <li>{@link UserData}
+ * <li>{@link UserDataType}
+ * <p>
+ * @author Christoffer Karlsson
  */
 public class GameStage extends Stage implements ContactListener {
 

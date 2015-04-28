@@ -17,7 +17,26 @@ import java.util.Map;
 import static edu.chl.morf.Constants.*;
 
 /**
- * Created by Lage on 2015-04-13.
+ * This class represents the player character.
+ * It also acts as a controller, and contains methods to move the player character in the world.
+ * It draws/displays itself, and shows the associated sprite animation depending on different states.
+ * <p>
+ * <li><b>Responsible for: </b>
+ * <li>Representing the player character.
+ * <li>Controlling the player character.
+ * <li>Displaying the player character.
+ * <p>
+ * <li><b>Used by: </b>
+ * <li>{@link edu.chl.morf.stages.GameStage}
+ * <li>{@link WorldUtils}
+ * <p>
+ * <li><b>Using: </b>
+ * <li>{@link edu.chl.morf.Constants}
+ * <li>{@link WorldUtils}
+ * <li>{@link UserData}
+ * <li>{@link UserDataType}
+ * <p>
+ * @author Lage Bergman
  */
 public class PlayerCharacter extends Image {
 

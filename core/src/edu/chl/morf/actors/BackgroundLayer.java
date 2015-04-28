@@ -14,7 +14,24 @@ import java.util.Map;
 import static edu.chl.morf.Constants.*;
 
 /**
- * Created by Christoffer on 2015-04-16.
+ * This class represents a background layer used in the game.
+ * The background layers are stacked and shown upon each other.
+ * All background layers are infinitely horizontally scrolling, (often at different speeds) creating a repeating background.
+ * This makes it possible to mimic depth in the game (The effect is known as <i>parallax scrolling</i>).
+ * <p>
+ * <li><b>Responsible for: </b>
+ * <li>Representing a background layer.
+ * <li>Infinitely scrolling horizontally.
+ * <li>Drawing itself.
+ * <p>
+ * <li><b>Used by: </b>
+ * {@link edu.chl.morf.stages.GameStage}
+ * <p>
+ * <li><b>Using: </b>
+ * <li>LibGDX-classes
+ * <li>{@link edu.chl.morf.Constants}
+ * <p>
+ * @author Christoffer Karlsson
  */
 public class BackgroundLayer extends Image{
 
