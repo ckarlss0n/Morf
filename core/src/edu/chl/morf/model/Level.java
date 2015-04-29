@@ -30,6 +30,10 @@ public class Level {
 		return levelMatrix;
 	}
 	
+	public ArrayList<Water> getWaterBlocks(){
+		return waterBlocks;
+	}
+	
 	public void addWater(Water w){
 		waterBlocks.add(w);
 	}
