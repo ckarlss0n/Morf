@@ -22,10 +22,10 @@ import java.awt.*;
 public class Water {
 
     private Point position;
-    private Block state;
+    private WaterState state;
 
     public Water(){
-        this.state = new LiquidState();
+        this.state = WaterState.SOLID;
     }
 
     public Point getPosition(){
@@ -33,18 +33,22 @@ public class Water {
     }
 
     public void heat(){
-        if(state.heat() != null) {
-            this.state = state.heat();
+        if(state == WaterState.SOLID) {
+            this.state = WaterState.LIQUID;
+        } else if(state == WaterState.LIQUID) {
+            this.state = WaterState.GAS;
         }
     }
 
     public void cool(){
-        if(state.cool() != null) {
-            this.state = state.cool();
+        if(state == WaterState.GAS) {
+            this.state = WaterState.LIQUID;
+        } else if(state == WaterState.LIQUID) {
+            this.state = WaterState.SOLID;
         }
     }
 
-    public Block getState(){
+    public WaterState getState(){
         return this.state;
     }
 
