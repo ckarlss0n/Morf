@@ -79,5 +79,13 @@ public class PlayerCharacterModel {
     public void setActiveBlock(Block block){
         this.activeBlock = block;
     }
+
+    //Methods for manipulating acive block
+    public void heatActiveBlock(){
+        activeBlock.heat();
+    }
+    public void coolActiveBlock(){
+        activeBlock.cool();
+    }
 }
 
