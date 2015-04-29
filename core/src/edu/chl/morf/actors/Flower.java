@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class Flower extends Image {
     private Body body;
     private Texture texture;
+    private edu.chl.morf.model.Flower flower;
 
     public Flower(){
         super();
