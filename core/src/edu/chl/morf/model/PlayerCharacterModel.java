@@ -28,6 +28,7 @@ public class PlayerCharacterModel {
     private boolean moving=false;
     private boolean alive = true;
     private int waterLevel=WATER_LEVEL;
+    private Block activeBlock;
 
     //Getters
     public boolean isMoving(){
@@ -73,6 +74,10 @@ public class PlayerCharacterModel {
     }
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
+    }
+
+    public void setActiveBlock(Block block){
+        this.activeBlock = block;
     }
 }
 
