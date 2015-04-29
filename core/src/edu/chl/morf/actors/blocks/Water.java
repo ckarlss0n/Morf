@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import edu.chl.morf.model.WaterState;
 
 /**
  * This class represents water.
@@ -20,7 +19,7 @@ import edu.chl.morf.model.WaterState;
  * <p>
  * <li><b>Using: </b>
  * <li>{@link edu.chl.morf.model.Water}
- * <li>{@link WaterState}
+ * <li>{@link edu.chl.morf.model.Block}
  * <p>
  * @author Harald
  */

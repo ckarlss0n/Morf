@@ -1,12 +1,7 @@
 package edu.chl.morf.model;
 
 /**
- * Common interface for the different states of water with a heating and a cooling method.
- * <p>
- * @author Lage Bergman
+ * Created by Lage on 2015-04-29.
  */
-public interface WaterState {
-
-    public WaterState heat();
-    public WaterState cool();
+public enum WaterState {
 }

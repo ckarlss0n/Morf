@@ -14,7 +14,7 @@ import java.awt.*;
  * None.
  * <p>
  * <li><b>Using: </b>
- * <li>{@link WaterState}
+ * <li>{@link Block}
  * <li>{@link LiquidState}
  * <p>
  * @author Lage Bergman
@@ -22,7 +22,7 @@ import java.awt.*;
 public class Water {
 
     private Point position;
-    private WaterState state;
+    private Block state;
 
     public Water(){
         this.state = new LiquidState();
@@ -44,7 +44,7 @@ public class Water {
         }
     }
 
-    public WaterState getState(){
+    public Block getState(){
         return this.state;
     }
 

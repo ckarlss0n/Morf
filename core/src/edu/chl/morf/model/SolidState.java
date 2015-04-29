@@ -11,12 +11,12 @@ package edu.chl.morf.model;
  * {@link LiquidState#cool()}
  * <p>
  * <li><b>Using: </b>
- * <li>{@link WaterState}
+ * <li>{@link Block}
  * <li>{@link LiquidState}
  * <p>
- * @author Gustav Bergström
+ * @author Gustav Bergstrï¿½m
  */
-public class SolidState implements WaterState{
+public class SolidState implements Block {
 
     @Override
     public String toString(){
@@ -24,12 +24,12 @@ public class SolidState implements WaterState{
     }
 
     @Override
-    public WaterState heat() {
+    public Block heat() {
         return new LiquidState();
     }
 
     @Override
-    public WaterState cool() {
+    public Block cool() {
         return null;
     }
 }
