@@ -19,18 +19,11 @@ public class Level {
 	
 	private TileType[][] levelMatrix;
 	private ArrayList<Water> waterBlocks;
-	//private Flower flower;
+	private PlayerCharacterModel player;
 
 	public Level(TileType[][] matrix){
 		levelMatrix = matrix;
-		
-        for (int row = 0; row < matrix.length; row++) {
-        	System.out.println();
-            for (int col = 0; col < matrix[0].length; col++) {
-                System.out.print(matrix[row][col] + " ");
-            }
-        }
-
+		waterBlocks = new ArrayList<Water>();
 	}
 	
 	public TileType[][] getMatrix(){

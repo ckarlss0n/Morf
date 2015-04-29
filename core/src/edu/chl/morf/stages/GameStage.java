@@ -104,8 +104,24 @@ public class GameStage extends Stage implements ContactListener {
         playerCharacter.setCamera(b2dCam);
         world.setContactListener(this);
         generateLevel();
+        
+        level = createLevel();
+    }
+    
+    public Level createLevel(){
+        TileType[][] matrix = new TileType[groundLayer.getHeight()][groundLayer.getWidth()];
+        
+        for (int row = 0; row < groundLayer.getHeight(); row++) {
+            for (int col = 0; col < groundLayer.getWidth(); col++) {
+                TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
+   
+                if (cell == null) continue;
+                if (cell.getTile() == null) continue;
 
-        addActor(new Water());
+                matrix[groundLayer.getHeight() - 1 - row][col] = TileType.GROUND;
+            }
+        }
+        return new Level(matrix);
     }
 
     public void generateLevel(){
@@ -114,19 +130,18 @@ public class GameStage extends Stage implements ContactListener {
         FixtureDef fixDef = new FixtureDef();
         
         TileType[][] matrix = new TileType[groundLayer.getHeight()][groundLayer.getWidth()];
-
+        
         for (int row = 0; row < groundLayer.getHeight(); row++) {
             for (int col = 0; col < groundLayer.getWidth(); col++) {
                 TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
-
+                
+                
                 if (cell == null) continue;
                 if (cell.getTile() == null) continue;
                 
-                if (row == 0 && col == 0){
-                	System.out.println(cell.getTile());
-                }
+
                 
-                matrix[row][col] = TileType.GROUND;
+                matrix[groundLayer.getHeight() - 1 - row][col] = TileType.GROUND;
 
                 bodyDef.type = BodyType.StaticBody;
                 bodyDef.position.set((col + 0.5f) * tileSize / PPM, (row + 0.5f) * tileSize / PPM);
