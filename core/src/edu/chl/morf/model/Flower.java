@@ -5,12 +5,12 @@ package edu.chl.morf.model;
  */
 public class Flower implements Block{
     @Override
-    public Block heat() {
-        return null;
+    public void heat() {
+
     }
 
     @Override
-    public Block cool() {
-        return null;
+    public void cool() {
+
     }
 }
