@@ -103,9 +103,11 @@ public class GameStage extends Stage implements ContactListener {
         b2dCam.setToOrtho(false, Constants.GAME_WIDTH / PPM, Constants.GAME_HEIGHT / PPM);
         playerCharacter.setCamera(b2dCam);
         world.setContactListener(this);
-        generateLevel();
+        
         
         level = createLevel();
+        
+        generateLevel();
     }
     
     public Level createLevel(){
@@ -129,20 +131,14 @@ public class GameStage extends Stage implements ContactListener {
         bodyDef.fixedRotation = true;
         FixtureDef fixDef = new FixtureDef();
         
-        TileType[][] matrix = new TileType[groundLayer.getHeight()][groundLayer.getWidth()];
-        
-        for (int row = 0; row < groundLayer.getHeight(); row++) {
-            for (int col = 0; col < groundLayer.getWidth(); col++) {
+        for (int row = 0; row < level.getMatrix().length; row++) {
+            for (int col = 0; col < level.getMatrix()[0].length; col++) {
                 TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
                 
                 
                 if (cell == null) continue;
                 if (cell.getTile() == null) continue;
                 
-
-                
-                matrix[groundLayer.getHeight() - 1 - row][col] = TileType.GROUND;
-
                 bodyDef.type = BodyType.StaticBody;
                 bodyDef.position.set((col + 0.5f) * tileSize / PPM, (row + 0.5f) * tileSize / PPM);
 
@@ -164,7 +160,6 @@ public class GameStage extends Stage implements ContactListener {
             }
         }
         
-        level = new Level(matrix);
     }
 
     public World getWorld() { return world; }
