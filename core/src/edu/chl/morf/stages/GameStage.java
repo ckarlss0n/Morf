@@ -10,14 +10,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import edu.chl.morf.actors.BackgroundLayer;
 import edu.chl.morf.actors.PlayerCharacter;
 import edu.chl.morf.Constants;
 import edu.chl.morf.actors.blocks.Water;
+import edu.chl.morf.model.Level;
+import edu.chl.morf.model.TileType;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 import edu.chl.morf.WorldUtils;
-
 import static edu.chl.morf.Constants.*;
 
 /**
@@ -51,6 +53,8 @@ public class GameStage extends Stage implements ContactListener {
     private World world;
     private PlayerCharacter playerCharacter;
     private float accumulator;
+    
+    private Level level;
 
     private BackgroundLayer background;
     private BackgroundLayer mountains;
@@ -60,7 +64,7 @@ public class GameStage extends Stage implements ContactListener {
     private BackgroundLayer topClouds;
 
     private TiledMap tileMap;
-    private TiledMapTileLayer layer;
+    private TiledMapTileLayer groundLayer;
     private float tileSize;
 
     private Box2DDebugRenderer renderer;
@@ -88,8 +92,8 @@ public class GameStage extends Stage implements ContactListener {
         addActor(playerCharacter);
 
         tileMap = new TmxMapLoader().load(LEVEL_PATH+levelName);
-        layer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
-        tileSize = layer.getTileWidth();
+        groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
+        tileSize = groundLayer.getTileWidth();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, 1/PPM);
 
         Gdx.input.setInputProcessor(this);
@@ -108,13 +112,21 @@ public class GameStage extends Stage implements ContactListener {
         BodyDef bodyDef = new BodyDef();
         bodyDef.fixedRotation = true;
         FixtureDef fixDef = new FixtureDef();
+        
+        TileType[][] matrix = new TileType[groundLayer.getHeight()][groundLayer.getWidth()];
 
-        for (int row = 0; row < layer.getHeight(); row++) {
-            for (int col = 0; col < layer.getWidth(); col++) {
-                TiledMapTileLayer.Cell cell = layer.getCell(col, row);
+        for (int row = 0; row < groundLayer.getHeight(); row++) {
+            for (int col = 0; col < groundLayer.getWidth(); col++) {
+                TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
 
                 if (cell == null) continue;
                 if (cell.getTile() == null) continue;
+                
+                if (row == 0 && col == 0){
+                	System.out.println(cell.getTile());
+                }
+                
+                matrix[row][col] = TileType.GROUND;
 
                 bodyDef.type = BodyType.StaticBody;
                 bodyDef.position.set((col + 0.5f) * tileSize / PPM, (row + 0.5f) * tileSize / PPM);
@@ -136,6 +148,8 @@ public class GameStage extends Stage implements ContactListener {
                 world.createBody(bodyDef).createFixture(fixDef);
             }
         }
+        
+        level = new Level(matrix);
     }
 
     public World getWorld() { return world; }

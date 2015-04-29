@@ -38,6 +38,7 @@ public final class Constants {
     //Levels
     public static final String LEVEL_PATH = "levels/";
     public static final String LEVEL_1 = "Level_1.tmx";
+    public static final String LEVEL_2 = "Level_2.tmx";
 
     //Game play constants
     public static final Vector2 WORLD_GRAVITY = new Vector2(0,-15);
