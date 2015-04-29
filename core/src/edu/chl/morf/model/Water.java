@@ -19,7 +19,7 @@ import java.awt.*;
  * <p>
  * @author Lage Bergman
  */
-public class Water {
+public class Water implements Block{
 
     private Point position;
     private WaterState state;

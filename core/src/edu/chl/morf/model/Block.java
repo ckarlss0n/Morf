@@ -7,6 +7,6 @@ package edu.chl.morf.model;
  */
 public interface Block {
 
-    public Block heat();
-    public Block cool();
+    public void heat();
+    public void cool();
 }
