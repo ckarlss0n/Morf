@@ -27,26 +27,34 @@ public class Level {
 		player = new PlayerCharacterModel();
 	}
 	
+	//Getters
 	public TileType[][] getMatrix(){
 		return levelMatrix;
 	}
-	
 	public ArrayList<Water> getWaterBlocks(){
 		return waterBlocks;
 	}
-	
 	public PlayerCharacterModel getPlayer(){
 		return player;
 	}
 	
+	//Method for pouring water
 	public void pourWater(){
 		addWater(player.pourWater());
 	}
 	
+	//Methods for heating and cooling blocks
+	public void heat(){
+		player.heatActiveBlock();
+	}
+	public void cool(){
+		player.coolActiveBlock();
+	}
+	
+	//Methods for adding and removing Water
 	public void addWater(Water w){
 		waterBlocks.add(w);
 	}
-	
 	public void removeWater(Water w){
 		waterBlocks.remove(w);
 	}

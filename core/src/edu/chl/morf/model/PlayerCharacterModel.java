@@ -47,7 +47,6 @@ public class PlayerCharacterModel {
     public Point getPosition(){
     	return position;
     }
-    
     public boolean isMoving(){
         return moving;
     }
@@ -101,7 +100,7 @@ public class PlayerCharacterModel {
         this.activeBlock = block;
     }
 
-    //Methods for manipulating acive block
+    //Methods for manipulating active block
     public void heatActiveBlock(){
         activeBlock.heat();
     }
