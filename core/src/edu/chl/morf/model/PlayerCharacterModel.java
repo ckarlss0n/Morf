@@ -31,8 +31,15 @@ public class PlayerCharacterModel {
     
     private Point position;
     
+    //Constructors
     public PlayerCharacterModel(){
     	position = new Point(0, 0);
+    }
+    public PlayerCharacterModel(Point position){
+    	this.position = position;
+    }
+    public PlayerCharacterModel(int x, int y){
+    	position = new Point(x, y);
     }
     
 
