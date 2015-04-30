@@ -35,6 +35,10 @@ public class Level {
 		return waterBlocks;
 	}
 	
+	public PlayerCharacterModel getPlayer(){
+		return player;
+	}
+	
 	public void pourWater(){
 		addWater(player.pourWater());
 	}

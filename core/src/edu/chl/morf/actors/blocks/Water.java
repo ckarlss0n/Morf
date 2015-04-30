@@ -32,7 +32,7 @@ public class Water extends Image{
     private edu.chl.morf.model.Water water;
 
     public Water(){
-        water = new edu.chl.morf.model.Water();
+        water = new edu.chl.morf.model.Water(0, 0);
     }
 
     @Override

@@ -37,6 +37,10 @@ public class PlayerCharacterModel {
     
 
     //Getters
+    public Point getPosition(){
+    	return position;
+    }
+    
     public boolean isMoving(){
         return moving;
     }
