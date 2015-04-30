@@ -24,8 +24,13 @@ public class Water implements Block{
     private Point position;
     private WaterState state;
 
-    public Water(){
+    public Water(Point position){
         this.state = WaterState.SOLID;
+        this.position = position;
+    }
+    
+    public Water(int x, int y){
+    	this(new Point(x, y));
     }
 
     public Point getPosition(){

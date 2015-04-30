@@ -24,6 +24,7 @@ public class Level {
 	public Level(TileType[][] matrix){
 		levelMatrix = matrix;
 		waterBlocks = new ArrayList<Water>();
+		player = new PlayerCharacterModel();
 	}
 	
 	public TileType[][] getMatrix(){
@@ -32,6 +33,10 @@ public class Level {
 	
 	public ArrayList<Water> getWaterBlocks(){
 		return waterBlocks;
+	}
+	
+	public void pourWater(){
+		addWater(player.pourWater());
 	}
 	
 	public void addWater(Water w){

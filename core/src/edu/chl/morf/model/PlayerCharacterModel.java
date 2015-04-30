@@ -2,6 +2,8 @@ package edu.chl.morf.model;
 
 import static edu.chl.morf.Constants.*;
 
+import java.awt.Point;
+
 /**
  * This class is used to keep track of information about the player character.
  * The PlayerCharacter class updates the information stored here.
@@ -19,16 +21,20 @@ import static edu.chl.morf.Constants.*;
  * @author Harald
  */
 public class PlayerCharacterModel {
-    public PlayerCharacterModel(){
-
-    }
-    private boolean emptyRight=true;
+	private boolean emptyRight=true;
     private boolean emptyLeft=true;
     private boolean facingRight=true;
     private boolean moving=false;
     private boolean alive = true;
     private int waterLevel=WATER_LEVEL;
     private Block activeBlock;
+    
+    private Point position;
+    
+    public PlayerCharacterModel(){
+    	position = new Point(0, 0);
+    }
+    
 
     //Getters
     public boolean isMoving(){
@@ -68,6 +74,10 @@ public class PlayerCharacterModel {
         moving=false;
     }
 
+    public Water pourWater(){
+    	return new Water(position);
+    }
+    
     //WaterLevel setters
     public void decreaseWaterLevel(){
         waterLevel=waterLevel-1;

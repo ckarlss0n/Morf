@@ -11,7 +11,7 @@ public class TestLevel {
 	@Test
 	public void testAddWater(){
 		Level level = new Level(null);
-		level.addWater(new Water());
+		level.addWater(new Water(0, 0));
 		assertTrue(level.getWaterBlocks().size() == 1);
 	}
 }
