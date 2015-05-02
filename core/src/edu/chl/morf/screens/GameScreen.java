@@ -27,7 +27,7 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(){
         super();
-        stage = new GameStage(LEVEL_2);
+        stage = new GameStage(LEVEL_1);
     }
 
     public void setStageInputHandler(){
