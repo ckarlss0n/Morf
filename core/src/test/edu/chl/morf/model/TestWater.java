@@ -1,4 +1,4 @@
-package test;
+package test.edu.chl.morf.model;
 
 import static org.junit.Assert.*;
 
