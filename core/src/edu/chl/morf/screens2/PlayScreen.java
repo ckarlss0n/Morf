@@ -32,7 +32,7 @@ public class PlayScreen extends GameScreen{
 	public PlayScreen(ScreenManager sm){
 		super(sm);
 		world = new World(new Vector2(0, -9.81f), true);
-		world.setContactListener(new MyContactListener(level));
+		world.setContactListener(new MyContactListener());
 		renderer = new Box2DDebugRenderer();
 		
 		//platform
