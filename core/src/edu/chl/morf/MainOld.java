@@ -24,7 +24,7 @@ import edu.chl.morf.screens.MainMenuScreen;
  * <p>
  * @author Lage Bergman
  */
-public class Main extends Game implements EventListener{
+public class MainOld extends Game implements EventListener{
 
     private GameScreen gameScreen;
     private MainMenuScreen mainMenuScreen;

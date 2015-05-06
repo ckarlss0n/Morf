@@ -10,7 +10,7 @@ import com.badlogic.gdx.Screen;
  * Represent a generic screen.
  * <p>
  * <li><b>Used by: </b>
- * {@link edu.chl.morf.Main}
+ * {@link edu.chl.morf.MainOld}
  * <p>
  * <li><b>Using: </b>
  * <li>LibGDX classes</li>

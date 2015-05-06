@@ -19,7 +19,7 @@ import edu.chl.morf.Constants;
  * Showing the main menu.
  * <p>
  * <li><b>Used by: </b>
- * {@link edu.chl.morf.Main}
+ * {@link edu.chl.morf.MainOld}
  * <p>
  * <li><b>Using: </b>
  * <li>LibGDX classes</li>

@@ -2,9 +2,8 @@ package edu.chl.morf.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import edu.chl.morf.Main;
 
-import static edu.chl.morf.Constants.*;
+import edu.chl.morf.main.Main;
 
 /**
  * This class is used to run Morf in a desktop environment.
@@ -22,12 +21,13 @@ import static edu.chl.morf.Constants.*;
  * @author Christoffer Karlsson
  */
 public class DesktopLauncher {
-	public static void main (String[] arg) {
+	public static void main (String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");	//Borderless
-		config.width = GAME_WIDTH;
-		config.height = GAME_HEIGHT;
-        config.fullscreen = FULLSCREEN;
+		config.title = Main.TITLE;
+		config.width = Main.V_WIDTH * Main.SCALE;
+		config.height = Main.V_HEIGHT * Main.SCALE;
+        config.fullscreen = Main.FULLSCREEN;
 		new LwjglApplication(new Main(), config);
 	}
 }
