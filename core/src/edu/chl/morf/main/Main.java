@@ -18,23 +18,10 @@ public class Main extends Game{
 	public static final float STEP = 1 / 60f;
 	private float accum;
 	
-	private SpriteBatch sb;
-	private OrthographicCamera cam;
-	private OrthographicCamera hudCam;
-	
 	private ScreenManager screenManager;
-	
-
 	
 	@Override
 	public void create() {
-		
-		sb = new SpriteBatch();
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, V_WIDTH, V_HEIGHT);
-		hudCam = new OrthographicCamera();
-		hudCam.setToOrtho(false, V_WIDTH, V_HEIGHT);
-		
 		screenManager = new ScreenManager(this);
 	}
 	
@@ -46,15 +33,4 @@ public class Main extends Game{
 			screenManager.render(STEP);
 		}
 	}
-	
-	public SpriteBatch getSpriteBatch(){
-		return sb;
-	}
-	public OrthographicCamera getCamera(){
-		return cam;
-	}
-	public OrthographicCamera getHudCam(){
-		return hudCam;
-	}
-
 }

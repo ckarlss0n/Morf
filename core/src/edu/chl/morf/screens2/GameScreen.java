@@ -10,7 +10,6 @@ import edu.chl.morf.main.Main;
 public abstract class GameScreen implements Screen{
 	
 	protected ScreenManager screenManager;
-	protected Main game;
 	
 	protected SpriteBatch spriteBatch;
 	protected OrthographicCamera cam;
@@ -18,10 +17,9 @@ public abstract class GameScreen implements Screen{
 	
 	protected GameScreen(ScreenManager sm){
 		screenManager = sm;
-		game = sm.getGame();
-		spriteBatch = game.getSpriteBatch();
-		cam = game.getCamera();
-		hudCam = game.getHudCam();
+		spriteBatch = new SpriteBatch();
+		cam = new OrthographicCamera();
+		hudCam = new OrthographicCamera();
 	}
 	
 	public abstract void handleInput();
