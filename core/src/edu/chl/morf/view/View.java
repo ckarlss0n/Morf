@@ -26,7 +26,7 @@ public class View {
 
     public View(){
         //Create SpriteBatch for drawing textures
-        batch = new SpriteBatch();
+        //batch = new SpriteBatch();
 
         //Load PayerCharacter sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
@@ -72,15 +72,18 @@ public class View {
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x - 15/100f, playerCharPos.y - 15/100f, 30/100f, 30/100f);
+                        playerCharPos.x, playerCharPos.y, 50,50);
             }else{
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x - 15/100f, playerCharPos.y - 15/100f, 30/100f, 30/100f);
+                        playerCharPos.x, playerCharPos.y, 50,50);
             }
         }else{
-            batch.draw(idleTexture, playerCharPos.x - 15 / 100f, playerCharPos.y - 15 / 100f, 30 / 100f, 30 / 100f);
+            batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 50,50);
         }
-
         batch.end();
+    }
+
+    public void setBatch(SpriteBatch batch){
+        this.batch = batch;
     }
 }
