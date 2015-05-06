@@ -1,6 +1,7 @@
 package edu.chl.morf.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import edu.chl.morf.model.Level;
@@ -59,7 +60,7 @@ public class View {
     }
 
     public void render(){
-        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         batch.begin();
 
         batch.setProjectionMatrix(camera.combined);                 //Tells the spritebatch to render according to camera
@@ -72,13 +73,13 @@ public class View {
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x, playerCharPos.y, 50,50);
+                        playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
             }else{
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x, playerCharPos.y, 50,50);
+                        playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
             }
         }else{
-            batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 50,50);
+            batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
         }
         batch.end();
     }
