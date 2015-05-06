@@ -1,5 +1,6 @@
 package edu.chl.morf.controllers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
@@ -15,6 +16,8 @@ public class GameController extends InputAdapter{
 
 	public GameController(){
 		pressedKeys = new HashMap<Integer, Boolean>();
+
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
