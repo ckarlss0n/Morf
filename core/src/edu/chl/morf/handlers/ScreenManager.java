@@ -34,7 +34,7 @@ public class ScreenManager {
 	
 	private GameScreen getScreen(int screen){
 		if(screen == PLAY){
-			return new PlayScreen(this);
+			return new PlayScreen(this, "Level_1.tmx");
 		}
 		return null;
 	}

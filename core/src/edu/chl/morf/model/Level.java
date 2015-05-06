@@ -17,11 +17,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  */
 public class Level {
 	
+	private String name;
 	private TileType[][] levelMatrix;
 	private ArrayList<Water> waterBlocks;
 	private PlayerCharacterModel player;
 
-	public Level(TileType[][] matrix){
+	public Level(TileType[][] matrix, String name){
+		this.name = name;
 		levelMatrix = matrix;
 		waterBlocks = new ArrayList<Water>();
 		player = new PlayerCharacterModel();

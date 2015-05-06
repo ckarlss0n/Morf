@@ -105,26 +105,26 @@ public class GameStage extends Stage implements ContactListener {
         world.setContactListener(this);
         
         
-        level = createLevel();
+        //level = createLevel();
         
         generateLevel();
     }
     
-    public Level createLevel(){
-        TileType[][] matrix = new TileType[groundLayer.getHeight()][groundLayer.getWidth()];
-        
-        for (int row = 0; row < groundLayer.getHeight(); row++) {
-            for (int col = 0; col < groundLayer.getWidth(); col++) {
-                TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
-   
-                if (cell == null) continue;
-                if (cell.getTile() == null) continue;
-
-                matrix[groundLayer.getHeight() - 1 - row][col] = TileType.GROUND;
-            }
-        }
-        return new Level(matrix);
-    }
+//    public Level createLevel(){
+//        TileType[][] matrix = new TileType[groundLayer.getHeight()][groundLayer.getWidth()];
+//        
+//        for (int row = 0; row < groundLayer.getHeight(); row++) {
+//            for (int col = 0; col < groundLayer.getWidth(); col++) {
+//                TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
+//   
+//                if (cell == null) continue;
+//                if (cell.getTile() == null) continue;
+//
+//                matrix[groundLayer.getHeight() - 1 - row][col] = TileType.GROUND;
+//            }
+//        }
+//        return new Level(matrix);
+//    }
 
     public void generateLevel(){
         BodyDef bodyDef = new BodyDef();
