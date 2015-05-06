@@ -17,6 +17,9 @@ import edu.chl.morf.controllers.MyContactListener;
 import edu.chl.morf.handlers.Constants;
 import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
+import edu.chl.morf.model.Level;
+import edu.chl.morf.userdata.UserData;
+import edu.chl.morf.userdata.UserDataType;
 
 public class PlayScreen extends GameScreen{
 	
@@ -24,11 +27,12 @@ public class PlayScreen extends GameScreen{
 	private Box2DDebugRenderer renderer;
 	private OrthographicCamera box2dCam; 
 	private Body playerBody;
+	private Level level;
 
 	public PlayScreen(ScreenManager sm){
 		super(sm);
 		world = new World(new Vector2(0, -9.81f), true);
-		world.setContactListener(new MyContactListener());
+		world.setContactListener(new MyContactListener(level));
 		renderer = new Box2DDebugRenderer();
 		
 		//platform
@@ -43,7 +47,7 @@ public class PlayScreen extends GameScreen{
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_GROUND;
 		fdef.filter.maskBits = Constants.BIT_PLAYER;
-		body.createFixture(fdef).setUserData("ground");
+		body.createFixture(fdef).setUserData(new UserData(UserDataType.GROUND));
 		
 		//Player
 		bdef.position.set(160 / PPM, 200 / PPM);
@@ -53,7 +57,7 @@ public class PlayScreen extends GameScreen{
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
 		fdef.filter.maskBits = Constants.BIT_GROUND;
-		playerBody.createFixture(fdef).setUserData("player");
+		playerBody.createFixture(fdef).setUserData(new UserData(UserDataType.PLAYERCHARACTER));
 		
 		
 		//Set up box2d camera
