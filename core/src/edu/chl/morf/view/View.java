@@ -1,7 +1,6 @@
 package edu.chl.morf.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import edu.chl.morf.model.Level;
@@ -29,9 +28,6 @@ public class View {
         //Create SpriteBatch for drawing textures
         batch = new SpriteBatch();
 
-        //Create Camera
-        camera = new OrthographicCamera();
-
         //Load PayerCharacter sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
         TextureRegion[] runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
@@ -57,8 +53,13 @@ public class View {
         this.level = level;
     }
 
+    public View(Level level, OrthographicCamera camera){
+        this(level);
+        this.camera = camera;
+    }
+
     public void render(){
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         batch.begin();
 
         batch.setProjectionMatrix(camera.combined);                 //Tells the spritebatch to render according to camera
