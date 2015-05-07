@@ -19,8 +19,8 @@ import edu.chl.morf.userdata.UserDataType;
 
 public class BodyFactory {
 
-	public void createPlayerBody(World world){
-		
+	public Body createPlayerBody(World world){
+
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(1, 1);
 		bdef.type = BodyType.StaticBody;
@@ -35,7 +35,30 @@ public class BodyFactory {
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_PLAYER;
 		fdef.filter.maskBits = BIT_GROUND;
-		body.createFixture(fdef).setUserData(UserDataType.PLAYERCHARACTER);;
+		body.createFixture(fdef).setUserData(UserDataType.PLAYERCHARACTER);
+		
+		return body;
+	}
+
+	public Body createWaterBody(World world, Vector2 position){
+
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(position);
+		bdef.type = BodyType.DynamicBody;
+		bdef.fixedRotation = true;
+
+		Body body = world.createBody(bdef);
+
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(64 / PPM, 64 / PPM);
+
+		FixtureDef fdef = new FixtureDef();
+		fdef.shape = shape;
+		fdef.filter.categoryBits = BIT_WATER;
+		fdef.filter.maskBits = BIT_GROUND;
+		body.createFixture(fdef).setUserData(UserDataType.PLAYERCHARACTER);
+
+		return body;
 	}
 }
 
