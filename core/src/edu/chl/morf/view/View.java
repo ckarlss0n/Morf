@@ -66,6 +66,12 @@ public class View {
 
     public void render(){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
+        updateCamera();
+
+        //Render map
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
+
         batch.begin();
         batch.setProjectionMatrix(camera.combined);                 //Tells the spritebatch to render according to camera
         stateTime += Gdx.graphics.getDeltaTime();
@@ -86,14 +92,16 @@ public class View {
         }
         batch.end();
 
-        //Render map
-        //INSERT CODE HERE
-        tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render();
-
         //Render water blocks
         //INSERT CODE HERE
 
+    }
+
+    public void updateCamera() {
+        PlayerCharacterModel playerCharacter = level.getPlayer();
+        Point playerCharPos = playerCharacter.getPosition();
+        //camera.position.set(playerCharPos.x, playerCharPos.y, 0f);
+        camera.update();
     }
 
     public void setBatch(SpriteBatch batch){
