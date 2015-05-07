@@ -14,6 +14,7 @@ public class Matrix {
     public Matrix(int maxRows, int maxColumns){
         this.maxRows = maxRows;
         this.maxColumns = maxColumns;
+        objects = new ArrayList<LevelObject>();
     }
 
     public Matrix(int maxRows, int maxColumns, ArrayList<LevelObject> objects){
