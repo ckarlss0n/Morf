@@ -7,14 +7,10 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.*;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 
 import java.awt.*;
-import java.awt.Rectangle;
-import java.util.HashMap;
-import java.util.Map;
 
 import static edu.chl.morf.Constants.*;
 
