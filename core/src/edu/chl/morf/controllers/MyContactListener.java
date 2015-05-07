@@ -47,9 +47,9 @@ public class MyContactListener implements ContactListener{
             }
             //Sets the dead variable to true when contact between SPIKE and PLAYERCHARACTER occurs
             else if ((userDataTypeA == UserDataType.SPIKE) && (userDataTypeB == UserDataType.PLAYERCHARACTER)) {
-                gameLogic.kill;
+                gameLogic.killPlayer();
             } else if ((userDataTypeA== UserDataType.PLAYERCHARACTER) && (userDataTypeB == UserDataType.SPIKE)) {
-                gameLogic.kill;
+                gameLogic.killPlayer();
             }
             //Sets the jumping variable
             else if (userDataTypeA==UserDataType.GHOST_BOTTOM && userDataTypeB!=UserDataType.PLAYERCHARACTER){

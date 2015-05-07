@@ -71,11 +71,11 @@ public class GameLogic {
 
 	}
 
-	public void setActiveBodyLeft(){
+	public void setActiveBodyLeft(Body bodyLeft){
 
 	}
 
-	public void setActiveBodyRight(){
+	public void setActiveBodyRight(Body bodyRight){
 
 	}
 
