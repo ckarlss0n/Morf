@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import edu.chl.morf.backgrounds.BackgroundFactory;
 import edu.chl.morf.backgrounds.BackgroundGroup;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
@@ -33,6 +34,7 @@ public class View {
 
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
+    private BackgroundFactory backgroundFactory;
     private BackgroundGroup backgroundGroup;
 
     public View(){
@@ -56,12 +58,13 @@ public class View {
         idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
         stateTime = 0f;
 
-        backgroundGroup = new BackgroundGroup();
     }
 
     public View(Level level){
         this();
         this.level = level;
+        backgroundFactory = new BackgroundFactory();
+        backgroundGroup = backgroundFactory.createBackgroundGroup(level.getName());
     }
 
     public View(Level level, OrthographicCamera camera){
@@ -75,14 +78,17 @@ public class View {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         updateCamera();
 
+        batch.begin();
         //Render background layers
-        backgroundGroup.renderLayers(batch,delta);
+        backgroundGroup.renderLayers(batch, delta);
+        batch.end();
 
         //Render map
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
         batch.begin();
+
         batch.setProjectionMatrix(camera.combined);                 //Tells the spritebatch to render according to camera
         stateTime += Gdx.graphics.getDeltaTime();
 
