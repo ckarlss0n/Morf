@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import edu.chl.morf.backgrounds.BackgroundGroup;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 
@@ -32,12 +33,7 @@ public class View {
 
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
-    //BackgroundLayer render varaibles
-    private TextureRegion backgroundTextureRegion;
-    private com.badlogic.gdx.math.Rectangle backgroundLeftBounds;
-    private com.badlogic.gdx.math.Rectangle backgroundRightBounds;
-    private float backgroundSpeed = BACKGROUND_SCROLLING_SPEED;
-
+    private BackgroundGroup backgroundGroup;
 
     public View(){
         //Create SpriteBatch for drawing textures
@@ -79,17 +75,7 @@ public class View {
         updateCamera();
 
         //Render background layers
-        backgroundLeftBounds.x += delta * backgroundSpeed;
-        backgroundRightBounds.x += delta * backgroundSpeed;
-        if(backgroundRightBounds.x >= GAME_WIDTH) {
-            backgroundLeftBounds.x = -GAME_WIDTH;
-            backgroundRightBounds.x = 0;
-        } else if(backgroundRightBounds.x <= 0){
-            backgroundLeftBounds.x = 0;
-            backgroundRightBounds.x = GAME_WIDTH;
-        }
-        batch.draw(backgroundTextureRegion, backgroundLeftBounds.x, backgroundLeftBounds.y, GAME_WIDTH, GAME_HEIGHT);
-        batch.draw(backgroundTextureRegion, backgroundRightBounds.x, backgroundRightBounds.y, GAME_WIDTH, GAME_HEIGHT);
+        //INSERT CODE
 
         //Render map
         tiledMapRenderer.setView(camera);
