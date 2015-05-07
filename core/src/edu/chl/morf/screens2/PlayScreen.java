@@ -71,7 +71,7 @@ public class PlayScreen extends GameScreen{
 	@Override
 	public void render(float delta) {
 		gameLogic.render(delta);
-		view.render();
+		view.render(delta);
 	}
 
 	@Override
