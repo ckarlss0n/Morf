@@ -18,11 +18,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 public class Level {
 	
 	private String name;
-	private TileType[][] levelMatrix;
 	private ArrayList<Water> waterBlocks;
 	private PlayerCharacterModel player;
+	private Matrix levelMatrix;
 
-	public Level(TileType[][] matrix, String name){
+	public Level(Matrix matrix, String name){
 		this.name = name;
 		levelMatrix = matrix;
 		waterBlocks = new ArrayList<Water>();
@@ -30,7 +30,7 @@ public class Level {
 	}
 	
 	//Getters
-	public TileType[][] getMatrix(){
+	public Matrix getMatrix(){
 		return levelMatrix;
 	}
 	public ArrayList<Water> getWaterBlocks(){
@@ -39,23 +39,7 @@ public class Level {
 	public PlayerCharacterModel getPlayer(){
 		return player;
 	}
-
-	//Setters
-	public void setActiveBlockLeft(Block activeBlockLeft){
-		if(player.isFacingRight()==false){
-			player.setActiveBlock(activeBlockLeft);
-		}
-	}
-	public void setActiveBlockRight(Block activeBlockRight){
-		if (player.isFacingRight()){
-			player.setActiveBlock(activeBlockRight);
-		}
-	}
-
-	//Method for killing the player
-	public void killPlayer(){
-		player.setAlive(false);
-	}
+	
 	//Method for pouring water
 	public void pourWater(){
 		addWater(player.pourWater());
