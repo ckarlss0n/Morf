@@ -3,20 +3,15 @@ import com.badlogic.gdx.physics.box2d.*;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 public class MyContactListener implements ContactListener{
+    GameLogic gameLogic;
     Body activeBodyLeft=null;
     Body activeBodyRight=null;
     boolean dead=false;
     boolean jumping=false;
-    public MyContactListener () {
+    public MyContactListener (GameLogic gameLogic) {
+        this.gameLogic=gameLogic;
     }
-    public boolean isDead(){return dead;}
-    public boolean isJumping() {return jumping;}
-    public Body getActiveBodyLeft(){
-        return activeBodyLeft;
-    }
-    public Body getActiveBodyRight() {
-        return activeBodyRight;
-    }
+
     @Override
     public void beginContact(Contact contact) {
         //boolean fallingBeforeTouch = false;
@@ -37,6 +32,7 @@ public class MyContactListener implements ContactListener{
             if (userDataTypeA == UserDataType.GHOST_LEFT) {
                 activeBodyLeft=fb.getBody();
                 userDataA.increment();
+                //gameLogic.setActiveBodyLeft(activeBodyLeft);
             } else if (userDataTypeB== UserDataType.GHOST_LEFT) {
                 activeBodyLeft=fa.getBody();
                 userDataB.increment();
