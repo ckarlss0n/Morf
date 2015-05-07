@@ -25,6 +25,7 @@ public class PlayerCharacterModel {
     private boolean emptyLeft=true;
     private boolean facingRight=true;
     private boolean moving=false;
+    private boolean inAir=false;
     private boolean alive = true;
     private int waterLevel=WATER_LEVEL;
     private Block activeBlock;
@@ -63,6 +64,10 @@ public class PlayerCharacterModel {
         return waterLevel;
     }
 
+    public boolean isInAir() {
+        return inAir;
+    }
+
     //Ghost setters
     public void setEmptyRight(boolean emptyRight){
         this.emptyRight=emptyRight;
@@ -79,6 +84,12 @@ public class PlayerCharacterModel {
     public void moveRight(){
         moving=true;
         facingRight=true;
+    }
+    public void setInAir(boolean inAir){
+        this.inAir=inAir;
+    }
+    public void setAlive(boolean alive){
+        this.alive=alive;
     }
     public void stop(){
         moving=false;

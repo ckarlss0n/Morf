@@ -37,6 +37,9 @@ public class PlayScreen extends GameScreen{
 	private OrthographicCamera box2dCam;
 	private Level level;
 	private View view;
+	
+	private MyContactListener cl;
+	private GameController input;
 
 	public PlayScreen(ScreenManager sm, String levelName){
 		super(sm);
@@ -46,12 +49,15 @@ public class PlayScreen extends GameScreen{
 		level = levelFactory.getLevel(levelName);
 		gameLogic = new GameLogic(level);
 		
+		cl = new MyContactListener(gameLogic);
+		input = new GameController();
+		
 
 		//Set up box2d camera
 		box2dCam = new OrthographicCamera();
 		box2dCam.setToOrtho(false, Main.V_WIDTH / PPM, Main.V_HEIGHT / PPM);
 		
-		this.view = new View(level, cam);
+		this.view = new View(level, box2dCam);
 		view.setBatch(spriteBatch);
 		
 	}
