@@ -62,6 +62,34 @@ public class WorldUtils {
         return new PlayerCharacter(body);
     }
 
+    //Create PlayerCharacter body
+    public static Body createPlayerBody(World world){
+        UserData userData=new UserData(UserDataType.PLAYERCHARACTER);
+        Body body = createBody(new Vector2(1,2),0.5f,2f,(short)2,(short)4, world,userData);
+        body.setType(BodyDef.BodyType.DynamicBody);
+        PolygonShape shapeLeft = new PolygonShape();
+
+        shapeLeft.setAsBox((REAL_TILE_SIZE-6)/(2*PPM),(REAL_TILE_SIZE-6)/(2*PPM),new Vector2(-1 * (REAL_TILE_SIZE-4)/(PPM),0),0); //Extra margin for ghosting boxes (64-4)
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = shapeLeft;
+        fixDef.filter.categoryBits = 2;
+        fixDef.filter.maskBits = 4;
+        fixDef.isSensor = true;
+        Fixture fixtureLeft = body.createFixture(fixDef);
+
+        PolygonShape shapeRight = new PolygonShape();
+        shapeRight.setAsBox((REAL_TILE_SIZE-6)/(2*PPM),(REAL_TILE_SIZE-6)/(2*PPM),new Vector2(1 * (REAL_TILE_SIZE-4)/(PPM),0),0);
+        fixDef.shape=shapeRight;
+        Fixture fixtureRight = body.createFixture(fixDef);
+
+        shapeLeft.dispose();
+        shapeRight.dispose();
+
+        fixtureLeft.setUserData(new UserData(UserDataType.GHOST_LEFT));
+        fixtureRight.setUserData(new UserData(UserDataType.GHOST_RIGHT));
+        return body;
+    }
+
     public static void addBlock(PlayerCharacter playerCharacter, Vector2 position,boolean facingRight,UserData userData){
         int direction = facingRight ? 1 : -1; //1 if facing right, else -1
 

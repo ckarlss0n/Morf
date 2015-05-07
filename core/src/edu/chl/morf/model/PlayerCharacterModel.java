@@ -97,6 +97,9 @@ public class PlayerCharacterModel {
     public void stop(){
         moving=false;
     }
+    public void setPosition(Point position){
+        this.position.setLocation(position);
+    }
 
     public Water pourWater(){
     	if(activeBlock instanceof EmptyBlock){

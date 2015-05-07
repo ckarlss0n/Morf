@@ -52,6 +52,10 @@ public class Water implements Block{
         return this.position;
     }
 
+    public void setPosition(Point p){
+        position = p;
+    }
+
     public void heat(){
         if(state == WaterState.SOLID) {
             this.state = WaterState.LIQUID;

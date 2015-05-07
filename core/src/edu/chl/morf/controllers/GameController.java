@@ -37,9 +37,6 @@ public class GameController extends InputAdapter{
 			case Input.Keys.X:
 				gameLogic.placeWater();
 				break;
-			case Input.Keys.C:
-				gameLogic.placeSpikes();
-				break;
 		}
 		return true;
 	}
