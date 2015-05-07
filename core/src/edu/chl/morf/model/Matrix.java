@@ -28,4 +28,8 @@ public class Matrix {
             this.objects.add(object);
         }
     }
+
+    public ArrayList<LevelObject> getLevelObjects(){
+        return this.objects;
+    }
 }
