@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl.morf.WorldUtils;
+import edu.chl.morf.handlers.BodyFactory;
+import edu.chl.morf.handlers.LevelGenerator;
 import edu.chl.morf.model.Block;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
@@ -30,38 +32,40 @@ public class GameLogic {
 	private TiledMapTileLayer tiledMapTileLayer;
 	private String levelName;
 	private PlayerCharacterModel playerCharacterModel;
-	private Vector2 movementVector = new Vector2(0,0);
+	private Vector2 movementVector;
+	private BodyFactory bodyFactory;
 
 	public GameLogic(Level level){
 		this.level = level;
 		world = new World(WORLD_GRAVITY, true);
 		bodyBlockMap = new HashMap<Body, Water>();
 		levelName = level.getName();
-		//tiledMapTileLayer = new TmxMapLoader().load(LEVEL_PATH + levelName);
 		playerCharacterModel = level.getPlayer();
+		movementVector = new Vector2(0,0);
+		bodyFactory = new BodyFactory();
 		playerCharacterBody = createPlayerBody();
-		bindWaterBlocks();
+		//bindWaterBlocks();
+		generateLevel();
 	}
 
 	public void bindWaterBlocks(){
 		ArrayList<Water> waterList = level.getWaterBlocks();
 		for(Water water : waterList){
-			//bodyBlockMap.put(createWaterBody(), water);
+			bodyBlockMap.put(createWaterBody(), water);
 		}
 	}
 
-	/*
 	public Body createWaterBody(){
-		return WorldUtils.createWaterBody(world);
+		return bodyFactory.createWaterBody(world, new Vector2(0, 0));
 	}
-	*/
 
 	public Body createPlayerBody(){
-		return WorldUtils.createPlayerBody(world);
+		return bodyFactory.createPlayerBody(world);
 	}
 
+	//Convert level to a body
 	public void generateLevel(){
-
+		new LevelGenerator().generateLevel(level, world);
 	}
 
 	public void moveLeft(){

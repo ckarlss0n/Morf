@@ -25,7 +25,7 @@ public class LevelGenerator {
 		
 		TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
-		
+		tileSize = groundLayer.getTileHeight();
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.fixedRotation = true;
 		FixtureDef fixDef = new FixtureDef();
