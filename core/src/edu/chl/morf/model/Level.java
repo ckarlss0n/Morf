@@ -72,6 +72,9 @@ public class Level {
 		if(player.getActiveBlock() instanceof EmptyBlock){
 			addWater(player.pourWater());
 		}
+		else if(player.getActiveBlock() instanceof Flower){
+			System.out.println("You win");
+		}
 	}
 	
 	//Methods for heating and cooling blocks
