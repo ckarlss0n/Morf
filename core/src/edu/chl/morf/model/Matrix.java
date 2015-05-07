@@ -30,6 +30,13 @@ public class Matrix {
         }
     }
 
+    public int getRows(){
+    	return maxRows;
+    }
+    public int getColumns(){
+    	return maxColumns;
+    }
+    
     public ArrayList<LevelObject> getLevelObjects(){
         return this.objects;
     }
