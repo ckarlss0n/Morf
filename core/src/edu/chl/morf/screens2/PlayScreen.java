@@ -50,7 +50,7 @@ public class PlayScreen extends GameScreen{
 		gameLogic = new GameLogic(level);
 		
 		cl = new MyContactListener(gameLogic);
-		input = new GameController();
+		input = new GameController(gameLogic);
 		
 
 		//Set up box2d camera
