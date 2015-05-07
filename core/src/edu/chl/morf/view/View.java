@@ -7,10 +7,14 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.*;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 
 import java.awt.*;
+import java.awt.Rectangle;
+import java.util.HashMap;
+import java.util.Map;
 
 import static edu.chl.morf.Constants.*;
 
@@ -21,12 +25,22 @@ public class View {
 
     private Level level;
     private Batch batch;
+
+    //PlayerCharacter render varaibles
     private Animation runningRightAnimation;
     private Animation runningLeftAnimation;
     private TextureRegion idleTexture;
     private float stateTime;
+
     private OrthographicCamera camera;
+
     private OrthogonalTiledMapRenderer tiledMapRenderer;
+
+    //BackgroundLayer render varaibles
+    private TextureRegion backgroundTextureRegion;
+    private com.badlogic.gdx.math.Rectangle backgroundLeftBounds;
+    private com.badlogic.gdx.math.Rectangle backgroundRightBounds;
+    private float backgroundSpeed = BACKGROUND_SCROLLING_SPEED;
 
 
     public View(){
@@ -64,9 +78,22 @@ public class View {
         this.camera = camera;
     }
 
-    public void render(){
+    public void render(float delta){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         updateCamera();
+
+        //Render background layers
+        backgroundLeftBounds.x += delta * backgroundSpeed;
+        backgroundRightBounds.x += delta * backgroundSpeed;
+        if(backgroundRightBounds.x >= GAME_WIDTH) {
+            backgroundLeftBounds.x = -GAME_WIDTH;
+            backgroundRightBounds.x = 0;
+        } else if(backgroundRightBounds.x <= 0){
+            backgroundLeftBounds.x = 0;
+            backgroundRightBounds.x = GAME_WIDTH;
+        }
+        batch.draw(backgroundTextureRegion, backgroundLeftBounds.x, backgroundLeftBounds.y, GAME_WIDTH, GAME_HEIGHT);
+        batch.draw(backgroundTextureRegion, backgroundRightBounds.x, backgroundRightBounds.y, GAME_WIDTH, GAME_HEIGHT);
 
         //Render map
         tiledMapRenderer.setView(camera);
@@ -90,10 +117,12 @@ public class View {
         }else{
             batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
         }
-        batch.end();
 
         //Render water blocks
         //INSERT CODE HERE
+
+
+        batch.end();
 
     }
 
