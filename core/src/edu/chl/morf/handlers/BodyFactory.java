@@ -58,6 +58,7 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND;
 		body.createFixture(fdef).setUserData(UserDataType.PLAYERCHARACTER);
 
+		
 		return body;
 	}
 }
