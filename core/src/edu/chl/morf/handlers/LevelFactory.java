@@ -4,6 +4,7 @@ import static edu.chl.morf.Constants.LEVEL_PATH;
 import static edu.chl.morf.Constants.PPM;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -35,7 +36,7 @@ public class LevelFactory {
 				if (cell == null) continue;
 				if (cell.getTile() == null) continue;
 
-				matrix.addLevelObject(new LevelObject(TileType.GROUND, new Point(groundLayer.getHeight() - 1 - row, col)));
+				matrix.addLevelObject(new LevelObject(TileType.GROUND, new Point2D.Float(groundLayer.getHeight() - 1 - row, col)));
 			}
 		}
 		return new Level(matrix, name);

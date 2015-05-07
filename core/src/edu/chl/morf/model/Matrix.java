@@ -23,8 +23,8 @@ public class Matrix {
     }
 
     public void addLevelObject(LevelObject object){
-        int x = object.getPosition().x;
-        int y = object.getPosition().y;
+        float x = object.getPosition().x;
+        float y = object.getPosition().y;
         if(x >= 0 && x <= maxColumns && y >= 0 && y <= maxRows){
             this.objects.add(object);
         }
