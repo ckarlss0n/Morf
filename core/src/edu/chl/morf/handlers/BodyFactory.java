@@ -22,7 +22,7 @@ public class BodyFactory {
 	public Body createPlayerBody(World world){
 
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(1, 1);
+		bdef.position.set(6, 6);
 		bdef.type = BodyType.DynamicBody;
 		bdef.fixedRotation = true;
 

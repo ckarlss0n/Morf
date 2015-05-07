@@ -99,7 +99,7 @@ public class PlayerCharacterModel {
     public void stop(){
         moving=false;
     }
-    public void setPosition(Point position){
+    public void setPosition(Point2D.Float position){
         this.position.setLocation(position);
     }
 

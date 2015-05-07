@@ -11,7 +11,7 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
 
-import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -138,8 +138,8 @@ public class GameLogic {
 		updateLevel();
 	}
 
-	public Point vectorToPoint(Vector2 v){
-		return new Point((int)v.x, (int)v.y);
+	public Point2D.Float vectorToPoint(Vector2 v){
+		return new Point2D.Float(v.x, v.y);
 	}
 
 	//Update model with physics changes
