@@ -102,15 +102,11 @@ public class PlayerCharacterModel {
     }
 
     public Water pourWater(){
-    	if(activeBlock instanceof EmptyBlock){
-            Point point=new Point(position.x-36,position.y);
-            if(facingRight){
-                point = new Point(position.x+36*2,position.y);
-            }
-            return new Water(point);
+        Point point=new Point(position.x-36,position.y);
+        if(facingRight){
+            point = new Point(position.x+36*2,position.y);
         }
-
-        return new Water(position);
+        return new Water(point);
     }
     
     //WaterLevel setters
