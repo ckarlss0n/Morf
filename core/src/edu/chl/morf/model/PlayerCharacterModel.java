@@ -1,5 +1,8 @@
 package edu.chl.morf.model;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+import edu.chl.morf.Constants;
+
 import static edu.chl.morf.Constants.*;
 
 import java.awt.Point;
@@ -96,7 +99,15 @@ public class PlayerCharacterModel {
     }
 
     public Water pourWater(){
-    	return new Water(position);
+    	if(activeBlock instanceof EmptyBlock){
+            Point point=new Point(position.x-36,position.y);
+            if(facingRight){
+                point = new Point(position.x+36*2,position.y);
+            }
+            return new Water(point);
+        }
+
+        return new Water(position);
     }
     
     //WaterLevel setters
