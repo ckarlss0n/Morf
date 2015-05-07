@@ -6,6 +6,7 @@ import edu.chl.morf.Constants;
 import static edu.chl.morf.Constants.*;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 /**
  * This class is used to keep track of information about the player character.
@@ -33,22 +34,22 @@ public class PlayerCharacterModel {
     private int waterLevel=WATER_LEVEL;
     private Block activeBlock;
     
-    private Point position;
+    private Point2D.Float position;
     
     //Constructors
     public PlayerCharacterModel(){
-    	position = new Point(0, 0);
+    	position = new Point2D.Float(0, 0);
     }
-    public PlayerCharacterModel(Point position){
+    public PlayerCharacterModel(Point2D.Float position){
     	this.position = position;
     }
     public PlayerCharacterModel(int x, int y){
-    	position = new Point(x, y);
+    	position = new Point2D.Float(x, y);
     }
     
 
     //Getters
-    public Point getPosition(){
+    public Point2D.Float getPosition(){
     	return position;
     }
     public boolean isMoving(){
@@ -103,9 +104,9 @@ public class PlayerCharacterModel {
     }
 
     public Water pourWater(){
-        Point point=new Point(position.x-36,position.y);
+        Point2D.Float point=new Point2D.Float(position.x - 36, position.y);
         if(facingRight){
-            point = new Point(position.x+36*2,position.y);
+            point = new Point2D.Float(position.x + 36 * 2, position.y);
         }
         decreaseWaterLevel();
         return new Water(point);

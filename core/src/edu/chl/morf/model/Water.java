@@ -1,6 +1,7 @@
 package edu.chl.morf.model;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 /**
  * This class represents water. The water can have one state at a time (gas/liquid/solid).
@@ -21,38 +22,38 @@ import java.awt.*;
  */
 public class Water implements Block{
 
-    private Point position;
+    private Point2D.Float position;
     private WaterState state;
 
     //Constructors
-    public Water(Point position, WaterState state){
+    public Water(Point2D.Float position, WaterState state){
     	this.position = position;
     	this.state = state;
     }
     public Water(int x, int y, WaterState state){
-    	this(new Point(x, y), state);
+    	this(new Point2D.Float(x, y), state);
     }
-    public Water(Point position){
+    public Water(Point2D.Float position){
     	this(position, WaterState.LIQUID);
     }
     public Water(int x, int y){
-    	this(new Point(x, y));
+    	this(new Point2D.Float(x, y));
     }
     public Water(WaterState state){
-    	this(new Point(0, 0), state);
+    	this(new Point2D.Float(0, 0), state);
     }
     public Water(){
-    	this(new Point(0, 0), WaterState.LIQUID);
+    	this(new Point2D.Float(0, 0), WaterState.LIQUID);
     }
 
 
 
 
-    public Point getPosition(){
+    public Point2D.Float getPosition(){
         return this.position;
     }
 
-    public void setPosition(Point p){
+    public void setPosition(Point2D.Float p){
         position = p;
     }
 
