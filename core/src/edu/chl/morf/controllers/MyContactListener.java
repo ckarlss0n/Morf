@@ -6,7 +6,6 @@ public class MyContactListener implements ContactListener{
     GameLogic gameLogic;
     Body activeBodyLeft=null;
     Body activeBodyRight=null;
-    boolean dead=false;
     boolean jumping=false;
     public MyContactListener (GameLogic gameLogic) {
         this.gameLogic=gameLogic;
@@ -32,22 +31,25 @@ public class MyContactListener implements ContactListener{
             if (userDataTypeA == UserDataType.GHOST_LEFT) {
                 activeBodyLeft=fb.getBody();
                 userDataA.increment();
-                //gameLogic.setActiveBodyLeft(activeBodyLeft);
+                gameLogic.setActiveBodyLeft(activeBodyLeft);
             } else if (userDataTypeB== UserDataType.GHOST_LEFT) {
                 activeBodyLeft=fa.getBody();
                 userDataB.increment();
+                gameLogic.setActiveBodyLeft(activeBodyLeft);
             } else if (userDataTypeA== UserDataType.GHOST_RIGHT) {
                 activeBodyRight=fb.getBody();
                 userDataA.increment();
+                gameLogic.setActiveBodyRight(activeBodyRight);
             } else if (userDataTypeB == UserDataType.GHOST_RIGHT) {
                 activeBodyRight=fa.getBody();
                 userDataB.increment();
+                gameLogic.setActiveBodyRight(activeBodyRight);
             }
             //Sets the dead variable to true when contact between SPIKE and PLAYERCHARACTER occurs
             else if ((userDataTypeA == UserDataType.SPIKE) && (userDataTypeB == UserDataType.PLAYERCHARACTER)) {
-                dead=true;
+                gameLogic.kill;
             } else if ((userDataTypeA== UserDataType.PLAYERCHARACTER) && (userDataTypeB == UserDataType.SPIKE)) {
-                dead=true;
+                gameLogic.kill;
             }
             //Sets the jumping variable
             else if (userDataTypeA==UserDataType.GHOST_BOTTOM && userDataTypeB!=UserDataType.PLAYERCHARACTER){
