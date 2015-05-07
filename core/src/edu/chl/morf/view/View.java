@@ -56,6 +56,7 @@ public class View {
         idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
         stateTime = 0f;
 
+        backgroundGroup = new BackgroundGroup();
     }
 
     public View(Level level){
@@ -75,7 +76,7 @@ public class View {
         updateCamera();
 
         //Render background layers
-        //INSERT CODE
+        backgroundGroup.renderLayers(batch,delta);
 
         //Render map
         tiledMapRenderer.setView(camera);
