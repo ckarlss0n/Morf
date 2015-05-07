@@ -60,4 +60,7 @@ public class Level {
 	public void removeWater(Water w){
 		waterBlocks.remove(w);
 	}
+    public String getName(){
+        return this.name;
+    }
 }
