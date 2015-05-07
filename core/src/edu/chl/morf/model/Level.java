@@ -16,7 +16,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  * A level consists of a matrix containing solid tiles and a list containing the water in the level.
  */
 public class Level {
-	
+
+	private Block emptyBlock=new EmptyBlock();
 	private String name;
 	private ArrayList<Water> waterBlocks;
 	private PlayerCharacterModel player;
@@ -39,7 +40,33 @@ public class Level {
 	public PlayerCharacterModel getPlayer(){
 		return player;
 	}
-	
+
+	//Setters
+	public void setActiveBlockLeft(Block activeBlockLeft){
+		if(player.isFacingRight()==false){
+			player.setActiveBlock(activeBlockLeft);
+		}
+	}
+	public void setActiveBlockRight(Block activeBlockRight){
+		if (player.isFacingRight()){
+			player.setActiveBlock(activeBlockRight);
+		}
+	}
+	public void setActiveBlockLeftEmpty(){
+		if (player.isFacingRight()==false){
+			player.setActiveBlock(emptyBlock);
+		}
+	}
+	public void setActiveBlockRightEmpty(){
+		if (player.isFacingRight()){
+			player.setActiveBlock(emptyBlock);
+		}
+	}
+	//Method for killing the player
+	public void killPlayer(){
+		player.setAlive(false);
+	}
+
 	//Method for pouring water
 	public void pourWater(){
 		addWater(player.pourWater());

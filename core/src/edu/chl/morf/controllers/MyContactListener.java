@@ -94,9 +94,9 @@ public class MyContactListener implements ContactListener{
             userDataA.decrement();
             if(userDataA.getNumOfContacts()==0){
                 if(userDataTypeA==UserDataType.GHOST_LEFT){
-                    activeBodyLeft=fa.getBody();
+                    gameLogic.setActiveBodyLeftEmpty();
                 }else{
-                    activeBodyRight=fa.getBody();
+                    gameLogic.setActiveBodyRightEmpty();
                 }
             }
         }
@@ -104,9 +104,9 @@ public class MyContactListener implements ContactListener{
             userDataB.decrement();
             if(userDataB.getNumOfContacts()==0){
                 if(userDataTypeB==UserDataType.GHOST_LEFT){
-                    activeBodyLeft=fb.getBody();
+                    gameLogic.setActiveBodyLeftEmpty();
                 }else{
-                    activeBodyRight=fb.getBody();
+                    gameLogic.setActiveBodyRightEmpty();
                 }
             }
         }

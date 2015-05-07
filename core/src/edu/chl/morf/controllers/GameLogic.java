@@ -81,6 +81,14 @@ public class GameLogic {
 		level.setActiveBlockRight(activeBlockRight);
 	}
 
+	public void setActiveBodyLeftEmpty(){
+		level.setActiveBlockLeftEmpty();
+	}
+
+	public void setActiveBodyRightEmpty(){
+		level.setActiveBlockRightEmpty();
+	}
+
 	public void killPlayer(){
 		level.killPlayer();
 	}
