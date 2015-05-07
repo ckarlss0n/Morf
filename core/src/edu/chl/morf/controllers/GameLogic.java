@@ -72,15 +72,17 @@ public class GameLogic {
 	}
 
 	public void setActiveBodyLeft(Body bodyLeft){
-
+		Block activeBlockLeft=bodyBlockMap.get(bodyLeft);
+		level.setActiveBlockLeft(activeBlockLeft);
 	}
 
 	public void setActiveBodyRight(Body bodyRight){
-
+		Block activeBlockRight=bodyBlockMap.get(bodyRight);
+		level.setActiveBlockRight(activeBlockRight);
 	}
 
 	public void killPlayer(){
-
+		level.killPlayer();
 	}
 
 	public void render(float delta){

@@ -39,7 +39,23 @@ public class Level {
 	public PlayerCharacterModel getPlayer(){
 		return player;
 	}
-	
+
+	//Setters
+	public void setActiveBlockLeft(Block activeBlockLeft){
+		if(player.isFacingRight()==false){
+			player.setActiveBlock(activeBlockLeft);
+		}
+	}
+	public void setActiveBlockRight(Block activeBlockRight){
+		if (player.isFacingRight()){
+			player.setActiveBlock(activeBlockRight);
+		}
+	}
+
+	//Method for killing the player
+	public void killPlayer(){
+		player.setAlive(false);
+	}
 	//Method for pouring water
 	public void pourWater(){
 		addWater(player.pourWater());
