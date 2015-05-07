@@ -107,6 +107,7 @@ public class PlayerCharacterModel {
         if(facingRight){
             point = new Point(position.x+36*2,position.y);
         }
+        decreaseWaterLevel();
         return new Water(point);
     }
     
