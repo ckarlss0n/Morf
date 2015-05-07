@@ -66,6 +66,7 @@ public class PlayerCharacterModel {
     public int getWaterLevel(){
         return waterLevel;
     }
+    public Block getActiveBlock(){return activeBlock;}
 
     public boolean isInAir() {
         return inAir;

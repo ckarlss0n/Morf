@@ -69,7 +69,9 @@ public class Level {
 
 	//Method for pouring water
 	public void pourWater(){
-		addWater(player.pourWater());
+		if(player.getActiveBlock() instanceof EmptyBlock){
+			addWater(player.pourWater());
+		}
 	}
 	
 	//Methods for heating and cooling blocks
