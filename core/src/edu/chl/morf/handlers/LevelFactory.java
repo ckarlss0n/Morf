@@ -35,7 +35,7 @@ public class LevelFactory {
 				if (cell == null) continue;
 				if (cell.getTile() == null) continue;
 
-				matrix.getObjects().add(new LevelObject(TileType.GROUND, new Point(groundLayer.getHeight() - 1 - row, col)));
+				matrix.addLevelObject(new LevelObject(TileType.GROUND, new Point(groundLayer.getHeight() - 1 - row, col)));
 			}
 		}
 		return new Level(matrix, name);

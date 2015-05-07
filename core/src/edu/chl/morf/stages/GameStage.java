@@ -107,7 +107,7 @@ public class GameStage extends Stage implements ContactListener {
         
         //level = createLevel();
         
-        generateLevel();
+        //generateLevel();
     }
     
 //    public Level createLevel(){
@@ -126,41 +126,41 @@ public class GameStage extends Stage implements ContactListener {
 //        return new Level(matrix);
 //    }
 
-    public void generateLevel(){
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.fixedRotation = true;
-        FixtureDef fixDef = new FixtureDef();
-        
-        for (int row = 0; row < level.getMatrix().length; row++) {
-            for (int col = 0; col < level.getMatrix()[0].length; col++) {
-                TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
-                
-                
-                if (cell == null) continue;
-                if (cell.getTile() == null) continue;
-                
-                bodyDef.type = BodyType.StaticBody;
-                bodyDef.position.set((col + 0.5f) * tileSize / PPM, (row + 0.5f) * tileSize / PPM);
-
-                ChainShape chainShape = new ChainShape();
-                Vector2[] v = new Vector2[5];
-                v[0] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
-                v[1] = new Vector2(-tileSize / 2 / PPM, tileSize / 2 / PPM);
-                v[2] = new Vector2(tileSize / 2 / PPM, tileSize / 2 / PPM);
-                v[3] = new Vector2(tileSize / 2 / PPM, -tileSize / 2 / PPM);
-                v[4] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
-
-                chainShape.createChain(v);
-                fixDef.friction = GROUND_FRICTION;
-                fixDef.shape = chainShape;
-                fixDef.filter.categoryBits = 4;
-                fixDef.filter.maskBits = -1;
-                fixDef.isSensor = false;
-                world.createBody(bodyDef).createFixture(fixDef);
-            }
-        }
-        
-    }
+//    public void generateLevel(){
+//        BodyDef bodyDef = new BodyDef();
+//        bodyDef.fixedRotation = true;
+//        FixtureDef fixDef = new FixtureDef();
+//        
+//        for (int row = 0; row < level.getMatrix().length; row++) {
+//            for (int col = 0; col < level.getMatrix()[0].length; col++) {
+//                TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
+//                
+//                
+//                if (cell == null) continue;
+//                if (cell.getTile() == null) continue;
+//                
+//                bodyDef.type = BodyType.StaticBody;
+//                bodyDef.position.set((col + 0.5f) * tileSize / PPM, (row + 0.5f) * tileSize / PPM);
+//
+//                ChainShape chainShape = new ChainShape();
+//                Vector2[] v = new Vector2[5];
+//                v[0] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
+//                v[1] = new Vector2(-tileSize / 2 / PPM, tileSize / 2 / PPM);
+//                v[2] = new Vector2(tileSize / 2 / PPM, tileSize / 2 / PPM);
+//                v[3] = new Vector2(tileSize / 2 / PPM, -tileSize / 2 / PPM);
+//                v[4] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
+//
+//                chainShape.createChain(v);
+//                fixDef.friction = GROUND_FRICTION;
+//                fixDef.shape = chainShape;
+//                fixDef.filter.categoryBits = 4;
+//                fixDef.filter.maskBits = -1;
+//                fixDef.isSensor = false;
+//                world.createBody(bodyDef).createFixture(fixDef);
+//            }
+//        }
+//        
+//    }
 
     public World getWorld() { return world; }
     public PlayerCharacter getPlayerCharacter() { return playerCharacter; }
