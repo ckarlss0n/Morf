@@ -14,4 +14,8 @@ public class LevelObject {
         this.tileType = tileType;
         this.position = position;
     }
+
+    public Point getPosition(){
+        return this.position;
+    }
 }
