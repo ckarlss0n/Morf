@@ -13,6 +13,7 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 import static edu.chl.morf.Constants.*;
 
@@ -94,7 +95,7 @@ public class View {
 
         //Render character animation
         PlayerCharacterModel playerCharacter = level.getPlayer();
-        Point playerCharPos = playerCharacter.getPosition();
+        Point2D.Float playerCharPos = playerCharacter.getPosition();
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
@@ -117,7 +118,7 @@ public class View {
 
     public void updateCamera() {
         PlayerCharacterModel playerCharacter = level.getPlayer();
-        Point playerCharPos = playerCharacter.getPosition();
+        Point2D.Float playerCharPos = playerCharacter.getPosition();
         //camera.position.set(playerCharPos.x, playerCharPos.y, 0f);
         camera.update();
     }

@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 import static org.junit.Assert.assertTrue;
 
@@ -33,7 +34,7 @@ public class TestPlayerCharacterModel {
 	@Test
 	public void testPourWater(){
 		playerCharacterModel = new PlayerCharacterModel(10, 10);
-		Point point = new Point(10, 10);
+		Point2D.Float point = new Point2D.Float(10, 10);
 		Water water = new Water(point);
 		assertTrue(water.getPosition().equals(playerCharacterModel.pourWater().getPosition())); //Returns a water block
 	}
