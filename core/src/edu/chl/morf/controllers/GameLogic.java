@@ -1,52 +1,91 @@
 package edu.chl.morf.controllers;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import edu.chl.morf.model.Block;
 import edu.chl.morf.model.Level;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static edu.chl.morf.Constants.*;
+import static edu.chl.morf.Constants.WORLD_GRAVITY;
 
 /**
  * Created by Christoffer on 2015-05-06.
  */
 public class GameLogic {
 
-	private GameController gameController;
-	private MyContactListener myContactListener;
 	private Level level;	//Model
 	private World world;	//Box2D world
-	private Map<Integer, Boolean> pressedKeys;
+	private Map<Body, Block> bodyBlockMap;	//Bind bodies to blocks in model
+	private Body playerCharacterBody;
+	private TiledMapTileLayer tiledMapTileLayer;
 
 	public GameLogic(Level level){
-		gameController = new GameController();
-		myContactListener = new MyContactListener();
 		this.level = level;
 		world = new World(WORLD_GRAVITY, true);
-		pressedKeys = new HashMap<Integer, Boolean>();
+		bodyBlockMap = new HashMap<Body, Block>();
+		//levelName = level.getName();
+		//tiledMapTileLayer = new TmxMapLoader().load(LEVEL_PATH + levelName);
+		createPlayerCharacter();
+	}
+
+	public void createPlayerCharacter(){
+
+	}
+
+	public void generateLevel(){
+
+	}
+
+	public void moveLeft(){
+
+	}
+
+	public void moveRight(){
+
+	}
+
+	public void jump(){
+
+	}
+
+	public void resetGame(){
+
+	}
+
+	public void fly(){
+
+	}
+
+	public void placeWater(){
+
+	}
+
+	public void placeSpikes(){
+
+	}
+
+	public void stop(){
+
+	}
+
+	public void setActiveBodyLeft(){
+
+	}
+
+	public void setActiveBodyRight(){
+
+	}
+
+	public void killPlayer(){
+
 	}
 
 	public void render(float delta){
-		handleInput();
-		handleContact();
 		world.step(delta,6,2);
 		updateLevel();
-	}
-
-	public void getPressedKeys(){
-		pressedKeys = gameController.getPressedKeys();
-	}
-
-	//Handle input from GameController
-	public void handleInput(){
-		getPressedKeys();
-		System.out.println(pressedKeys);
-	}
-
-	//Handle collisions from MyContactListener
-	public void handleContact(){
-
 	}
 
 	//Update model with physics changes
