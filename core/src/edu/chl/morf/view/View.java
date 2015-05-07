@@ -71,7 +71,7 @@ public class View {
     public View(Level level, OrthographicCamera camera){
         this(level);
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, 1/PPM);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         this.camera = camera;
     }
 
