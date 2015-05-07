@@ -119,7 +119,7 @@ public class View {
     public void updateCamera() {
         PlayerCharacterModel playerCharacter = level.getPlayer();
         Point2D.Float playerCharPos = playerCharacter.getPosition();
-        //camera.position.set(playerCharPos.x, playerCharPos.y, 0f);
+        camera.position.set(playerCharPos.x, playerCharPos.y, 0f);
         camera.update();
     }
 
