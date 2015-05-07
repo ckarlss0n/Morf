@@ -25,8 +25,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");	//Borderless
 		config.title = Main.TITLE;
-		config.width = Main.V_WIDTH * Main.SCALE;
-		config.height = Main.V_HEIGHT * Main.SCALE;
+		config.width = Main.V_WIDTH;
+		config.height = Main.V_HEIGHT;
         config.fullscreen = Main.FULLSCREEN;
 		new LwjglApplication(new Main(), config);
 	}

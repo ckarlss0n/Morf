@@ -4,6 +4,7 @@ import static edu.chl.morf.Constants.LEVEL_PATH;
 import static edu.chl.morf.handlers.Constants.PPM;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -51,13 +52,12 @@ public class PlayScreen extends GameScreen{
 		
 		cl = new MyContactListener(gameLogic);
 		input = new GameController(gameLogic);
-		
 
 		//Set up box2d camera
 		box2dCam = new OrthographicCamera();
-		box2dCam.setToOrtho(false, Main.V_WIDTH / 10, Main.V_HEIGHT / 10);
+		box2dCam.setToOrtho(false, Main.V_WIDTH / PPM, Main.V_HEIGHT / PPM);
 		
-		this.view = new View(level, box2dCam);
+		this.view = new View(level, cam);
 		view.setBatch(spriteBatch);
 		
 	}

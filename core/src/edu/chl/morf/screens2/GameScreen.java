@@ -19,7 +19,9 @@ public abstract class GameScreen implements Screen{
 		screenManager = sm;
 		spriteBatch = new SpriteBatch();
 		cam = new OrthographicCamera();
+		cam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
 		hudCam = new OrthographicCamera();
+		hudCam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
 	}
 	
 	public abstract void handleInput();
