@@ -23,7 +23,7 @@ public class BodyFactory {
 
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(1, 1);
-		bdef.type = BodyType.StaticBody;
+		bdef.type = BodyType.DynamicBody;
 		bdef.fixedRotation = true;
 
 		Body body = world.createBody(bdef);

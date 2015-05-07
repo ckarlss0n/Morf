@@ -4,7 +4,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl.morf.WorldUtils;
 import edu.chl.morf.handlers.BodyFactory;
 import edu.chl.morf.handlers.LevelGenerator;
 import edu.chl.morf.model.Block;
