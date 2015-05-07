@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 
@@ -23,6 +26,7 @@ public class View {
     private TextureRegion idleTexture;
     private float stateTime;
     private OrthographicCamera camera;
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
 
 
     public View(){
@@ -46,7 +50,6 @@ public class View {
         idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
         stateTime = 0f;
 
-
     }
 
     public View(Level level){
@@ -56,18 +59,18 @@ public class View {
 
     public View(Level level, OrthographicCamera camera){
         this(level);
+        TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, 1/PPM);
         this.camera = camera;
     }
 
     public void render(){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         batch.begin();
-
         batch.setProjectionMatrix(camera.combined);                 //Tells the spritebatch to render according to camera
-        //super.draw(batch, parentAlpha);
         stateTime += Gdx.graphics.getDeltaTime();
 
-        //Draw correct animation at player character position
+        //Render character animation
         PlayerCharacterModel playerCharacter = level.getPlayer();
         Point playerCharPos = playerCharacter.getPosition();
         if(playerCharacter.isMoving()) {
@@ -82,6 +85,15 @@ public class View {
             batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
         }
         batch.end();
+
+        //Render map
+        //INSERT CODE HERE
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
+
+        //Render water blocks
+        //INSERT CODE HERE
+
     }
 
     public void setBatch(SpriteBatch batch){
