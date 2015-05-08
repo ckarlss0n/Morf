@@ -1,114 +1,94 @@
 package edu.chl.morf.screens2;
 
-import static edu.chl.morf.Constants.LEVEL_PATH;
-import static edu.chl.morf.handlers.Constants.PPM;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-
 import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.controllers.MyContactListener;
-import edu.chl.morf.handlers.Constants;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
-import edu.chl.morf.model.TileType;
-import edu.chl.morf.userdata.UserData;
-import edu.chl.morf.userdata.UserDataType;
 import edu.chl.morf.view.View;
+
+import static edu.chl.morf.handlers.Constants.PPM;
 
 public class PlayScreen extends GameScreen{
 
-	private GameLogic gameLogic;
-	private OrthographicCamera box2dCam;
-	private Level level;
-	private View view;
-	
-	private MyContactListener cl;
-	private GameController input;
+    private GameLogic gameLogic;
+    private OrthographicCamera box2dCam;
+    private Level level;
+    private View view;
 
-	public PlayScreen(ScreenManager sm, String levelName){
-		super(sm);
-		
-		LevelFactory levelFactory = new LevelFactory();
-		
-		level = levelFactory.getLevel(levelName);
-		gameLogic = new GameLogic(level);
-		
-		cl = new MyContactListener(gameLogic);
-		input = new GameController(gameLogic);
+    private MyContactListener cl;
+    private GameController input;
 
-		//Set up box2d camera
-		box2dCam = new OrthographicCamera();
-		box2dCam.setToOrtho(false, Main.V_WIDTH / PPM, Main.V_HEIGHT / PPM);
-		
-		this.view = new View(level, cam, spriteBatch);
-	}
+    public PlayScreen(ScreenManager sm, String levelName){
+        super(sm);
 
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
-	}
+        LevelFactory levelFactory = new LevelFactory();
 
-	@Override
-	public void render(float delta) {
-		gameLogic.render(delta);
-		view.render(delta);
-	}
+        level = levelFactory.getLevel(levelName);
+        gameLogic = new GameLogic(level);
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
+        cl = new MyContactListener(gameLogic);
+        input = new GameController(gameLogic);
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
+        //Set up box2d camera
+        box2dCam = new OrthographicCamera();
+        box2dCam.setToOrtho(false, Main.V_WIDTH / PPM, Main.V_HEIGHT / PPM);
 
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
+        this.view = new View(level, cam, spriteBatch);
+    }
 
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void show() {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void handleInput(){
-		
-	}
-	
-	public void update(float dt){
+    }
 
-	}
+    @Override
+    public void render(float delta) {
+        gameLogic.render(delta);
+        view.render(delta);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void pause() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void resume() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void hide() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void dispose() {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void handleInput(){
+
+    }
+
+    public void update(float dt){
+
+    }
 
 
 }
