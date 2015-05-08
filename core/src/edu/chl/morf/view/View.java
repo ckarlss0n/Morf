@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.morf.backgrounds.BackgroundFactory;
 import edu.chl.morf.backgrounds.BackgroundGroup;
 import edu.chl.morf.model.Level;
+import edu.chl.morf.model.Matrix;
 import edu.chl.morf.model.PlayerCharacterModel;
 
 import java.awt.*;
@@ -39,8 +40,9 @@ public class View {
     private BackgroundGroup backgroundGroup;
 
     public View(){
-        //Create SpriteBatch for drawing textures
-        //batch = new SpriteBatch();
+        batch = new SpriteBatch();                      //Create SpriteBatch for drawing textures
+        level = new Level(new Matrix(0,0,null), "");    //Create a level
+        camera = new OrthographicCamera();              //Create new camera
 
         //Load PayerCharacter sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
@@ -73,6 +75,11 @@ public class View {
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         this.camera = camera;
+    }
+
+    public View(Level level, OrthographicCamera camera, Batch batch){
+        this(level,camera);
+        this.batch =  batch;
     }
 
     public void render(float delta){

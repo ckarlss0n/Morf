@@ -57,9 +57,7 @@ public class PlayScreen extends GameScreen{
 		box2dCam = new OrthographicCamera();
 		box2dCam.setToOrtho(false, Main.V_WIDTH / PPM, Main.V_HEIGHT / PPM);
 		
-		this.view = new View(level, cam);
-		view.setBatch(spriteBatch);
-		
+		this.view = new View(level, cam, spriteBatch);
 	}
 
 	@Override
