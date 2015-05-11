@@ -29,7 +29,7 @@ public class PlayerCharacterModel {
     private boolean emptyLeft=true;
     private boolean facingRight=true;
     private boolean moving=false;
-    private boolean inAir=false;
+    private boolean onGround=false;
     private boolean alive = true;
     private int waterLevel=WATER_LEVEL;
     private Block activeBlock;
@@ -73,8 +73,9 @@ public class PlayerCharacterModel {
     }
     public Block getActiveBlock(){return activeBlock;}
     public Point2D.Float getSpeed(){return speed;}
-    public boolean isInAir() {
-        return inAir;
+    
+    public boolean onGround() {
+        return onGround;
     }
 
     //Ghost setters
@@ -94,8 +95,8 @@ public class PlayerCharacterModel {
         moving=true;
         facingRight=true;
     }
-    public void setInAir(boolean inAir){
-        this.inAir=inAir;
+    public void setOnGround(boolean onGround){
+        this.onGround = onGround;
     }
     public void setAlive(boolean alive){
         this.alive=alive;

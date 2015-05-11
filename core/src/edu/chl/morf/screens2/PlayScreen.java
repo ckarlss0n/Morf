@@ -38,6 +38,8 @@ public class PlayScreen extends GameScreen{
 
         cl = new MyContactListener(gameLogic);
         input = new GameController(gameLogic);
+        
+        world.setContactListener(cl);
 
         //Set up box2d camera
         box2dCam = new OrthographicCamera();

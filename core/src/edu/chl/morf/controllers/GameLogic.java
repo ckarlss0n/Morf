@@ -120,7 +120,7 @@ public class GameLogic {
 	}
 
 	public void setActiveBodyRight(Body bodyRight){
-		Block activeBlockRight=bodyBlockMap.get(bodyRight);
+		Block activeBlockRight = bodyBlockMap.get(bodyRight);
 		level.setActiveBlockRight(activeBlockRight);
 	}
 
