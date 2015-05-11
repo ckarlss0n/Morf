@@ -39,10 +39,14 @@ public class BackgroundLayer{
     private TextureRegion textureRegion;
     private Rectangle leftBounds;
     private Rectangle rightBounds;
-    private float speed = BACKGROUND_SCROLLING_SPEED;
+    private float speed;
+    private float relativeSpeed;
+    private float constantSpeed;
     private BitmapFont font = new BitmapFont();
 
-    public BackgroundLayer(String imagePath) {
+    public BackgroundLayer(String imagePath, float relativeSpeed, float constantSpeed) {
+        this.relativeSpeed = relativeSpeed;
+        this.constantSpeed = constantSpeed;
         font.setColor(Color.BLACK);
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(imagePath)));
         leftBounds = new Rectangle(0 - GAME_WIDTH/2, 0, GAME_WIDTH, GAME_HEIGHT);      //Half rectangle out of bounds on left side of screen
@@ -50,7 +54,7 @@ public class BackgroundLayer{
     }
 
     public void setSpeed(float speed){
-        this.speed = speed;
+        this.speed = constantSpeed + speed * relativeSpeed;
     }
 
     private void updateBounds(float delta){
