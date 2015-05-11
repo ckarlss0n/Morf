@@ -154,7 +154,9 @@ public class GameLogic {
 	//Update model with physics changes
 	public void updateLevel(){
 		Vector2 bodyPos = playerCharacterBody.getPosition();
+        Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
 		player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
+        player.setSpeed(bodySpeed.x,bodySpeed.y);
 
 		for(Body waterBody : bodyBlockMap.keySet()){
 			Water waterBlock = bodyBlockMap.get(waterBody);

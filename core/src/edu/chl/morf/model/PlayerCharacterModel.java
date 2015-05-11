@@ -110,7 +110,7 @@ public class PlayerCharacterModel {
     	position.setLocation(x, y);
     }
     public void setSpeed(float x, float y){
-        position.setLocation(x, y);
+        speed.setLocation(x, y);
     }
 
     public Water pourWater(){

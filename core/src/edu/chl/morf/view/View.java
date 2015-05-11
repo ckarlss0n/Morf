@@ -96,6 +96,7 @@ public class View {
         batch.begin();
         
         //Render background layers
+        backgroundGroup.setBackgroundSpeeds(playerCharacter.getSpeed().x);
         backgroundGroup.renderLayers(batch, delta);
         batch.end();
 
