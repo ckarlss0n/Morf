@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
+
 import edu.chl.morf.backgrounds.BackgroundFactory;
 import edu.chl.morf.backgrounds.BackgroundGroup;
 import edu.chl.morf.model.Level;
@@ -33,18 +36,18 @@ public class View {
     private float stateTime;
 
     private OrthographicCamera camera;
+    private OrthographicCamera box2dCam;
 
     private OrthogonalTiledMapRenderer tiledMapRenderer;
+    
+    private Box2DDebugRenderer b2dr;
+    private World world;
 
     private BackgroundFactory backgroundFactory;
     private BackgroundGroup backgroundGroup;
-
-    public View(){
-        batch = new SpriteBatch();                      //Create SpriteBatch for drawing textures
-        level = new Level(new Matrix(0,0,null), "");    //Create a level
-        camera = new OrthographicCamera();              //Create new camera
-
-        //Load PayerCharacter sprite sheet from assets
+    
+    public View(Level level, OrthographicCamera camera, OrthographicCamera b2dCam, Batch batch, World world){
+    	//Load PayerCharacter sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
         TextureRegion[] runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
         for (int i = 0; i < PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length; i++) {
@@ -60,26 +63,16 @@ public class View {
         runningRightAnimation = new Animation(0.1f, runningFrames);
         idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
         stateTime = 0f;
-
-    }
-
-    public View(Level level){
-        this();
-        this.level = level;
-        backgroundFactory = new BackgroundFactory();
+    	this.level = level;
+    	backgroundFactory = new BackgroundFactory();
         backgroundGroup = backgroundFactory.createBackgroundGroup(level.getName());
-    }
-
-    public View(Level level, OrthographicCamera camera){
-        this(level);
+        this.camera = camera;
+        this.batch =  batch;
+        this.box2dCam = b2dCam;
+        this.world = world;
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
-        this.camera = camera;
-    }
-
-    public View(Level level, OrthographicCamera camera, Batch batch){
-        this(level,camera);
-        this.batch =  batch;
+        b2dr = new Box2DDebugRenderer();
     }
 
     public void render(float delta){
@@ -94,6 +87,8 @@ public class View {
         //Render map
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+        
+        b2dr.render(world, box2dCam.combined);
 
         batch.begin();
 
@@ -103,16 +98,17 @@ public class View {
         //Render character animation
         PlayerCharacterModel playerCharacter = level.getPlayer();
         Point2D.Float playerCharPos = playerCharacter.getPosition();
+        System.out.println(playerCharPos.x + " " + playerCharPos.y);
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
+                        playerCharPos.x, playerCharPos.y, 15 ,15);
             }else{
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
+                        playerCharPos.x, playerCharPos.y, 15 ,15);
             }
         }else{
-            batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 15/100f,15/100f);
+            batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 15 ,15);
         }
 
         //Render water blocks
@@ -128,6 +124,8 @@ public class View {
         Point2D.Float playerCharPos = playerCharacter.getPosition();
         camera.position.set(playerCharPos.x, playerCharPos.y, 0f);
         camera.update();
+        box2dCam.position.set(playerCharPos.x / PPM, playerCharPos.y / PPM, 0f);
+        box2dCam.update();
     }
 
     public void setBatch(SpriteBatch batch){
