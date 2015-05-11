@@ -14,6 +14,7 @@ public abstract class GameScreen implements Screen{
 	protected SpriteBatch spriteBatch;
 	protected OrthographicCamera cam;
 	protected OrthographicCamera hudCam;
+	protected GameScreen(){}
 	
 	protected GameScreen(ScreenManager sm){
 		screenManager = sm;

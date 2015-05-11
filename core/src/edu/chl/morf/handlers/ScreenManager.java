@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import edu.chl.morf.main.Main;
 import edu.chl.morf.screens2.GameScreen;
+import edu.chl.morf.screens2.MainMenuScreen;
 import edu.chl.morf.screens2.PlayScreen;
 
 public class ScreenManager {
@@ -13,11 +14,12 @@ public class ScreenManager {
 	private Stack<GameScreen> screens;
 	
 	public static final int PLAY = 656987;
+	public static final int MAINMENU = 123456;
 	
 	public ScreenManager(Main game){
 		this.game = game;
 		screens = new Stack<GameScreen>();
-		pushState(PLAY);
+		pushState(MAINMENU);
 	}
 	
 	public Main getGame(){
@@ -35,6 +37,9 @@ public class ScreenManager {
 	private GameScreen getScreen(int screen){
 		if(screen == PLAY){
 			return new PlayScreen(this, "Level_1.tmx");
+		}
+		else if(screen == MAINMENU){
+			return new MainMenuScreen(this);
 		}
 		return null;
 	}
