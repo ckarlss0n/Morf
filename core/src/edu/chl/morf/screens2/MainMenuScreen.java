@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import edu.chl.morf.Constants;
 import edu.chl.morf.handlers.ScreenManager;
 
@@ -27,11 +29,14 @@ public class MainMenuScreen extends GameScreen{
     }
 
     public class MainMenuStage extends Stage{
+        float scaling=0.6666f;
+        Image background;
         TextButton playButton;
         TextButton exitButton;
         TextButton settingsButton;
         TextButton highscoreButton;
-        TextButton.TextButtonStyle textButtonStyle;
+        TextButton.TextButtonStyle playTextButtonStyle;
+        TextButton.TextButtonStyle exitTextButtonStyle;
         BitmapFont font;
         public MainMenuStage() {
             Gdx.input.setInputProcessor(this);
@@ -41,33 +46,48 @@ public class MainMenuScreen extends GameScreen{
             skin.addRegions(textureAtlas);
             font.setColor(Color.WHITE);
             font.setScale(2);
-            textButtonStyle = new TextButton.TextButtonStyle();
-            textButtonStyle.font = font;
-            textButtonStyle.up = skin.getDrawable(Constants.BUTTON_UNPRESSED_REGION_NAME);
-            textButtonStyle.down = skin.getDrawable(Constants.BUTTON_PRESSED_REGION_NAME);
-            textButtonStyle.checked = skin.getDrawable(Constants.BUTTON_PRESSED_REGION_NAME);
+            playTextButtonStyle = new TextButton.TextButtonStyle();
+            playTextButtonStyle.font = font;
+
+            //background
+            background=new Image(new Texture("menu/MainMenu_Background.png"));
+            //background.setScaling(Scaling.fit);
+            background.setScale(scaling);
+            background.setPosition(0,0);
+            this.addActor(background);
+
 
             //PlayButton
-            playButton = new TextButton("Play", textButtonStyle);
-            playButton.setPosition(50, 250);
-            playButton.setSize(200, 200);
-            playButton.addListener(new ChangeListener(  ) {
+            playTextButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection.png")));
+            playTextButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection_Focus.png")));
+            playTextButtonStyle.checked = playTextButtonStyle.down;
+            playButton = new TextButton("",playTextButtonStyle);
+            playButton.setPosition(557*scaling,(89+146+16)*scaling);
+            playButton.setSize(806*scaling, 146*scaling);
+            playButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     screenManager.setState(ScreenManager.PLAY);
                 }
             });
+            playButton.setScale(scaling);
             this.addActor(playButton);
+
             //ExitButton
-            exitButton=new TextButton("Exit", textButtonStyle);
-            exitButton.setPosition(250,250);
-            exitButton.setSize(200, 200);
+            exitTextButtonStyle=new TextButton.TextButtonStyle(playTextButtonStyle);
+            exitTextButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Exit.png")));
+            exitTextButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Exit_Focus.png")));
+            exitTextButtonStyle.checked = exitTextButtonStyle.down;
+            exitButton=new TextButton("", exitTextButtonStyle);
+            exitButton.setPosition(557*scaling,89*scaling);
+            exitButton.setSize(806*scaling, 146*scaling);
             exitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     Gdx.app.exit();
                 }
             });
+            exitButton.setScale(scaling);
             this.addActor(exitButton);
 
         }
