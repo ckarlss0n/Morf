@@ -3,6 +3,7 @@ package edu.chl.morf.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -15,6 +16,8 @@ import edu.chl.morf.backgrounds.BackgroundGroup;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.Matrix;
 import edu.chl.morf.model.PlayerCharacterModel;
+import edu.chl.morf.model.Water;
+import edu.chl.morf.model.WaterState;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -33,7 +36,10 @@ public class View {
     private Animation runningRightAnimation;
     private Animation runningLeftAnimation;
     private TextureRegion idleTexture;
+    private Texture waterTexture;
     private float stateTime;
+    
+    private PlayerCharacterModel playerCharacter;
 
     private OrthographicCamera camera;
     private OrthographicCamera box2dCam;
@@ -55,21 +61,30 @@ public class View {
             runningFrames[i] = textureAtlas.findRegion(path);
         }
         runningLeftAnimation = new Animation(0.1f, runningFrames);
+        
         runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length];
         for (int i = 0; i < PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length; i++) {
             String path = PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES [i];
             runningFrames[i] = textureAtlas.findRegion(path);
         }
         runningRightAnimation = new Animation(0.1f, runningFrames);
+        
         idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
+        
+        waterTexture = new Texture("Tiles/waterTile.png");
+        
         stateTime = 0f;
     	this.level = level;
+    	playerCharacter = level.getPlayer();
+    	
     	backgroundFactory = new BackgroundFactory();
         backgroundGroup = backgroundFactory.createBackgroundGroup(level.getName());
+        
         this.camera = camera;
         this.batch =  batch;
         this.box2dCam = b2dCam;
         this.world = world;
+        
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         b2dr = new Box2DDebugRenderer();
@@ -78,8 +93,8 @@ public class View {
     public void render(float delta){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         updateCamera();
-
         batch.begin();
+        
         //Render background layers
         backgroundGroup.renderLayers(batch, delta);
         batch.end();
@@ -96,7 +111,7 @@ public class View {
         stateTime += Gdx.graphics.getDeltaTime();
 
         //Render character animation
-        PlayerCharacterModel playerCharacter = level.getPlayer();
+        
         Point2D.Float playerCharPos = playerCharacter.getPosition();
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
@@ -111,7 +126,11 @@ public class View {
         }
 
         //Render water blocks
-        //INSERT CODE HERE
+        for(Water water : level.getWaterBlocks()){
+        	if(water.getState() == WaterState.LIQUID){
+        		batch.draw(waterTexture, water.getPosition().x, water.getPosition().y, 64, 64);
+        	}
+        }
 
 
         batch.end();
