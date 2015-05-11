@@ -2,6 +2,7 @@ package edu.chl.morf.controllers;
 
 import static edu.chl.morf.handlers.Constants.*;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -37,6 +38,7 @@ public class GameLogic {
 	private PlayerCharacterModel player;
 	private Vector2 movementVector;
 	private BodyFactory bodyFactory;
+	private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
 
 	public GameLogic(Level level, World world){
 		this.level = level;
@@ -49,6 +51,13 @@ public class GameLogic {
 		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
 		//bindWaterBlocks();
 		generateLevel();
+		initPressedKeys();
+	}
+
+	public void initPressedKeys(){
+		pressedKeys.put(Input.Keys.LEFT, false);
+		pressedKeys.put(Input.Keys.RIGHT, false);
+		pressedKeys.put(Input.Keys.UP, false);
 	}
 
 	public World getWorld(){
@@ -64,6 +73,10 @@ public class GameLogic {
 			return bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
 		}
 		return null;
+	}
+
+	public void setKeyState(int keyCode, boolean bool){
+		pressedKeys.put(keyCode, bool);
 	}
 
 	//Convert level to a body
@@ -110,8 +123,14 @@ public class GameLogic {
 	}
 
 	public void stop(){
-		player.stop();
-		movementVector = new Vector2(0, 0);
+		if(!(pressedKeys.get(Input.Keys.LEFT) || pressedKeys.get(Input.Keys.RIGHT))) {
+			player.stop();
+			movementVector = new Vector2(0, 0);
+		} else if(pressedKeys.get(Input.Keys.LEFT) && !pressedKeys.get(Input.Keys.RIGHT)) {
+			moveLeft();
+		} else {
+			moveRight();
+		}
 	}
 
 	public void setActiveBodyLeft(Body bodyLeft){

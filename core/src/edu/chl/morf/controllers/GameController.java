@@ -20,12 +20,15 @@ public class GameController extends InputAdapter{
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
 			case Input.Keys.LEFT:
+				gameLogic.setKeyState(keycode, true);
 				gameLogic.moveLeft();
 				break;
 			case Input.Keys.RIGHT:
+				gameLogic.setKeyState(keycode, true);
 				gameLogic.moveRight();
 				break;
 			case Input.Keys.UP:
+				gameLogic.setKeyState(keycode, true);
 				gameLogic.jump();
 				break;
 			case Input.Keys.SPACE:
@@ -43,7 +46,25 @@ public class GameController extends InputAdapter{
 
 	@Override
 	public boolean keyUp(int keycode) {
-		gameLogic.stop();
+		switch (keycode) {
+			case Input.Keys.LEFT:
+				gameLogic.setKeyState(Input.Keys.LEFT, false);
+				gameLogic.moveLeft();
+				gameLogic.stop();
+				break;
+			case Input.Keys.RIGHT:
+				gameLogic.setKeyState(Input.Keys.RIGHT, false);
+				gameLogic.moveRight();
+				gameLogic.stop();
+				break;
+			case Input.Keys.UP:
+				gameLogic.setKeyState(Input.Keys.UP, false);
+				gameLogic.stop();
+				break;
+			case Input.Keys.SHIFT_LEFT:
+				gameLogic.stop();
+				break;
+		}
 		return true;
 	}
 }
