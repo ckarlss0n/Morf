@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl.morf.backgrounds.BackgroundFactory;
 import edu.chl.morf.backgrounds.BackgroundGroup;
+import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
@@ -49,8 +50,9 @@ public class View {
 
     private BackgroundFactory backgroundFactory;
     private BackgroundGroup backgroundGroup;
+    private OrthographicCamera hudCam;
     
-    public View(Level level, OrthographicCamera camera, OrthographicCamera b2dCam, Batch batch, World world){
+    public View(Level level, OrthographicCamera camera, OrthographicCamera hudCam, OrthographicCamera b2dCam, Batch batch, World world){
     	//Load PayerCharacter sprite sheet from assets
         TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
         TextureRegion[] runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
@@ -82,6 +84,8 @@ public class View {
         this.batch =  batch;
         this.box2dCam = b2dCam;
         this.world = world;
+        this.hudCam = hudCam;
+        this.hudCam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
         
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
@@ -94,6 +98,7 @@ public class View {
         batch.begin();
         
         //Render background layers
+        batch.setProjectionMatrix(hudCam.combined);
         backgroundGroup.setBackgroundSpeeds(playerCharacter.getSpeed().x);
         backgroundGroup.renderLayers(batch, delta);
         batch.end();
@@ -115,13 +120,13 @@ public class View {
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x, playerCharPos.y, 15 ,15);
+                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/4, TILE_SIZE ,TILE_SIZE);
             }else{
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x, playerCharPos.y, 15 ,15);
+                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/4, TILE_SIZE ,TILE_SIZE);
             }
         }else{
-            batch.draw(idleTexture, playerCharPos.x, playerCharPos.y, 15 ,15);
+            batch.draw(idleTexture, playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/4, TILE_SIZE ,TILE_SIZE);
         }
 
         //Render water blocks

@@ -7,12 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static edu.chl.morf.Constants.*;
+import static edu.chl.morf.main.Main.V_HEIGHT;
+import static edu.chl.morf.main.Main.V_WIDTH;
 
 /**
  * This class represents a background layer used in the game.
@@ -49,8 +46,8 @@ public class BackgroundLayer{
         this.constantSpeed = constantSpeed;
         font.setColor(Color.BLACK);
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(imagePath)));
-        leftBounds = new Rectangle(0 - GAME_WIDTH/2, 0, GAME_WIDTH, GAME_HEIGHT);      //Half rectangle out of bounds on left side of screen
-        rightBounds = new Rectangle(GAME_WIDTH/2, 0, GAME_WIDTH, GAME_HEIGHT);         //Half rectangle out of bounds on right side of screen
+        leftBounds = new Rectangle(0 - V_WIDTH/2, 0, V_WIDTH, V_HEIGHT);      //Half rectangle out of bounds on left side of screen
+        rightBounds = new Rectangle(V_WIDTH/2, 0, V_WIDTH, V_HEIGHT);         //Half rectangle out of bounds on right side of screen
     }
 
     public void setSpeed(float speed){
@@ -63,19 +60,19 @@ public class BackgroundLayer{
     }
 
     private void scrolledOut(){
-        if(rightBounds.x >= GAME_WIDTH) {
-            leftBounds.x = -GAME_WIDTH;
+        if(rightBounds.x >= V_WIDTH) {
+            leftBounds.x = -V_WIDTH;
             rightBounds.x = 0;
         } else if(rightBounds.x <= 0){
             leftBounds.x = 0;
-            rightBounds.x = GAME_WIDTH;
+            rightBounds.x = V_WIDTH;
         }
     }
 
     public void draw(Batch batch, float delta){
         updateBounds(delta);
         scrolledOut();
-        batch.draw(textureRegion, leftBounds.x, leftBounds.y, GAME_WIDTH, GAME_HEIGHT);
-        batch.draw(textureRegion, rightBounds.x, rightBounds.y, GAME_WIDTH, GAME_HEIGHT);
+        batch.draw(textureRegion, leftBounds.x, leftBounds.y, V_WIDTH, V_HEIGHT);
+        batch.draw(textureRegion, rightBounds.x, rightBounds.y, V_WIDTH, V_HEIGHT);
     }
 }
