@@ -55,12 +55,9 @@ public class GameLogic {
 		return world;
 	}
 	
-//	public void bindWaterBlocks(){
-//		ArrayList<Water> waterList = level.getWaterBlocks();
-//		for(Water water : waterList){
-//			bodyBlockMap.put(createWaterBody(), water);
-//		}
-//	}
+	public void bindWaterToBody(Body body, Water water){
+		bodyBlockMap.put(body, water);
+	}
 
 	public Body createWaterBody(Water water){
 		if (water.getState() == WaterState.LIQUID){
@@ -109,7 +106,7 @@ public class GameLogic {
 	public void placeWater(){
 		level.pourWater();
 		Water water = level.getWaterBlocks().get(level.getWaterBlocks().size() - 1);
-		createWaterBody(water);
+		bindWaterToBody(createWaterBody(water), water);
 	}
 
 	public void stop(){
@@ -161,7 +158,7 @@ public class GameLogic {
 		for(Body waterBody : bodyBlockMap.keySet()){
 			Water waterBlock = bodyBlockMap.get(waterBody);
 			Vector2 waterPos = waterBody.getPosition();
-			waterBlock.setPosition(vectorToPoint(waterPos));
+			waterBlock.setPosition(waterPos.x * PPM, waterPos.y * PPM);
 		}
 	}
 }

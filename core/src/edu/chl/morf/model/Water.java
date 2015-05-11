@@ -56,6 +56,9 @@ public class Water implements Block{
     public void setPosition(Point2D.Float p){
         position = p;
     }
+    public void setPosition(float x, float y){
+    	position.setLocation(x, y);
+    }
 
     public void heat(){
         if(state == WaterState.SOLID) {
