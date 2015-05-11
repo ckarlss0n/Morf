@@ -120,13 +120,13 @@ public class View {
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/4, TILE_SIZE ,TILE_SIZE);
+                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
             }else{
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/4, TILE_SIZE ,TILE_SIZE);
+                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
             }
         }else{
-            batch.draw(idleTexture, playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/4, TILE_SIZE ,TILE_SIZE);
+            batch.draw(idleTexture, playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
         }
 
         //Render water blocks

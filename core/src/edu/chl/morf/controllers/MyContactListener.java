@@ -42,11 +42,9 @@ public class MyContactListener implements ContactListener{
             } else if (userDataTypeA == UserDataType.GHOST_RIGHT) {
                 userDataA.increment();
                 gameLogic.setActiveBodyRight(fb.getBody());
-                System.out.println("right");
             } else if (userDataTypeB == UserDataType.GHOST_RIGHT) {
                 userDataB.increment();
                 gameLogic.setActiveBodyRight(fa.getBody());
-                System.out.println("right");
             }
             //Sets the dead variable to true when contact between SPIKE and PLAYERCHARACTER occurs
             else if ((userDataTypeA == UserDataType.SPIKE) && (userDataTypeB == UserDataType.PLAYERCHARACTER)) {
