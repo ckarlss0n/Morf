@@ -17,7 +17,8 @@ public class TestBodyFactory {
 	public void testCreatePlayerBody() {
 		BodyFactory bf = new BodyFactory();
 		World world = new World(WORLD_GRAVITY, true);
-		Body body = bf.createPlayerBody(world);
+		Vector2 playerPos = new Vector2(0, 0);
+		Body body = bf.createPlayerBody(world, playerPos);
 
 		assertTrue(body != null);
 	}

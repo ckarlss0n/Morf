@@ -1,5 +1,6 @@
 package edu.chl.morf.controllers;
 
+import static edu.chl.morf.handlers.Constants.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -30,23 +31,27 @@ public class GameLogic {
 	private Body playerCharacterBody;
 	private TiledMapTileLayer tiledMapTileLayer;
 	private String levelName;
-	private PlayerCharacterModel playerCharacterModel;
+	private PlayerCharacterModel player;
 	private Vector2 movementVector;
 	private BodyFactory bodyFactory;
 
-	public GameLogic(Level level){
+	public GameLogic(Level level, World world){
 		this.level = level;
-		world = new World(WORLD_GRAVITY, true);
+		this.world = world;
 		bodyBlockMap = new HashMap<Body, Water>();
 		levelName = level.getName();
-		playerCharacterModel = level.getPlayer();
+		player = level.getPlayer();
 		movementVector = new Vector2(0,0);
 		bodyFactory = new BodyFactory();
-		playerCharacterBody = createPlayerBody();
+		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
 		//bindWaterBlocks();
 		generateLevel();
 	}
 
+	public World getWorld(){
+		return world;
+	}
+	
 	public void bindWaterBlocks(){
 		ArrayList<Water> waterList = level.getWaterBlocks();
 		for(Water water : waterList){
@@ -58,17 +63,13 @@ public class GameLogic {
 		return bodyFactory.createWaterBody(world, new Vector2(0, 0));
 	}
 
-	public Body createPlayerBody(){
-		return bodyFactory.createPlayerBody(world);
-	}
-
 	//Convert level to a body
 	public void generateLevel(){
 		new LevelGenerator().generateLevel(level, world);
 	}
 
 	public void moveLeft(){
-		playerCharacterModel.moveLeft();
+		player.moveLeft();
 		if(playerCharacterBody.getLinearVelocity().x >= 0){    //If moving right
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
@@ -76,7 +77,7 @@ public class GameLogic {
 	}
 
 	public void moveRight(){
-		playerCharacterModel.moveRight();
+		player.moveRight();
 		if(playerCharacterBody.getLinearVelocity().x <= 0){    //If moving left
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
@@ -104,7 +105,7 @@ public class GameLogic {
 	}
 
 	public void stop(){
-		playerCharacterModel.stop();
+		player.stop();
 		movementVector = new Vector2(0, 0);
 	}
 
@@ -145,7 +146,7 @@ public class GameLogic {
 	//Update model with physics changes
 	public void updateLevel(){
 		Vector2 bodyPos = playerCharacterBody.getPosition();
-		playerCharacterModel.setPosition(vectorToPoint(bodyPos));
+		player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
 
 		for(Body waterBody : bodyBlockMap.keySet()){
 			Water waterBlock = bodyBlockMap.get(waterBody);

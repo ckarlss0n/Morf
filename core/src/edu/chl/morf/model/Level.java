@@ -23,11 +23,11 @@ public class Level {
 	private PlayerCharacterModel player;
 	private Matrix levelMatrix;
 
-	public Level(Matrix matrix, String name){
+	public Level(Matrix matrix, String name, PlayerCharacterModel player){
 		this.name = name;
 		levelMatrix = matrix;
 		waterBlocks = new ArrayList<Water>();
-		player = new PlayerCharacterModel();
+		this.player = player;
 	}
 	
 	//Getters

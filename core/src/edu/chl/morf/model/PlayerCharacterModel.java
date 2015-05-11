@@ -38,7 +38,7 @@ public class PlayerCharacterModel {
     
     //Constructors
     public PlayerCharacterModel(){
-    	position = new Point2D.Float(0, 0);
+    	position = new Point2D.Float(100, 100);
     }
     public PlayerCharacterModel(Point2D.Float position){
     	this.position = position;
@@ -100,7 +100,10 @@ public class PlayerCharacterModel {
         moving=false;
     }
     public void setPosition(Point2D.Float position){
-        this.position.setLocation(position);
+        position.setLocation(position);
+    }
+    public void setPosition(float x, float y){
+    	position.setLocation(x, y);
     }
 
     public Water pourWater(){

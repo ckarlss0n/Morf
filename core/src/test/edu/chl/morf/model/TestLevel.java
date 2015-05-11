@@ -12,14 +12,14 @@ import edu.chl.morf.model.Water;
 public class TestLevel {
 	@Test
 	public void testAddWater(){
-		Level level = new Level(null, null);
+		Level level = new Level(null, null, null);
 		level.addWater(new Water(0, 0));
 		assertTrue(level.getWaterBlocks().size() == 1);
 	}
 	
 	@Test
 	public void testPourWater(){
-		Level level = new Level(null, null);
+		Level level = new Level(null, null, null);
 		level.pourWater();
 		assertTrue(level.getWaterBlocks().get(0).getPosition().equals(level.getPlayer().getPosition()));
 	}

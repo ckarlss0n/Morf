@@ -19,10 +19,10 @@ import edu.chl.morf.userdata.UserDataType;
 
 public class BodyFactory {
 
-	public Body createPlayerBody(World world){
+	public Body createPlayerBody(World world, Vector2 position){
 
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(6, 6);
+		bdef.position.set(position.x / PPM, position.y / PPM);
 		bdef.type = BodyType.DynamicBody;
 		bdef.fixedRotation = true;
 

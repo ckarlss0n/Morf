@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.LevelObject;
 import edu.chl.morf.model.Matrix;
+import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.TileType;
 
 public class LevelFactory {
@@ -39,7 +40,9 @@ public class LevelFactory {
 				matrix.addLevelObject(new LevelObject(TileType.GROUND, new Point2D.Float(groundLayer.getHeight() - 1 - row, col)));
 			}
 		}
-		return new Level(matrix, name);
+		
+		PlayerCharacterModel player = new PlayerCharacterModel(500, 500);
+		return new Level(matrix, name, player);
 
 	}
 }
