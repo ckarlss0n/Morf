@@ -23,6 +23,12 @@ public class BackgroundGroup {
         return backgrounds;
     }
 
+    public void setBackgroundSpeeds(float speed){
+        for(BackgroundLayer backgroundLayer: backgrounds){
+            backgroundLayer.setSpeed(speed);
+        }
+    }
+
     public void renderLayers(Batch batch, float delta){
         for(BackgroundLayer backgroundLayer: backgrounds){
             backgroundLayer.draw(batch,delta);
