@@ -98,7 +98,6 @@ public class View {
         //Render character animation
         PlayerCharacterModel playerCharacter = level.getPlayer();
         Point2D.Float playerCharPos = playerCharacter.getPosition();
-        System.out.println(playerCharPos.x + " " + playerCharPos.y);
         if(playerCharacter.isMoving()) {
             if(playerCharacter.isFacingRight()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),

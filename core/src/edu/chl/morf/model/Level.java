@@ -69,12 +69,13 @@ public class Level {
 
 	//Method for pouring water
 	public void pourWater(){
-		if(player.getActiveBlock() instanceof EmptyBlock && player.getWaterLevel()>0){
-			addWater(player.pourWater());
-		}
-		else if(player.getActiveBlock() instanceof Flower){
-			System.out.println("You win");
-		}
+		addWater(player.pourWater());
+//		if(player.getActiveBlock() instanceof EmptyBlock && player.getWaterLevel()>0){
+//			addWater(player.pourWater());
+//		}
+//		else if(player.getActiveBlock() instanceof Flower){
+//			System.out.println("You win");
+//		}
 	}
 	
 	//Methods for heating and cooling blocks

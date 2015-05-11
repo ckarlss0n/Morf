@@ -7,6 +7,7 @@ import java.awt.Point;
 import org.junit.Test;
 
 import edu.chl.morf.model.Level;
+import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
 
 public class TestLevel {
@@ -19,7 +20,7 @@ public class TestLevel {
 	
 	@Test
 	public void testPourWater(){
-		Level level = new Level(null, null, null);
+		Level level = new Level(null, null, new PlayerCharacterModel());
 		level.pourWater();
 		assertTrue(level.getWaterBlocks().get(0).getPosition().equals(level.getPlayer().getPosition()));
 	}

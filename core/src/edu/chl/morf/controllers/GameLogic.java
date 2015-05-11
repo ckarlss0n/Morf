@@ -1,16 +1,19 @@
 package edu.chl.morf.controllers;
 
 import static edu.chl.morf.handlers.Constants.*;
+
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+
 import edu.chl.morf.handlers.BodyFactory;
 import edu.chl.morf.handlers.LevelGenerator;
 import edu.chl.morf.model.Block;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
+import edu.chl.morf.model.WaterState;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -52,15 +55,18 @@ public class GameLogic {
 		return world;
 	}
 	
-	public void bindWaterBlocks(){
-		ArrayList<Water> waterList = level.getWaterBlocks();
-		for(Water water : waterList){
-			bodyBlockMap.put(createWaterBody(), water);
-		}
-	}
+//	public void bindWaterBlocks(){
+//		ArrayList<Water> waterList = level.getWaterBlocks();
+//		for(Water water : waterList){
+//			bodyBlockMap.put(createWaterBody(), water);
+//		}
+//	}
 
-	public Body createWaterBody(){
-		return bodyFactory.createWaterBody(world, new Vector2(0, 0));
+	public Body createWaterBody(Water water){
+		if (water.getState() == WaterState.LIQUID){
+			return bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
+		}
+		return null;
 	}
 
 	//Convert level to a body
@@ -102,6 +108,8 @@ public class GameLogic {
 
 	public void placeWater(){
 		level.pourWater();
+		Water water = level.getWaterBlocks().get(level.getWaterBlocks().size() - 1);
+		createWaterBody(water);
 	}
 
 	public void stop(){

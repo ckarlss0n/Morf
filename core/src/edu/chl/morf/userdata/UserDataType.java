@@ -10,5 +10,6 @@ public enum UserDataType {
     GHOST_RIGHT,
     GHOST_BOTTOM,
     SPIKE,
+    WATER,
     OTHER
 }

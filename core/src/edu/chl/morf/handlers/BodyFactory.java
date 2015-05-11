@@ -43,20 +43,20 @@ public class BodyFactory {
 	public Body createWaterBody(World world, Vector2 position){
 
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(position);
+		bdef.position.set(position.x / PPM, position.y / PPM);
 		bdef.type = BodyType.DynamicBody;
 		bdef.fixedRotation = true;
 
 		Body body = world.createBody(bdef);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(64 / PPM, 64 / PPM);
+		shape.setAsBox(32 / PPM, 32 / PPM);
 
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_WATER;
 		fdef.filter.maskBits = BIT_GROUND;
-		body.createFixture(fdef).setUserData(UserDataType.PLAYERCHARACTER);
+		body.createFixture(fdef).setUserData(UserDataType.WATER);
 
 		
 		return body;
