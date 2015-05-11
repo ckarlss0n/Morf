@@ -1,17 +1,17 @@
 package edu.chl.morf.screens2;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import edu.chl.morf.Constants;
 import edu.chl.morf.handlers.ScreenManager;
 
@@ -22,14 +22,18 @@ import edu.chl.morf.handlers.ScreenManager;
 public class MainMenuScreen extends GameScreen{
     MainMenuStage stage;
     public MainMenuScreen(ScreenManager sm){
-        this.stage=new MainMenuStage(sm);
+        super(sm);
+        this.stage=new MainMenuStage();
     }
 
     public class MainMenuStage extends Stage{
         TextButton playButton;
+        TextButton exitButton;
+        TextButton settingsButton;
+        TextButton highscoreButton;
         TextButton.TextButtonStyle textButtonStyle;
         BitmapFont font;
-        public MainMenuStage(ScreenManager sm) {
+        public MainMenuStage() {
             Gdx.input.setInputProcessor(this);
             Skin skin = new Skin();
             font = new BitmapFont();
@@ -42,18 +46,30 @@ public class MainMenuScreen extends GameScreen{
             textButtonStyle.up = skin.getDrawable(Constants.BUTTON_UNPRESSED_REGION_NAME);
             textButtonStyle.down = skin.getDrawable(Constants.BUTTON_PRESSED_REGION_NAME);
             textButtonStyle.checked = skin.getDrawable(Constants.BUTTON_PRESSED_REGION_NAME);
-            playButton = new TextButton("PLAY", textButtonStyle);
+
+            //PlayButton
+            playButton = new TextButton("Play", textButtonStyle);
             playButton.setPosition(50, 250);
             playButton.setSize(200, 200);
-            System.out.println("hej");
-            playButton.addListener(new ChangeListener() {
+            playButton.addListener(new ChangeListener(  ) {
                 @Override
-                public void changed(ChangeEvent changeEvent,Actor actor) {
-                    System.out.println("hej");
-                    sm.setState(656987);
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    screenManager.setState(ScreenManager.PLAY);
                 }
             });
             this.addActor(playButton);
+            //ExitButton
+            exitButton=new TextButton("Exit", textButtonStyle);
+            exitButton.setPosition(250,250);
+            exitButton.setSize(200, 200);
+            exitButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    Gdx.app.exit();
+                }
+            });
+            this.addActor(exitButton);
+
         }
     }
 
