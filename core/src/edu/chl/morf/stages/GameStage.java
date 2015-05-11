@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl.morf.actors.BackgroundLayer;
 import edu.chl.morf.actors.PlayerCharacter;
 import edu.chl.morf.Constants;
-import edu.chl.morf.actors.blocks.Water;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.TileType;
 import edu.chl.morf.userdata.UserData;
