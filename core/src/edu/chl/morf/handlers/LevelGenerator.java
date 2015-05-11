@@ -19,13 +19,12 @@ import edu.chl.morf.model.Level;
 public class LevelGenerator {
 
     private TiledMapTileLayer groundLayer;
-    private float tileSize;
-
+	public static float TILE_SIZE;
 	public void generateLevel(Level level, World world){
 		
 		TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
-		tileSize = groundLayer.getTileHeight();
+		TILE_SIZE = groundLayer.getTileHeight();
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.fixedRotation = true;
 		FixtureDef fixDef = new FixtureDef();
@@ -39,15 +38,15 @@ public class LevelGenerator {
 				if (cell.getTile() == null) continue;
 
 				bodyDef.type = BodyType.StaticBody;
-				bodyDef.position.set((col + 0.5f) * tileSize / PPM, (row + 0.5f) * tileSize / PPM);
+				bodyDef.position.set((col + 0.5f) * TILE_SIZE / PPM, (row + 0.5f) * TILE_SIZE / PPM);
 
 				ChainShape chainShape = new ChainShape();
 				Vector2[] v = new Vector2[5];
-				v[0] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
-				v[1] = new Vector2(-tileSize / 2 / PPM, tileSize / 2 / PPM);
-				v[2] = new Vector2(tileSize / 2 / PPM, tileSize / 2 / PPM);
-				v[3] = new Vector2(tileSize / 2 / PPM, -tileSize / 2 / PPM);
-				v[4] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
+				v[0] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
+				v[1] = new Vector2(-TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
+				v[2] = new Vector2(TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
+				v[3] = new Vector2(TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
+				v[4] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
 
 				chainShape.createChain(v);
 				fixDef.friction = GROUND_FRICTION;

@@ -10,19 +10,17 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-
 import edu.chl.morf.backgrounds.BackgroundFactory;
 import edu.chl.morf.backgrounds.BackgroundGroup;
 import edu.chl.morf.model.Level;
-import edu.chl.morf.model.Matrix;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 import static edu.chl.morf.Constants.*;
+import static edu.chl.morf.handlers.LevelGenerator.TILE_SIZE;
 
 /**
  * Created by Lage on 2015-05-06.
@@ -32,7 +30,7 @@ public class View {
     private Level level;
     private Batch batch;
 
-    //PlayerCharacter render varaibles
+    //PlayerCharacter render variables
     private Animation runningRightAnimation;
     private Animation runningLeftAnimation;
     private TextureRegion idleTexture;
@@ -129,13 +127,11 @@ public class View {
         //Render water blocks
         for(Water water : level.getWaterBlocks()){
         	if(water.getState() == WaterState.LIQUID){
-        		batch.draw(waterTexture, water.getPosition().x, water.getPosition().y, 64, 64);
+        		batch.draw(waterTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
         	}
         }
 
-
         batch.end();
-
     }
 
     public void updateCamera() {
