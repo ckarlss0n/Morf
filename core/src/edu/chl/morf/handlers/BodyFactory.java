@@ -1,8 +1,8 @@
 package edu.chl.morf.handlers;
 
 import static edu.chl.morf.handlers.Constants.*;
-import static edu.chl.morf.Constants.REAL_TILE_SIZE;
-import static edu.chl.morf.Constants.TILE_SIZE;
+import static edu.chl.morf.userdata.UserDataType.*;
+import static edu.chl.morf.handlers.LevelGenerator.TILE_SIZE;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -29,13 +29,21 @@ public class BodyFactory {
 		Body body = world.createBody(bdef);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(15 / PPM, 15 / PPM);
+		//shape.setAsBox((TILE_SIZE / 2 - 2) / PPM, (TILE_SIZE / 2 - 2) / PPM);
+		shape.setAsBox(30 / PPM, 30 / PPM);
 
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_PLAYER;
 		fdef.filter.maskBits = BIT_GROUND;
-		body.createFixture(fdef).setUserData(UserDataType.PLAYERCHARACTER);
+		body.createFixture(fdef).setUserData(new UserData(PLAYERCHARACTER));
+		
+		shape.setAsBox(20 / PPM, 20 / PPM, new Vector2(30 / PPM, 0), 0);
+		fdef.shape = shape;
+		fdef.filter.categoryBits = BIT_SENSOR;
+		fdef.filter.maskBits = BIT_GROUND;
+		fdef.isSensor = true;
+		body.createFixture(fdef).setUserData(new UserData(GHOST_RIGHT));
 		
 		return body;
 	}
@@ -50,13 +58,13 @@ public class BodyFactory {
 		Body body = world.createBody(bdef);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(32 / PPM, 32 / PPM);
+		shape.setAsBox((TILE_SIZE / 2) / PPM, (TILE_SIZE / 2) / PPM);
 
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_WATER;
 		fdef.filter.maskBits = BIT_GROUND;
-		body.createFixture(fdef).setUserData(UserDataType.WATER);
+		body.createFixture(fdef).setUserData(new UserData(WATER));
 
 		
 		return body;
