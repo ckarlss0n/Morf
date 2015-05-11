@@ -35,16 +35,20 @@ public class PlayerCharacterModel {
     private Block activeBlock;
     
     private Point2D.Float position;
+    private Point2D.Float speed;
     
     //Constructors
     public PlayerCharacterModel(){
     	position = new Point2D.Float(100, 100);
+        speed = new Point2D.Float(0,0);
     }
     public PlayerCharacterModel(Point2D.Float position){
     	this.position = position;
+        speed = new Point2D.Float(0,0);
     }
     public PlayerCharacterModel(int x, int y){
     	position = new Point2D.Float(x, y);
+        speed = new Point2D.Float(0,0);
     }
     
 
@@ -68,7 +72,7 @@ public class PlayerCharacterModel {
         return waterLevel;
     }
     public Block getActiveBlock(){return activeBlock;}
-
+    public Point2D.Float getSpeed(){return speed;}
     public boolean isInAir() {
         return inAir;
     }
@@ -104,6 +108,9 @@ public class PlayerCharacterModel {
     }
     public void setPosition(float x, float y){
     	position.setLocation(x, y);
+    }
+    public void setSpeed(float x, float y){
+        position.setLocation(x, y);
     }
 
     public Water pourWater(){
