@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import edu.chl.morf.handlers.BodyFactory;
 import edu.chl.morf.handlers.LevelGenerator;
 import edu.chl.morf.model.Block;
+import edu.chl.morf.model.EmptyBlock;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
@@ -117,9 +118,12 @@ public class GameLogic {
 	}
 
 	public void placeWater(){
+		int size = level.getWaterBlocks().size();
 		level.pourWater();
-		Water water = level.getWaterBlocks().get(level.getWaterBlocks().size() - 1);
-		bindWaterToBody(createWaterBody(water), water);
+		if(level.getWaterBlocks().size() > size){
+			Water water = level.getWaterBlocks().get(level.getWaterBlocks().size() - 1);
+			bindWaterToBody(createWaterBody(water), water);
+		}
 	}
 
 	public void stop(){
@@ -133,22 +137,24 @@ public class GameLogic {
 		}
 	}
 
-	public void setActiveBodyLeft(Body bodyLeft){
-		Block activeBlockLeft=bodyBlockMap.get(bodyLeft);
-		level.setActiveBlockLeft(activeBlockLeft);
+	public void setActiveBodyLeft(Body body){
+		if (bodyBlockMap.get(body) != null){
+			Block block = bodyBlockMap.get(body);
+			level.setActiveBlockLeft(block);
+		}
+		else{
+			level.setActiveBlockLeft(new EmptyBlock());
+		}
 	}
 
-	public void setActiveBodyRight(Body bodyRight){
-		Block activeBlockRight = bodyBlockMap.get(bodyRight);
-		level.setActiveBlockRight(activeBlockRight);
-	}
-
-	public void setActiveBodyLeftEmpty(){
-		level.setActiveBlockLeftEmpty();
-	}
-
-	public void setActiveBodyRightEmpty(){
-		level.setActiveBlockRightEmpty();
+	public void setActiveBodyRight(Body body){
+		if (bodyBlockMap.get(body) != null){
+			Block block = bodyBlockMap.get(body);
+			level.setActiveBlockRight(block);
+		}
+		else{
+			level.setActiveBlockRight(new EmptyBlock());
+		}
 	}
 
 	public void killPlayer(){
