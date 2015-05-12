@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -32,7 +31,8 @@ public class MainMenuScreen extends GameScreen{
         ImageButton settingsButton;
         TextButton playButton;
         TextButton exitButton;
-        TextButton highscoreButton;
+        ImageButton highScoreButton;
+        ImageButton.ImageButtonStyle highScoreButtonStyle;
         ImageButton.ImageButtonStyle settingsButtonStyle;
         TextButton.TextButtonStyle playTextButtonStyle;
         TextButton.TextButtonStyle exitTextButtonStyle;
@@ -61,7 +61,7 @@ public class MainMenuScreen extends GameScreen{
             playTextButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection_Focus.png")));
             playTextButtonStyle.over=playTextButtonStyle.down;
             playButton = new TextButton("",playTextButtonStyle);
-            playButton.setPosition(557 * scaling, 89 + (146 + 16) * 3 * scaling);
+            playButton.setPosition(557 * scaling, (89 + (146 + 16) * 3 )* scaling);
             playButton.setSize(806 * scaling, 146 * scaling);
             playButton.addListener(new ChangeListener() {
                 @Override
@@ -102,6 +102,22 @@ public class MainMenuScreen extends GameScreen{
                 }
             });
             this.addActor(settingsButton);
+
+            //highScoreButton
+            highScoreButtonStyle =new ImageButton.ImageButtonStyle();
+            highScoreButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_HighScores.png")));
+            highScoreButtonStyle.down=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_HighScores_Focus.png")));
+            highScoreButtonStyle.over= highScoreButtonStyle.down;
+            highScoreButton =new ImageButton(highScoreButtonStyle);
+            highScoreButton.setPosition(557 * scaling, (89 + (146 + 16) * 2) * scaling);
+            highScoreButton.setSize(806 * scaling, 146 * scaling);
+            highScoreButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    Gdx.app.exit();
+                }
+            });
+            this.addActor(highScoreButton);
         }
     }
 
