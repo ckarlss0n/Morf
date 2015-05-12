@@ -3,9 +3,8 @@ package edu.chl.morf.main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import edu.chl.morf.handlers.HighScoreHandler;
 import edu.chl.morf.handlers.ScreenManager;
 
 public class Main extends Game{
@@ -26,7 +25,13 @@ public class Main extends Game{
 		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal("Morf_Music_Theme.mp3"));
 		mp3Music.play();
 		mp3Music.setLooping(true);
+        HighScoreHandler.getInstance().readHighScores();
 	}
+
+    @Override
+    public void dispose(){
+        HighScoreHandler.getInstance().writeHighScores();
+    }
 	
 	public void render(){
 		accum += Gdx.graphics.getDeltaTime();
