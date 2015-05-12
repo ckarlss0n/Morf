@@ -42,26 +42,13 @@ public class Level {
 	}
 
 	//Setters
-	public void setActiveBlockLeft(Block activeBlockLeft){
-		if(player.isFacingRight()==false){
-			player.setActiveBlock(activeBlockLeft);
-		}
+	public void setActiveBlockLeft(Block block){
+			player.setActiveBlockLeft(block);
 	}
-	public void setActiveBlockRight(Block activeBlockRight){
-		if (player.isFacingRight()){
-			player.setActiveBlock(activeBlockRight);
-		}
+	public void setActiveBlockRight(Block block){
+			player.setActiveBlockRight(block);
 	}
-	public void setActiveBlockLeftEmpty(){
-		if (player.isFacingRight()==false){
-			player.setActiveBlock(emptyBlock);
-		}
-	}
-	public void setActiveBlockRightEmpty(){
-		if (player.isFacingRight()){
-			player.setActiveBlock(emptyBlock);
-		}
-	}
+
 	//Method for killing the player
 	public void killPlayer(){
 		player.setAlive(false);
@@ -69,13 +56,9 @@ public class Level {
 
 	//Method for pouring water
 	public void pourWater(){
-		addWater(player.pourWater());
-//		if(player.getActiveBlock() instanceof EmptyBlock && player.getWaterLevel()>0){
-//			addWater(player.pourWater());
-//		}
-//		else if(player.getActiveBlock() instanceof Flower){
-//			System.out.println("You win");
-//		}
+		if(!(player.getActiveBlock() instanceof Water)){
+			addWater(player.pourWater());
+		}
 	}
 	
 	//Methods for heating and cooling blocks

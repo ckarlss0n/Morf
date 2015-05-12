@@ -25,13 +25,13 @@ import java.awt.geom.Point2D;
  * @author Harald
  */
 public class PlayerCharacterModel {
-	private boolean emptyRight=true;
-    private boolean emptyLeft=true;
     private boolean facingRight=true;
     private boolean moving=false;
     private boolean onGround=false;
     private boolean alive = true;
     private int waterLevel=WATER_LEVEL;
+    private Block activeBlockRight;
+    private Block activeBlockLeft;
     private Block activeBlock;
     
     private Point2D.Float position;
@@ -71,38 +71,37 @@ public class PlayerCharacterModel {
     public int getWaterLevel(){
         return waterLevel;
     }
-    public Block getActiveBlock(){return activeBlock;}
-    public Point2D.Float getSpeed(){return speed;}
+    public Block getActiveBlock(){
+    	return activeBlock;
+    }
+    public Point2D.Float getSpeed(){
+    	return speed;
+    }
     
     public boolean onGround() {
         return onGround;
     }
 
-    //Ghost setters
-    public void setEmptyRight(boolean emptyRight){
-        this.emptyRight=emptyRight;
-    }
-    public void setEmptyLeft(boolean emptyLeft) {
-        this.emptyLeft = emptyLeft;
-    }
-
     //Move setters
     public void moveLeft(){
-        moving=true;
-        facingRight=false;
+        moving = true;
+        facingRight = false;
+        setActiveBlock(activeBlockLeft);
     }
     public void moveRight(){
-        moving=true;
-        facingRight=true;
+        moving = true;
+        facingRight = true;
+        setActiveBlock(activeBlockRight);
     }
+    
     public void setOnGround(boolean onGround){
         this.onGround = onGround;
     }
     public void setAlive(boolean alive){
-        this.alive=alive;
+        this.alive = alive;
     }
     public void stop(){
-        moving=false;
+        moving = false;
     }
     public void setPosition(Point2D.Float position){
         position.setLocation(position);
@@ -131,8 +130,20 @@ public class PlayerCharacterModel {
         this.waterLevel = waterLevel;
     }
 
+    public void setActiveBlockRight(Block block){
+    	activeBlockRight = block;
+    	if(facingRight){
+    		setActiveBlock(block);
+    	}
+    }
+    public void setActiveBlockLeft(Block block){
+    	activeBlockLeft = block;
+    	if(!facingRight){
+    		setActiveBlock(block);
+    	}
+    }
     public void setActiveBlock(Block block){
-        this.activeBlock = block;
+        activeBlock = block;
     }
 
     //Methods for manipulating active block

@@ -46,6 +46,7 @@ public class MyContactListener implements ContactListener{
                 userDataB.increment();
                 gameLogic.setActiveBodyRight(fa.getBody());
             }
+            
             //Sets the dead variable to true when contact between SPIKE and PLAYERCHARACTER occurs
             else if ((userDataTypeA == UserDataType.SPIKE) && (userDataTypeB == UserDataType.PLAYERCHARACTER)) {
                 gameLogic.killPlayer();
@@ -59,25 +60,16 @@ public class MyContactListener implements ContactListener{
                 playerOnGround=false;
             }
         }
-        else {
-            System.out.println("No touch!");
-        }
-      /*
-      if (player.getVelocity().y < -10) {
-         fallingBeforeTouch = true;
-      }
-      if (fallingBeforeTouch && contact.isTouching()) {
-         System.out.println("DIE");
-         playerCharacter.die();
-      }
-      */
     }
+    
     @Override
     public void endContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
+        
         UserData userDataA=new UserData(UserDataType.OTHER);
         UserData userDataB=new UserData(UserDataType.OTHER);
+        
         if(fa.getUserData()!=null){
             userDataA=(UserData)fa.getUserData();
         }
@@ -95,9 +87,9 @@ public class MyContactListener implements ContactListener{
             userDataA.decrement();
             if(userDataA.getNumOfContacts()==0){
                 if(userDataTypeA==UserDataType.GHOST_LEFT){
-                    gameLogic.setActiveBodyLeftEmpty();
+                    //gameLogic.setActiveBodyLeftEmpty();
                 }else{
-                    gameLogic.setActiveBodyRightEmpty();
+                    //gameLogic.setActiveBodyRightEmpty();
                 }
             }
         }
@@ -105,13 +97,14 @@ public class MyContactListener implements ContactListener{
             userDataB.decrement();
             if(userDataB.getNumOfContacts()==0){
                 if(userDataTypeB==UserDataType.GHOST_LEFT){
-                    gameLogic.setActiveBodyLeftEmpty();
+                    //gameLogic.setActiveBodyLeftEmpty();
                 }else{
-                    gameLogic.setActiveBodyRightEmpty();
+                    //gameLogic.setActiveBodyRightEmpty();
                 }
             }
         }
     }
+    
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
         // TODO Auto-generated method stub
