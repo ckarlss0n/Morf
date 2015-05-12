@@ -2,6 +2,7 @@ package edu.chl.morf.main;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -22,6 +23,9 @@ public class Main extends Game{
 	@Override
 	public void create() {
 		screenManager = new ScreenManager(this);
+		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal("Morf_Music_Theme.mp3"));
+		mp3Music.play();
+		mp3Music.setLooping(true);
 	}
 	
 	public void render(){
