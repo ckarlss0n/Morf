@@ -25,11 +25,11 @@ import java.awt.geom.Point2D;
  * @author Harald
  */
 public class PlayerCharacterModel {
-    private boolean facingRight=true;
-    private boolean moving=false;
-    private boolean onGround=false;
-    private boolean alive = true;
-    private int waterLevel=WATER_LEVEL;
+    private boolean facingRight;
+    private boolean moving;
+    private boolean onGround;
+    private boolean alive;
+    private int waterLevel;
     private Block activeBlockRight;
     private Block activeBlockLeft;
     private Block activeBlock;
@@ -39,16 +39,21 @@ public class PlayerCharacterModel {
     
     //Constructors
     public PlayerCharacterModel(){
-    	position = new Point2D.Float(100, 100);
+        facingRight = true;
+        moving = false;
+        onGround = true;
+        alive = true;
+        activeBlockRight = new EmptyBlock();
+        activeBlockLeft = new EmptyBlock();
+        activeBlock = new EmptyBlock();
         speed = new Point2D.Float(0,0);
     }
     public PlayerCharacterModel(Point2D.Float position){
+    	this();
     	this.position = position;
-        speed = new Point2D.Float(0,0);
     }
     public PlayerCharacterModel(int x, int y){
-    	position = new Point2D.Float(x, y);
-        speed = new Point2D.Float(0,0);
+    	this(new Point2D.Float(x, y));
     }
     
 
