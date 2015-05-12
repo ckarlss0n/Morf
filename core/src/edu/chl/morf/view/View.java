@@ -142,9 +142,9 @@ public class View {
     public void updateCamera() {
         PlayerCharacterModel playerCharacter = level.getPlayer();
         Point2D.Float playerCharPos = playerCharacter.getPosition();
-        camera.position.set(playerCharPos.x, playerCharPos.y, 0f);
+        camera.position.set(playerCharPos.x, Main.V_HEIGHT/2, 0f);
         camera.update();
-        box2dCam.position.set(playerCharPos.x / PPM, playerCharPos.y / PPM, 0f);
+        box2dCam.position.set(playerCharPos.x / PPM, Main.V_HEIGHT/2 / PPM, 0f);
         box2dCam.update();
     }
 

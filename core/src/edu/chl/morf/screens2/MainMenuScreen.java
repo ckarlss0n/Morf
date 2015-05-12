@@ -27,7 +27,7 @@ public class MainMenuScreen extends GameScreen{
     }
 
     public class MainMenuStage extends Stage{
-        float scaling=0.6666f;
+        float scaling=0.666f;
         Image background;
         ImageButton settingsButton;
         TextButton playButton;
@@ -66,7 +66,7 @@ public class MainMenuScreen extends GameScreen{
             playButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    screenManager.setState(ScreenManager.PLAY);
+                    screenManager.setState(ScreenManager.LEVELSELECTION);
                 }
             });
             this.addActor(playButton);
@@ -97,7 +97,9 @@ public class MainMenuScreen extends GameScreen{
             settingsButton.setSize(806 * scaling, 146 * scaling);
             settingsButton.addListener(new ChangeListener() {
                 @Override
-                public void changed(ChangeEvent event, Actor actor) {Gdx.app.exit();}
+                public void changed(ChangeEvent event, Actor actor) {
+                    Gdx.app.exit();
+                }
             });
             this.addActor(settingsButton);
         }
@@ -121,7 +123,8 @@ public class MainMenuScreen extends GameScreen{
 
     @Override
     /** @see ApplicationListener#resize(int, int) */
-    public void resize (int width, int height){}
+    public void resize (int width, int height){
+    }
 
     @Override
     /** @see ApplicationListener#pause() */
