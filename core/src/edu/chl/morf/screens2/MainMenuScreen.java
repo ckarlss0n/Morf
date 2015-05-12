@@ -1,15 +1,12 @@
 package edu.chl.morf.screens2;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import edu.chl.morf.handlers.ScreenManager;
@@ -29,39 +26,28 @@ public class MainMenuScreen extends GameScreen{
         float scaling=0.666f;
         Image background;
         ImageButton settingsButton;
-        TextButton playButton;
-        TextButton exitButton;
+        ImageButton playButton;
+        ImageButton exitButton;
         ImageButton highScoreButton;
         ImageButton.ImageButtonStyle highScoreButtonStyle;
         ImageButton.ImageButtonStyle settingsButtonStyle;
-        TextButton.TextButtonStyle playTextButtonStyle;
-        TextButton.TextButtonStyle exitTextButtonStyle;
-        BitmapFont font;
+        ImageButton.ImageButtonStyle playButtonStyle;
+        ImageButton.ImageButtonStyle exitButtonStyle;
         public MainMenuStage() {
             Gdx.input.setInputProcessor(this);
-            //Skin skin = new Skin();
-            font = new BitmapFont();
-            //TextureAtlas textureAtlas = new TextureAtlas(Constants.BUTTONS_ATLAS_PATH);
-            //skin.addRegions(textureAtlas);
-            font.setColor(Color.WHITE);
-            font.setScale(2);
-            playTextButtonStyle = new TextButton.TextButtonStyle();
-            playTextButtonStyle.font = font;
 
             //background
             background=new Image(new Texture("menu/MainMenu_Background.png"));
-            //background.setScaling(Scaling.fit);
             background.setScale(scaling);
             background.setPosition(0, 0);
             this.addActor(background);
 
-
             //PlayButton
-            playTextButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection.png")));
-            playTextButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection_Focus.png")));
-            playTextButtonStyle.over=playTextButtonStyle.down;
-            playButton = new TextButton("",playTextButtonStyle);
-            playButton.setPosition(557 * scaling, (89 + (146 + 16) * 3 )* scaling);
+            playButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection.png")));
+            playButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection_Focus.png")));
+            playButtonStyle.over= playButtonStyle.down;
+            playButton = new ImageButton(playButtonStyle);
+            playButton.setPosition(557 * scaling, (89 + (146 + 16) * 3) * scaling);
             playButton.setSize(806 * scaling, 146 * scaling);
             playButton.addListener(new ChangeListener() {
                 @Override
@@ -72,11 +58,11 @@ public class MainMenuScreen extends GameScreen{
             this.addActor(playButton);
 
             //ExitButton
-            exitTextButtonStyle=new TextButton.TextButtonStyle(playTextButtonStyle);
-            exitTextButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Exit.png")));
-            exitTextButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Exit_Focus.png")));
-            exitTextButtonStyle.over = exitTextButtonStyle.down;
-            exitButton=new TextButton("", exitTextButtonStyle);
+            exitButtonStyle =new ImageButton.ImageButtonStyle();
+            exitButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Exit.png")));
+            exitButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Exit_Focus.png")));
+            exitButtonStyle.over = exitButtonStyle.down;
+            exitButton=new ImageButton(exitButtonStyle);
             exitButton.setPosition(557 * scaling, 89 * scaling);
             exitButton.setSize(806 * scaling, 146 * scaling);
             exitButton.addListener(new ChangeListener() {
