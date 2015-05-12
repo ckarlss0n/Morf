@@ -41,7 +41,7 @@ public class BodyFactory {
 		shape.setAsBox(20 / PPM, 20 / PPM, new Vector2(30 / PPM, 0), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_SENSOR;
-		fdef.filter.maskBits = BIT_GROUND;
+		fdef.filter.maskBits = BIT_GROUND | BIT_WATER;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_RIGHT));
 		
@@ -63,7 +63,7 @@ public class BodyFactory {
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_WATER;
-		fdef.filter.maskBits = BIT_GROUND;
+		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER;
 		body.createFixture(fdef).setUserData(new UserData(WATER));
 
 		
