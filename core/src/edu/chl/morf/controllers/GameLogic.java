@@ -12,6 +12,7 @@ import edu.chl.morf.handlers.BodyFactory;
 import edu.chl.morf.handlers.LevelGenerator;
 import edu.chl.morf.model.Block;
 import edu.chl.morf.model.EmptyBlock;
+import edu.chl.morf.model.Flower;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
@@ -138,22 +139,28 @@ public class GameLogic {
 	}
 
 	public void setActiveBodyLeft(Body body){
-		if (bodyBlockMap.get(body) != null){
+		if (body == null){
+			level.setActiveBlockLeft(new EmptyBlock());
+		}
+		else if (bodyBlockMap.get(body) != null){
 			Block block = bodyBlockMap.get(body);
 			level.setActiveBlockLeft(block);
 		}
 		else{
-			level.setActiveBlockLeft(new EmptyBlock());
+			level.setActiveBlockLeft(new Flower());
 		}
 	}
 
 	public void setActiveBodyRight(Body body){
-		if (bodyBlockMap.get(body) != null){
+		if (body == null){
+			level.setActiveBlockRight(new EmptyBlock());
+		}
+		else if (bodyBlockMap.get(body) != null){
 			Block block = bodyBlockMap.get(body);
 			level.setActiveBlockRight(block);
 		}
 		else{
-			level.setActiveBlockRight(new EmptyBlock());
+			level.setActiveBlockRight(new Flower());
 		}
 	}
 

@@ -17,7 +17,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  */
 public class Level {
 
-	private Block emptyBlock=new EmptyBlock();
 	private String name;
 	private ArrayList<Water> waterBlocks;
 	private PlayerCharacterModel player;
@@ -56,7 +55,7 @@ public class Level {
 
 	//Method for pouring water
 	public void pourWater(){
-		if(!(player.getActiveBlock() instanceof Water)){
+		if(!(player.getActiveBlock() instanceof Water) && !(player.getActiveBlock() instanceof Flower)){
 			addWater(player.pourWater());
 		}
 	}
