@@ -19,7 +19,26 @@ public class LevelSelectionScreen extends GameScreen{
 
     private class LevelSelectionStage extends Stage{
 
+        private class BackButton extends Image{
+            private Texture backButtonTexture;
+            private BackButton(){
+                this.backButtonTexture = new Texture("menu/Btn_Exit.png");
+                this.addListener(new ClickListener(){
+                   @Override
+                   public void clicked(InputEvent event, float x, float y){
+                       screenManager.pushState(screenManager.MAINMENU);
+                   }
+                });
+            }
+            @Override
+            public void draw(Batch batch, float parentAlpha){
+                super.draw(batch,parentAlpha);
+                batch.draw(backButtonTexture,this.getX(),this.getY(),this.getWidth(),this.getHeight());
+            }
+        }
+
         private class LevelPreview extends Image{
+
             private class Star extends Image{
                 private Texture starTexture;
                 private Star(){
@@ -87,6 +106,10 @@ public class LevelSelectionScreen extends GameScreen{
             super();
             this.addActor(new LevelPreview());
             this.addActor(new LevelPreview());
+            BackButton backButton = new BackButton();
+            backButton.setPosition(30,600);
+            backButton.setSize(300,100);
+            this.addActor(backButton);
         }
     }
 
