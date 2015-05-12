@@ -43,6 +43,7 @@ public class MainMenuScreen extends GameScreen{
             this.addActor(background);
 
             //PlayButton
+            playButtonStyle=new ImageButton.ImageButtonStyle();
             playButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection.png")));
             playButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection_Focus.png")));
             playButtonStyle.over= playButtonStyle.down;
