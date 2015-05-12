@@ -1,82 +1,92 @@
 package edu.chl.morf.screens2;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import edu.chl.morf.Constants;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl.morf.handlers.ScreenManager;
+import edu.chl.morf.main.Main;
 
 /**
  * Created by Lage on 2015-05-08.
  */
-public class LevelSelectionScreen extends GameScreen implements EventListener{
+public class LevelSelectionScreen extends GameScreen{
 
     private class LevelSelectionStage extends Stage{
 
-        private class LevelPreview extends Table{
-            TextButton playButton;
-            TextButton.TextButtonStyle textButtonStyle;
-            Label.LabelStyle labelStyle;
-            BitmapFont font;
-            Skin skin;
-            TextureAtlas buttonAtlas;
+        private class LevelPreview extends Image{
+            private class Star extends Image{
+                private Texture starTexture;
+                private Star(){
+                    this.starTexture = new Texture("levelselection/level_selection_star.png");
+                }
+                @Override
+                public void draw(Batch batch, float parentAlpha){
+                    super.draw(batch,parentAlpha);
+                    batch.draw(starTexture,this.getX(),this.getY(),this.getWidth(),this.getHeight());
+                }
+            }
 
-            private LevelPreview(){
+            Star[] stars;
+            private Texture normalTexture;
+            private Texture highlightTexture;
+            private boolean highlighted;
+
+            private LevelPreview() {
                 super();
-                font = new BitmapFont();
-                skin = new Skin();
-                buttonAtlas = new TextureAtlas(Constants.BUTTONS_ATLAS_PATH);
-                skin.addRegions(buttonAtlas);
-                textButtonStyle = new TextButton.TextButtonStyle();
-                labelStyle = new Label.LabelStyle();
-                font.setColor(Color.BLACK);
-                font.setScale(2);
-                labelStyle.font = font;
-                textButtonStyle.font = font;
-                textButtonStyle.up = skin.getDrawable(Constants.BUTTON_UNPRESSED_REGION_NAME);
-                textButtonStyle.down = skin.getDrawable(Constants.BUTTON_PRESSED_REGION_NAME);
-                textButtonStyle.checked = skin.getDrawable(Constants.BUTTON_PRESSED_REGION_NAME);
 
-                //play button
-                playButton = new TextButton("Play", textButtonStyle);
-                playButton.setDebug(true);
+                this.setSize(0.3f * Main.V_WIDTH, 0.25f *  Main.V_HEIGHT);
+                System.out.println("width : " + this.getWidth() + " height: " + this.getHeight());
+                this.setPosition(0.2f * Main.V_WIDTH, (20 * 6 / 4) / 100f * Main.V_HEIGHT);
+                this.normalTexture = new Texture("levelselection/Level_1_Thumb.png");
+                this.highlightTexture = new Texture("levelselection/Level_1_Thumb_Focus.png");
+                stars = new Star[5];
+                for(int i = 0; i < 5; i++){
+                    Star star = new Star();
+                    float starSize = 71f/1920f * Main.V_WIDTH;
+                    star.setSize(starSize,starSize);
+                    star.setPosition(this.getX() + 19 +  42.5f * i, this.getY() + 14);
+                    stars[i] = star;
+                }
+                this.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y){
+                        screenManager.pushState(screenManager.PLAY);
+                    }
+                    @Override
+                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                        highlighted = true;
+                    }
+                    @Override
+                    public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                        highlighted = false;
+                    }
+                });
 
-                this.setDebug(true);
-                this.add(new Label("Image here", labelStyle));
-                this.row();
-                this.add(new Label("*", labelStyle));
-                this.add(new Label("*", labelStyle));
-                this.add(new Label("*", labelStyle));
-                this.row();
-                this.add(new Label("Points here ", labelStyle));
-                this.row();
-                this.add(playButton);
+            }
+            @Override
+            public void draw(Batch batch,float parentAlpha) {
+                super.draw(batch, parentAlpha);
+                if(this.highlighted){
+                    batch.draw(highlightTexture,this.getX(),this.getY(),this.getWidth(),this.getHeight());
+                }else{
+                    batch.draw(normalTexture,this.getX(),this.getY(),this.getWidth(),this.getHeight());
+                }
+                for (Star star: stars) {
+                    star.draw(batch, parentAlpha);
+                }
             }
         }
 
-        private Table table;
         private LevelSelectionStage(){
             super();
-            table = new Table();
-            table.setPosition(new LevelPreview().getMinWidth() + new LevelPreview().getMinWidth() / 2 + 1, Gdx.graphics.getHeight() - new LevelPreview().getMinHeight() * 1,5 - 1);
-            System.out.println(new LevelPreview().getMinHeight());
-            table.add(new LevelPreview());
-            table.add(new LevelPreview());
-            table.add(new LevelPreview());
-            table.row();
-            table.add(new LevelPreview());
-            table.add(new LevelPreview());
-            table.add(new LevelPreview());
-            addActor(table);
+            this.addActor(new LevelPreview());
+            this.addActor(new LevelPreview());
         }
     }
 
@@ -104,6 +114,7 @@ public class LevelSelectionScreen extends GameScreen implements EventListener{
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         stage.act(delta);
         stage.draw();
     }
@@ -131,24 +142,5 @@ public class LevelSelectionScreen extends GameScreen implements EventListener{
     @Override
     public void dispose() {
 
-    }
-
-    @Override
-    public boolean handle(Event event) {
-        if(event instanceof ChangeListener.ChangeEvent){
-            ChangeListener.ChangeEvent changeEvent = (ChangeListener.ChangeEvent)event;
-            if(changeEvent.getTarget() instanceof TextButton){
-                TextButton button = (TextButton)changeEvent.getTarget();
-                String buttonText = button.getLabel().getText().toString();
-                if(buttonText.equals("PLAY")){
-                    /*sm.setStageInputHandler();
-                    gameScreen.show();
-                    setScreen(gameScreen);*/
-                }else if(buttonText.equals("SETTINGS")){
-
-                }
-            }
-        }
-        return true;
     }
 }
