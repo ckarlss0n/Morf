@@ -13,6 +13,7 @@ import edu.chl.morf.handlers.LevelGenerator;
 import edu.chl.morf.model.Block;
 import edu.chl.morf.model.EmptyBlock;
 import edu.chl.morf.model.Flower;
+import edu.chl.morf.model.Ground;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
@@ -152,6 +153,7 @@ public class GameLogic {
 	}
 
 	public void setActiveBodyRight(Body body){
+		System.out.println(body);
 		if (body == null){
 			level.setActiveBlockRight(new EmptyBlock());
 		}
@@ -160,7 +162,7 @@ public class GameLogic {
 			level.setActiveBlockRight(block);
 		}
 		else{
-			level.setActiveBlockRight(new Flower());
+			level.setActiveBlockRight(new Ground());
 		}
 	}
 

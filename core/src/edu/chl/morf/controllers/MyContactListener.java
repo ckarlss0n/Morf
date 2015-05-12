@@ -107,7 +107,7 @@ public class MyContactListener implements ContactListener{
         else if(userDataTypeB == UserDataType.GHOST_RIGHT){
         	userDataB.decrement();
         	if(userDataB.getNumOfContacts() == 0){
-        		gameLogic.setActiveBodyLeft(null);
+        		gameLogic.setActiveBodyRight(null);
         	}
         }
     }
