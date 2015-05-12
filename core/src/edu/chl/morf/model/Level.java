@@ -61,10 +61,10 @@ public class Level {
 	}
 	
 	//Methods for heating and cooling blocks
-	public void heat(){
+	public void heatBlock(){
 		player.heatActiveBlock();
 	}
-	public void cool(){
+	public void coolBlock(){
 		player.coolActiveBlock();
 	}
 	

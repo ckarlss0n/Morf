@@ -40,6 +40,12 @@ public class GameController extends InputAdapter{
 			case Input.Keys.X:
 				gameLogic.placeWater();
 				break;
+			case Input.Keys.C:
+				gameLogic.heatBlock();
+				break;
+			case Input.Keys.Z:
+				gameLogic.coolBlock();
+				break;
 		}
 		return true;
 	}

@@ -127,6 +127,13 @@ public class GameLogic {
 			bindWaterToBody(createWaterBody(water), water);
 		}
 	}
+	
+	public void heatBlock(){
+		level.heatBlock();
+	}
+	public void coolBlock(){
+		level.coolBlock();
+	}
 
 	public void stop(){
 		if(!(pressedKeys.get(Input.Keys.LEFT) || pressedKeys.get(Input.Keys.RIGHT))) {
