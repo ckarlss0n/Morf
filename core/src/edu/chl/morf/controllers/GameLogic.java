@@ -148,12 +148,11 @@ public class GameLogic {
 			level.setActiveBlockLeft(block);
 		}
 		else{
-			level.setActiveBlockLeft(new Flower());
+			level.setActiveBlockLeft(new Ground());
 		}
 	}
 
 	public void setActiveBodyRight(Body body){
-		System.out.println(body);
 		if (body == null){
 			level.setActiveBlockRight(new EmptyBlock());
 		}

@@ -21,13 +21,14 @@ public class BodyFactory {
 
 	public Body createPlayerBody(World world, Vector2 position){
 
+		//Create body
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(position.x / PPM, position.y / PPM);
 		bdef.type = BodyType.DynamicBody;
 		bdef.fixedRotation = true;
-
 		Body body = world.createBody(bdef);
 
+		//Create player fixture
 		PolygonShape shape = new PolygonShape();
 		//shape.setAsBox((TILE_SIZE / 2 - 2) / PPM, (TILE_SIZE / 2 - 2) / PPM);
 		shape.setAsBox(30 / PPM, 30 / PPM);
@@ -38,12 +39,21 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND;
 		body.createFixture(fdef).setUserData(new UserData(PLAYERCHARACTER));
 		
+		//Create right ghost fixture 
 		shape.setAsBox(20 / PPM, 20 / PPM, new Vector2(30 / PPM, 0), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_SENSOR;
 		fdef.filter.maskBits = BIT_GROUND | BIT_WATER;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_RIGHT));
+		
+		//Create left ghost fixture
+		shape.setAsBox(20 / PPM, 20 / PPM, new Vector2(-30 / PPM, 0), 0);
+		fdef.shape = shape;
+		fdef.filter.categoryBits = BIT_SENSOR;
+		fdef.filter.maskBits = BIT_GROUND | BIT_WATER;
+		fdef.isSensor = true;
+		body.createFixture(fdef).setUserData(new UserData(GHOST_LEFT));
 		
 		return body;
 	}
