@@ -76,32 +76,39 @@ public class MyContactListener implements ContactListener{
         if (fb.getUserData()!=null){
             userDataB=(UserData)fb.getUserData();
         }
+        
         UserDataType userDataTypeB=userDataB.getUserDataType();
         UserDataType userDataTypeA=userDataA.getUserDataType();
+        
         //Sets jumping to true
         if(userDataTypeA==UserDataType.GHOST_BOTTOM || userDataTypeB==UserDataType.GHOST_BOTTOM){
             playerOnGround=true;
         }
-        //Sets activeBody to null when empty
-        if(userDataTypeA==UserDataType.GHOST_LEFT || userDataTypeA==UserDataType.GHOST_RIGHT){
-            userDataA.decrement();
-            if(userDataA.getNumOfContacts()==0){
-                if(userDataTypeA==UserDataType.GHOST_LEFT){
-                    //gameLogic.setActiveBodyLeftEmpty();
-                }else{
-                    //gameLogic.setActiveBodyRightEmpty();
-                }
-            }
+        
+        //Sets activeBody to null when empty 
+        if(userDataTypeA == UserDataType.GHOST_LEFT){
+        	userDataA.decrement();
+        	if(userDataA.getNumOfContacts() == 0){
+        		gameLogic.setActiveBodyLeft(null);
+        	}
         }
-        else if(userDataTypeB==UserDataType.GHOST_LEFT || userDataTypeB==UserDataType.GHOST_RIGHT){
-            userDataB.decrement();
-            if(userDataB.getNumOfContacts()==0){
-                if(userDataTypeB==UserDataType.GHOST_LEFT){
-                    //gameLogic.setActiveBodyLeftEmpty();
-                }else{
-                    //gameLogic.setActiveBodyRightEmpty();
-                }
-            }
+        else if(userDataTypeA == UserDataType.GHOST_RIGHT){
+        	userDataA.decrement();
+        	if(userDataA.getNumOfContacts() == 0){
+        		gameLogic.setActiveBodyRight(null);
+        	}
+        }
+        else if(userDataTypeB == UserDataType.GHOST_LEFT){
+        	userDataB.decrement();
+        	if(userDataB.getNumOfContacts() == 0){
+        		gameLogic.setActiveBodyLeft(null);
+        	}
+        }
+        else if(userDataTypeB == UserDataType.GHOST_RIGHT){
+        	userDataB.decrement();
+        	if(userDataB.getNumOfContacts() == 0){
+        		gameLogic.setActiveBodyLeft(null);
+        	}
         }
     }
     
