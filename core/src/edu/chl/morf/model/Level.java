@@ -55,7 +55,7 @@ public class Level {
 
 	//Method for pouring water
 	public void pourWater(){
-		if(!(player.getActiveBlock() instanceof Water) && !(player.getActiveBlock() instanceof Flower)){
+		if(player.getActiveBlock() instanceof EmptyBlock){
 			addWater(player.pourWater());
 		}
 	}

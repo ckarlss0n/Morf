@@ -50,14 +50,14 @@ public class MyContactListener implements ContactListener{
             //Sets the dead variable to true when contact between SPIKE and PLAYERCHARACTER occurs
             else if ((userDataTypeA == UserDataType.SPIKE) && (userDataTypeB == UserDataType.PLAYERCHARACTER)) {
                 gameLogic.killPlayer();
-            } else if ((userDataTypeA== UserDataType.PLAYERCHARACTER) && (userDataTypeB == UserDataType.SPIKE)) {
+            } else if ((userDataTypeA == UserDataType.PLAYERCHARACTER) && (userDataTypeB == UserDataType.SPIKE)) {
                 gameLogic.killPlayer();
             }
             //Sets the jumping variable
-            else if (userDataTypeA==UserDataType.GHOST_BOTTOM && userDataTypeB!=UserDataType.PLAYERCHARACTER){
-                playerOnGround=false;
-            } else if (userDataTypeA!=UserDataType.PLAYERCHARACTER && userDataTypeB==UserDataType.GHOST_BOTTOM){
-                playerOnGround=false;
+            else if (userDataTypeA == UserDataType.GHOST_BOTTOM && userDataTypeB != UserDataType.PLAYERCHARACTER){
+                playerOnGround = false;
+            } else if (userDataTypeA != UserDataType.PLAYERCHARACTER && userDataTypeB == UserDataType.GHOST_BOTTOM){
+                playerOnGround = false;
             }
         }
     }
@@ -67,18 +67,18 @@ public class MyContactListener implements ContactListener{
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
         
-        UserData userDataA=new UserData(UserDataType.OTHER);
-        UserData userDataB=new UserData(UserDataType.OTHER);
+        UserData userDataA = new UserData(UserDataType.OTHER);
+        UserData userDataB = new UserData(UserDataType.OTHER);
         
-        if(fa.getUserData()!=null){
+        if(fa.getUserData() != null){
             userDataA=(UserData)fa.getUserData();
         }
-        if (fb.getUserData()!=null){
-            userDataB=(UserData)fb.getUserData();
+        if (fb.getUserData() != null){
+            userDataB = (UserData)fb.getUserData();
         }
         
-        UserDataType userDataTypeB=userDataB.getUserDataType();
-        UserDataType userDataTypeA=userDataA.getUserDataType();
+        UserDataType userDataTypeB = userDataB.getUserDataType();
+        UserDataType userDataTypeA = userDataA.getUserDataType();
         
         //Sets jumping to true
         if(userDataTypeA==UserDataType.GHOST_BOTTOM || userDataTypeB==UserDataType.GHOST_BOTTOM){
