@@ -40,6 +40,7 @@ public class HighScoreHandler {
         }catch(FileNotFoundException e){
             System.out.println("File not found");
         }
+        printWriter.close();
     }
 
     public void readHighScores(){
