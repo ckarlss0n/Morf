@@ -48,9 +48,11 @@ public final class Constants {
     public static final float GROUND_FRICTION = 0.1f;
 
     //Character animation constants
-    public static final String CHARACTERS_ATLAS_PATH = "spritesheets/Stickman";
-    public static final String[] PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES = new String[] {"runningLeft1", "runningLeft2", "runningLeft3"};
-    public static final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[] {"runningRight1", "runningRight2", "runningRight3"};
+    public static final String CHARACTERS_ATLAS_PATH = "spritesheets/Character_Sprite_Sheet";
+    public static final String[] PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES = new String[] {"runningLeft1", "runningLeft2", "runningLeft3",
+            "runningLeft4", "runningLeft5", "runningLeft6", "runningLeft7"};
+    public static final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[] {"runningRight1", "runningRight2", "runningRight3",
+            "runningRight4", "runningRight5", "runningRight6", "runningRight7",};
     public static final String PLAYERCHARACTER_IDLE_REGION_NAME = "idle";
 
     //Button constants
