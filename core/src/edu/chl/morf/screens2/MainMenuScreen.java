@@ -4,12 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import edu.chl.morf.handlers.ScreenManager;
+import edu.chl.morf.handlers.SoundHandler;
 
 /**
  * Responsible for showing the main menu screen on start-up.
@@ -17,6 +20,7 @@ import edu.chl.morf.handlers.ScreenManager;
  */
 public class MainMenuScreen extends GameScreen{
     MainMenuStage stage;
+    private SoundHandler soundHandler = SoundHandler.getInstance();
     public MainMenuScreen(ScreenManager sm){
         super(sm);
         this.stage=new MainMenuStage();
@@ -35,7 +39,7 @@ public class MainMenuScreen extends GameScreen{
         ImageButton.ImageButtonStyle exitButtonStyle;
         public MainMenuStage() {
             Gdx.input.setInputProcessor(this);
-
+            soundHandler.playMusic();
             //background
             background=new Image(new Texture("menu/MainMenu_Background.png"));
             background.setScale(scaling);
@@ -54,6 +58,13 @@ public class MainMenuScreen extends GameScreen{
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     screenManager.setState(ScreenManager.LEVELSELECTION);
+                    soundHandler.playSoundEffect(soundHandler.getButtonForward());
+                }
+            });
+            playButton.addListener(new ClickListener() {
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    soundHandler.playSoundEffect(soundHandler.getButtonHover());
                 }
             });
             this.addActor(playButton);
@@ -72,6 +83,12 @@ public class MainMenuScreen extends GameScreen{
                     Gdx.app.exit();
                 }
             });
+            exitButton.addListener(new ClickListener() {
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    soundHandler.playSoundEffect(soundHandler.getButtonHover());
+                }
+            });
             this.addActor(exitButton);
 
             //settingsButton
@@ -88,6 +105,12 @@ public class MainMenuScreen extends GameScreen{
                     Gdx.app.exit();
                 }
             });
+            settingsButton.addListener(new ClickListener() {
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    soundHandler.playSoundEffect(soundHandler.getButtonHover());
+                }
+            });
             this.addActor(settingsButton);
 
             //highScoreButton
@@ -102,6 +125,12 @@ public class MainMenuScreen extends GameScreen{
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     Gdx.app.exit();
+                }
+            });
+            highScoreButton.addListener(new ClickListener(){
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                    soundHandler.playSoundEffect(soundHandler.getButtonHover());
                 }
             });
             this.addActor(highScoreButton);

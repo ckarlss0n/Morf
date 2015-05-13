@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import edu.chl.morf.handlers.BodyFactory;
 import edu.chl.morf.handlers.LevelGenerator;
+import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.model.Block;
 import edu.chl.morf.model.EmptyBlock;
 import edu.chl.morf.model.Flower;
@@ -42,6 +43,7 @@ public class GameLogic {
 	private Vector2 movementVector;
 	private BodyFactory bodyFactory;
 	private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
+	private SoundHandler soundHandler = SoundHandler.getInstance();
 
 	public GameLogic(Level level, World world){
 		this.level = level;
@@ -126,12 +128,32 @@ public class GameLogic {
 			Water water = level.getWaterBlocks().get(level.getWaterBlocks().size() - 1);
 			bindWaterToBody(createWaterBody(water), water);
 		}
+		soundHandler.playSoundEffect(soundHandler.getPour());
 	}
 	
 	public void heatBlock(){
+		Block activeBlock = level.getPlayer().getActiveBlock();
+		if(activeBlock instanceof Water){
+			WaterState state = ((Water) activeBlock).getState();
+			if(state == WaterState.SOLID) {
+				soundHandler.playSoundEffect(soundHandler.getPour());
+			} else if(state == WaterState.LIQUID) {
+				soundHandler.playSoundEffect(soundHandler.getHeat());
+			}
+		}
 		level.heatBlock();
 	}
+
 	public void coolBlock(){
+		Block activeBlock = level.getPlayer().getActiveBlock();
+		if(activeBlock instanceof Water) {
+			WaterState state = ((Water) activeBlock).getState();
+			if (state == WaterState.GAS) {
+				soundHandler.playSoundEffect(soundHandler.getPour());
+			} else if (state == WaterState.LIQUID) {
+				soundHandler.playSoundEffect(soundHandler.getFreeze());
+			}
+		}
 		level.coolBlock();
 	}
 
@@ -174,6 +196,7 @@ public class GameLogic {
 
 	public void killPlayer(){
 		level.killPlayer();
+		soundHandler.playSoundEffect(soundHandler.getDie());
 	}
 
 	public void render(float delta){

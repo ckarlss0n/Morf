@@ -10,12 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl.morf.handlers.ScreenManager;
+import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.main.Main;
 
 /**
  * Created by Lage on 2015-05-08.
  */
 public class LevelSelectionScreen extends GameScreen{
+    private SoundHandler soundHandler = SoundHandler.getInstance();
 
     private class LevelSelectionStage extends Stage{
 
@@ -27,6 +29,7 @@ public class LevelSelectionScreen extends GameScreen{
                    @Override
                    public void clicked(InputEvent event, float x, float y){
                        screenManager.pushState(screenManager.MAINMENU);
+                       soundHandler.playSoundEffect(soundHandler.getButtonReturn());
                    }
                 });
             }
@@ -80,6 +83,7 @@ public class LevelSelectionScreen extends GameScreen{
                     @Override
                     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
                         highlighted = true;
+                        soundHandler.playSoundEffect(soundHandler.getButtonHover());
                     }
                     @Override
                     public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
