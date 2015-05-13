@@ -33,7 +33,7 @@ public class HighScoreHandler {
 
     public void writeHighScores(){
         try{
-            printWriter = new PrintWriter("HighScore.txt");
+            printWriter = new PrintWriter(System.getProperty("user.home") + "/.morf/.highscore.txt");
             for(Level level : highScores.keySet()){
                 printWriter.println(level.getName() + ";" + highScores.get(level).toString());
             }
@@ -45,10 +45,11 @@ public class HighScoreHandler {
     public void readHighScores(){
         try{
             //Trys to read file
-            bufferedReader = new BufferedReader(new FileReader("HighScore.txt"));
+            bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/.morf/.highscore.txt"));
         }catch (FileNotFoundException e){
             //Creates file if file not found
-            File f = new File("HighScore.txt");
+            File f = new File(System.getProperty("user.home") + "/.morf/.highscore.txt");
+            f.getParentFile().mkdirs();
             try {
                 f.createNewFile();
             } catch (IOException ex) {
@@ -57,7 +58,7 @@ public class HighScoreHandler {
         }
 
         try{
-            bufferedReader = new BufferedReader(new FileReader("HighScore.txt"));
+            bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/.morf/.highscore.txt"));
             String line = bufferedReader.readLine();
             LevelFactory levelFactory = new LevelFactory();
             while (line != null) {
