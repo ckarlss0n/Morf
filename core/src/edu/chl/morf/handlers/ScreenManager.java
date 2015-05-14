@@ -3,10 +3,7 @@ package edu.chl.morf.handlers;
 import java.util.Stack;
 
 import edu.chl.morf.main.Main;
-import edu.chl.morf.screens2.GameScreen;
-import edu.chl.morf.screens2.LevelSelectionScreen;
-import edu.chl.morf.screens2.MainMenuScreen;
-import edu.chl.morf.screens2.PlayScreen;
+import edu.chl.morf.screens2.*;
 
 public class ScreenManager {
 	
@@ -17,6 +14,7 @@ public class ScreenManager {
 	public static final int PLAY = 656987;
 	public static final int MAINMENU = 123456;
     public static final int LEVELSELECTION = 654321;
+	public static final int OPTIONS_SCREEN = 246810;
 	
 	public ScreenManager(Main game){
 		this.game = game;
@@ -46,6 +44,9 @@ public class ScreenManager {
         else if(screen == LEVELSELECTION){
             return new LevelSelectionScreen(this);
         }
+		else if(screen == OPTIONS_SCREEN){
+			return new OptionsScreen(this);
+		}
 		return null;
 	}
 	
