@@ -102,7 +102,7 @@ public class MainMenuScreen extends GameScreen{
             settingsButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    Gdx.app.exit();
+                    screenManager.setState(ScreenManager.OPTIONS_SCREEN);
                 }
             });
             settingsButton.addListener(new ClickListener() {
