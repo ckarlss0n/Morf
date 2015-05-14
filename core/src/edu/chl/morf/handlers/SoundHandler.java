@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
-import java.util.List;
-
 /**
  * Created by Christoffer on 2015-05-12.
  */
@@ -27,11 +25,12 @@ public class SoundHandler {
 	private Sound buttonReturn;
 	private Sound saveSettings;
 	private Sound buttonHover;
-
-	private List<Sound> soundEffects;
 	private Music music;
 
+	private float musicVolume = 1f;
 	private float soundEffectsVolume = 1f;
+	private boolean isMusicEnabled = true;
+	private boolean isSoundEffectsEnabled = true;
 
 	private SoundHandler(){
 		//Game sounds
@@ -54,7 +53,7 @@ public class SoundHandler {
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("Morf_Music_Theme.mp3"));
 		music.setLooping(true);
-		setMusicVolume(0.3f);
+		setMusicVolume(musicVolume);
 	}
 
 	public static synchronized SoundHandler getInstance(){
@@ -62,6 +61,31 @@ public class SoundHandler {
 			instance = new SoundHandler();
 		}
 		return instance;
+	}
+
+	public void enableMusic(){
+		isMusicEnabled = true;
+		playMusic();
+	}
+
+	public void enabledSoundEffects(){
+		isSoundEffectsEnabled = true;
+	}
+
+	public boolean isMusicEnabled(){
+		return isMusicEnabled;
+	}
+
+	public boolean isSoundEffectsEnabled(){
+		return isSoundEffectsEnabled;
+	}
+
+	public float getMusicVolume(){
+		return music.getVolume();
+	}
+
+	public float getSoundEffectsVolume(){
+		return soundEffectsVolume;
 	}
 
 	private Sound bindPath(String path){
@@ -77,34 +101,28 @@ public class SoundHandler {
 	}
 
 	public void muteSoundEffects() {
-		setSoundEffectsVolume(0f);
+		isSoundEffectsEnabled = false;
 	}
 
 	public void muteMusic(){
-		setMusicVolume(0f);
+		isMusicEnabled = false;
+		music.pause();
 	}
 
 	public void playSoundEffect(Sound sound){
-		sound.play(soundEffectsVolume);
-	}
-
-	public void stopSoundEffects() {
-		for(Sound sound : soundEffects){
-			sound.stop();
+		if(isSoundEffectsEnabled) {
+			sound.play(soundEffectsVolume);
 		}
 	}
 
 	public void playMusic(){
-		music.play();
+		if(isMusicEnabled) {
+			music.play();
+		}
 	}
 
 	public void stopMusic(){
 		music.stop();
-	}
-
-	public void stopAll(){
-		stopMusic();
-		stopSoundEffects();
 	}
 
 	public Sound getHit() {
