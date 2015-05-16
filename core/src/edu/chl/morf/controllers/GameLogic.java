@@ -104,9 +104,11 @@ public class GameLogic {
 		}
 		movementVector = new Vector2(15, 0);
 	}
-
+	public void setOnGround(boolean isOnGround){
+		player.setOnGround(isOnGround);
+	}
 	public void jump(){
-		if(Math.abs(playerCharacterBody.getLinearVelocity().y) < 0.01f) {   //If standing (could be improved, also 0 at top of jump)
+		if(player.isOnGround()) {   //If standing (could be improved, also 0 at top of jump)
 			playerCharacterBody.applyForceToCenter(new Vector2(0, 300), true);
 		}
 	}

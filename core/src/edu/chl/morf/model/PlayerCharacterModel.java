@@ -58,6 +58,7 @@ public class PlayerCharacterModel {
     
 
     //Getters
+    public boolean isOnGround(){return onGround;}
     public Point2D.Float getPosition(){
     	return position;
     }
