@@ -54,10 +54,14 @@ public class MyContactListener implements ContactListener{
                 gameLogic.killPlayer();
             }
             //Sets the jumping variable
-            else if (userDataTypeA == UserDataType.GHOST_BOTTOM && userDataTypeB != UserDataType.PLAYERCHARACTER){
-                playerOnGround = false;
-            } else if (userDataTypeA != UserDataType.PLAYERCHARACTER && userDataTypeB == UserDataType.GHOST_BOTTOM){
-                playerOnGround = false;
+            else if (userDataTypeA==UserDataType.GHOST_BOTTOM && userDataTypeB!=UserDataType.PLAYERCHARACTER){
+                playerOnGround=true;
+                userDataA.increment();
+                System.out.println("Land");
+            } else if (userDataTypeA!=UserDataType.PLAYERCHARACTER && userDataTypeB==UserDataType.GHOST_BOTTOM){
+                playerOnGround=true;
+                userDataB.increment();
+                System.out.println("Land");
             }
         }
     }
@@ -81,10 +85,21 @@ public class MyContactListener implements ContactListener{
         UserDataType userDataTypeA = userDataA.getUserDataType();
         
         //Sets jumping to true
-        if(userDataTypeA==UserDataType.GHOST_BOTTOM || userDataTypeB==UserDataType.GHOST_BOTTOM){
-            playerOnGround=true;
+        if(userDataTypeA==UserDataType.GHOST_BOTTOM) {
+            userDataA.decrement();
+            if(userDataA.getNumOfContacts()==0) {
+                //Jumping=true;
+                System.out.println("Jump");
+            }
         }
-        
+        if(userDataTypeB==UserDataType.GHOST_BOTTOM){
+            userDataB.decrement();
+            if(userDataB.getNumOfContacts()==0) {
+                //Jumping=true;
+                System.out.println("Jump");
+            }
+        }
+
         //Sets activeBody to null when empty 
         if(userDataTypeA == UserDataType.GHOST_LEFT){
         	userDataA.decrement();

@@ -54,6 +54,14 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND | BIT_WATER;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_LEFT));
+
+		//Create bottom ghost fixture
+		shape.setAsBox(28 / PPM, 20 / PPM, new Vector2(0, -15 / PPM), 0);
+		fdef.shape=shape;
+		fdef.filter.categoryBits = BIT_SENSOR;
+		fdef.filter.maskBits = BIT_GROUND;
+		fdef.isSensor = true;
+		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM));
 		
 		return body;
 	}
