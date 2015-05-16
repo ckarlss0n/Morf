@@ -57,11 +57,9 @@ public class MyContactListener implements ContactListener{
             else if (userDataTypeA==UserDataType.GHOST_BOTTOM && userDataTypeB!=UserDataType.PLAYERCHARACTER){
                 gameLogic.setOnGround(true);
                 userDataA.increment();
-                System.out.println("Land");
             } else if (userDataTypeA!=UserDataType.PLAYERCHARACTER && userDataTypeB==UserDataType.GHOST_BOTTOM){
                 gameLogic.setOnGround(true);
                 userDataB.increment();
-                System.out.println("Land");
             }
         }
     }
@@ -90,7 +88,6 @@ public class MyContactListener implements ContactListener{
             if(userDataA.getNumOfContacts()==0) {
                 //Jumping=true;
                 gameLogic.setOnGround(false);
-                System.out.println("Jump");
             }
         }
         if(userDataTypeB==UserDataType.GHOST_BOTTOM){
@@ -98,7 +95,6 @@ public class MyContactListener implements ContactListener{
             if(userDataB.getNumOfContacts()==0) {
                 //Jumping=true;
                 gameLogic.setOnGround(false);
-                System.out.println("Jump");
             }
         }
 

@@ -29,7 +29,7 @@ public class PlayerCharacterModel {
     private boolean moving;
     private boolean onGround;
     private boolean alive;
-    private int waterLevel;
+    private int waterLevel=30;
     private Block activeBlockRight;
     private Block activeBlockLeft;
     private Block activeBlock;
