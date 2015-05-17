@@ -35,7 +35,7 @@
    <image width="64" height="64" source="../Tiles/waterTile-Middle.png"/>
   </tile>
  </tileset>
- <layer name="Tile Layer 1" width="40" height="15">
+ <layer name="Ground" width="40" height="15">
   <data encoding="base64" compression="zlib">
    eJztlOEKgCAMhDcLKnv/961B0hqzaSYSefDhD3He9BSg668advBgbOyl65RrbeCDCln2jJDtObNW6fk7MZIWgxp+Jrj2XjNXdP45fwh5S+n9qag+FqyteTdW78E73Z1XkNlJzTevG5tDURsV+PyqoOWbr4/5vdvXej9vY/WdygbIjwPE
   </data>

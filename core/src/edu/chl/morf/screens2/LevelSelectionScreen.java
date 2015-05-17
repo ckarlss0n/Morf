@@ -116,7 +116,7 @@ public class LevelSelectionScreen extends GameScreen{
         private LevelSelectionStage(){
             super();
             LevelFactory levelFactory = new LevelFactory();
-            this.addActor(new LevelPreview(levelFactory.getLevel("Level_1.tmx")));
+            this.addActor(new LevelPreview(levelFactory.getLevel("Level_3.tmx")));
             BackButton backButton = new BackButton();
             backButton.setPosition(30,600);
             backButton.setSize(300,100);

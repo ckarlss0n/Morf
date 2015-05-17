@@ -36,7 +36,7 @@ public class ScreenManager {
 	
 	private GameScreen getScreen(int screen){
 		if(screen == PLAY){
-			return new PlayScreen(this, "Level_1.tmx");
+			return new PlayScreen(this, "Level_3.tmx");
 		}
 		else if(screen == MAINMENU){
 			return new MainMenuScreen(this);
