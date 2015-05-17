@@ -23,7 +23,7 @@ public class LevelGenerator {
 	public void generateLevel(Level level, World world){
 		
 		TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
-		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Tile Layer 1");
+		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
 		TILE_SIZE = groundLayer.getTileHeight();
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.fixedRotation = true;

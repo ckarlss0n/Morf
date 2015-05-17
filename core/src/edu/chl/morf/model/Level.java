@@ -22,10 +22,10 @@ public class Level {
 	private PlayerCharacterModel player;
 	private Matrix levelMatrix;
 
-	public Level(Matrix matrix, String name, PlayerCharacterModel player){
+	public Level(Matrix matrix, String name, PlayerCharacterModel player, ArrayList<Water> waterBlocks){
 		this.name = name;
 		levelMatrix = matrix;
-		waterBlocks = new ArrayList<Water>();
+		this.waterBlocks = waterBlocks;
 		this.player = player;
 	}
 	
