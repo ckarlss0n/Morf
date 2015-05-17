@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import edu.chl.morf.handlers.HighScoreHandler;
 import edu.chl.morf.handlers.ScreenManager;
+import edu.chl.morf.handlers.SettingsHandler;
 
 public class Main extends Game{
 
@@ -19,13 +20,15 @@ public class Main extends Game{
 	
 	@Override
 	public void create() {
+        HighScoreHandler.getInstance().load();
+        SettingsHandler.getInstance().load();
 		screenManager = new ScreenManager(this);
-        HighScoreHandler.getInstance().readHighScores();
 	}
 
     @Override
     public void dispose(){
-        HighScoreHandler.getInstance().writeHighScores();
+        HighScoreHandler.getInstance().save();
+        SettingsHandler.getInstance().save();
     }
 	
 	public void render(){
