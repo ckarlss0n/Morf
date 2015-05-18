@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
 import edu.chl.morf.handlers.BodyFactory;
+import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.LevelGenerator;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.model.Block;
@@ -21,6 +22,7 @@ import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
 
 import java.awt.geom.Point2D;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +46,7 @@ public class GameLogic {
 	private BodyFactory bodyFactory;
 	private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
 	private SoundHandler soundHandler = SoundHandler.getInstance();
+	private KeyBindings keyBindings = KeyBindings.getInstance();
 
 	public GameLogic(Level level, World world){
 		this.level = level;
@@ -60,9 +63,10 @@ public class GameLogic {
 	}
 
 	public void initPressedKeys(){
-		pressedKeys.put(Input.Keys.LEFT, false);
-		pressedKeys.put(Input.Keys.RIGHT, false);
-		pressedKeys.put(Input.Keys.UP, false);
+		pressedKeys.clear();
+		pressedKeys.put(Input.Keys.valueOf(keyBindings.getMoveLeftKey()), false);
+		pressedKeys.put(Input.Keys.valueOf(keyBindings.getMoveRightKey()), false);
+		pressedKeys.put(Input.Keys.valueOf(keyBindings.getJumpKey()), false);
 	}
 
 	public World getWorld(){
@@ -107,6 +111,7 @@ public class GameLogic {
 	public void setOnGround(boolean isOnGround){
 		player.setOnGround(isOnGround);
 	}
+
 	public void jump(){
 		if(player.isOnGround()) {   //If standing (could be improved, also 0 at top of jump)
 			playerCharacterBody.applyForceToCenter(new Vector2(0, 300), true);
@@ -164,10 +169,10 @@ public class GameLogic {
 	}
 
 	public void stop(){
-		if(!(pressedKeys.get(Input.Keys.LEFT) || pressedKeys.get(Input.Keys.RIGHT))) {
+		if(!(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) || pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey())))) {
 			player.stop();
 			movementVector = new Vector2(0, 0);
-		} else if(pressedKeys.get(Input.Keys.LEFT) && !pressedKeys.get(Input.Keys.RIGHT)) {
+		} else if(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) && !pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey()))) {
 			moveLeft();
 		} else {
 			moveRight();
