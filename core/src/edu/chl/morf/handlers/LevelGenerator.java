@@ -26,6 +26,9 @@ import edu.chl.morf.model.LevelObject;
 import edu.chl.morf.model.TileType;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+import edu.chl.morf.userdata.UserData;
+import edu.chl.morf.userdata.UserDataType;
+
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
 public class LevelGenerator {
@@ -66,17 +69,17 @@ public class LevelGenerator {
 				ChainShape chainShape = new ChainShape();
 				Vector2[] v = new Vector2[5];
 				v[0] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-				v[1] = new Vector2(-TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
-				v[2] = new Vector2(TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
+				v[1] = new Vector2(-TILE_SIZE / 2 / PPM, TILE_SIZE * 0.6f / 2 / PPM);
+				v[2] = new Vector2(TILE_SIZE / 2 / PPM, TILE_SIZE * 0.6f/ 2 / PPM);
 				v[3] = new Vector2(TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
 				v[4] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
 
 				chainShape.createChain(v);
 				fixDef.shape = chainShape;
 				fixDef.filter.categoryBits = BIT_SPIKES;
-				fixDef.filter.maskBits = BIT_PLAYER;
+				fixDef.filter.maskBits = BIT_SENSOR;
 				fixDef.isSensor = false;
-				world.createBody(bodyDef).createFixture(fixDef);
+				world.createBody(bodyDef).createFixture(fixDef).setUserData(new UserData(UserDataType.SPIKE));
 			}
 		}
 

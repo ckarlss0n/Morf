@@ -56,7 +56,7 @@ public class Level {
 
 	//Method for killing the player
 	public void killPlayer(){
-		player.setAlive(false);
+		player.setDead(true);
 	}
 
 	//Method for pouring water

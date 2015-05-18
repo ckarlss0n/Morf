@@ -60,11 +60,9 @@ public class PlayScreen extends GameScreen{
         gameLogic.render(delta);
         view.render(delta);
         if(gameLogic.isLevelWon()){
-            System.out.println("You Won!");
             newLevel("nextLevel");
         }
         if(gameLogic.isPlayerDead()){
-            System.out.println("You Died!");
             newLevel("thisLevel");
         }
     }

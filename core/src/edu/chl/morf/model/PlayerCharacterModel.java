@@ -118,7 +118,7 @@ public class PlayerCharacterModel {
     public void setOnGround(boolean onGround){
         this.onGround = onGround;
     }
-    public void setAlive(boolean dead){
+    public void setDead(boolean dead){
         this.dead = dead;
     }
     public void stop(){
