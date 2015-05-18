@@ -41,26 +41,29 @@ public class LevelFactory {
 		Matrix matrix = new Matrix(groundLayer.getHeight(), groundLayer.getWidth());
 		ArrayList<Water> waterBlocks = new ArrayList<Water>();
 
-		for (int row = 0; row < groundLayer.getHeight(); row++) {
-			for (int col = 0; col < groundLayer.getWidth(); col++) {
-				TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
+		if (groundLayer != null){
+			for (int row = 0; row < groundLayer.getHeight(); row++) {
+				for (int col = 0; col < groundLayer.getWidth(); col++) {
+					TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
+					
+					if (cell == null) continue;
+					if (cell.getTile() == null) continue;
 
-				if (cell == null) continue;
-				if (cell.getTile() == null) continue;
-
-				matrix.addLevelObject(new LevelObject(TileType.GROUND, new Point2D.Float(groundLayer.getHeight() - 1 - row, col)));
+					matrix.addLevelObject(new LevelObject(TileType.GROUND, new Point2D.Float(row, col)));
+				}
 			}
 		}
-		
-		for (MapObject water : waterLayer.getObjects()) {
-			Point2D.Float position = new Point2D.Float(
-					(Float)water.getProperties().get("x") - TILE_SIZE / 2,
-					(Float)water.getProperties().get("y") - TILE_SIZE / 2);
-			waterBlocks.add(new Water(position, WaterState.LIQUID));
+
+		if (waterLayer != null){
+			for (MapObject water : waterLayer.getObjects()) {
+				Point2D.Float position = new Point2D.Float(
+						(Float)water.getProperties().get("x") - TILE_SIZE / 2,
+						(Float)water.getProperties().get("y") - TILE_SIZE / 2);
+				waterBlocks.add(new Water(position, WaterState.LIQUID));
+			}
 		}
-		
+
 		PlayerCharacterModel player = new PlayerCharacterModel(500, 500);
 		return new Level(matrix, name, player, waterBlocks);
-
 	}
 }

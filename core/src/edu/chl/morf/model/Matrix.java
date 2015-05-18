@@ -25,7 +25,7 @@ public class Matrix {
     public void addLevelObject(LevelObject object){
         float x = object.getPosition().x;
         float y = object.getPosition().y;
-        if(x >= 0 && x <= maxColumns && y >= 0 && y <= maxRows){
+        if(x >= 0 && x <= maxRows && y >= 0 && y <= maxColumns){
             this.objects.add(object);
         }
     }
