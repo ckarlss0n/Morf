@@ -62,7 +62,8 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM));
-		
+
+		shape.dispose();
 		return body;
 	}
 
@@ -84,7 +85,15 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER;
 		body.createFixture(fdef).setUserData(new UserData(WATER));
 
-		
+		//ghostFixture
+		fdef.filter.categoryBits = BIT_SENSOR;
+		fdef.filter.maskBits = BIT_WATER;
+		shape.setAsBox((TILE_SIZE * 0.9f / 2) / PPM,(TILE_SIZE / 20) / PPM,new Vector2(0, (TILE_SIZE / 2) / PPM),0);
+		fdef.shape = shape;
+		fdef.isSensor=true;
+		body.createFixture(fdef).setUserData(new UserData(WATER_SENSOR));
+
+		shape.dispose();
 		return body;
 	}
 }
