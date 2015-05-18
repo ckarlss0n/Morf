@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 
 import edu.chl.morf.handlers.BodyFactory;
@@ -157,6 +158,15 @@ public class GameLogic {
 			}
 		}
 		level.heatBlock();
+        if(activeBlock instanceof Water) {
+            Water activeWater = (Water)activeBlock;
+            for (Body body : bodyBlockMap.keySet()) {
+                if (bodyBlockMap.get(body) == activeBlock) {
+                    body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
+                    break;
+                }
+            }
+        }
 	}
 
 	public void coolBlock(){
@@ -170,7 +180,32 @@ public class GameLogic {
 			}
 		}
 		level.coolBlock();
+        if(activeBlock instanceof Water) {
+            Water activeWater = (Water)activeBlock;
+            for (Body body : bodyBlockMap.keySet()) {
+                if (bodyBlockMap.get(body) == activeWater) {
+                    body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
+                    break;
+                }
+            }
+        }
 	}
+
+
+    public Filter getFilter(Water water){
+        Filter filter = new Filter();
+        if(water.getState() == WaterState.GAS){
+            filter.categoryBits = BIT_GAS;
+            filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
+        }else if(water.getState() == WaterState.LIQUID){
+            filter.categoryBits = BIT_WATER;
+            filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
+        }else if(water.getState() == WaterState.SOLID){
+            filter.categoryBits = BIT_ICE;
+            filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS | BIT_PLAYER;
+        }
+        return filter;
+    }
 
 	public void stop(){
 		if(!(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) || pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey())))) {
@@ -184,7 +219,7 @@ public class GameLogic {
 	}
 
 	public void setActiveBodyLeft(Body body){
-		if (body == null){
+        if (body == null){
 			level.setActiveBlockLeft(new EmptyBlock());
 		}
 		else if (bodyBlockMap.get(body) != null){

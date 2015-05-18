@@ -36,14 +36,14 @@ public class BodyFactory {
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_PLAYER;
-		fdef.filter.maskBits = BIT_GROUND;
+		fdef.filter.maskBits = BIT_GROUND | BIT_ICE;
 		body.createFixture(fdef).setUserData(new UserData(PLAYERCHARACTER));
 		
 		//Create right ghost fixture 
 		shape.setAsBox(32 / PPM, 20 / PPM, new Vector2(60 / PPM, 0), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_SENSOR;
-		fdef.filter.maskBits = BIT_GROUND | BIT_WATER;
+		fdef.filter.maskBits = BIT_GROUND | BIT_WATER | BIT_ICE | BIT_GAS;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_RIGHT));
 		
@@ -51,7 +51,7 @@ public class BodyFactory {
 		shape.setAsBox(32 / PPM, 20 / PPM, new Vector2(-60 / PPM, 0), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_SENSOR;
-		fdef.filter.maskBits = BIT_GROUND | BIT_WATER;
+		fdef.filter.maskBits = BIT_GROUND | BIT_WATER | BIT_ICE | BIT_GAS;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_LEFT));
 
@@ -93,7 +93,7 @@ public class BodyFactory {
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_WATER;
-		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER;
+		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
 		body.createFixture(fdef).setUserData(new UserData(WATER));
 
 
