@@ -41,6 +41,8 @@ public class LevelFactory {
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
 		spikeLayer = (TiledMapTileLayer) tileMap.getLayers().get("Spikes");
 		waterLayer = tileMap.getLayers().get("Water");
+		iceLayer = tileMap.getLayers().get("Ice");
+		vaporLayer = tileMap.getLayers().get("Vapor");
 		TILE_SIZE = groundLayer.getTileHeight();
 
 		Matrix matrix = new Matrix(groundLayer.getHeight(), groundLayer.getWidth());
@@ -73,12 +75,30 @@ public class LevelFactory {
 			}
 		}
 
-		if (waterLayer != null){
+		if (iceLayer != null){
 			for (MapObject water : waterLayer.getObjects()) {
 				Point2D.Float position = new Point2D.Float(
 						(Float)water.getProperties().get("x") - TILE_SIZE / 2,
 						(Float)water.getProperties().get("y") - TILE_SIZE / 2);
 				waterBlocks.add(new Water(position, WaterState.LIQUID));
+			}
+		}
+		
+		if (iceLayer != null){
+			for (MapObject ice : iceLayer.getObjects()) {
+				Point2D.Float position = new Point2D.Float(
+						(Float)ice.getProperties().get("x") - TILE_SIZE / 2,
+						(Float)ice.getProperties().get("y") - TILE_SIZE / 2);
+				waterBlocks.add(new Water(position, WaterState.SOLID));
+			}
+		}
+		
+		if (vaporLayer != null){
+			for (MapObject vapor : vaporLayer.getObjects()) {
+				Point2D.Float position = new Point2D.Float(
+						(Float)vapor.getProperties().get("x") - TILE_SIZE / 2,
+						(Float)vapor.getProperties().get("y") - TILE_SIZE / 2);
+				waterBlocks.add(new Water(position, WaterState.GAS));
 			}
 		}
 		
