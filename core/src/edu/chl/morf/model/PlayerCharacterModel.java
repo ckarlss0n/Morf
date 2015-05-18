@@ -28,7 +28,7 @@ public class PlayerCharacterModel {
     private boolean facingRight;
     private boolean moving;
     private boolean onGround;
-    private boolean alive;
+    private boolean dead;
     private int waterLevel=30;
     private Block activeBlockRight;
     private Block activeBlockLeft;
@@ -42,7 +42,7 @@ public class PlayerCharacterModel {
         facingRight = true;
         moving = false;
         onGround = true;
-        alive = true;
+        dead = false;
         activeBlockRight = new EmptyBlock();
         activeBlockLeft = new EmptyBlock();
         activeBlock = new EmptyBlock();
@@ -65,8 +65,8 @@ public class PlayerCharacterModel {
     public boolean isMoving(){
         return moving;
     }
-    public boolean isAlive(){
-        return alive;
+    public boolean isDead(){
+        return dead;
     }
     public boolean isFacingRight(){
         return facingRight;
@@ -103,8 +103,8 @@ public class PlayerCharacterModel {
     public void setOnGround(boolean onGround){
         this.onGround = onGround;
     }
-    public void setAlive(boolean alive){
-        this.alive = alive;
+    public void setAlive(boolean dead){
+        this.dead = dead;
     }
     public void stop(){
         moving = false;

@@ -112,6 +112,9 @@ public class GameLogic {
 			playerCharacterBody.applyForceToCenter(new Vector2(0, 300), true);
 		}
 	}
+	public boolean isLevelWon(){
+		return level.isLevelWon();
+	}
 
 	public void resetGame(){
 
@@ -199,6 +202,10 @@ public class GameLogic {
 	public void killPlayer(){
 		level.killPlayer();
 		soundHandler.playSoundEffect(soundHandler.getDie());
+	}
+
+	public boolean isPlayerDead(){
+		return level.isPlayerDead();
 	}
 
 	public void render(float delta){

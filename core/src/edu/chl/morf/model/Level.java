@@ -21,6 +21,7 @@ public class Level {
 	private ArrayList<Water> waterBlocks;
 	private PlayerCharacterModel player;
 	private Matrix levelMatrix;
+	private boolean levelWon = false;
 
 	public Level(Matrix matrix, String name, PlayerCharacterModel player, ArrayList<Water> waterBlocks){
 		this.name = name;
@@ -61,9 +62,16 @@ public class Level {
 			}
 			else if(player.getActiveBlock() instanceof Flower){
 				System.out.println("You Win!");
+				levelWon = true;
 			}
 		}
 
+	}
+	public boolean isLevelWon(){
+		return levelWon;
+	}
+	public boolean isPlayerDead(){
+		return player.isDead();
 	}
 	
 	//Methods for heating and cooling blocks
