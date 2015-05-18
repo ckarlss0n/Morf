@@ -1,5 +1,6 @@
 package edu.chl.morf.controllers;
 import com.badlogic.gdx.physics.box2d.*;
+import edu.chl.morf.model.WaterState;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
@@ -32,17 +33,31 @@ public class MyContactListener implements ContactListener{
         UserDataType userDataTypeA = userDataA.getUserDataType();
         
         if (contact.isTouching()) {
-            //These if cases are used to set the active block variable
+            //These if cases are used to check if ghost is empty
             if (userDataTypeA == UserDataType.GHOST_LEFT) {
                 userDataA.increment();
-                gameLogic.setActiveBodyLeft(fb.getBody());
+                gameLogic.setGhostEmptyLeft(false);
             } else if (userDataTypeB == UserDataType.GHOST_LEFT) {
                 userDataB.increment();
-                gameLogic.setActiveBodyLeft(fa.getBody());
+                gameLogic.setGhostEmptyLeft(false);
             } else if (userDataTypeA == UserDataType.GHOST_RIGHT) {
                 userDataA.increment();
-                gameLogic.setActiveBodyRight(fb.getBody());
+                gameLogic.setGhostEmptyRight(false);
             } else if (userDataTypeB == UserDataType.GHOST_RIGHT) {
+                userDataB.increment();
+                gameLogic.setGhostEmptyRight(false);
+            }
+            //Active block setter
+            else if(userDataTypeA == UserDataType.ACTIVE_BLOCK_LEFT){
+                userDataA.increment();
+                gameLogic.setActiveBodyLeft(fb.getBody());
+            } else if(userDataTypeB == UserDataType.ACTIVE_BLOCK_LEFT){
+                userDataB.increment();
+                gameLogic.setActiveBodyLeft(fa.getBody());
+            } else if(userDataTypeA == UserDataType.ACTIVE_BLOCK_RIGHT){
+                userDataA.increment();
+                gameLogic.setActiveBodyRight(fb.getBody());
+            } else if(userDataTypeB == UserDataType.ACTIVE_BLOCK_RIGHT){
                 userDataB.increment();
                 gameLogic.setActiveBodyRight(fa.getBody());
             }
@@ -64,9 +79,15 @@ public class MyContactListener implements ContactListener{
             //Updates the Water isBottomBlock variable
             else if(userDataTypeA == UserDataType.WATER_SENSOR && userDataTypeB == UserDataType.WATER){
                 gameLogic.setWaterBottom(fa.getBody(), true);
+                if(gameLogic.getWaterState(fa.getBody()) != WaterState.SOLID){
+                    fb.getBody().applyForceToCenter(120f, 0f, true);
+                }
             }
             else if(userDataTypeA == UserDataType.WATER && userDataTypeB == UserDataType.WATER_SENSOR){
                 gameLogic.setWaterBottom(fb.getBody(), true);
+                if(gameLogic.getWaterState(fb.getBody()) != WaterState.SOLID){
+                    fa.getBody().applyForceToCenter(120f, 0f, true);
+                }
             }
         }
     }
@@ -109,26 +130,50 @@ public class MyContactListener implements ContactListener{
         if(userDataTypeA == UserDataType.GHOST_LEFT){
         	userDataA.decrement();
         	if(userDataA.getNumOfContacts() == 0){
-        		gameLogic.setActiveBodyLeft(null);
+        		gameLogic.setGhostEmptyLeft(true);
         	}
         }
         else if(userDataTypeA == UserDataType.GHOST_RIGHT){
         	userDataA.decrement();
         	if(userDataA.getNumOfContacts() == 0){
-        		gameLogic.setActiveBodyRight(null);
+        		gameLogic.setGhostEmptyRight(true);
         	}
         }
         else if(userDataTypeB == UserDataType.GHOST_LEFT){
         	userDataB.decrement();
         	if(userDataB.getNumOfContacts() == 0){
-        		gameLogic.setActiveBodyLeft(null);
+        		gameLogic.setGhostEmptyLeft(true);
         	}
         }
         else if(userDataTypeB == UserDataType.GHOST_RIGHT){
         	userDataB.decrement();
         	if(userDataB.getNumOfContacts() == 0){
-        		gameLogic.setActiveBodyRight(null);
+        		gameLogic.setGhostEmptyRight(true);
         	}
+        }
+        else if (userDataTypeA == UserDataType.ACTIVE_BLOCK_LEFT){
+            userDataA.decrement();
+            if(userDataA.getNumOfContacts() == 0){
+                gameLogic.setActiveBodyLeft(null);
+            }
+        }
+        else if (userDataTypeB == UserDataType.ACTIVE_BLOCK_LEFT){
+            userDataB.decrement();
+            if(userDataB.getNumOfContacts() == 0){
+                gameLogic.setActiveBodyLeft(null);
+            }
+        }
+        else if (userDataTypeA == UserDataType.ACTIVE_BLOCK_RIGHT){
+            userDataA.decrement();
+            if (userDataA.getNumOfContacts() == 0){
+                gameLogic.setActiveBodyRight(null);
+            }
+        }
+        else if (userDataTypeB == UserDataType.ACTIVE_BLOCK_RIGHT){
+            userDataB.decrement();
+            if (userDataB.getNumOfContacts() == 0){
+                gameLogic.setActiveBodyRight(null);
+            }
         }
     }
     
