@@ -36,6 +36,7 @@ public class View {
     private Animation runningLeftAnimation;
     private TextureRegion idleTexture;
     private Texture waterTexture;
+    private Texture waterTextureBottom;
     private Texture iceTexture;
     private Texture vaporTexture;
     private float stateTime;
@@ -72,10 +73,11 @@ public class View {
         runningRightAnimation = new Animation(0.1f, runningFrames);
         
         idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
-        
+
         waterTexture = new Texture("Tiles/waterTile.png");
-        iceTexture = new Texture("Tiles/waterTile-Middle.png");
-        vaporTexture = new Texture("Tiles/grassTile-Middle.png");
+        waterTextureBottom = new Texture("Tiles/waterTile-Middle.png");
+        iceTexture = new Texture("Tiles/ice.png");
+        vaporTexture = new Texture("Tiles/steam.png");
         
         stateTime = 0f;
     	this.level = level;
@@ -135,9 +137,13 @@ public class View {
 
         //Render water blocks
         for(Water water : level.getWaterBlocks()){
-        	if(water.getState() == WaterState.LIQUID){
-        		batch.draw(waterTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
-        	}
+        	if(water.getState() == WaterState.LIQUID) {
+                if (water.isBottomBlock()) {
+                    batch.draw(waterTextureBottom, water.getPosition().x - TILE_SIZE / 2, water.getPosition().y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                } else {
+                    batch.draw(waterTexture, water.getPosition().x - TILE_SIZE / 2, water.getPosition().y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                }
+            }
         	else if(water.getState() == WaterState.SOLID){
         		batch.draw(iceTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
         	}
