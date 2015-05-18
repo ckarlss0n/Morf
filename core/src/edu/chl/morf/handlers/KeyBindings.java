@@ -113,28 +113,20 @@ public class KeyBindings {
 	}
 
 	public void setKey(String keyName, String keyValue){
-		switch(keyName){
-			case "MOVE_LEFT_KEY":
-				setMoveLeftKey(keyValue);
-				break;
-			case "MOVE_RIGHT_KEY":
-				setMoveRightKey(keyValue);
-				break;
-			case "JUMP_KEY":
-				setJumpKey(keyValue);
-				break;
-			case "FLY_KEY":
-				setFlyKey(keyValue);
-				break;
-			case "POUR_KEY":
-				setPourKey(keyValue);
-				break;
-			case "COOL_KEY":
-				setCoolKey(keyValue);
-				break;
-			case "HEAT_KEY":
-				setHeatKey(keyValue);
-				break;
+		if(keyName.equals("MOVE_LEFT_KEY")) {
+			setMoveLeftKey(keyValue);
+		} else if(keyName.equals("MOVE_RIGHT_KEY")) {
+			setMoveRightKey(keyValue);
+		} else if(keyName.equals("JUMP_KEY")) {
+			setJumpKey(keyValue);
+		} else if(keyName.equals("FLY_KEY")) {
+			setFlyKey(keyValue);
+		} else if(keyName.equals("POUR_KEY")) {
+			setPourKey(keyValue);
+		} else if(keyName.equals("COOL_KEY")) {
+			setCoolKey(keyValue);
+		} else if(keyName.equals("HEAT_KEY")) {
+			setHeatKey(keyValue);
 		}
 	}
 
