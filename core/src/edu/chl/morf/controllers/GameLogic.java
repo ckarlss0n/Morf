@@ -21,6 +21,8 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+import edu.chl.morf.userdata.UserData;
+import edu.chl.morf.userdata.UserDataType;
 
 import java.awt.geom.Point2D;
 import java.security.Key;
@@ -225,6 +227,12 @@ public class GameLogic {
 			Block block = bodyBlockMap.get(body);
 			level.setActiveBlockLeft(block);
 		}
+		else if (body.getFixtureList().get(0).getUserData()!=null) {
+			if (((UserData) body.getFixtureList().get(0).getUserData()).getUserDataType() == UserDataType.FLOWER) {
+				Block block = level.getFlower();
+				level.setActiveBlockLeft(block);
+			}
+		}
 		else{
 			level.setActiveBlockLeft(new Ground());
 		}
@@ -237,6 +245,12 @@ public class GameLogic {
 		else if (bodyBlockMap.get(body) != null){
 			Block block = bodyBlockMap.get(body);
 			level.setActiveBlockRight(block);
+		}
+		else if (body.getFixtureList().get(0).getUserData()!=null) {
+			if (((UserData) body.getFixtureList().get(0).getUserData()).getUserDataType() == UserDataType.FLOWER) {
+				Block block = level.getFlower();
+				level.setActiveBlockRight(block);
+			}
 		}
 		else{
 			level.setActiveBlockRight(new Ground());
