@@ -5,6 +5,8 @@ import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.Constants.GROUND_FRICTION;
 
 import java.awt.geom.Point2D;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -27,7 +29,7 @@ public class LevelGenerator {
 	private TiledMapTileLayer groundLayer;
 	public static float TILE_SIZE;
 	
-	public void generateLevel(Level level, World world){
+	public void generateLevel(Level level, World world, Map<Body, Water> bodyBlockMap){
 
 		TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
@@ -67,22 +69,9 @@ public class LevelGenerator {
 		}
 
 		for (Water water : level.getWaterBlocks()) {
-			bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
-			//			public void placeWater(){
-			//				int size = level.getWaterBlocks().size();
-			//				level.pourWater();
-			//				if(level.getWaterBlocks().size() > size){
-			//					Water water = level.getWaterBlocks().get(size - 1);
-			//					bindWaterToBody(createWaterBody(water), water);
-			//				}
-			//				soundHandler.playSoundEffect(soundHandler.getPour());
-			//			}
-			//			public Body createWaterBody(Water water){
-			//				if (water.getState() == WaterState.LIQUID){
-			//					return bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
-			//				}
-			//				return null;
-			//			}
+			
+			Body body = bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
+			bodyBlockMap.put(body, water);
 		}
 
 	}

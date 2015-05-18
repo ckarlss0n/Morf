@@ -86,7 +86,7 @@ public class GameLogic {
 
 	//Convert level to a body
 	public void generateLevel(){
-		new LevelGenerator().generateLevel(level, world);
+		new LevelGenerator().generateLevel(level, world, bodyBlockMap);
 	}
 
 	public void moveLeft(){
@@ -127,7 +127,7 @@ public class GameLogic {
 		int size = level.getWaterBlocks().size();
 		level.pourWater();
 		if(level.getWaterBlocks().size() > size){
-			Water water = level.getWaterBlocks().get(size - 1);
+			Water water = level.getWaterBlocks().get(size);
 			bindWaterToBody(createWaterBody(water), water);
 		}
 		soundHandler.playSoundEffect(soundHandler.getPour());
