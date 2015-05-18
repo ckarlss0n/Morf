@@ -39,6 +39,7 @@ public class LevelGenerator {
 		bodyDef.fixedRotation = true;
 		FixtureDef fixDef = new FixtureDef();
 		BodyFactory bodyFactory = new BodyFactory();
+		
 
 		//Generate ground bodies
 		for (LevelObject object : level.getMatrix().getLevelObjects()){
@@ -61,6 +62,7 @@ public class LevelGenerator {
 			fixDef.isSensor = false;
 			world.createBody(bodyDef).createFixture(fixDef);
 		}
+		
 		
 		//Generate spike bodies
 
