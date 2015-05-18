@@ -37,6 +37,7 @@ public class View {
     private Texture waterTextureBottom;
     private Texture iceTexture;
     private Texture vaporTexture;
+    private Texture flowerTexture;
     private float stateTime;
     
     private PlayerCharacterModel playerCharacter;
@@ -76,6 +77,7 @@ public class View {
         waterTextureBottom = new Texture("Tiles/waterTile-Middle.png");
         iceTexture = new Texture("Tiles/ice.png");
         vaporTexture = new Texture("Tiles/steam.png");
+        flowerTexture = new Texture("Tiles/flower.png");
         
         stateTime = 0f;
     	this.level = level;
@@ -149,6 +151,9 @@ public class View {
         		batch.draw(vaporTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
         	}
         }
+        
+        //Render flower
+        batch.draw(flowerTexture, level.getFlower().getPosition().x - TILE_SIZE / 2, level.getFlower().getPosition().y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
 
         batch.end();
     }
