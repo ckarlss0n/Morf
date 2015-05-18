@@ -40,6 +40,7 @@ public class View {
     private Texture flowerTexture;
     private Texture waterMeterTexture;
     private Texture waterLevelTexture;
+    private Texture levelCompletedTexture;
     private float stateTime;
     
     private PlayerCharacterModel playerCharacter;
@@ -83,6 +84,7 @@ public class View {
         flowerTexture = new Texture("Tiles/flower.png");
         waterMeterTexture = new Texture("WaterMeter.png");
         waterLevelTexture = new Texture("WaterLevel.png");
+        levelCompletedTexture = new Texture("levelCompleted.png");
         
         stateTime = 0f;
     	this.level = level;
@@ -180,6 +182,11 @@ public class View {
         String waterLevelString = waterLevel + " / " + playerCharacter.getMaxWaterLevel();
         BitmapFont.TextBounds messageBounds = font.getBounds(waterLevelString); //Actual size of the drawn message
         font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth()/2 - messageBounds.width/2, Main.V_HEIGHT - waterMeterTexture.getHeight()/2 - paddingTop + messageBounds.height/2);
+
+        if(level.isLevelWon()){
+            batch.draw(levelCompletedTexture, Main.V_WIDTH/2 - levelCompletedTexture.getWidth()/2, Main.V_HEIGHT/2 - levelCompletedTexture.getHeight()/2);
+        }
+
         batch.end();
     }
 
