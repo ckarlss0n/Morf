@@ -28,12 +28,15 @@ public class LevelFactory {
 	private TiledMapTileLayer groundLayer;
 	private TiledMapTileLayer spikeLayer;
 	private MapLayer waterLayer;
+	
+	public static float TILE_SIZE;
 
 	public Level getLevel(String name){
 
 		tileMap = new TmxMapLoader().load(LEVEL_PATH + name);
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
 		waterLayer = tileMap.getLayers().get("Water");
+		TILE_SIZE = groundLayer.getTileHeight();
 
 		Matrix matrix = new Matrix(groundLayer.getHeight(), groundLayer.getWidth());
 		ArrayList<Water> waterBlocks = new ArrayList<Water>();
@@ -50,7 +53,9 @@ public class LevelFactory {
 		}
 		
 		for (MapObject water : waterLayer.getObjects()) {
-			Point2D.Float position = new Point2D.Float((Float)water.getProperties().get("x"), (Float)water.getProperties().get("y"));
+			Point2D.Float position = new Point2D.Float(
+					(Float)water.getProperties().get("x") - TILE_SIZE / 2,
+					(Float)water.getProperties().get("y") - TILE_SIZE / 2);
 			waterBlocks.add(new Water(position, WaterState.LIQUID));
 		}
 		
