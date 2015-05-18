@@ -120,6 +120,10 @@ public class GameLogic {
 	public boolean isLevelWon(){
 		return level.isLevelWon();
 	}
+	public WaterState getWaterState(Body body){
+		Water waterBlock = bodyBlockMap.get(body);
+		return waterBlock.getState();
+	}
 
 	public void resetGame(){
 
@@ -203,6 +207,12 @@ public class GameLogic {
 		else{
 			level.setActiveBlockRight(new Ground());
 		}
+	}
+	public void setGhostEmptyLeft(boolean ghostEmptyLeft){
+		level.setGhostEmptyLeft(ghostEmptyLeft);
+	}
+	public void setGhostEmptyRight(boolean ghostEmptyRight){
+		level.setGhostEmptyRight(ghostEmptyRight);
 	}
 
 	public void killPlayer(){

@@ -57,16 +57,22 @@ public class Level {
 	//Method for pouring water
 	public void pourWater(){
 		if (player.getWaterLevel()!=0){
-			if(player.getActiveBlock() instanceof EmptyBlock){
-				addWater(player.pourWater());
-			}
-			else if(player.getActiveBlock() instanceof Flower){
-				System.out.println("You Win!");
+			if(player.getActiveBlock() instanceof Flower){
 				levelWon = true;
+			}
+			else if(player.isGhostEmpty()){
+				addWater(player.pourWater());
 			}
 		}
 
 	}
+	public void setGhostEmptyLeft(boolean ghostEmptyLeft){
+		player.setGhostEmptyLeft(ghostEmptyLeft);
+	}
+	public void setGhostEmptyRight(boolean ghostEmptyRight){
+		player.setGhostEmptyRight(ghostEmptyRight);
+	}
+
 	public boolean isLevelWon(){
 		return levelWon;
 	}

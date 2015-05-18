@@ -33,6 +33,9 @@ public class PlayerCharacterModel {
     private Block activeBlockRight;
     private Block activeBlockLeft;
     private Block activeBlock;
+    private boolean ghostEmptyRight;
+    private boolean ghostEmptyLeft;
+    private boolean ghostEmpty;
     
     private Point2D.Float position;
     private Point2D.Float speed;
@@ -47,6 +50,9 @@ public class PlayerCharacterModel {
         activeBlockLeft = new EmptyBlock();
         activeBlock = new EmptyBlock();
         speed = new Point2D.Float(0,0);
+        ghostEmptyRight = true;
+        ghostEmptyLeft = true;
+        ghostEmpty = true;
     }
     public PlayerCharacterModel(Point2D.Float position){
     	this();
@@ -59,6 +65,13 @@ public class PlayerCharacterModel {
 
     //Getters
     public boolean isOnGround(){return onGround;}
+    public boolean isGhostEmpty(){
+        if(facingRight){
+            return ghostEmptyRight;
+        } else {
+            return ghostEmptyLeft;
+        }
+    }
     public Point2D.Float getPosition(){
     	return position;
     }
@@ -93,11 +106,13 @@ public class PlayerCharacterModel {
         moving = true;
         facingRight = false;
         setActiveBlock(activeBlockLeft);
+        setGhostEmpty(ghostEmptyLeft);
     }
     public void moveRight(){
         moving = true;
         facingRight = true;
         setActiveBlock(activeBlockRight);
+        setGhostEmpty(ghostEmptyRight);
     }
     
     public void setOnGround(boolean onGround){
@@ -118,11 +133,14 @@ public class PlayerCharacterModel {
     public void setSpeed(float x, float y){
         speed.setLocation(x, y);
     }
+    public void setGhostEmptyLeft(boolean ghostEmptyLeft){this.ghostEmptyLeft=ghostEmptyLeft;}
+    public void setGhostEmptyRight(boolean ghostEmptyRight){this.ghostEmptyRight=ghostEmptyRight;}
+    public void setGhostEmpty(boolean ghostEmpty){this.ghostEmpty=ghostEmpty;}
 
     public Water pourWater(){
-        Point2D.Float point=new Point2D.Float(position.x - 36, position.y);
+        Point2D.Float point=new Point2D.Float(position.x - 64, position.y);
         if(facingRight){
-            point = new Point2D.Float(position.x + 36 * 2, position.y);
+            point = new Point2D.Float(position.x + 64, position.y);
         }
         decreaseWaterLevel();
         return new Water(point);
