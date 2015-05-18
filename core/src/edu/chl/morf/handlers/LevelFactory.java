@@ -43,6 +43,7 @@ public class LevelFactory {
 		waterLayer = tileMap.getLayers().get("Water");
 		iceLayer = tileMap.getLayers().get("Ice");
 		vaporLayer = tileMap.getLayers().get("Vapor");
+		flowerLayer = tileMap.getLayers().get("Flower");
 		TILE_SIZE = groundLayer.getTileHeight();
 
 		Matrix matrix = new Matrix(groundLayer.getHeight(), groundLayer.getWidth());

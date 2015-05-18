@@ -14,5 +14,6 @@ public enum UserDataType {
     SPIKE,
     WATER,
     WATER_SENSOR,
+    FLOWER,
     OTHER
 }

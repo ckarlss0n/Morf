@@ -97,7 +97,9 @@ public class LevelGenerator {
 		}
 		
 		//Generate flower body
-//		Flower flower = level.getFlower();
-//		bodyFactory.createFlowerBody(world, new Vector2(flower.getPosition().x, flower.getPosition().y));
+		if (level.getFlower() != null){
+			Flower flower = level.getFlower();
+			bodyFactory.createFlowerBody(world, new Vector2(flower.getPosition().x, flower.getPosition().y));
+		}
 	}
 }

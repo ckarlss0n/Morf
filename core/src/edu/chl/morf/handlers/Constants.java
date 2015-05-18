@@ -13,5 +13,5 @@ public class Constants {
 	public static final short BIT_ICE = 32;
 	public static final short BIT_GAS = 64;
 	public static final short BIT_SENSOR = 128;
-	
+	public static final short BIT_FLOWER = 256;
 }

@@ -108,5 +108,26 @@ public class BodyFactory {
 		shape.dispose();
 		return body;
 	}
+	
+	public Body createFlowerBody(World world, Vector2 position){
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(position.x / PPM, position.y / PPM);
+		bdef.type = BodyType.DynamicBody;
+		bdef.fixedRotation = true;
+
+		Body body = world.createBody(bdef);
+
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox((TILE_SIZE / 2) / PPM, (TILE_SIZE / 2) / PPM);
+
+		FixtureDef fdef = new FixtureDef();
+		fdef.shape = shape;
+		fdef.filter.categoryBits = BIT_FLOWER;
+		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER;
+		body.createFixture(fdef).setUserData(new UserData(FLOWER));
+
+		shape.dispose();
+		return body;
+	}
 }
 
