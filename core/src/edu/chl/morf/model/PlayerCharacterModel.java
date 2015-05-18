@@ -29,7 +29,8 @@ public class PlayerCharacterModel {
     private boolean moving;
     private boolean onGround;
     private boolean dead;
-    private int waterLevel=30;
+    private int maxWaterLevel = 30;
+    private int waterLevel= maxWaterLevel;
     private Block activeBlockRight;
     private Block activeBlockLeft;
     private Block activeBlock;
@@ -86,6 +87,9 @@ public class PlayerCharacterModel {
     }
     public boolean hasWater(){
         return waterLevel>0;
+    }
+    public int getMaxWaterLevel() {
+        return maxWaterLevel;
     }
     public int getWaterLevel(){
         return waterLevel;

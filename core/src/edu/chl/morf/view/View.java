@@ -38,6 +38,8 @@ public class View {
     private Texture iceTexture;
     private Texture vaporTexture;
     private Texture flowerTexture;
+    private Texture waterMeterTexture;
+    private Texture waterLevelTexture;
     private float stateTime;
     
     private PlayerCharacterModel playerCharacter;
@@ -53,6 +55,7 @@ public class View {
     private BackgroundFactory backgroundFactory;
     private BackgroundGroup backgroundGroup;
     private OrthographicCamera hudCam;
+    private BitmapFont font;
     
     public View(Level level, OrthographicCamera camera, OrthographicCamera hudCam, OrthographicCamera b2dCam, Batch batch, World world){
     	//Load PayerCharacter sprite sheet from assets
@@ -78,6 +81,8 @@ public class View {
         iceTexture = new Texture("Tiles/ice.png");
         vaporTexture = new Texture("Tiles/steam.png");
         flowerTexture = new Texture("Tiles/flower.png");
+        waterMeterTexture = new Texture("WaterMeter.png");
+        waterLevelTexture = new Texture("WaterLevel.png");
         
         stateTime = 0f;
     	this.level = level;
@@ -92,6 +97,7 @@ public class View {
         this.world = world;
         this.hudCam = hudCam;
         this.hudCam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
+        font = new BitmapFont();
         
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
@@ -155,6 +161,25 @@ public class View {
         //Render flower
         batch.draw(flowerTexture, level.getFlower().getPosition().x - TILE_SIZE / 2, level.getFlower().getPosition().y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
 
+        //Render HUD (Water level)
+        batch.setProjectionMatrix(hudCam.combined);
+        float deltaWidth = (waterMeterTexture.getWidth()- waterLevelTexture.getWidth())/2;
+        float deltaHeight = (waterMeterTexture.getHeight()- waterLevelTexture.getHeight())/2;
+        int waterLevel = playerCharacter.getWaterLevel();
+        float computedWidth = (float) waterLevelTexture.getWidth()/playerCharacter.getMaxWaterLevel()*waterLevel;
+        float paddingTop = 20;
+        float paddingLeft = 20;
+
+        //Water meter (background texture)
+        batch.draw(waterMeterTexture, paddingLeft, Main.V_HEIGHT - waterMeterTexture.getHeight() - paddingTop);
+
+        //Water level (blue texture on top)
+        batch.draw(waterLevelTexture, paddingLeft + deltaWidth, Main.V_HEIGHT - waterMeterTexture.getHeight() - paddingTop + deltaHeight, computedWidth, waterLevelTexture.getHeight());
+
+        //Also show water level as text
+        String waterLevelString = waterLevel + " / " + playerCharacter.getMaxWaterLevel();
+        BitmapFont.TextBounds messageBounds = font.getBounds(waterLevelString); //Actual size of the drawn message
+        font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth()/2 - messageBounds.width/2, Main.V_HEIGHT - waterMeterTexture.getHeight()/2 - paddingTop + messageBounds.height/2);
         batch.end();
     }
 
