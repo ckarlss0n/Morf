@@ -11,6 +11,7 @@
  </tileset>
  <layer name="Ground" width="20" height="10">
   <data encoding="base64" compression="zlib">
+   eJxjZGBgYKQyphZANo8a5mPTT4mZtPQvNdSTYh4jDjY28wjFBTZxXGKE3EfIf4TcRykGAHCwAEk=
   </data>
  </layer>
  <objectgroup name="Water">
