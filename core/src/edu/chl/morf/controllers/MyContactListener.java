@@ -61,6 +61,13 @@ public class MyContactListener implements ContactListener{
                 gameLogic.setOnGround(true);
                 userDataB.increment();
             }
+            //Updates the Water isBottomBlock variable
+            else if(userDataTypeA == UserDataType.WATER_SENSOR && userDataTypeB == UserDataType.WATER){
+                gameLogic.setWaterBottom(fa.getBody(), true);
+            }
+            else if(userDataTypeA == UserDataType.WATER && userDataTypeB == UserDataType.WATER_SENSOR){
+                gameLogic.setWaterBottom(fb.getBody(), true);
+            }
         }
     }
     

@@ -140,6 +140,7 @@ public class GameLogic {
 		Block activeBlock = level.getPlayer().getActiveBlock();
 		if(activeBlock instanceof Water){
 			WaterState state = ((Water) activeBlock).getState();
+			((Water) activeBlock).setBottomBlock(true);
 			if(state == WaterState.SOLID) {
 				soundHandler.playSoundEffect(soundHandler.getPour());
 			} else if(state == WaterState.LIQUID) {
@@ -206,6 +207,10 @@ public class GameLogic {
 
 	public boolean isPlayerDead(){
 		return level.isPlayerDead();
+	}
+	public void setWaterBottom(Body body, boolean bottomBlock){
+		Water waterBlock = bodyBlockMap.get(body);
+		waterBlock.setBottomBlock(bottomBlock);
 	}
 
 	public void render(float delta){
