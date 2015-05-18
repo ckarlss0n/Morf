@@ -16,7 +16,11 @@ public class LevelObject {
         this.position = position;
     }
 
+    public TileType getTileType(){
+    	return tileType;
+    }
+    
     public Point2D.Float getPosition(){
-        return this.position;
+        return position;
     }
 }
