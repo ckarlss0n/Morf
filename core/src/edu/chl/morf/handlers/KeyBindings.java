@@ -66,6 +66,9 @@ public class KeyBindings {
 		usedKeys.add(POUR_KEY);
 		usedKeys.add(COOL_KEY);
 		usedKeys.add(HEAT_KEY);
+		if(usedKeys.contains(null)){
+			resetDefaults();
+		}
 	}
 
 	public List<String> getUsedKeys(){
