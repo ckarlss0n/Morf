@@ -144,8 +144,8 @@ public class GameLogic {
 		if(level.getWaterBlocks().size() > size){
 			Water water = level.getWaterBlocks().get(size);
 			bindWaterToBody(createWaterBody(water), water);
+			soundHandler.playSoundEffect(soundHandler.getPour());
 		}
-		soundHandler.playSoundEffect(soundHandler.getPour());
 	}
 	
 	public void heatBlock(){
