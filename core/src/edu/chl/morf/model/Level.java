@@ -22,12 +22,14 @@ public class Level {
 	private PlayerCharacterModel player;
 	private Matrix levelMatrix;
 	private boolean levelWon = false;
+	private Flower flower;
 
-	public Level(Matrix matrix, String name, PlayerCharacterModel player, ArrayList<Water> waterBlocks){
+	public Level(Matrix matrix, String name, PlayerCharacterModel player, ArrayList<Water> waterBlocks, Flower flower){
 		this.name = name;
 		levelMatrix = matrix;
 		this.waterBlocks = waterBlocks;
 		this.player = player;
+		this.flower = flower;
 	}
 	
 	//Getters
@@ -39,6 +41,9 @@ public class Level {
 	}
 	public PlayerCharacterModel getPlayer(){
 		return player;
+	}
+	public Flower getFlower(){
+		return flower;
 	}
 
 	//Setters
