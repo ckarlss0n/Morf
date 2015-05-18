@@ -41,54 +41,25 @@ public class LevelGenerator {
 		BodyFactory bodyFactory = new BodyFactory();
 
 		//Generate ground bodies
-//		for (LevelObject object : level.getMatrix().getLevelObjects()){
-//			bodyDef.type = BodyType.StaticBody;
-//			bodyDef.position.set((col + 0.5f) * TILE_SIZE / PPM, (row + 0.5f) * TILE_SIZE / PPM);
-//
-//			ChainShape chainShape = new ChainShape();
-//			Vector2[] v = new Vector2[5];
-//			v[0] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-//			v[1] = new Vector2(-TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
-//			v[2] = new Vector2(TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
-//			v[3] = new Vector2(TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-//			v[4] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-//
-//			chainShape.createChain(v);
-//			fixDef.friction = GROUND_FRICTION;
-//			fixDef.shape = chainShape;
-//			fixDef.filter.categoryBits = BIT_GROUND;
-//			fixDef.filter.maskBits = -1;
-//			fixDef.isSensor = false;
-//			world.createBody(bodyDef).createFixture(fixDef);
-//		}
-		
-		for (int row = 0; row < level.getMatrix().getRows(); row++) {
-			for (int col = 0; col < level.getMatrix().getColumns(); col++) {
-				TiledMapTileLayer.Cell cell = groundLayer.getCell(col, row);
+		for (LevelObject object : level.getMatrix().getLevelObjects()){
+			bodyDef.type = BodyType.StaticBody;
+			bodyDef.position.set((object.getPosition().y + 0.5f) * TILE_SIZE / PPM, (object.getPosition().x + 0.5f) * TILE_SIZE / PPM);
 
+			ChainShape chainShape = new ChainShape();
+			Vector2[] v = new Vector2[5];
+			v[0] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
+			v[1] = new Vector2(-TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
+			v[2] = new Vector2(TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
+			v[3] = new Vector2(TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
+			v[4] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
 
-				if (cell == null) continue;
-				if (cell.getTile() == null) continue;
-
-				bodyDef.type = BodyType.StaticBody;
-				bodyDef.position.set((col + 0.5f) * TILE_SIZE / PPM, (row + 0.5f) * TILE_SIZE / PPM);
-
-				ChainShape chainShape = new ChainShape();
-				Vector2[] v = new Vector2[5];
-				v[0] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-				v[1] = new Vector2(-TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
-				v[2] = new Vector2(TILE_SIZE / 2 / PPM, TILE_SIZE / 2 / PPM);
-				v[3] = new Vector2(TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-				v[4] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-
-				chainShape.createChain(v);
-				fixDef.friction = GROUND_FRICTION;
-				fixDef.shape = chainShape;
-				fixDef.filter.categoryBits = BIT_GROUND;
-				fixDef.filter.maskBits = -1;
-				fixDef.isSensor = false;
-				world.createBody(bodyDef).createFixture(fixDef);
-			}
+			chainShape.createChain(v);
+			fixDef.friction = GROUND_FRICTION;
+			fixDef.shape = chainShape;
+			fixDef.filter.categoryBits = BIT_GROUND;
+			fixDef.filter.maskBits = -1;
+			fixDef.isSensor = false;
+			world.createBody(bodyDef).createFixture(fixDef);
 		}
 		
 		//Generate spike bodies
