@@ -39,7 +39,7 @@ public class OptionsScreen extends GameScreen{
 		private Slider soundEffectsVolumeSlider;
 		private KeyBindings keyBindings = KeyBindings.getInstance();
 
-		private void bindListener(TextField textField, String keyName){
+		private void bindListener(final TextField textField, final String keyName){
 			textField.addListener(new ClickListener(){
 				@Override
 				public boolean keyDown(InputEvent event, int keycode) {
@@ -90,13 +90,13 @@ public class OptionsScreen extends GameScreen{
 			Label coolLabel = new Label("Cool: ", skin);
 			Label heatLabel = new Label("Heat: ", skin);
 
-			TextField moveLeftField = new TextField(keyBindings.getMoveLeftKey(), skin);
-			TextField moveRightField = new TextField(keyBindings.getMoveRightKey(), skin);
-			TextField jumpField = new TextField(keyBindings.getJumpKey(), skin);
-			TextField flyField = new TextField(keyBindings.getFlyKey(), skin);
-			TextField pourField = new TextField(keyBindings.getPourKey(), skin);
-			TextField coolField = new TextField(keyBindings.getCoolKey(), skin);
-			TextField heatField = new TextField(keyBindings.getHeatKey(), skin);
+			final TextField moveLeftField = new TextField(keyBindings.getMoveLeftKey(), skin);
+            final TextField moveRightField = new TextField(keyBindings.getMoveRightKey(), skin);
+            final TextField jumpField = new TextField(keyBindings.getJumpKey(), skin);
+            final TextField flyField = new TextField(keyBindings.getFlyKey(), skin);
+            final TextField pourField = new TextField(keyBindings.getPourKey(), skin);
+            final TextField coolField = new TextField(keyBindings.getCoolKey(), skin);
+            final TextField heatField = new TextField(keyBindings.getHeatKey(), skin);
 
 			bindListener(moveLeftField, "MOVE_LEFT_KEY");
 			bindListener(moveRightField, "MOVE_RIGHT_KEY");
