@@ -11,5 +11,6 @@ public enum UserDataType {
     GHOST_BOTTOM,
     SPIKE,
     WATER,
+    WATER_SENSOR,
     OTHER
 }
