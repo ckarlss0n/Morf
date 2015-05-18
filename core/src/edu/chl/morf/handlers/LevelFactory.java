@@ -47,7 +47,7 @@ public class LevelFactory {
 
 		Matrix matrix = new Matrix(groundLayer.getHeight(), groundLayer.getWidth());
 		ArrayList<Water> waterBlocks = new ArrayList<Water>();
-		Flower flower;
+		Flower flower = null;
 
 		//Add ground objects to level
 		if (groundLayer != null){
@@ -116,8 +116,11 @@ public class LevelFactory {
 				flower = new Flower(position);
 			}
 		}
+		else {
+			flower = null;
+		}
 
 		PlayerCharacterModel player = new PlayerCharacterModel(500, 500);
-		return new Level(matrix, name, player, waterBlocks);
+		return new Level(matrix, name, player, waterBlocks, flower);
 	}
 }
