@@ -47,6 +47,7 @@ public class PlayScreen extends GameScreen{
 
         this.view = new View(level, cam, hudCam, box2dCam, spriteBatch, world);
     }
+    private void newLevel(String levelName){}
 
     @Override
     public void show() {
@@ -58,6 +59,14 @@ public class PlayScreen extends GameScreen{
     public void render(float delta) {
         gameLogic.render(delta);
         view.render(delta);
+        if(gameLogic.isLevelWon()){
+            System.out.println("You Won!");
+            newLevel("nextLevel");
+        }
+        if(gameLogic.isPlayerDead()){
+            System.out.println("You Died!");
+            newLevel("thisLevel");
+        }
     }
 
     @Override
