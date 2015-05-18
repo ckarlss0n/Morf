@@ -4,30 +4,38 @@ import static edu.chl.morf.Constants.LEVEL_PATH;
 import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.Constants.GROUND_FRICTION;
 
+import java.awt.geom.Point2D;
+
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import edu.chl.morf.model.Level;
+import edu.chl.morf.model.Water;
+import edu.chl.morf.model.WaterState;
 
 public class LevelGenerator {
 
-    private TiledMapTileLayer groundLayer;
+	private TiledMapTileLayer groundLayer;
 	public static float TILE_SIZE;
+	
 	public void generateLevel(Level level, World world){
-		
+
 		TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
 		TILE_SIZE = groundLayer.getTileHeight();
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.fixedRotation = true;
 		FixtureDef fixDef = new FixtureDef();
+		BodyFactory bodyFactory = new BodyFactory();
 
 		for (int row = 0; row < level.getMatrix().getRows(); row++) {
 			for (int col = 0; col < level.getMatrix().getColumns(); col++) {
@@ -56,6 +64,25 @@ public class LevelGenerator {
 				fixDef.isSensor = false;
 				world.createBody(bodyDef).createFixture(fixDef);
 			}
+		}
+
+		for (Water water : level.getWaterBlocks()) {
+			bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
+			//			public void placeWater(){
+			//				int size = level.getWaterBlocks().size();
+			//				level.pourWater();
+			//				if(level.getWaterBlocks().size() > size){
+			//					Water water = level.getWaterBlocks().get(size - 1);
+			//					bindWaterToBody(createWaterBody(water), water);
+			//				}
+			//				soundHandler.playSoundEffect(soundHandler.getPour());
+			//			}
+			//			public Body createWaterBody(Water water){
+			//				if (water.getState() == WaterState.LIQUID){
+			//					return bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
+			//				}
+			//				return null;
+			//			}
 		}
 
 	}
