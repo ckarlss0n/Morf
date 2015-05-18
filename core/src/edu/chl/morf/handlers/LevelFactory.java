@@ -49,6 +49,7 @@ public class LevelFactory {
 		ArrayList<Water> waterBlocks = new ArrayList<Water>();
 		Flower flower;
 
+		//Add ground objects to level
 		if (groundLayer != null){
 			for (int row = 0; row < groundLayer.getHeight(); row++) {
 				for (int col = 0; col < groundLayer.getWidth(); col++) {
@@ -62,6 +63,7 @@ public class LevelFactory {
 			}
 		}
 		
+		//Add spike objects to level
 		if (spikeLayer != null){
 			for (int row = 0; row < spikeLayer.getHeight(); row++){
 				for (int col = 0; col < spikeLayer.getWidth(); col++) {
@@ -75,38 +77,42 @@ public class LevelFactory {
 			}
 		}
 
-		if (iceLayer != null){
+		//Add water blocks to level
+		if (waterLayer != null){
 			for (MapObject water : waterLayer.getObjects()) {
 				Point2D.Float position = new Point2D.Float(
-						(Float)water.getProperties().get("x") - TILE_SIZE / 2,
-						(Float)water.getProperties().get("y") - TILE_SIZE / 2);
+						(Float)water.getProperties().get("x") + TILE_SIZE / 2,
+						(Float)water.getProperties().get("y") + TILE_SIZE / 2);
 				waterBlocks.add(new Water(position, WaterState.LIQUID));
 			}
 		}
 		
+		//Add ice blocks to level
 		if (iceLayer != null){
 			for (MapObject ice : iceLayer.getObjects()) {
 				Point2D.Float position = new Point2D.Float(
-						(Float)ice.getProperties().get("x") - TILE_SIZE / 2,
-						(Float)ice.getProperties().get("y") - TILE_SIZE / 2);
+						(Float)ice.getProperties().get("x") + TILE_SIZE / 2,
+						(Float)ice.getProperties().get("y") + TILE_SIZE / 2);
 				waterBlocks.add(new Water(position, WaterState.SOLID));
 			}
 		}
 		
+		//Add vapor blocks to level
 		if (vaporLayer != null){
 			for (MapObject vapor : vaporLayer.getObjects()) {
 				Point2D.Float position = new Point2D.Float(
-						(Float)vapor.getProperties().get("x") - TILE_SIZE / 2,
-						(Float)vapor.getProperties().get("y") - TILE_SIZE / 2);
+						(Float)vapor.getProperties().get("x") + TILE_SIZE / 2,
+						(Float)vapor.getProperties().get("y") + TILE_SIZE / 2);
 				waterBlocks.add(new Water(position, WaterState.GAS));
 			}
 		}
 		
+		//Add flower block to level
 		if (flowerLayer != null){
 			for (MapObject flowerObject : flowerLayer.getObjects()) {
 				Point2D.Float position = new Point2D.Float(
-						(Float)flowerObject.getProperties().get("x") - TILE_SIZE / 2,
-						(Float)flowerObject.getProperties().get("y") - TILE_SIZE / 2);
+						(Float)flowerObject.getProperties().get("x") + TILE_SIZE / 2,
+						(Float)flowerObject.getProperties().get("y") + TILE_SIZE / 2);
 				flower = new Flower(position);
 			}
 		}

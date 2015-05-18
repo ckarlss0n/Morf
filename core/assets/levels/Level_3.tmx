@@ -6,9 +6,11 @@
  <tileset firstgid="2" name="waterTile" tilewidth="64" tileheight="64">
   <image source="../Tiles/waterTile.png" width="64" height="64"/>
  </tileset>
+ <tileset firstgid="3" name="spikes" tilewidth="64" tileheight="64">
+  <image source="../Tiles/spikes.png" width="64" height="64"/>
+ </tileset>
  <layer name="Ground" width="20" height="10">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYKQyphagtpnoZiHzybEHnx5ywoUSN2DTR4x5hOKQmvGLrhebeYTsonZaJYQBgeAAWw==
   </data>
  </layer>
  <objectgroup name="Water">
@@ -18,4 +20,9 @@
   <object id="21" gid="2" x="128" y="448"/>
   <object id="22" gid="2" x="256" y="384"/>
  </objectgroup>
+ <layer name="Spikes" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFowATMA+0A4gEzGg0tQEACGAACg==
+  </data>
+ </layer>
 </map>
