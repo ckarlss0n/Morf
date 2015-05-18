@@ -72,7 +72,7 @@ public class GameStage extends Stage implements ContactListener {
 
     public GameStage(String levelName) {
         world = WorldUtils.createWorld();
-        playerCharacter = WorldUtils.createPlayerCharacter(world);
+        //playerCharacter = WorldUtils.createPlayerCharacter(world);
         accumulator = 0f;
 
         background = new BackgroundLayer(BACKGROUND_IMAGE_PATH);

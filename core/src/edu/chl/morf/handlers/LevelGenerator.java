@@ -24,23 +24,17 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.model.LevelObject;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
 public class LevelGenerator {
-
-	private TiledMapTileLayer groundLayer;
-	public static float TILE_SIZE;
 	
 	public void generateLevel(Level level, World world, Map<Body, Water> bodyBlockMap){
 
-		TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
-		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
-		TILE_SIZE = groundLayer.getTileHeight();
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.fixedRotation = true;
 		FixtureDef fixDef = new FixtureDef();
 		BodyFactory bodyFactory = new BodyFactory();
 		
-
 		//Generate ground bodies
 		for (LevelObject object : level.getMatrix().getLevelObjects()){
 			bodyDef.type = BodyType.StaticBody;

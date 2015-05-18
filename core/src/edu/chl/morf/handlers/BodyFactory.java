@@ -2,7 +2,7 @@ package edu.chl.morf.handlers;
 
 import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.userdata.UserDataType.*;
-import static edu.chl.morf.handlers.LevelGenerator.TILE_SIZE;
+import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;

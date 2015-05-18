@@ -23,8 +23,6 @@ public final class Constants {
     public static final int GAME_HEIGHT = 768;
     public static final boolean FULLSCREEN = false;
     public static final float PPM = 100f; //Pixels per meter
-    public static final float REAL_TILE_SIZE = 64;
-    public static final float TILE_SIZE = (REAL_TILE_SIZE-2)/PPM; //Safe tile size
 
     //Background constants
     public static final String BACKGROUND_IMAGE_PATH = "background.png";

@@ -17,11 +17,9 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
-
 import java.awt.geom.Point2D;
-
 import static edu.chl.morf.Constants.*;
-import static edu.chl.morf.handlers.LevelGenerator.TILE_SIZE;
+import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
 /**
  * Created by Lage on 2015-05-06.

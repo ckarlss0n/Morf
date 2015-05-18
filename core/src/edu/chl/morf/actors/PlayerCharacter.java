@@ -57,94 +57,94 @@ public class PlayerCharacter extends Image {
     private OrthographicCamera camera;
     private int waterLevel = WATER_LEVEL;
 
-    public PlayerCharacter(Body body){
-        //Load sprite sheet from assets
-        TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
-        TextureRegion[] runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
-        for (int i = 0; i < PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length; i++) {
-            String path = PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES[i];
-            runningFrames[i] = textureAtlas.findRegion(path);
-        }
-        runningLeftAnimation = new Animation(0.1f, runningFrames);
+//    public PlayerCharacter(Body body){
+//        //Load sprite sheet from assets
+//        TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
+//        TextureRegion[] runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
+//        for (int i = 0; i < PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length; i++) {
+//            String path = PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES[i];
+//            runningFrames[i] = textureAtlas.findRegion(path);
+//        }
+//        runningLeftAnimation = new Animation(0.1f, runningFrames);
+//
+//        runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length];
+//        for (int i = 0; i < PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length; i++) {
+//            String path = PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES [i];
+//            runningFrames[i] = textureAtlas.findRegion(path);
+//        }
+//        runningRightAnimation = new Animation(0.1f, runningFrames);
+//
+//        idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
+//        stateTime = 0f;
+//
+//        this.body = body;
+//        pressedKeys.put(Input.Keys.LEFT, false);
+//        pressedKeys.put(Input.Keys.RIGHT, false);
+//        pressedKeys.put(Input.Keys.UP, false);
+//        addListener(new InputListener() {
+//            public boolean keyDown(InputEvent event, int keycode) {
+//                switch (keycode) {
+//                    case Input.Keys.LEFT:
+//                        pressedKeys.put(Input.Keys.LEFT, true);
+//                        moveLeft();
+//                        break;
+//                    case Input.Keys.RIGHT:
+//                        pressedKeys.put(Input.Keys.RIGHT, true);
+//                        moveRight();
+//                        break;
+//                    case Input.Keys.UP:
+//                        pressedKeys.put(Input.Keys.UP, true);
+//                        jump();
+//                        break;
+//                    case Input.Keys.SPACE:
+//                        doAction();
+//                        break;
+//                    case Input.Keys.SHIFT_LEFT:
+//                        fly();
+//                        break;
+//                    case Input.Keys.X:
+//                        addBlock(getBody().getPosition(),UserDataType.GROUND);
+//                        break;
+//                    case Input.Keys.C:
+//                        addBlock(getBody().getPosition(),UserDataType.SPIKE);
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
-        runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length];
-        for (int i = 0; i < PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length; i++) {
-            String path = PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES [i];
-            runningFrames[i] = textureAtlas.findRegion(path);
-        }
-        runningRightAnimation = new Animation(0.1f, runningFrames);
+//        addListener(new InputListener() {
+//            public boolean keyUp(InputEvent event, int keycode) {
+//                if (keycode == Input.Keys.LEFT) {
+//                    pressedKeys.put(Input.Keys.LEFT, false);
+//                    stop();
+//                } else if (keycode == Input.Keys.RIGHT) {
+//                    pressedKeys.put(Input.Keys.RIGHT, false);
+//                    stop();
+//                } else if (keycode == Input.Keys.UP) {
+//                    pressedKeys.put(Input.Keys.UP, false);
+//                    stop();
+//                } else if (keycode == Input.Keys.SHIFT_LEFT) {
+//                    stop();
+//            }
+//                return true;
+//            }
+//        });
+//    }
 
-        idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
-        stateTime = 0f;
-
-        this.body = body;
-        pressedKeys.put(Input.Keys.LEFT, false);
-        pressedKeys.put(Input.Keys.RIGHT, false);
-        pressedKeys.put(Input.Keys.UP, false);
-        addListener(new InputListener() {
-            public boolean keyDown(InputEvent event, int keycode) {
-                switch (keycode) {
-                    case Input.Keys.LEFT:
-                        pressedKeys.put(Input.Keys.LEFT, true);
-                        moveLeft();
-                        break;
-                    case Input.Keys.RIGHT:
-                        pressedKeys.put(Input.Keys.RIGHT, true);
-                        moveRight();
-                        break;
-                    case Input.Keys.UP:
-                        pressedKeys.put(Input.Keys.UP, true);
-                        jump();
-                        break;
-                    case Input.Keys.SPACE:
-                        doAction();
-                        break;
-                    case Input.Keys.SHIFT_LEFT:
-                        fly();
-                        break;
-                    case Input.Keys.X:
-                        addBlock(getBody().getPosition(),UserDataType.GROUND);
-                        break;
-                    case Input.Keys.C:
-                        addBlock(getBody().getPosition(),UserDataType.SPIKE);
-                        break;
-                }
-                return true;
-            }
-        });
-
-        addListener(new InputListener() {
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.LEFT) {
-                    pressedKeys.put(Input.Keys.LEFT, false);
-                    stop();
-                } else if (keycode == Input.Keys.RIGHT) {
-                    pressedKeys.put(Input.Keys.RIGHT, false);
-                    stop();
-                } else if (keycode == Input.Keys.UP) {
-                    pressedKeys.put(Input.Keys.UP, false);
-                    stop();
-                } else if (keycode == Input.Keys.SHIFT_LEFT) {
-                    stop();
-            }
-                return true;
-            }
-        });
-    }
-
-    public void addBlock(Vector2 position,UserDataType userDataType) {
-        System.out.println("Empty left: " + emptyLeft);
-        System.out.println("Empty right: " + emptyRight);
-        if (hasWater()) {
-            if ((facingRight && emptyRight) || (!facingRight && emptyLeft)) {
-                UserData userData = new UserData(userDataType);
-                WorldUtils.addBlock(this, position, facingRight, userData);
-                decreaseWaterLevel();
-            }
-        } else {
-            System.out.println("You are out of water!");
-        }
-    }
+//    public void addBlock(Vector2 position,UserDataType userDataType) {
+//        System.out.println("Empty left: " + emptyLeft);
+//        System.out.println("Empty right: " + emptyRight);
+//        if (hasWater()) {
+//            if ((facingRight && emptyRight) || (!facingRight && emptyLeft)) {
+//                UserData userData = new UserData(userDataType);
+//                WorldUtils.addBlock(this, position, facingRight, userData);
+//                decreaseWaterLevel();
+//            }
+//        } else {
+//            System.out.println("You are out of water!");
+//        }
+//    }
 
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
