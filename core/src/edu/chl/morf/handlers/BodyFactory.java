@@ -67,10 +67,10 @@ public class BodyFactory {
 
 
 		//Create bottom ghost fixture
-		shape.setAsBox(28 / PPM, 20 / PPM, new Vector2(0, -15 / PPM), 0);
+		shape.setAsBox(28 / PPM, 5 / PPM, new Vector2(0, -25 / PPM), 0);
 		fdef.shape=shape;
 		fdef.filter.categoryBits = BIT_SENSOR;
-		fdef.filter.maskBits = BIT_GROUND;
+		fdef.filter.maskBits = BIT_GROUND | BIT_SPIKES | BIT_ICE;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM));
 
