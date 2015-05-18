@@ -9,6 +9,8 @@ public enum UserDataType {
     GHOST_LEFT,
     GHOST_RIGHT,
     GHOST_BOTTOM,
+    ACTIVE_BLOCK_RIGHT,
+    ACTIVE_BLOCK_LEFT,
     SPIKE,
     WATER,
     WATER_SENSOR,
