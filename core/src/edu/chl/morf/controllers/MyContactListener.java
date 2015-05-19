@@ -203,6 +203,9 @@ public class MyContactListener implements ContactListener{
                 gameLogic.setWaterTop(fa.getBody(), false);
             }
         }
+        else if (userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
+            gameLogic.setFlyingEnabled(false);
+        }
     }
     
     @Override
