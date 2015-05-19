@@ -7,7 +7,6 @@ import static edu.chl.morf.Constants.*;
  */
 public class BackgroundFactory {
     public BackgroundGroup createBackgroundGroup(String levelName){
-        System.out.println(levelName);
         if(levelName.equals("Level_1.tmx")) {
             BackgroundGroup backgroundGroup = new BackgroundGroup();
             BackgroundLayer background = new BackgroundLayer(BACKGROUND_IMAGE_PATH, 0, 0);

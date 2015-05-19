@@ -67,7 +67,6 @@ public class LevelSelectionScreen extends GameScreen{
                 super();
                 this.level = level;
                 this.setSize(0.3f * Main.V_WIDTH, 0.25f *  Main.V_HEIGHT);
-                System.out.println("width : " + this.getWidth() + " height: " + this.getHeight());
                 this.setPosition(0.2f * Main.V_WIDTH, (20 * 6 / 4) / 100f * Main.V_HEIGHT);
                 this.normalTexture = new Texture("levelselection/Level_1_Thumb.png");
                 this.highlightTexture = new Texture("levelselection/Level_1_Thumb_Focus.png");
