@@ -26,6 +26,7 @@ public class MainMenuScreen extends GameScreen{
     public MainMenuScreen(ScreenManager sm){
         super(sm);
         this.stage=new MainMenuStage();
+        setFocus();
     }
 
     public class MainMenuStage extends Stage{
@@ -40,7 +41,6 @@ public class MainMenuScreen extends GameScreen{
         ImageButton.ImageButtonStyle playButtonStyle;
         ImageButton.ImageButtonStyle exitButtonStyle;
         public MainMenuStage() {
-            Gdx.input.setInputProcessor(this);
             soundHandler.playMusic();
             //background
             background=new Image(new Texture("menu/MainMenu_Background.png"));
@@ -181,4 +181,8 @@ public class MainMenuScreen extends GameScreen{
     public void update(float dt) {
 
     }
+	@Override
+	public void setFocus() {
+		Gdx.input.setInputProcessor(stage);
+	}
 }

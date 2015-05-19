@@ -134,7 +134,7 @@ public class LevelSelectionScreen extends GameScreen{
     public LevelSelectionScreen(ScreenManager sm) {
         super(sm);
         stage = new LevelSelectionStage();
-        Gdx.input.setInputProcessor(stage);
+        setFocus();
     }
     private Stage stage;
 
@@ -185,4 +185,9 @@ public class LevelSelectionScreen extends GameScreen{
     public void dispose() {
 
     }
+
+	@Override
+	public void setFocus() {
+		Gdx.input.setInputProcessor(stage);
+	}
 }

@@ -27,7 +27,7 @@ public class OptionsScreen extends GameScreen{
 	public OptionsScreen(ScreenManager screenManager){
 		super(screenManager);
 		stage = new OptionsScreenStage();
-		Gdx.input.setInputProcessor(stage);
+		setFocus();
 	}
 
 	private class OptionsScreenStage extends Stage{
@@ -313,5 +313,10 @@ public class OptionsScreen extends GameScreen{
 
 	@Override
 	public void dispose() {
+	}
+
+	@Override
+	public void setFocus() {
+		Gdx.input.setInputProcessor(stage);
 	}
 }
