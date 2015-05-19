@@ -18,6 +18,8 @@ import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lage on 2015-05-08.
  */
@@ -59,7 +61,7 @@ public class LevelSelectionScreen extends GameScreen{
                 }
             }
 
-            Star[] stars;
+            ArrayList<Star> stars;
             private Texture normalTexture;
             private Texture highlightTexture;
             private boolean highlighted;
@@ -75,13 +77,17 @@ public class LevelSelectionScreen extends GameScreen{
 
                 Integer levelScore = HighScoreHandler.getInstance().getHighScore(this.level);
 
-                stars = new Star[5];
-                for(int i = 0; i < 5; i++){
-                    Star star = new Star();
-                    float starSize = 71f / 1920f * Main.V_WIDTH;
-                    star.setSize(starSize, starSize);
-                    star.setPosition(this.getX() + 19 + 42.5f * i, this.getY() + 14);
-                    stars[i] = star;
+                stars = new ArrayList<Star>();
+                if(levelScore != null) {
+                    for (int i = 0; i < 8; i++) {
+                        if (levelScore >= (i+1) * (30 / 8)) {
+                            Star star = new Star();
+                            float starSize = 71f / 1920f * Main.V_WIDTH;
+                            star.setSize(starSize, starSize);
+                            star.setPosition(this.getX() + 19 + 42.5f * i, this.getY() + 14);
+                            stars.add(star);
+                        }
+                    }
                 }
                 this.addListener(new ClickListener(){
                     @Override
