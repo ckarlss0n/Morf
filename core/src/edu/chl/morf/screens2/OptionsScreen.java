@@ -168,7 +168,7 @@ public class OptionsScreen extends GameScreen{
 			returnButton.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y){
-					screenManager.setScreen(ScreenType.MAIN_MENU, null);
+					screenManager.popScreen();
 					soundHandler.playSoundEffect(soundHandler.getButtonReturn());
 					soundHandler.playSoundEffect(soundHandler.getSaveSettings());
 				}

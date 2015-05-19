@@ -2,6 +2,8 @@ package edu.chl.morf.handlers;
 
 import java.util.Stack;
 
+import com.badlogic.gdx.Gdx;
+
 import edu.chl.morf.main.Main;
 import edu.chl.morf.screens2.*;
 
@@ -33,10 +35,6 @@ public class ScreenManager {
 		return game;
 	}
 	
-	public void update(float dt){
-		screens.peek().update(dt);
-	}
-	
 	public void render(float dt){
 		screens.peek().render(dt);
 	}
@@ -58,17 +56,28 @@ public class ScreenManager {
 	}
 	
 	public void setScreen(ScreenType screen, String levelName){
-		popScreen();
+		clearScreens();
 		pushScreen(screen, levelName);
 	}
 	
 	public void pushScreen(ScreenType screen, String levelName){
 		screens.push(getScreen(screen, levelName));
+//		for(GameScreen s : screens){
+//			System.out.println(s);
+//		}
 	}
 	
 	public void popScreen(){
 		GameScreen gs = screens.pop();
 		gs.dispose();
+		screens.peek().setFocus();
+//		for(GameScreen s : screens){
+//			System.out.println(s);
+//		}
+	}
+	
+	public void clearScreens(){
+		screens.clear();
 	}
 	
 }

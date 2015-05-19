@@ -59,7 +59,7 @@ public class MainMenuScreen extends GameScreen{
             playButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    screenManager.setScreen(ScreenType.LEVEL_SELECTION, null);
+                    screenManager.pushScreen(ScreenType.LEVEL_SELECTION, null);
                     soundHandler.playSoundEffect(soundHandler.getButtonForward());
                 }
             });
@@ -104,7 +104,7 @@ public class MainMenuScreen extends GameScreen{
             settingsButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    screenManager.setScreen(ScreenType.OPTIONS, null);
+                    screenManager.pushScreen(ScreenType.OPTIONS, null);
                 }
             });
             settingsButton.addListener(new ClickListener() {

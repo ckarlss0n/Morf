@@ -27,4 +27,5 @@ public abstract class GameScreen implements Screen{
 	
 	public abstract void handleInput();
 	public abstract void update(float dt);
+	public abstract void setFocus();
 }

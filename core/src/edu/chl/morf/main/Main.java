@@ -35,7 +35,6 @@ public class Main extends Game{
 		accum += Gdx.graphics.getDeltaTime();
 		while(accum >= STEP){
 			accum -= STEP;
-			screenManager.update(STEP);
 			screenManager.render(STEP);
 		}
 	}

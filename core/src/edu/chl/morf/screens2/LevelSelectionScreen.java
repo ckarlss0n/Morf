@@ -35,7 +35,7 @@ public class LevelSelectionScreen extends GameScreen{
                 this.addListener(new ClickListener(){
                    @Override
                    public void clicked(InputEvent event, float x, float y){
-                       screenManager.pushScreen(ScreenType.MAIN_MENU, null);
+                       screenManager.popScreen();
                        soundHandler.playSoundEffect(soundHandler.getButtonReturn());
                    }
                 });
@@ -138,6 +138,7 @@ public class LevelSelectionScreen extends GameScreen{
     }
     private Stage stage;
 
+    
     @Override
     public void handleInput() {
 
