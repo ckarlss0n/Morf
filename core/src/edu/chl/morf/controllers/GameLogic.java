@@ -120,7 +120,9 @@ public class GameLogic {
 	public boolean isLevelWon(){
         if(level.isLevelWon()){
             HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
-            highScoreHandler.addHighScore(level,player.getWaterLevel());
+            if(player.getWaterLevel() > highScoreHandler.getHighScore(level)) {
+                highScoreHandler.addHighScore(level, player.getWaterLevel());
+            }
         }
         return level.isLevelWon();
 	}
