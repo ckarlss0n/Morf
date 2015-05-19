@@ -1,21 +1,13 @@
 package edu.chl.morf.handlers;
 
-import static edu.chl.morf.handlers.Constants.*;
-import static edu.chl.morf.userdata.UserDataType.*;
-import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
-
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-
-import edu.chl.morf.actors.PlayerCharacter;
 import edu.chl.morf.userdata.UserData;
-import edu.chl.morf.userdata.UserDataType;
+
+import static edu.chl.morf.handlers.Constants.*;
+import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
+import static edu.chl.morf.userdata.UserDataType.*;
 
 public class BodyFactory {
 
@@ -38,7 +30,7 @@ public class BodyFactory {
 		fdef.filter.categoryBits = BIT_PLAYER;
 		fdef.filter.maskBits = BIT_GROUND | BIT_ICE | BIT_FLOWER;
 		body.createFixture(fdef).setUserData(new UserData(PLAYERCHARACTER));
-		
+
 		//Create right ghost fixture 
 		shape.setAsBox(32 / PPM, 20 / PPM, new Vector2(60 / PPM, 0), 0);
 		fdef.shape = shape;
@@ -46,7 +38,7 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND | BIT_WATER | BIT_ICE | BIT_GAS | BIT_FLOWER;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_RIGHT));
-		
+
 		//Create left ghost fixture
 		shape.setAsBox(32 / PPM, 20 / PPM, new Vector2(-60 / PPM, 0), 0);
 		fdef.shape = shape;
@@ -70,6 +62,12 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND | BIT_SPIKES | BIT_ICE | BIT_FLOWER;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM));
+
+		//Create core ghost fixture
+		shape.setAsBox(15 / PPM, 15 / PPM, new Vector2(0, 0), 0);
+		fdef.shape=shape;
+		fdef.filter.maskBits = BIT_GAS;
+		body.createFixture(fdef).setUserData(new UserData(GHOST_CORE));
 
 		shape.dispose();
 		return body;
@@ -105,7 +103,7 @@ public class BodyFactory {
 		shape.dispose();
 		return body;
 	}
-	
+
 	public Body createFlowerBody(World world, Vector2 position){
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(position.x / PPM, position.y / PPM);

@@ -9,6 +9,7 @@ public enum UserDataType {
     GHOST_LEFT,
     GHOST_RIGHT,
     GHOST_BOTTOM,
+    GHOST_CORE,
     ACTIVE_BLOCK_RIGHT,
     ACTIVE_BLOCK_LEFT,
     SPIKE,
