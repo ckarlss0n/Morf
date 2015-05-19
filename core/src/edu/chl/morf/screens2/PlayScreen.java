@@ -31,7 +31,7 @@ public class PlayScreen extends GameScreen{
 
         world = new World(WORLD_GRAVITY, true);
         
-        LevelFactory levelFactory = new LevelFactory();
+        LevelFactory levelFactory = LevelFactory.getInstace();
 
         level = levelFactory.getLevel(levelName);
         gameLogic = new GameLogic(level, world);

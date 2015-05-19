@@ -32,8 +32,17 @@ public class LevelFactory {
 	private MapLayer iceLayer;
 	private MapLayer vaporLayer;
 	private MapLayer flowerLayer;
+    private static LevelFactory instance = new LevelFactory();
 	
 	public static float TILE_SIZE;
+
+    private LevelFactory(){
+
+    }
+
+    public static LevelFactory getInstace(){
+        return instance;
+    }
 
 	public Level getLevel(String name){
 

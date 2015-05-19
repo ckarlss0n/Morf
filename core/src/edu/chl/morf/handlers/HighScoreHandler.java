@@ -34,7 +34,7 @@ public class HighScoreHandler extends FileHandler{
 
     @Override
     public void read(BufferedReader bufferedReader) throws IOException{
-        LevelFactory levelFactory = new LevelFactory();
+        LevelFactory levelFactory = LevelFactory.getInstace();
         String line = bufferedReader.readLine();
         while (line != null) {
             String[] lineSplit = line.split(";");
