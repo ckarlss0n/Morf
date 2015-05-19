@@ -71,10 +71,10 @@ public class MyContactListener implements ContactListener{
                 userDataA.increment();
             }
             //Sets the jumping variable
-            else if (userDataTypeA==UserDataType.GHOST_BOTTOM && userDataTypeB!=UserDataType.PLAYERCHARACTER){
+            else if (userDataTypeA==UserDataType.GHOST_BOTTOM){
                 gameLogic.setOnGround(true);
                 userDataA.increment();
-            } else if (userDataTypeA!=UserDataType.PLAYERCHARACTER && userDataTypeB==UserDataType.GHOST_BOTTOM){
+            } else if (userDataTypeB==UserDataType.GHOST_BOTTOM){
                 gameLogic.setOnGround(true);
                 userDataB.increment();
             }
@@ -93,9 +93,9 @@ public class MyContactListener implements ContactListener{
                 userDataA.increment();
                 gameLogic.setWaterBottom(fb.getBody(), true);
                 gameLogic.setWaterTop(fa.getBody(),true);
-                //if(gameLogic.getWaterState(fb.getBody()) != WaterState.SOLID){
-                  //  fa.getBody().applyForceToCenter(120f, 0f, true);
-               // }
+            }
+            else if(userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
+                gameLogic.setFlyingEnabled(true);
             }
         }
     }

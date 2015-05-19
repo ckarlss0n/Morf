@@ -77,6 +77,7 @@ public class Level {
 	public void setGhostEmptyRight(boolean ghostEmptyRight){
 		player.setGhostEmptyRight(ghostEmptyRight);
 	}
+	public void setFlyingEnabled(boolean flyingEnabled){player.setFlyingEnabled(flyingEnabled);}
 
 	public boolean isLevelWon(){
 		return levelWon;
@@ -84,6 +85,7 @@ public class Level {
 	public boolean isPlayerDead(){
 		return player.isDead();
 	}
+	public boolean isFlyingEnabled(){return player.isFlyingEnabled();}
 	
 	//Methods for heating and cooling blocks
 	public void heatBlock(){

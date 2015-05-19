@@ -29,6 +29,7 @@ public class PlayerCharacterModel {
     private boolean moving;
     private boolean onGround;
     private boolean dead;
+    private boolean flyingEnabled;
     private int maxWaterLevel = 30;
     private int waterLevel= maxWaterLevel;
     private Block activeBlockRight;
@@ -76,6 +77,7 @@ public class PlayerCharacterModel {
     public Point2D.Float getPosition(){
     	return position;
     }
+    public boolean isFlyingEnabled(){return flyingEnabled;}
     public boolean isMoving(){
         return moving;
     }
@@ -88,6 +90,8 @@ public class PlayerCharacterModel {
     public boolean hasWater(){
         return waterLevel>0;
     }
+
+
     public int getMaxWaterLevel() {
         return maxWaterLevel;
     }
@@ -99,10 +103,6 @@ public class PlayerCharacterModel {
     }
     public Point2D.Float getSpeed(){
     	return speed;
-    }
-    
-    public boolean onGround() {
-        return onGround;
     }
 
     //Move setters
@@ -125,6 +125,7 @@ public class PlayerCharacterModel {
     public void setDead(boolean dead){
         this.dead = dead;
     }
+    public void setFlyingEnabled(boolean flyingEnabled){this.flyingEnabled=flyingEnabled;}
     public void stop(){
         moving = false;
     }

@@ -131,9 +131,10 @@ public class GameLogic {
 	public void resetGame(){
 
 	}
+	public void setFlyingEnabled(boolean flyingEnabled){level.setFlyingEnabled(flyingEnabled);}
 
 	public void fly(){
-		if (Math.abs(playerCharacterBody.getLinearVelocity().y) < 0.01f && Math.abs(playerCharacterBody.getLinearVelocity().x) < 0.01f) {
+		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < 0.01f && level.isFlyingEnabled()) {
 			movementVector = new Vector2(0, 20);
 		}
 	}
@@ -305,10 +306,6 @@ public class GameLogic {
 			Water waterBlock = bodyBlockMap.get(waterBody);
 			Vector2 waterPos = waterBody.getPosition();
 			waterBlock.setPosition(waterPos.x * PPM, waterPos.y * PPM);
-			Vector2 waterVel = waterBody.getLinearVelocity();
-			if(waterBlock.isTopBlock() && waterVel.x<1){
-				waterBody.applyForceToCenter(5f,0,true);
-			}
 		}
 	}
 }
