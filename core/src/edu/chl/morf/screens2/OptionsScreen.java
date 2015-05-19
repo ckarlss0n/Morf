@@ -11,8 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.ScreenManager;
+import edu.chl.morf.handlers.ScreenManager.ScreenType;
 import edu.chl.morf.handlers.SoundHandler;
 
 /**
@@ -166,7 +168,7 @@ public class OptionsScreen extends GameScreen{
 			returnButton.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y){
-					screenManager.setState(ScreenManager.MAINMENU);
+					screenManager.setScreen(ScreenType.MAIN_MENU, null);
 					soundHandler.playSoundEffect(soundHandler.getButtonReturn());
 					soundHandler.playSoundEffect(soundHandler.getSaveSettings());
 				}

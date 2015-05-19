@@ -11,15 +11,22 @@ public class ScreenManager {
 	
 	private Stack<GameScreen> screens;
 	
-	public static final int PLAY = 656987;
-	public static final int MAINMENU = 123456;
-    public static final int LEVELSELECTION = 654321;
-	public static final int OPTIONS_SCREEN = 246810;
+	public static enum ScreenType{
+		PLAY,
+		MAIN_MENU,
+		LEVEL_SELECTION,
+		OPTIONS
+	}
+	
+//	public static final int PLAY = 656987;
+//	public static final int MAINMENU = 123456;
+//  public static final int LEVELSELECTION = 654321;
+//	public static final int OPTIONS_SCREEN = 246810;
 	
 	public ScreenManager(Main game){
 		this.game = game;
 		screens = new Stack<GameScreen>();
-		pushState(MAINMENU);
+		pushScreen(ScreenType.MAIN_MENU, null);
 	}
 	
 	public Main getGame(){
@@ -34,29 +41,29 @@ public class ScreenManager {
 		screens.peek().render(dt);
 	}
 	
-	private GameScreen getScreen(int screen){
-		if(screen == PLAY){
-			return new PlayScreen(this, "Level_3.tmx");
+	private GameScreen getScreen(ScreenType screen, String levelName){
+		if(screen == ScreenType.PLAY){
+			return new PlayScreen(this, levelName);
 		}
-		else if(screen == MAINMENU){
+		else if(screen == ScreenType.MAIN_MENU){
 			return new MainMenuScreen(this);
 		}
-        else if(screen == LEVELSELECTION){
+        else if(screen == ScreenType.LEVEL_SELECTION){
             return new LevelSelectionScreen(this);
         }
-		else if(screen == OPTIONS_SCREEN){
+		else if(screen == ScreenType.OPTIONS){
 			return new OptionsScreen(this);
 		}
 		return null;
 	}
 	
-	public void setState(int screen){
+	public void setScreen(ScreenType screen, String levelName){
 		popScreen();
-		pushState(screen);
+		pushScreen(screen, levelName);
 	}
 	
-	public void pushState(int screen){
-		screens.push(getScreen(screen));
+	public void pushScreen(ScreenType screen, String levelName){
+		screens.push(getScreen(screen, levelName));
 	}
 	
 	public void popScreen(){

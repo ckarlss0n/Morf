@@ -9,9 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import edu.chl.morf.handlers.HighScoreHandler;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.ScreenManager;
+import edu.chl.morf.handlers.ScreenManager.ScreenType;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
@@ -31,7 +33,7 @@ public class LevelSelectionScreen extends GameScreen{
                 this.addListener(new ClickListener(){
                    @Override
                    public void clicked(InputEvent event, float x, float y){
-                       screenManager.pushState(screenManager.MAINMENU);
+                       screenManager.pushScreen(ScreenType.MAIN_MENU, null);
                        soundHandler.playSoundEffect(soundHandler.getButtonReturn());
                    }
                 });
@@ -84,7 +86,7 @@ public class LevelSelectionScreen extends GameScreen{
                 this.addListener(new ClickListener(){
                     @Override
                     public void clicked(InputEvent event, float x, float y){
-                        screenManager.pushState(screenManager.PLAY);
+                        screenManager.pushScreen(ScreenType.PLAY, "Level_3.tmx");
                     }
                     @Override
                     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){

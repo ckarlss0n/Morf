@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 import edu.chl.morf.handlers.ScreenManager;
+import edu.chl.morf.handlers.ScreenManager.ScreenType;
 import edu.chl.morf.handlers.SoundHandler;
 
 /**
@@ -57,7 +59,7 @@ public class MainMenuScreen extends GameScreen{
             playButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    screenManager.setState(ScreenManager.LEVELSELECTION);
+                    screenManager.setScreen(ScreenType.LEVEL_SELECTION, null);
                     soundHandler.playSoundEffect(soundHandler.getButtonForward());
                 }
             });
@@ -102,7 +104,7 @@ public class MainMenuScreen extends GameScreen{
             settingsButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    screenManager.setState(ScreenManager.OPTIONS_SCREEN);
+                    screenManager.setScreen(ScreenType.OPTIONS, null);
                 }
             });
             settingsButton.addListener(new ClickListener() {
