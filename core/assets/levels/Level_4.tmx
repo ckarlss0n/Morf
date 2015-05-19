@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="64" tileheight="64" nextobjectid="5">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="64" tileheight="64" nextobjectid="12">
  <tileset firstgid="1" name="Morf" tilewidth="64" tileheight="64">
   <tile id="0">
    <image width="64" height="64" source="../Tiles/flower.png"/>
@@ -71,4 +71,11 @@
  <objectgroup name="Flower">
   <object id="4" gid="1" x="1153" y="575"/>
  </objectgroup>
+ <objectgroup name="Ice">
+  <object id="5" gid="11" x="1088" y="576"/>
+  <object id="6" gid="11" x="576" y="576"/>
+  <object id="10" gid="15" x="384" y="576"/>
+  <object id="11" gid="15" x="320" y="384"/>
+ </objectgroup>
+ <objectgroup name="Vapor"/>
 </map>
