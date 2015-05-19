@@ -6,6 +6,8 @@ import static edu.chl.morf.Constants.PPM;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -33,11 +35,12 @@ public class LevelFactory {
 	private MapLayer vaporLayer;
 	private MapLayer flowerLayer;
     private static LevelFactory instance = new LevelFactory();
+    private Map<String,Level> nameLevelMap;
 	
 	public static float TILE_SIZE;
 
     private LevelFactory(){
-
+        nameLevelMap = new HashMap<String, Level>();
     }
 
     public static LevelFactory getInstace(){
@@ -131,6 +134,13 @@ public class LevelFactory {
 		}
 
 		PlayerCharacterModel player = new PlayerCharacterModel(500, 500);
-		return new Level(matrix, name, player, waterBlocks, flower);
+
+        if(nameLevelMap.containsKey(name)){
+            return nameLevelMap.get(name);
+        }else {
+            Level level = new Level(matrix, name, player, waterBlocks, flower);
+            nameLevelMap.put(name,level);
+            return level;
+        }
 	}
 }
