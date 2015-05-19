@@ -82,8 +82,8 @@ public class View {
         iceTexture = new Texture("Tiles/ice.png");
         vaporTexture = new Texture("Tiles/steam.png");
         flowerTexture = new Texture("Tiles/flower.png");
-        waterMeterTexture = new Texture("WaterMeter.png");
-        waterLevelTexture = new Texture("WaterLevel.png");
+        waterMeterTexture = new Texture("waterMeter.png");
+        waterLevelTexture = new Texture("waterLevel.png");
         levelCompletedTexture = new Texture("levelCompleted.png");
         
         stateTime = 0f;

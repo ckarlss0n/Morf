@@ -80,16 +80,22 @@ public class MyContactListener implements ContactListener{
             }
             //Updates the Water isBottomBlock variable
             else if(userDataTypeA == UserDataType.WATER_SENSOR && userDataTypeB == UserDataType.WATER){
+                userDataA.increment();
+                userDataB.increment();
                 gameLogic.setWaterBottom(fa.getBody(), true);
-                if(gameLogic.getWaterState(fa.getBody()) != WaterState.SOLID){
-                    fb.getBody().applyForceToCenter(120f, 0f, true);
-                }
+                gameLogic.setWaterTop(fb.getBody(),true);
+                //if(gameLogic.getWaterState(fa.getBody()) != WaterState.SOLID){
+                  //  fb.getBody().applyForceToCenter(120f, 0f, true);
+                //}
             }
             else if(userDataTypeA == UserDataType.WATER && userDataTypeB == UserDataType.WATER_SENSOR){
+                userDataB.increment();
+                userDataA.increment();
                 gameLogic.setWaterBottom(fb.getBody(), true);
-                if(gameLogic.getWaterState(fb.getBody()) != WaterState.SOLID){
-                    fa.getBody().applyForceToCenter(120f, 0f, true);
-                }
+                gameLogic.setWaterTop(fa.getBody(),true);
+                //if(gameLogic.getWaterState(fb.getBody()) != WaterState.SOLID){
+                  //  fa.getBody().applyForceToCenter(120f, 0f, true);
+               // }
             }
         }
     }
@@ -175,6 +181,26 @@ public class MyContactListener implements ContactListener{
             userDataB.decrement();
             if (userDataB.getNumOfContacts() == 0){
                 gameLogic.setActiveBodyRight(null);
+            }
+        }
+        else if (userDataTypeA == UserDataType.WATER_SENSOR && userDataTypeB == UserDataType.WATER){
+            userDataA.decrement();
+            userDataB.decrement();
+            if(userDataA.getNumOfContacts() == 0){
+                gameLogic.setWaterBottom(fa.getBody(), false);
+            }
+            if (userDataB.getNumOfContacts() == 0){
+                gameLogic.setWaterTop(fb.getBody(), false);
+            }
+        }
+        else if (userDataTypeB == UserDataType.WATER_SENSOR && userDataTypeA == UserDataType.WATER){
+            userDataA.decrement();
+            userDataB.decrement();
+            if(userDataB.getNumOfContacts() == 0){
+                gameLogic.setWaterBottom(fb.getBody(), false);
+            }
+            if (userDataA.getNumOfContacts() == 0){
+                gameLogic.setWaterTop(fa.getBody(), false);
             }
         }
     }

@@ -25,6 +25,7 @@ public class Water implements Block{
     private Point2D.Float position;
     private WaterState state;
     private boolean bottomBlock;
+    private boolean topBlock;
 
     //Constructors
     public Water(Point2D.Float position, WaterState state){
@@ -82,6 +83,13 @@ public class Water implements Block{
     public boolean isBottomBlock(){
         return bottomBlock;
     }
+    public void setTopBlock(boolean topBlock){
+        this.topBlock=topBlock;
+    }
+    public boolean isTopBlock() {
+        return topBlock;
+    }
+
     public WaterState getState(){
         return this.state;
     }

@@ -109,7 +109,7 @@ public class BodyFactory {
 	public Body createFlowerBody(World world, Vector2 position){
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(position.x / PPM, position.y / PPM);
-		bdef.type = BodyType.DynamicBody;
+		bdef.type = BodyType.StaticBody;
 		bdef.fixedRotation = true;
 
 		Body body = world.createBody(bdef);

@@ -277,6 +277,10 @@ public class GameLogic {
 		Water waterBlock = bodyBlockMap.get(body);
 		waterBlock.setBottomBlock(bottomBlock);
 	}
+	public void setWaterTop(Body body, boolean topBlock){
+		Water waterBlock = bodyBlockMap.get(body);
+		waterBlock.setTopBlock(topBlock);
+	}
 
 	public void render(float delta){
 		world.step(delta,6,2);
@@ -301,6 +305,10 @@ public class GameLogic {
 			Water waterBlock = bodyBlockMap.get(waterBody);
 			Vector2 waterPos = waterBody.getPosition();
 			waterBlock.setPosition(waterPos.x * PPM, waterPos.y * PPM);
+			Vector2 waterVel = waterBody.getLinearVelocity();
+			if(waterBlock.isTopBlock() && waterVel.x<1){
+				waterBody.applyForceToCenter(5f,0,true);
+			}
 		}
 	}
 }
