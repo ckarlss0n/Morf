@@ -10,14 +10,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 
 import edu.chl.morf.handlers.*;
-import edu.chl.morf.model.Block;
-import edu.chl.morf.model.EmptyBlock;
-import edu.chl.morf.model.Flower;
-import edu.chl.morf.model.Ground;
-import edu.chl.morf.model.Level;
-import edu.chl.morf.model.PlayerCharacterModel;
-import edu.chl.morf.model.Water;
-import edu.chl.morf.model.WaterState;
+import edu.chl.morf.model.*;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
@@ -223,41 +216,22 @@ public class GameLogic {
 		}
 	}
 
-	public void setActiveBodyLeft(Body body){
-        if (body == null){
-			level.setActiveBlockLeft(new EmptyBlock());
-		}
-		else if (bodyBlockMap.get(body) != null){
-			Block block = bodyBlockMap.get(body);
-			level.setActiveBlockLeft(block);
-		}
-		else if (body.getFixtureList().get(0).getUserData()!=null) {
-			if (((UserData) body.getFixtureList().get(0).getUserData()).getUserDataType() == UserDataType.FLOWER) {
-				Block block = level.getFlower();
-				level.setActiveBlockLeft(block);
-			}
-		}
-		else{
-			level.setActiveBlockLeft(new Ground());
-		}
-	}
-
-	public void setActiveBodyRight(Body body){
+	public void setActiveBody(Body body, ActiveBlockPosition position){
 		if (body == null){
-			level.setActiveBlockRight(new EmptyBlock());
+			level.setActiveBlock(new EmptyBlock(),position);
 		}
 		else if (bodyBlockMap.get(body) != null){
 			Block block = bodyBlockMap.get(body);
-			level.setActiveBlockRight(block);
+			level.setActiveBlock(block, position);
 		}
 		else if (body.getFixtureList().get(0).getUserData()!=null) {
 			if (((UserData) body.getFixtureList().get(0).getUserData()).getUserDataType() == UserDataType.FLOWER) {
 				Block block = level.getFlower();
-				level.setActiveBlockRight(block);
+				level.setActiveBlock(block, position);
 			}
 		}
 		else{
-			level.setActiveBlockRight(new Ground());
+			level.setActiveBlock(new Ground(), position);
 		}
 	}
 	public void setGhostEmptyLeft(boolean ghostEmptyLeft){

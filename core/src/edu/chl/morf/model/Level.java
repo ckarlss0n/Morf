@@ -47,11 +47,8 @@ public class Level {
 	}
 
 	//Setters
-	public void setActiveBlockLeft(Block block){
-			player.setActiveBlockLeft(block);
-	}
-	public void setActiveBlockRight(Block block){
-			player.setActiveBlockRight(block);
+	public void setActiveBlock(Block block, ActiveBlockPosition position){
+		player.setActiveBlock(block, position);
 	}
 
 	//Method for killing the player

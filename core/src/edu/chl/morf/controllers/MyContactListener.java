@@ -1,6 +1,7 @@
 package edu.chl.morf.controllers;
+
 import com.badlogic.gdx.physics.box2d.*;
-import edu.chl.morf.model.WaterState;
+import edu.chl.morf.model.ActiveBlockPosition;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
@@ -50,16 +51,16 @@ public class MyContactListener implements ContactListener{
             //Active block setter
             else if(userDataTypeA == UserDataType.ACTIVE_BLOCK_LEFT){
                 userDataA.increment();
-                gameLogic.setActiveBodyLeft(fb.getBody());
+                gameLogic.setActiveBody(fb.getBody(), ActiveBlockPosition.LEFT);
             } else if(userDataTypeB == UserDataType.ACTIVE_BLOCK_LEFT){
                 userDataB.increment();
-                gameLogic.setActiveBodyLeft(fa.getBody());
+                gameLogic.setActiveBody(fa.getBody(), ActiveBlockPosition.LEFT);
             } else if(userDataTypeA == UserDataType.ACTIVE_BLOCK_RIGHT){
                 userDataA.increment();
-                gameLogic.setActiveBodyRight(fb.getBody());
+                gameLogic.setActiveBody(fb.getBody(), ActiveBlockPosition.RIGHT);
             } else if(userDataTypeB == UserDataType.ACTIVE_BLOCK_RIGHT){
                 userDataB.increment();
-                gameLogic.setActiveBodyRight(fa.getBody());
+                gameLogic.setActiveBody(fa.getBody(), ActiveBlockPosition.RIGHT);
             }
             
             //Sets the dead variable to true when contact between SPIKE and PLAYERCHARACTER occurs
@@ -95,6 +96,11 @@ public class MyContactListener implements ContactListener{
                 gameLogic.setWaterTop(fa.getBody(),true);
             }
             else if(userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
+                if(userDataTypeA == UserDataType.GHOST_CORE){
+                    userDataA.increment();
+                } else{
+                    userDataB.increment();
+                }
                 gameLogic.setFlyingEnabled(true);
             }
         }
@@ -162,25 +168,25 @@ public class MyContactListener implements ContactListener{
         else if (userDataTypeA == UserDataType.ACTIVE_BLOCK_LEFT){
             userDataA.decrement();
             if(userDataA.getNumOfContacts() == 0){
-                gameLogic.setActiveBodyLeft(null);
+                gameLogic.setActiveBody(null, ActiveBlockPosition.LEFT);
             }
         }
         else if (userDataTypeB == UserDataType.ACTIVE_BLOCK_LEFT){
             userDataB.decrement();
             if(userDataB.getNumOfContacts() == 0){
-                gameLogic.setActiveBodyLeft(null);
+                gameLogic.setActiveBody(null, ActiveBlockPosition.LEFT);
             }
         }
         else if (userDataTypeA == UserDataType.ACTIVE_BLOCK_RIGHT){
             userDataA.decrement();
             if (userDataA.getNumOfContacts() == 0){
-                gameLogic.setActiveBodyRight(null);
+                gameLogic.setActiveBody(null, ActiveBlockPosition.RIGHT);
             }
         }
         else if (userDataTypeB == UserDataType.ACTIVE_BLOCK_RIGHT){
             userDataB.decrement();
             if (userDataB.getNumOfContacts() == 0){
-                gameLogic.setActiveBodyRight(null);
+                gameLogic.setActiveBody(null, ActiveBlockPosition.RIGHT);
             }
         }
         else if (userDataTypeA == UserDataType.WATER_SENSOR && userDataTypeB == UserDataType.WATER){
@@ -204,7 +210,17 @@ public class MyContactListener implements ContactListener{
             }
         }
         else if (userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
-            gameLogic.setFlyingEnabled(false);
+            if(userDataTypeA == UserDataType.GHOST_CORE){
+                userDataA.decrement();
+                if(userDataA.getNumOfContacts()==0){
+                    gameLogic.setFlyingEnabled(false);
+                }
+            }else{
+                userDataB.decrement();
+                if (userDataB.getNumOfContacts()==0){
+                    gameLogic.setFlyingEnabled(false);
+                }
+            }
         }
     }
     

@@ -1,11 +1,5 @@
 package edu.chl.morf.model;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
-import edu.chl.morf.Constants;
-
-import static edu.chl.morf.Constants.*;
-
-import java.awt.Point;
 import java.awt.geom.Point2D;
 
 /**
@@ -34,14 +28,17 @@ public class PlayerCharacterModel {
     private int waterLevel= maxWaterLevel;
     private Block activeBlockRight;
     private Block activeBlockLeft;
+    private Block activeBlockBottomRight;
+    private Block activeBlockBottomLeft;
+    private Block activeBlockBottom;
     private Block activeBlock;
     private boolean ghostEmptyRight;
     private boolean ghostEmptyLeft;
     private boolean ghostEmpty;
-    
+
     private Point2D.Float position;
     private Point2D.Float speed;
-    
+
     //Constructors
     public PlayerCharacterModel(){
         facingRight = true;
@@ -50,6 +47,9 @@ public class PlayerCharacterModel {
         dead = false;
         activeBlockRight = new EmptyBlock();
         activeBlockLeft = new EmptyBlock();
+        activeBlockBottomLeft = new EmptyBlock();
+        activeBlockBottomRight = new EmptyBlock();
+        activeBlockBottom = new EmptyBlock();
         activeBlock = new EmptyBlock();
         speed = new Point2D.Float(0,0);
         ghostEmptyRight = true;
@@ -57,13 +57,13 @@ public class PlayerCharacterModel {
         ghostEmpty = true;
     }
     public PlayerCharacterModel(Point2D.Float position){
-    	this();
-    	this.position = position;
+        this();
+        this.position = position;
     }
     public PlayerCharacterModel(int x, int y){
-    	this(new Point2D.Float(x, y));
+        this(new Point2D.Float(x, y));
     }
-    
+
 
     //Getters
     public boolean isOnGround(){return onGround;}
@@ -75,7 +75,7 @@ public class PlayerCharacterModel {
         }
     }
     public Point2D.Float getPosition(){
-    	return position;
+        return position;
     }
     public boolean isFlyingEnabled(){return flyingEnabled;}
     public boolean isMoving(){
@@ -99,10 +99,10 @@ public class PlayerCharacterModel {
         return waterLevel;
     }
     public Block getActiveBlock(){
-    	return activeBlock;
+        return activeBlock;
     }
     public Point2D.Float getSpeed(){
-    	return speed;
+        return speed;
     }
 
     //Move setters
@@ -118,7 +118,7 @@ public class PlayerCharacterModel {
         setActiveBlock(activeBlockRight);
         setGhostEmpty(ghostEmptyRight);
     }
-    
+
     public void setOnGround(boolean onGround){
         this.onGround = onGround;
     }
@@ -133,7 +133,7 @@ public class PlayerCharacterModel {
         position.setLocation(position);
     }
     public void setPosition(float x, float y){
-    	position.setLocation(x, y);
+        position.setLocation(x, y);
     }
     public void setSpeed(float x, float y){
         speed.setLocation(x, y);
@@ -150,29 +150,39 @@ public class PlayerCharacterModel {
         decreaseWaterLevel();
         return new Water(point);
     }
-    
+
     //WaterLevel setters
     public void decreaseWaterLevel(){
         waterLevel=waterLevel-1;
+        if(waterLevel==0){
+            setDead(true);
+        }
     }
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
     }
 
-    public void setActiveBlockRight(Block block){
-    	activeBlockRight = block;
-    	if(facingRight){
-    		setActiveBlock(block);
-    	}
-    }
-    public void setActiveBlockLeft(Block block){
-    	activeBlockLeft = block;
-    	if(!facingRight){
-    		setActiveBlock(block);
-    	}
-    }
     public void setActiveBlock(Block block){
         activeBlock = block;
+    }
+    public void setActiveBlock(Block block, ActiveBlockPosition position){
+        if(position == ActiveBlockPosition.LEFT){
+            activeBlockLeft = block;
+            if(!facingRight){
+                activeBlock=block;
+            }
+        }else if(position == ActiveBlockPosition.RIGHT){
+            activeBlockRight = block;
+            if(facingRight){
+                activeBlock=block;
+            }
+        }else if(position == ActiveBlockPosition.BOTTOM_LEFT){
+            activeBlockBottomLeft = block;
+        }else if(position == ActiveBlockPosition.BOTTOM_RIGHT){
+            activeBlockBottomRight = block;
+        }else if(position == ActiveBlockPosition.BOTTOM){
+            activeBlockBottom = block;
+        }
     }
 
     //Methods for manipulating active block
