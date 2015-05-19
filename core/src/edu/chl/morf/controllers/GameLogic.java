@@ -9,10 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 
-import edu.chl.morf.handlers.BodyFactory;
-import edu.chl.morf.handlers.KeyBindings;
-import edu.chl.morf.handlers.LevelGenerator;
-import edu.chl.morf.handlers.SoundHandler;
+import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.Block;
 import edu.chl.morf.model.EmptyBlock;
 import edu.chl.morf.model.Flower;
@@ -121,7 +118,11 @@ public class GameLogic {
 		}
 	}
 	public boolean isLevelWon(){
-		return level.isLevelWon();
+        if(level.isLevelWon()){
+            HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
+            highScoreHandler.addHighScore(level,player.getWaterLevel());
+        }
+        return level.isLevelWon();
 	}
 	public WaterState getWaterState(Body body){
 		Water waterBlock = bodyBlockMap.get(body);
