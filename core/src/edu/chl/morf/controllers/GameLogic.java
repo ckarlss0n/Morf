@@ -218,8 +218,15 @@ public class GameLogic {
     }
 
 	public void stop(){
+		stop(3); //Stop with normal slowFactor
+	}
+
+	public void stop(float slowFactor){
 		if(!(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) || pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey())))) {
 			player.stop();
+			if(player.isOnGround()) {
+				playerCharacterBody.setLinearVelocity(playerCharacterBody.getLinearVelocity().x / slowFactor, playerCharacterBody.getLinearVelocity().y / slowFactor);
+			}
 			movementVector = new Vector2(0, 0);
 		} else if(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) && !pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey()))) {
 			moveLeft();

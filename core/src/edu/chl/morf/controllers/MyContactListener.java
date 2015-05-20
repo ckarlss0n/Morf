@@ -74,9 +74,11 @@ public class MyContactListener implements ContactListener{
             //Sets the jumping variable
             else if (userDataTypeA==UserDataType.GHOST_BOTTOM){
                 gameLogic.setOnGround(true);
+                gameLogic.stop(2);
                 userDataA.increment();
             } else if (userDataTypeB==UserDataType.GHOST_BOTTOM){
                 gameLogic.setOnGround(true);
+                gameLogic.stop(2);
                 userDataB.increment();
             }
             //Updates the Water isBottomBlock variable
