@@ -1,8 +1,8 @@
 package edu.chl.morf.screens2;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
-
 import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.controllers.MyContactListener;
@@ -11,6 +11,7 @@ import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.view.View;
+
 import static edu.chl.morf.Constants.WORLD_GRAVITY;
 import static edu.chl.morf.handlers.Constants.PPM;
 
@@ -24,7 +25,11 @@ public class PlayScreen extends GameScreen{
 
     private MyContactListener cl;
     private GameController input;
-    
+
+    @Override
+    public void setFocus(){
+        Gdx.input.setInputProcessor(input);
+    }
 
     public PlayScreen(ScreenManager sm, String levelName){
         super(sm);
@@ -55,17 +60,26 @@ public class PlayScreen extends GameScreen{
 
     }
 
+    public void resumeGame(){
+        gameLogic.resumeGame();
+    }
+
     @Override
     public void render(float delta) {
-        gameLogic.render(delta);
-        view.render(delta);
-        if(gameLogic.isLevelWon()){
-            newLevel("nextLevel");
-            gameLogic.fly();
-        }
-        if(gameLogic.isPlayerDead()){
-            newLevel("thisLevel");
-            gameLogic.resetGame();
+        if(!gameLogic.isGamePaused()) {
+            gameLogic.render(delta);
+            view.render(delta);
+            if (gameLogic.isLevelWon()) {
+                newLevel("nextLevel");
+                gameLogic.fly();
+            }
+            if (gameLogic.isPlayerDead()) {
+                newLevel("thisLevel");
+                gameLogic.resetGame();
+            }
+        } else {
+            screenManager.pushScreen(ScreenManager.ScreenType.PAUSE_SCREEN, null);
+            resumeGame();
         }
     }
 
