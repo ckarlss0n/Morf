@@ -1,27 +1,22 @@
 package edu.chl.morf.controllers;
 
-import static edu.chl.morf.handlers.Constants.*;
-
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
-
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
 import java.awt.geom.Point2D;
-import java.security.Key;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static edu.chl.morf.Constants.MAX_SPEED;
-import static edu.chl.morf.Constants.WORLD_GRAVITY;
+import static edu.chl.morf.handlers.Constants.*;
 
 /**
  * Created by Christoffer on 2015-05-06.
@@ -40,6 +35,7 @@ public class GameLogic {
 	private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
 	private SoundHandler soundHandler = SoundHandler.getInstance();
 	private KeyBindings keyBindings = KeyBindings.getInstance();
+	private boolean gamePaused;
 
 	public GameLogic(Level level, World world){
 		this.level = level;
@@ -51,8 +47,24 @@ public class GameLogic {
 		bodyFactory = new BodyFactory();
 		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
 		//bindWaterBlocks();
+		gamePaused = false;
 		generateLevel();
 		initPressedKeys();
+	}
+
+	public void pauseGame(){
+		gamePaused = true;
+	}
+
+	public void resumeGame(){
+		gamePaused = false;
+		movementVector = new Vector2(0, 0);
+		player.stop();
+		initPressedKeys();
+	}
+
+	public boolean isGamePaused(){
+		return gamePaused;
 	}
 
 	public void initPressedKeys(){
@@ -218,7 +230,7 @@ public class GameLogic {
 
 	public void setActiveBody(Body body, ActiveBlockPosition position){
 		if (body == null){
-			level.setActiveBlock(new EmptyBlock(),position);
+			level.setActiveBlock(new EmptyBlock(), position);
 		}
 		else if (bodyBlockMap.get(body) != null){
 			Block block = bodyBlockMap.get(body);
