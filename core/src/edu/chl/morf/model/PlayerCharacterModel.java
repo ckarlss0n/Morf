@@ -35,6 +35,9 @@ public class PlayerCharacterModel {
     private boolean ghostEmptyRight;
     private boolean ghostEmptyLeft;
     private boolean ghostEmpty;
+    private boolean pouringWater;
+    private boolean coolingWater;
+    private boolean heatingWater;
 
     private Point2D.Float position;
     private Point2D.Float speed;
@@ -141,8 +144,27 @@ public class PlayerCharacterModel {
     public void setGhostEmptyLeft(boolean ghostEmptyLeft){this.ghostEmptyLeft=ghostEmptyLeft;}
     public void setGhostEmptyRight(boolean ghostEmptyRight){this.ghostEmptyRight=ghostEmptyRight;}
     public void setGhostEmpty(boolean ghostEmpty){this.ghostEmpty=ghostEmpty;}
+    public void stopPouring(){
+        pouringWater = false;
+    }
+    public void stopCooling(){
+        coolingWater = false;
+    }
+    public void stopHeating(){
+        heatingWater = false;
+    }
+    public boolean isPouringWater(){
+        return this.pouringWater;
+    }
+    public boolean isHeatingWater(){
+        return this.heatingWater;
+    }
+    public boolean isCoolingWater(){
+        return this.coolingWater;
+    }
 
     public Water pourWater(){
+        pouringWater = true;
         Point2D.Float point=new Point2D.Float(position.x - 64, position.y);
         if(facingRight){
             point = new Point2D.Float(position.x + 64, position.y);
@@ -187,9 +209,15 @@ public class PlayerCharacterModel {
 
     //Methods for manipulating active block
     public void heatActiveBlock(){
+        if(activeBlock instanceof Water) {
+            heatingWater = true;
+        }
         activeBlock.heat();
     }
     public void coolActiveBlock(){
+        if(activeBlock instanceof Water) {
+            coolingWater = true;
+        }
         activeBlock.cool();
     }
 }
