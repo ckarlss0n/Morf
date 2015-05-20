@@ -1,5 +1,7 @@
 package edu.chl.morf.handlers;
 
+import com.badlogic.gdx.Input;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class KeyBindings {
 	private String POUR_KEY;
 	private String COOL_KEY;
 	private String HEAT_KEY;
+	private String PAUSE_KEY;
 
 	private String MOVE_LEFT_KEY_DEFAULT;
 	private String MOVE_RIGHT_KEY_DEFAULT;
@@ -49,6 +52,8 @@ public class KeyBindings {
 
 		HEAT_KEY_DEFAULT = "C";
 		HEAT_KEY = HEAT_KEY_DEFAULT;
+
+		PAUSE_KEY = "Escape";
 	}
 
 	public static synchronized KeyBindings getInstance(){
@@ -66,6 +71,7 @@ public class KeyBindings {
 		usedKeys.add(POUR_KEY);
 		usedKeys.add(COOL_KEY);
 		usedKeys.add(HEAT_KEY);
+		usedKeys.add(PAUSE_KEY);
 		if(usedKeys.contains(null)){
 			resetDefaults();
 		}
@@ -133,6 +139,18 @@ public class KeyBindings {
 		}
 	}
 
+	public boolean isKey(int keyCode, String keyName){
+		return keyCode == Input.Keys.valueOf(keyName);
+	}
+
+	public int getValue(String key){
+		return Input.Keys.valueOf(key);
+	}
+
+	public String getName(int value){
+		return Input.Keys.toString(value);
+	}
+
 	public String getMoveLeftKey() {
 		return MOVE_LEFT_KEY;
 	}
@@ -159,6 +177,10 @@ public class KeyBindings {
 
 	public String getHeatKey() {
 		return HEAT_KEY;
+	}
+
+	public String getPauseKey(){
+		return PAUSE_KEY;
 	}
 
 	public void resetDefaults(){
