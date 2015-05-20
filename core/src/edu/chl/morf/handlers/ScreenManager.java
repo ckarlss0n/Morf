@@ -1,23 +1,22 @@
 package edu.chl.morf.handlers;
 
-import java.util.Stack;
-
-import com.badlogic.gdx.Gdx;
-
 import edu.chl.morf.main.Main;
 import edu.chl.morf.screens2.*;
+
+import java.util.Stack;
 
 public class ScreenManager {
 	
 	private Main game;
 	
 	private Stack<GameScreen> screens;
-	
+
 	public static enum ScreenType{
 		PLAY,
 		MAIN_MENU,
 		LEVEL_SELECTION,
-		OPTIONS
+		OPTIONS,
+		PAUSE_SCREEN
 	}
 	
 	public ScreenManager(Main game){
@@ -47,6 +46,9 @@ public class ScreenManager {
 		else if(screen == ScreenType.OPTIONS){
 			return new OptionsScreen(this);
 		}
+		else if(screen == ScreenType.PAUSE_SCREEN){
+			return new PauseScreen(this, screens.peek()); //Set current screen behind PauseScreen
+		}
 		return null;
 	}
 	
@@ -63,6 +65,10 @@ public class ScreenManager {
 		GameScreen gs = screens.pop();
 		gs.dispose();
 		screens.peek().setFocus();
+		if(screens.peek() instanceof PlayScreen){
+			((PlayScreen)screens.peek()).resumeGame();
+		}
+
 	}
 	
 	public void clearScreens(){
