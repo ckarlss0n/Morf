@@ -22,7 +22,11 @@ public class HighScoreHandler extends FileHandler{
     }
 
     public Integer getHighScore(Level level){
-        return highScores.get(level);
+        if(highScores.get(level) != null) {
+            return highScores.get(level);
+        } else {
+            return 0;
+        }
     }
 
     @Override
