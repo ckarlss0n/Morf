@@ -17,7 +17,9 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+
 import java.awt.geom.Point2D;
+
 import static edu.chl.morf.Constants.*;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
@@ -30,9 +32,18 @@ public class View {
     private Batch batch;
 
     //PlayerCharacter render variables
+    private TextureRegion idleRightTexture;
     private Animation runningRightAnimation;
+    private Animation pourRightAnimation;
+    private Animation coolRightAnimation;
+    private Animation heatRightAnimation;
+    private TextureRegion idleLeftTexture;
     private Animation runningLeftAnimation;
-    private TextureRegion idleTexture;
+    private Animation pourLeftAnimation;
+    private Animation coolLeftAnimation;
+    private Animation heatLeftAnimation;
+    private int currentAnimationTime;
+
     private Texture waterTexture;
     private Texture waterTextureBottom;
     private Texture iceTexture;
@@ -42,14 +53,14 @@ public class View {
     private Texture waterLevelTexture;
     private Texture levelCompletedTexture;
     private float stateTime;
-    
+
     private PlayerCharacterModel playerCharacter;
 
     private OrthographicCamera camera;
     private OrthographicCamera box2dCam;
 
     private OrthogonalTiledMapRenderer tiledMapRenderer;
-    
+
     private Box2DDebugRenderer b2dr;
     private World world;
 
@@ -57,25 +68,27 @@ public class View {
     private BackgroundGroup backgroundGroup;
     private OrthographicCamera hudCam;
     private BitmapFont font;
-    
+
+    private enum Action{
+        POUR,
+        COOL,
+        HEAT
+    }
+
     public View(Level level, OrthographicCamera camera, OrthographicCamera hudCam, OrthographicCamera b2dCam, Batch batch, World world){
-    	//Load PayerCharacter sprite sheet from assets
-        TextureAtlas textureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
-        TextureRegion[] runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length];
-        for (int i = 0; i < PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES.length; i++) {
-            String path = PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES[i];
-            runningFrames[i] = textureAtlas.findRegion(path);
-        }
-        runningLeftAnimation = new Animation(0.1f, runningFrames);
-        
-        runningFrames = new TextureRegion[PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length];
-        for (int i = 0; i < PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES.length; i++) {
-            String path = PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES [i];
-            runningFrames[i] = textureAtlas.findRegion(path);
-        }
-        runningRightAnimation = new Animation(0.1f, runningFrames);
-        
-        idleTexture = textureAtlas.findRegion(PLAYERCHARACTER_IDLE_REGION_NAME);
+
+        //Load PayerCharacter sprite sheet from assets
+        TextureAtlas characterTextureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
+        runningLeftAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES,characterTextureAtlas,0.1f);
+        pourLeftAnimation = generateAnimation(PLAYERCHARACTER_POURLEFT_REGION_NAMES,characterTextureAtlas,1);
+        heatLeftAnimation = generateAnimation(PLAYERCHARACTER_HEATLEFT_REGION_NAMES,characterTextureAtlas,1);
+        coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES,characterTextureAtlas,1);
+        runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES,characterTextureAtlas,0.1f);
+        pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES,characterTextureAtlas,1);
+        heatRightAnimation = generateAnimation(PLAYERCHARACTER_HEATRIGHT_REGION_NAMES,characterTextureAtlas,1);
+        coolRightAnimation = generateAnimation(PLAYERCHARACTER_COOLRIGHT_REGION_NAMES,characterTextureAtlas,1);
+        idleRightTexture = characterTextureAtlas.findRegion("idleRight");
+        idleLeftTexture = characterTextureAtlas.findRegion("idleLeft");
 
         waterTexture = new Texture("Tiles/waterTile.png");
         waterTextureBottom = new Texture("Tiles/waterTile-Middle.png");
@@ -85,14 +98,14 @@ public class View {
         waterMeterTexture = new Texture("waterMeter.png");
         waterLevelTexture = new Texture("waterLevel.png");
         levelCompletedTexture = new Texture("levelCompleted.png");
-        
+
         stateTime = 0f;
-    	this.level = level;
-    	playerCharacter = level.getPlayer();
-    	
-    	backgroundFactory = new BackgroundFactory();
+        this.level = level;
+        playerCharacter = level.getPlayer();
+
+        backgroundFactory = new BackgroundFactory();
         backgroundGroup = backgroundFactory.createBackgroundGroup(level.getName());
-        
+
         this.camera = camera;
         this.batch =  batch;
         this.box2dCam = b2dCam;
@@ -100,17 +113,26 @@ public class View {
         this.hudCam = hudCam;
         this.hudCam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
         font = new BitmapFont();
-        
+
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         b2dr = new Box2DDebugRenderer();
+    }
+
+    public Animation generateAnimation(String[] textureNames, TextureAtlas textureAtlas, float frameDuration){
+        TextureRegion[] animationFrames = new TextureRegion[textureNames.length];
+        for (int i = 0; i < textureNames.length; i++) {
+            String path = textureNames[i];
+            animationFrames[i] = textureAtlas.findRegion(path);
+        }
+        return new Animation(frameDuration, animationFrames);
     }
 
     public void render(float delta){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         updateCamera();
         batch.begin();
-        
+
         //Render background layers
         batch.setProjectionMatrix(hudCam.combined);
         backgroundGroup.setBackgroundSpeeds(playerCharacter.getSpeed().x);
@@ -120,7 +142,7 @@ public class View {
         //Render map
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-        
+
         b2dr.render(world, box2dCam.combined);
 
         batch.begin();
@@ -129,37 +151,94 @@ public class View {
         stateTime += Gdx.graphics.getDeltaTime();
 
         //Render character animation
-        
         Point2D.Float playerCharPos = playerCharacter.getPosition();
-        if(playerCharacter.isMoving()) {
-            if(playerCharacter.isFacingRight()) {
+
+        if(playerCharacter.isFacingRight()) {
+            if (playerCharacter.isMoving()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
-            }else{
-                batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
+                        playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+
+            } else if(playerCharacter.isPouringWater()){
+                if(currentAnimationTime != pourRightAnimation.getKeyFrames().length * 2) {
+                    batch.draw(pourRightAnimation.getKeyFrame(currentAnimationTime/2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    playerCharacter.stopPouring();
+                    currentAnimationTime = 0;
+                }
+            } else if(playerCharacter.isCoolingWater()){
+                if(currentAnimationTime != coolRightAnimation.getKeyFrames().length * 2) {
+                    batch.draw(coolRightAnimation.getKeyFrame(currentAnimationTime/2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    playerCharacter.stopCooling();
+                    currentAnimationTime = 0;
+                }
+            } else if(playerCharacter.isHeatingWater()){
+                if(currentAnimationTime != heatRightAnimation.getKeyFrames().length * 2) {
+                    batch.draw(heatRightAnimation.getKeyFrame(currentAnimationTime/2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    playerCharacter.stopHeating();
+                    currentAnimationTime = 0;
+                }
+            } else{
+                batch.draw(idleRightTexture, playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
             }
         }else{
-            batch.draw(idleTexture, playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
+            if(playerCharacter.isMoving()){
+                batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
+                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
+            } else if(playerCharacter.isPouringWater()){
+                if(currentAnimationTime != pourLeftAnimation.getKeyFrames().length * 2) {
+                    batch.draw(pourLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    playerCharacter.stopPouring();
+                    currentAnimationTime = 0;
+                }
+            } else if(playerCharacter.isCoolingWater()){
+                if(currentAnimationTime != coolLeftAnimation.getKeyFrames().length * 2) {
+                    batch.draw(coolLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    playerCharacter.stopCooling();
+                    currentAnimationTime = 0;
+                }
+            } else if(playerCharacter.isHeatingWater()){
+                if(currentAnimationTime != heatLeftAnimation.getKeyFrames().length * 2) {
+                    batch.draw(heatLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    playerCharacter.stopHeating();
+                    currentAnimationTime = 0;
+                }
+            } else{
+                batch.draw(idleLeftTexture, playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
+            }
         }
 
         //Render water blocks
         for(Water water : level.getWaterBlocks()){
-        	if(water.getState() == WaterState.LIQUID) {
+            if(water.getState() == WaterState.LIQUID) {
                 if (water.isBottomBlock()) {
                     batch.draw(waterTextureBottom, water.getPosition().x - TILE_SIZE / 2, water.getPosition().y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                 } else {
                     batch.draw(waterTexture, water.getPosition().x - TILE_SIZE / 2, water.getPosition().y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                 }
+            } else if(water.getState() == WaterState.SOLID){
+                batch.draw(iceTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
+            } else if(water.getState() == WaterState.GAS){
+                batch.draw(vaporTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
             }
-        	else if(water.getState() == WaterState.SOLID){
-        		batch.draw(iceTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
-        	}
-        	else if(water.getState() == WaterState.GAS){
-        		batch.draw(vaporTexture, water.getPosition().x-TILE_SIZE/2, water.getPosition().y-TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
-        	}
         }
-        
+
         //Render flower
         batch.draw(flowerTexture, level.getFlower().getPosition().x - TILE_SIZE / 2, level.getFlower().getPosition().y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
 

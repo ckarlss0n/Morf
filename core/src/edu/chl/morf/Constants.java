@@ -51,7 +51,18 @@ public final class Constants {
             "runningLeft4", "runningLeft5", "runningLeft6", "runningLeft7"};
     public static final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[] {"runningRight1", "runningRight2", "runningRight3",
             "runningRight4", "runningRight5", "runningRight6", "runningRight7",};
-    public static final String PLAYERCHARACTER_IDLE_REGION_NAME = "idle";
+    public static final String[] PLAYERCHARACTER_POURRIGHT_REGION_NAMES = new String[] {"pourRight1", "pourRight1", "pourRight2", "pourRight2", "pourRight2",
+            "pourRight3", "pourRight3", "pourRight3", "pourRight2", "pourRight2", "pourRight2", "pourRight1", "pourRight1"};
+    public static final String[] PLAYERCHARACTER_COOLRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "coolRight1", "coolRight1", "coolRight2",
+            "coolRight2", "coolRight2", "coolRight3", "coolRight3", "coolRight3", "coolRight2", "coolRight2", "coolRight2", "coolRight1", "coolRight1", "idleRightEmpty"};
+    public static final String[] PLAYERCHARACTER_HEATRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "heatRight1", "heatRight1", "heatRight2", "heatRight2",
+            "heatRight2", "heatRight3", "heatRight3", "heatRight3", "heatRight2", "heatRight2", "heatRight2", "heatRight1", "heatRight1", "idleRightEmpty"};
+    public static final String[] PLAYERCHARACTER_POURLEFT_REGION_NAMES = new String[] {"pourLeft1", "pourLeft1", "pourLeft2", "pourLeft2", "pourLeft2",
+            "pourLeft3", "pourLeft3", "pourLeft3", "pourLeft2", "pourLeft2", "pourLeft2", "pourLeft1", "pourLeft1"};
+    public static final String[] PLAYERCHARACTER_COOLLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "coolLeft1", "coolLeft1", "coolLeft2",
+            "coolLeft2", "coolLeft2", "coolLeft3", "coolLeft3", "coolLeft3", "coolLeft2", "coolLeft2", "coolLeft2", "coolLeft1", "coolLeft1", "idleLeftEmpty"};
+    public static final String[] PLAYERCHARACTER_HEATLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "heatLeft1", "heatLeft1", "heatLeft2", "heatLeft2",
+            "heatLeft2", "heatLeft3", "heatLeft3", "heatLeft3", "heatLeft2", "heatLeft2", "heatLeft2", "heatLeft1", "heatLeft1", "idleLeftEmpty"};
 
     //Button constants
     public static final String BUTTONS_ATLAS_PATH = "spritesheets/Buttons";
