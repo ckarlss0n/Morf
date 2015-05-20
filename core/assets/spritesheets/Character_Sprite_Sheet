@@ -100,9 +100,163 @@ runningRight1
   orig: 64,64
   offset: 0, 0
   index: -1
-idle
+idleForward
   rotate: false
   xy: 0, 896
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+idleRightEmpty
+  rotate: false
+  xy: 128, 896
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+idleRight
+  rotate: false
+  xy: 128, 832
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+coolRight3
+  rotate: false
+  xy: 128, 640
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+coolRight2
+  rotate: false
+  xy: 128, 704
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+coolRight1
+  rotate: false
+  xy: 128, 768
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+pourRight3
+  rotate: false
+  xy: 128, 64
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+pourRight2
+  rotate: false
+  xy: 128, 128
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+pourRight1
+  rotate: false
+  xy: 128, 192
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+heatRight3
+  rotate: false
+  xy: 128, 256
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+heatRight2
+  rotate: false
+  xy: 128, 320
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+heatRight1
+  rotate: false
+  xy: 128, 384
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+idleLeftEmpty
+  rotate: false
+  xy: 64, 896
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+idleLeft
+  rotate: false
+  xy: 64, 832
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+coolLeft3
+  rotate: false
+  xy: 64, 640
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+coolLeft2
+  rotate: false
+  xy: 64, 704
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+coolLeft1
+  rotate: false
+  xy: 64, 768
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+pourLeft3
+  rotate: false
+  xy: 64, 64
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+pourLeft2
+  rotate: false
+  xy: 64, 128
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+pourLeft1
+  rotate: false
+  xy: 64, 192
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+heatLeft3
+  rotate: false
+  xy: 64, 256
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+heatLeft2
+  rotate: false
+  xy: 64, 320
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: -1
+heatLeft1
+  rotate: false
+  xy: 64, 384
   size: 64,64
   orig: 64,64
   offset: 0, 0
