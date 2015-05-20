@@ -18,47 +18,45 @@ public class GameController extends InputAdapter{
 		Gdx.input.setInputProcessor(this);
 	}
 
-	private boolean isKey(int keyCode, String keyName){
-		return keyCode == Input.Keys.valueOf(keyName);
-	}
-
 	@Override
 	public boolean keyDown(int keycode) {
-		if (isKey(keycode, keyBindings.getMoveLeftKey())) {
+		if (keyBindings.isKey(keycode, keyBindings.getMoveLeftKey())) {
 			gameLogic.setKeyState(keycode, true);
 			gameLogic.moveLeft();
-		} else if (isKey(keycode, keyBindings.getMoveRightKey())){
+		} else if (keyBindings.isKey(keycode, keyBindings.getMoveRightKey())){
 			gameLogic.setKeyState(keycode, true);
 			gameLogic.moveRight();
-		} else if(isKey(keycode, keyBindings.getJumpKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getJumpKey())) {
 			gameLogic.setKeyState(keycode, true);
 			gameLogic.jump();
-		} else if(isKey(keycode, keyBindings.getFlyKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getFlyKey())) {
 			gameLogic.fly();
-		} else if(isKey(keycode, keyBindings.getPourKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getPourKey())) {
 			gameLogic.placeWater();
-		} else if(isKey(keycode, keyBindings.getHeatKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getHeatKey())) {
 			gameLogic.heatBlock();
-		} else if(isKey(keycode, keyBindings.getCoolKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getCoolKey())) {
 			gameLogic.coolBlock();
+		} else if(keyBindings.isKey(keycode, keyBindings.getPauseKey())){
+			gameLogic.pauseGame();
 		}
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if(isKey(keycode, keyBindings.getMoveLeftKey())) {
+		if(keyBindings.isKey(keycode, keyBindings.getMoveLeftKey())) {
 			gameLogic.setKeyState(Input.Keys.valueOf(keyBindings.getMoveLeftKey()), false);
 			gameLogic.moveLeft();
 			gameLogic.stop();
-		} else if(isKey(keycode, keyBindings.getMoveRightKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getMoveRightKey())) {
 			gameLogic.setKeyState(Input.Keys.valueOf(keyBindings.getMoveRightKey()), false);
 			gameLogic.moveRight();
 			gameLogic.stop();
-		} else if(isKey(keycode, keyBindings.getJumpKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getJumpKey())) {
 			gameLogic.setKeyState(Input.Keys.valueOf(keyBindings.getJumpKey()), false);
 			gameLogic.stop();
-		} else if(isKey(keycode, keyBindings.getFlyKey())) {
+		} else if(keyBindings.isKey(keycode, keyBindings.getFlyKey())) {
 			gameLogic.stop();
 		}
 		return true;
