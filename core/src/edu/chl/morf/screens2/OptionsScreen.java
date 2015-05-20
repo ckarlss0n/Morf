@@ -56,7 +56,6 @@ public class OptionsScreen extends GameScreen{
 					} else {
 						textField.setColor(Color.RED);
 					}
-					System.out.println(keyBindings.getUsedKeys());
 					textField.setDisabled(true);
 					return super.keyDown(event, keycode);
 				}
@@ -194,7 +193,6 @@ public class OptionsScreen extends GameScreen{
 					pourField.setText(keyBindings.getPourKey());
 					coolField.setText(keyBindings.getCoolKey());
 					heatField.setText(keyBindings.getHeatKey());
-					System.out.println("RESET " + keyBindings.getUsedKeys());
 					soundHandler.playSoundEffect(soundHandler.getSaveSettings());
 				}
 
