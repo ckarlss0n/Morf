@@ -118,7 +118,7 @@ public class BodyFactory {
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_FLOWER;
-		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_PLAYER;
+		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER;
 		body.createFixture(fdef).setUserData(new UserData(FLOWER));
 
 		shape.dispose();
