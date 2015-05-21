@@ -11,6 +11,7 @@ import static edu.chl.morf.userdata.UserDataType.*;
 
 public class BodyFactory {
 
+	private int pS = 15;
 	public Body createPlayerBody(World world, Vector2 position){
 
 		//Create body
@@ -23,7 +24,7 @@ public class BodyFactory {
 		//Create player fixture
 		PolygonShape shape = new PolygonShape();
 		//shape.setAsBox((TILE_SIZE / 2 - 2) / PPM, (TILE_SIZE / 2 - 2) / PPM);
-		shape.setAsBox(30 / PPM, 30 / PPM);
+		shape.setAsBox((30-pS) / PPM, 30 / PPM);
 
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
@@ -32,7 +33,7 @@ public class BodyFactory {
 		body.createFixture(fdef).setUserData(new UserData(PLAYERCHARACTER));
 
 		//Create right ghost fixture 
-		shape.setAsBox(32 / PPM, 20 / PPM, new Vector2(60 / PPM, 0), 0);
+		shape.setAsBox(31 / PPM, 20 / PPM, new Vector2((62-pS) / PPM, 0), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_SENSOR;
 		fdef.filter.maskBits = BIT_GROUND | BIT_WATER | BIT_ICE | BIT_GAS | BIT_FLOWER;
@@ -40,26 +41,35 @@ public class BodyFactory {
 		body.createFixture(fdef).setUserData(new UserData(GHOST_RIGHT));
 
 		//Create left ghost fixture
-		shape.setAsBox(32 / PPM, 20 / PPM, new Vector2(-60 / PPM, 0), 0);
+		shape.setAsBox(31 / PPM, 20 / PPM, new Vector2((-62+pS) / PPM, 0), 0);
 		fdef.shape = shape;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_LEFT));
 
 		//Create active block right fixture
-		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2(93 / PPM, 0), 0);
+		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((91-pS) / PPM, 0), 0);
 		fdef.shape = shape;
+		fdef.filter.maskBits = BIT_WATER | BIT_ICE | BIT_GAS | BIT_FLOWER;
 		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_RIGHT));
 
 		//Create active block left fixture
-		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2(-93 / PPM, 0), 0);
+		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((-91+pS) / PPM, 0), 0);
 		fdef.shape = shape;
 		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_LEFT));
 
+		//Create active block bottom right fixture
+		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((60-pS) / PPM, -64 / PPM), 0);
+		fdef.shape = shape;
+		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_BOTTOM_RIGHT));
+
+		//Create active block bottom left fixture
+		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((-60+pS) / PPM, -64 / PPM), 0);
+		fdef.shape = shape;
+		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_BOTTOM_LEFT));
 
 		//Create bottom ghost fixture
-		shape.setAsBox(28 / PPM, 5 / PPM, new Vector2(0, -25 / PPM), 0);
+		shape.setAsBox((29-pS) / PPM, 5 / PPM, new Vector2(0, -25 / PPM), 0);
 		fdef.shape=shape;
-		fdef.filter.categoryBits = BIT_SENSOR;
-		fdef.filter.maskBits = BIT_GROUND | BIT_SPIKES | BIT_ICE | BIT_FLOWER;
+		fdef.filter.maskBits = BIT_GROUND | BIT_SPIKES | BIT_ICE;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM));
 
@@ -120,14 +130,14 @@ public class BodyFactory {
 	public Body createWaterBody(World world, Vector2 position){
 
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(position.x / PPM, position.y / PPM);
+		bdef.position.set((position.x) / PPM, position.y / PPM);
 		bdef.type = BodyType.DynamicBody;
 		bdef.fixedRotation = true;
 
 		Body body = world.createBody(bdef);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox((TILE_SIZE / 2) / PPM, (TILE_SIZE / 2) / PPM);
+		shape.setAsBox(((TILE_SIZE-2) / 2) / PPM, ((TILE_SIZE-2 )/ 2) / PPM);
 
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;

@@ -178,6 +178,9 @@ public class GameLogic {
 	
 	public void heatBlock(){
 		Block activeBlock = level.getPlayer().getActiveBlock();
+		if(activeBlock instanceof EmptyBlock){
+			activeBlock = level.getPlayer().getActiveBlockBottom();
+		}
 		if(activeBlock instanceof Water){
 			WaterState state = ((Water) activeBlock).getState();
 			if(state == WaterState.SOLID) {
@@ -200,6 +203,9 @@ public class GameLogic {
 
 	public void coolBlock(){
 		Block activeBlock = level.getPlayer().getActiveBlock();
+		if(activeBlock instanceof EmptyBlock){
+			activeBlock = level.getPlayer().getActiveBlockBottom();
+		}
 		if(activeBlock instanceof Water) {
 			WaterState state = ((Water) activeBlock).getState();
 			if (state == WaterState.GAS) {

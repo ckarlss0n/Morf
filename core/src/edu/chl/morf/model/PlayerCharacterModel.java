@@ -104,6 +104,7 @@ public class PlayerCharacterModel {
     public Block getActiveBlock(){
         return activeBlock;
     }
+    public Block getActiveBlockBottom(){return activeBlockBottom;}
     public Point2D.Float getSpeed(){
         return speed;
     }
@@ -114,12 +115,14 @@ public class PlayerCharacterModel {
         facingRight = false;
         setActiveBlock(activeBlockLeft);
         setGhostEmpty(ghostEmptyLeft);
+        activeBlockBottom=activeBlockBottomLeft;
     }
     public void moveRight(){
         moving = true;
         facingRight = true;
         setActiveBlock(activeBlockRight);
         setGhostEmpty(ghostEmptyRight);
+        activeBlockBottom=activeBlockBottomRight;
     }
 
     public void setOnGround(boolean onGround){
@@ -165,9 +168,9 @@ public class PlayerCharacterModel {
 
     public Water pourWater(){
         pouringWater = true;
-        Point2D.Float point=new Point2D.Float(position.x - 64, position.y);
+        Point2D.Float point=new Point2D.Float(position.x - 64+15, position.y);
         if(facingRight){
-            point = new Point2D.Float(position.x + 64, position.y);
+            point = new Point2D.Float(position.x + 64-15, position.y);
         }
         decreaseWaterLevel();
         return new Water(point);
@@ -200,8 +203,14 @@ public class PlayerCharacterModel {
             }
         }else if(position == ActiveBlockPosition.BOTTOM_LEFT){
             activeBlockBottomLeft = block;
+            if(!facingRight){
+                activeBlockBottom = activeBlockBottomLeft;
+            }
         }else if(position == ActiveBlockPosition.BOTTOM_RIGHT){
             activeBlockBottomRight = block;
+            if(facingRight){
+                activeBlockBottom = activeBlockBottomRight;
+            }
         }else if(position == ActiveBlockPosition.BOTTOM){
             activeBlockBottom = block;
         }
@@ -209,16 +218,28 @@ public class PlayerCharacterModel {
 
     //Methods for manipulating active block
     public void heatActiveBlock(){
-        if(activeBlock instanceof Water) {
-            heatingWater = true;
+        if(activeBlock instanceof EmptyBlock){
+            if(activeBlockBottom instanceof Water){
+                heatingWater = true;
+            }
+            activeBlockBottom.heat();
         }
-        activeBlock.heat();
+        else if(activeBlock instanceof Water) {
+            heatingWater = true;
+            activeBlock.heat();
+        }
     }
     public void coolActiveBlock(){
-        if(activeBlock instanceof Water) {
-            coolingWater = true;
+        if(activeBlock instanceof EmptyBlock){
+            if (activeBlockBottom instanceof Water){
+                coolingWater = true;
+            }
+            activeBlockBottom.cool();
         }
-        activeBlock.cool();
+        else if(activeBlock instanceof Water) {
+            coolingWater = true;
+            activeBlock.cool();
+        }
     }
 }
 
