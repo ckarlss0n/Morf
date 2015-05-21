@@ -92,7 +92,7 @@ public class LevelSelectionScreen extends GameScreen{
                 this.addListener(new ClickListener(){
                     @Override
                     public void clicked(InputEvent event, float x, float y){
-                        screenManager.pushScreen(ScreenType.PLAY, "Level_3.tmx");
+                        screenManager.pushScreen(ScreenType.PLAY, "Level_1.tmx");
                     }
                     @Override
                     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
@@ -123,7 +123,7 @@ public class LevelSelectionScreen extends GameScreen{
         private LevelSelectionStage(){
             super();
             LevelFactory levelFactory = LevelFactory.getInstace();
-            this.addActor(new LevelPreview(levelFactory.getLevel("Level_3.tmx")));
+            this.addActor(new LevelPreview(levelFactory.getLevel("Level_1.tmx", false)));
             BackButton backButton = new BackButton();
             backButton.setPosition(30,600);
             backButton.setSize(300,100);

@@ -45,7 +45,7 @@ public class HighScoreHandler extends FileHandler{
             String levelName = lineSplit[0];
             String highScoreString = lineSplit[1];
             Integer highScore = Integer.parseInt(highScoreString);
-            Level level = levelFactory.getLevel(levelName);
+            Level level = levelFactory.getLevel(levelName, false);
             highScores.put(level, highScore);
             line = bufferedReader.readLine();
         }

@@ -47,7 +47,7 @@ public class LevelFactory {
         return instance;
     }
 
-	public Level getLevel(String name){
+	public Level getLevel(String name, boolean reset){
 
 		tileMap = new TmxMapLoader().load(LEVEL_PATH + name);
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
@@ -135,7 +135,7 @@ public class LevelFactory {
 
 		PlayerCharacterModel player = new PlayerCharacterModel(500, 500);
 
-        if(nameLevelMap.containsKey(name)){
+        if(nameLevelMap.containsKey(name) && reset == false){
             return nameLevelMap.get(name);
         }else {
             Level level = new Level(matrix, name, player, waterBlocks, flower);
