@@ -6,10 +6,9 @@ import edu.chl.morf.screens2.*;
 import java.util.Stack;
 
 public class ScreenManager {
-	
-	private Main game;
-	
+
 	private Stack<GameScreen> screens;
+    private static ScreenManager instance = new ScreenManager();
 
 	public static enum ScreenType{
 		PLAY,
@@ -19,15 +18,14 @@ public class ScreenManager {
 		PAUSE_SCREEN
 	}
 	
-	public ScreenManager(Main game){
-		this.game = game;
+	private ScreenManager(){
 		screens = new Stack<GameScreen>();
 		pushScreen(ScreenType.MAIN_MENU, null);
 	}
-	
-	public Main getGame(){
-		return game;
-	}
+
+    public static ScreenManager getInstance(){
+        return instance;
+    }
 	
 	public void render(float dt){
 		screens.peek().render(dt);

@@ -22,7 +22,7 @@ public class Main extends Game{
 	public void create() {
         HighScoreHandler.getInstance().load();
         SettingsHandler.getInstance().load();
-		screenManager = new ScreenManager(this);
+		screenManager = ScreenManager.getInstance();
 	}
 
     @Override
