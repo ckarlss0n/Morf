@@ -1,17 +1,20 @@
 package edu.chl.morf.screens2;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+
 import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.controllers.MyContactListener;
 import edu.chl.morf.handlers.LevelFactory;
+import edu.chl.morf.handlers.LevelReader;
 import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.view.View;
-
 import static edu.chl.morf.Constants.WORLD_GRAVITY;
 import static edu.chl.morf.handlers.Constants.PPM;
 
@@ -56,18 +59,18 @@ public class PlayScreen extends GameScreen{
     }
     
     public void nextLevel(){
-    	if (level.getName().equals("Level_1.tmx")){
-    		level = levelFactory.getLevel("Level_2.tmx", true);
+    	List<String> levels = LevelReader.getInstance().getLevels();
+    	int currentLevel = levels.indexOf(level.getName());
+    	String name;
+    	if(currentLevel == levels.size() - 1){
+        	name = levels.get(0);
     	}
-    	else if (level.getName().equals("Level_2.tmx")){
-    		level = levelFactory.getLevel("Level_3.tmx", true);
+    	else{
+        	name = levels.get(currentLevel + 1);
     	}
-    	else if (level.getName().equals("Level_3.tmx")){
-    		level = levelFactory.getLevel("Level_4.tmx", true);
-    	}
-    	else if (level.getName().equals("Level_4.tmx")){
-    		level = levelFactory.getLevel("Level_1.tmx", true);
-    	}
+    	
+    	level = levelFactory.getLevel(name, true);
+
     	gameLogic.changeLevel(level);
     	view.changeLevel(level);
     }
