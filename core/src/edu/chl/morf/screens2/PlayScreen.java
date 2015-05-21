@@ -80,12 +80,6 @@ public class PlayScreen extends GameScreen{
     	view.changeLevel(level);
     }
 
-    @Override
-    public void show() {
-        // TODO Auto-generated method stub
-
-    }
-
     public void resumeGame(){
         gameLogic.resumeGame();
     }
@@ -106,44 +100,4 @@ public class PlayScreen extends GameScreen{
             resumeGame();
         }
     }
-
-    @Override
-    public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void hide() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
-
-    }
-
-    public void handleInput(){
-
-    }
-
-    public void update(float dt){
-
-    }
-
-
 }

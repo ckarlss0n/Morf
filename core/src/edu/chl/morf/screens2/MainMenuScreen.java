@@ -138,48 +138,12 @@ public class MainMenuScreen extends GameScreen{
             this.addActor(highScoreButton);
         }
     }
-
-    @Override
-    public void dispose() {
-    }
-    @Override
-    /** Called when this screen becomes the current screen. */
-    public void show () {
-    }
-
     @Override
     /** Called when the screen should render itself.
      * @param delta The time in seconds since the last render. */
     public void render (float delta){
         stage.act(delta);
         stage.draw();
-    }
-
-    @Override
-    /** @see ApplicationListener#resize(int, int) */
-    public void resize (int width, int height){
-    }
-
-    @Override
-    /** @see ApplicationListener#pause() */
-    public void pause (){}
-
-    @Override
-    /** @see ApplicationListener#resume() */
-    public void resume (){}
-
-    @Override
-    /** Called when this screen is no longer the current screen. */
-    public void hide (){}
-
-    @Override
-    public void handleInput() {
-
-    }
-
-    @Override
-    public void update(float dt) {
-
     }
 	@Override
 	public void setFocus() {

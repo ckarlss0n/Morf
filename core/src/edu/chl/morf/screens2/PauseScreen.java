@@ -105,14 +105,6 @@ public class PauseScreen extends GameScreen{
 	}
 
 	@Override
-	public void dispose() {
-	}
-
-	@Override
-	public void show () {
-	}
-
-	@Override
 	public void render (float delta){
 		backgroundScreen.render(0); //Render the background screen without flickering
 		stage.act(delta);
@@ -121,23 +113,4 @@ public class PauseScreen extends GameScreen{
 			returnToParentScreen();
 		}
 	}
-
-	@Override
-	public void resize (int width, int height){
-	}
-
-	@Override
-	public void pause (){}
-
-	@Override
-	public void resume (){}
-
-	@Override
-	public void hide (){}
-
-	@Override
-	public void handleInput() {}
-
-	@Override
-	public void update(float dt) {}
 }
