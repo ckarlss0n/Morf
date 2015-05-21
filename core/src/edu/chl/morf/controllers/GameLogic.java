@@ -293,15 +293,17 @@ public class GameLogic {
 	public boolean isPlayerDead(){
 		return level.isPlayerDead();
 	}
-	public void setWaterBottom(Body body, boolean bottomBlock){
-		Water waterBlock = bodyBlockMap.get(body);
-		waterBlock.setBottomBlock(bottomBlock);
+	public void setWaterBottom(Body body, boolean bottomBlock) {
+		if (bodyBlockMap.get(body) != null) {
+			Water waterBlock = bodyBlockMap.get(body);
+			waterBlock.setBottomBlock(bottomBlock);
+		}
 	}
 	public void setWaterTop(Body body, boolean topBlock){
-		System.out.println(body);
-		System.out.println(bodyBlockMap.get(body));
-		Water waterBlock = bodyBlockMap.get(body);
-		waterBlock.setTopBlock(topBlock);
+		if(bodyBlockMap.get(body)!=null){
+			Water waterBlock = bodyBlockMap.get(body);
+			waterBlock.setTopBlock(topBlock);
+		}
 	}
 
 	public void render(float delta){
