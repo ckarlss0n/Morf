@@ -7,19 +7,16 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-
+import com.badlogic.gdx.utils.Timer;
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static edu.chl.morf.Constants.MAX_SPEED;
-import static edu.chl.morf.Constants.WORLD_GRAVITY;
 import static edu.chl.morf.handlers.Constants.*;
 
 /**
@@ -35,11 +32,15 @@ public class GameLogic {
 	private String levelName;
 	private PlayerCharacterModel player;
 	private Vector2 movementVector;
+	private Vector2 flyVector;
 	private BodyFactory bodyFactory;
 	private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
 	private SoundHandler soundHandler = SoundHandler.getInstance();
 	private KeyBindings keyBindings = KeyBindings.getInstance();
 	private boolean gamePaused;
+	private boolean flying;
+	private Map<Block, Body> gasBlockBodyMap;
+	private Map<Body, List<Timer.Task>> gasBodyTaskMap;
 
 	public GameLogic(Level level, World world){
 		this.level = level;
@@ -48,11 +49,18 @@ public class GameLogic {
 		levelName = level.getName();
 		player = level.getPlayer();
 		movementVector = new Vector2(0,0);
+		flyVector = new Vector2(0, 2.3f);
 		bodyFactory = new BodyFactory();
 		gamePaused = false;
+		gasBlockBodyMap = new HashMap<Block, Body>();
+		gasBodyTaskMap = new HashMap<Body, List<Timer.Task>>();
 		setUpLevel();
 	}
-	
+
+	public void setFlying(Boolean state){
+		flying = state;
+	}
+
 	public void setUpLevel(){
 		Array<Body> bodies = new Array<Body>();
 		world.getBodies(bodies);
@@ -123,6 +131,7 @@ public class GameLogic {
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
 		movementVector = new Vector2(-15, 0);
+		setFlying(false);
 	}
 
 	public void moveRight(){
@@ -131,6 +140,7 @@ public class GameLogic {
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
 		movementVector = new Vector2(15, 0);
+		setFlying(false);
 	}
 	public void setOnGround(boolean isOnGround){
 		player.setOnGround(isOnGround);
@@ -140,6 +150,7 @@ public class GameLogic {
 		if(player.isOnGround()) {   //If standing (could be improved, also 0 at top of jump)
 			playerCharacterBody.applyForceToCenter(new Vector2(0, 300), true);
 		}
+		setFlying(false);
 	}
 	public boolean isLevelWon(){
         if(level.isLevelWon()){
@@ -162,7 +173,8 @@ public class GameLogic {
 
 	public void fly(){
 		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < 0.01f && level.isFlyingEnabled()) {
-			movementVector = new Vector2(0, 20);
+			flying = true;
+			movementVector = new Vector2(0, 0);
 		}
 	}
 
@@ -181,6 +193,8 @@ public class GameLogic {
 		if(activeBlock instanceof EmptyBlock){
 			activeBlock = level.getPlayer().getActiveBlockBottom();
 		}
+
+		//Sound effects
 		if(activeBlock instanceof Water){
 			WaterState state = ((Water) activeBlock).getState();
 			if(state == WaterState.SOLID) {
@@ -189,16 +203,83 @@ public class GameLogic {
 				soundHandler.playSoundEffect(soundHandler.getHeat());
 			}
 		}
+
 		level.heatBlock();
+
         if(activeBlock instanceof Water) {
             Water activeWater = (Water)activeBlock;
             for (Body body : bodyBlockMap.keySet()) {
                 if (bodyBlockMap.get(body) == activeBlock) {
                     body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
-                    break;
-                }
-            }
-        }
+
+						//If water is heated and turns into gas
+						if (activeWater.getState() == WaterState.GAS) {
+
+							/*
+							Bind the gas block to it's body, if not already existing in map.
+							Also apply flying and removal tasks if not already applied.
+							*/
+							if(!gasBlockBodyMap.containsKey(activeBlock) && !gasBodyTaskMap.containsKey(body)) {
+								gasBlockBodyMap.put(activeBlock, body);
+								flyAndRemove(body, 1, 3);	//Make body fly and disappear using tasks
+								body.setGravityScale(0f); //Body no longer affected by gravity
+							}
+						}
+					break;
+				}
+			}
+		}
+	}
+
+	/*
+	If a block is in the gas state it is affected by two tasks.
+	The first task makes the gas block rise, and the second task removes the gas block from the world.
+	If a gas block however is cooled before those two tasks are finished, it should be turned into water, thus cancelling the two tasks.
+	 */
+	public void resetBody(Body body){
+		body.setGravityScale(1);	//Body should be affected by gravity as usual
+		body.setLinearVelocity(0, 0);
+
+		//Cancel the the two tasks linked to the body
+		for(Timer.Task task : gasBodyTaskMap.get(body)) {
+			task.cancel();
+		}
+		gasBodyTaskMap.remove(body); //Remove body from gasBodyTaskMap, as it no longer has the tasks, due to changed water state.
+	}
+
+	/*
+	Add two tasks to a body (normally the body of the active block)
+	 */
+	public void flyAndRemove(Body body, float flyDelay, float destroyDelay){
+		List<Timer.Task> timerTaskList = new LinkedList<Timer.Task>();
+
+		//Make body fly
+		Timer.Task waitAndFlyTask = new Timer.Task() {
+			@Override
+			public void run() {
+				body.setLinearVelocity(0, 2);
+			}
+		};
+
+		//Remove body
+		Timer.Task waitAndRemoveTask = new Timer.Task() {
+			@Override
+			public void run() {
+				level.getWaterBlocks().remove(bodyBlockMap.get(body));
+				gasBlockBodyMap.remove(bodyBlockMap.get(body));
+				bodyBlockMap.remove(body);
+				gasBodyTaskMap.remove(body);
+				world.destroyBody(body);
+			}
+		};
+
+		Timer.schedule(waitAndFlyTask, flyDelay);
+		Timer.schedule(waitAndRemoveTask, destroyDelay);
+
+		timerTaskList.add(waitAndFlyTask);
+		timerTaskList.add(waitAndRemoveTask);
+
+		gasBodyTaskMap.put(body, timerTaskList);
 	}
 
 	public void coolBlock(){
@@ -210,6 +291,13 @@ public class GameLogic {
 			WaterState state = ((Water) activeBlock).getState();
 			if (state == WaterState.GAS) {
 				soundHandler.playSoundEffect(soundHandler.getPour());
+
+				//If the active block is of type gas, it should be reset upon cooling
+				if(gasBlockBodyMap.containsKey(activeBlock)){
+					resetBody(gasBlockBodyMap.get(activeBlock));
+					gasBlockBodyMap.remove(activeBlock); //As the block no longer is in the gas state, it should not exist in the gasBlockBodyMap
+				}
+
 			} else if (state == WaterState.LIQUID) {
 				soundHandler.playSoundEffect(soundHandler.getFreeze());
 			}
@@ -225,7 +313,6 @@ public class GameLogic {
             }
         }
 	}
-
 
     public Filter getFilter(Water water){
         Filter filter = new Filter();
@@ -249,6 +336,7 @@ public class GameLogic {
 	public void stop(float slowFactor){
 		if(!(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) || pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey())))) {
 			player.stop();
+			setFlying(false);
 			if(player.isOnGround()) {
 				playerCharacterBody.setLinearVelocity(playerCharacterBody.getLinearVelocity().x / slowFactor, playerCharacterBody.getLinearVelocity().y / slowFactor);
 			}
@@ -309,7 +397,11 @@ public class GameLogic {
 	public void render(float delta){
 		world.step(delta,6,2);
 		if(Math.abs(playerCharacterBody.getLinearVelocity().x) < MAX_SPEED) {
-			playerCharacterBody.applyForceToCenter(movementVector, true);
+			if(flying) {
+				playerCharacterBody.setLinearVelocity(flyVector);
+			} else {
+				playerCharacterBody.applyForceToCenter(movementVector, true);
+			}
 		}
 		updateLevel();
 	}
