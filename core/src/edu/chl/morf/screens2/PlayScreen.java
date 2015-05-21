@@ -25,6 +25,8 @@ public class PlayScreen extends GameScreen{
 
     private MyContactListener cl;
     private GameController input;
+    
+    private LevelFactory levelFactory;
 
     @Override
     public void setFocus(){
@@ -36,9 +38,9 @@ public class PlayScreen extends GameScreen{
 
         world = new World(WORLD_GRAVITY, true);
         
-        LevelFactory levelFactory = LevelFactory.getInstace();
+        levelFactory = LevelFactory.getInstace();
 
-        level = levelFactory.getLevel(levelName);
+        level = levelFactory.getLevel(levelName, true);
         gameLogic = new GameLogic(level, world);
 
         cl = new MyContactListener(gameLogic);
@@ -52,7 +54,28 @@ public class PlayScreen extends GameScreen{
 
         this.view = new View(level, cam, hudCam, box2dCam, spriteBatch, world);
     }
-    private void newLevel(String levelName){}
+    
+    public void nextLevel(){
+    	if (level.getName().equals("Level_1.tmx")){
+    		level = levelFactory.getLevel("Level_2.tmx", true);
+    	}
+    	else if (level.getName().equals("Level_2.tmx")){
+    		level = levelFactory.getLevel("Level_3.tmx", true);
+    	}
+    	else if (level.getName().equals("Level_3.tmx")){
+    		level = levelFactory.getLevel("Level_4.tmx", true);
+    	}
+    	else if (level.getName().equals("Level_4.tmx")){
+    		level = levelFactory.getLevel("Level_1.tmx", true);
+    	}
+    	gameLogic.changeLevel(level);
+    	view.changeLevel(level);
+    }
+    public void resetLevel(){
+    	level = levelFactory.getLevel(level.getName(), true);
+    	gameLogic.changeLevel(level);
+    	view.changeLevel(level);
+    }
 
     @Override
     public void show() {
@@ -70,12 +93,10 @@ public class PlayScreen extends GameScreen{
             gameLogic.render(delta);
             view.render(delta);
             if (gameLogic.isLevelWon()) {
-                newLevel("nextLevel");
-                gameLogic.fly();
+                nextLevel();
             }
             if (gameLogic.isPlayerDead()) {
-                newLevel("thisLevel");
-                gameLogic.resetGame();
+                resetLevel();
             }
         } else {
             screenManager.pushScreen(ScreenManager.ScreenType.PAUSE_SCREEN, null);
