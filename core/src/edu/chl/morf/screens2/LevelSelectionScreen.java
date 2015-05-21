@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
 import edu.chl.morf.handlers.HighScoreHandler;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.ScreenManager;
@@ -33,11 +32,11 @@ public class LevelSelectionScreen extends GameScreen{
             private BackButton(){
                 this.backButtonTexture = new Texture("menu/Btn_Exit.png");
                 this.addListener(new ClickListener(){
-                   @Override
-                   public void clicked(InputEvent event, float x, float y){
-                       screenManager.popScreen();
-                       soundHandler.playSoundEffect(soundHandler.getButtonReturn());
-                   }
+                    @Override
+                    public void clicked(InputEvent event, float x, float y){
+                        screenManager.popScreen();
+                        soundHandler.playSoundEffect(soundHandler.getButtonReturn());
+                    }
                 });
             }
             @Override
@@ -66,15 +65,21 @@ public class LevelSelectionScreen extends GameScreen{
             private Texture highlightTexture;
             private boolean highlighted;
             private Level level;
+            String levelName;
 
-            private LevelPreview(Level level) {
+            private LevelPreview(Level level, float x, float y) {
                 super();
                 this.level = level;
-                this.setSize(0.3f * Main.V_WIDTH, 0.25f *  Main.V_HEIGHT);
-                this.setPosition(0.2f * Main.V_WIDTH, (20 * 6 / 4) / 100f * Main.V_HEIGHT);
-                this.normalTexture = new Texture("levelselection/Level_1_Thumb.png");
-                this.highlightTexture = new Texture("levelselection/Level_1_Thumb_Focus.png");
-
+                this.setSize(0.3f * Main.V_WIDTH, 0.25f * Main.V_HEIGHT);
+                this.setPosition(x, y);
+                this.levelName = level.getName().split("\\.")[0];
+                if(levelName.equals("Level_1") || levelName.equals("Level_1")) {
+                    this.normalTexture = new Texture("levelselection/" + levelName + "_Thumb.png");
+                    this.highlightTexture = new Texture("levelselection/" + levelName + "_Thumb_Focus.png");
+                }else{
+                    this.normalTexture = new Texture("levelselection/Level_1_Thumb.png");
+                    this.highlightTexture = new Texture("levelselection/Level_1_Thumb_Focus.png");
+                }
                 Integer levelScore = HighScoreHandler.getInstance().getHighScore(this.level);
 
                 stars = new ArrayList<Star>();
@@ -92,7 +97,7 @@ public class LevelSelectionScreen extends GameScreen{
                 this.addListener(new ClickListener(){
                     @Override
                     public void clicked(InputEvent event, float x, float y){
-                        screenManager.pushScreen(ScreenType.PLAY, "Level_1.tmx");
+                        screenManager.pushScreen(ScreenType.PLAY, levelName + ".tmx");
                     }
                     @Override
                     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
@@ -123,7 +128,24 @@ public class LevelSelectionScreen extends GameScreen{
         private LevelSelectionStage(){
             super();
             LevelFactory levelFactory = LevelFactory.getInstace();
-            this.addActor(new LevelPreview(levelFactory.getLevel("Level_1.tmx", false)));
+            String levelName;
+            Level level;
+            LevelPreview levelPreview;
+            float levelPreviewHeight = 0.25f * Main.V_HEIGHT;
+            float levelPreviewWidth = 0.3f * Main.V_WIDTH;
+            float previewGapX = (Main.V_WIDTH - 2 * levelPreviewWidth)/3;
+            float previewGapY = (Main.V_HEIGHT - 2 * levelPreviewHeight)/3;
+            int i = 1;
+            for(int y = 0; y < 2; y ++) {
+                for(int x = 0; x < 2; x++){
+                    levelName = "Level_" + i + ".tmx";
+                    level = levelFactory.getLevel(levelName, false);
+                    levelPreview = new LevelPreview(level, previewGapX + x * (previewGapX + levelPreviewWidth),
+                            Main.V_HEIGHT - (previewGapY + levelPreviewHeight) - y * (levelPreviewHeight + previewGapY));
+                    this.addActor(levelPreview);
+                    i++;
+                }
+            }
             BackButton backButton = new BackButton();
             backButton.setPosition(30,600);
             backButton.setSize(300,100);
@@ -138,7 +160,7 @@ public class LevelSelectionScreen extends GameScreen{
     }
     private Stage stage;
 
-    
+
     @Override
     public void handleInput() {
 
@@ -186,8 +208,8 @@ public class LevelSelectionScreen extends GameScreen{
 
     }
 
-	@Override
-	public void setFocus() {
-		Gdx.input.setInputProcessor(stage);
-	}
+    @Override
+    public void setFocus() {
+        Gdx.input.setInputProcessor(stage);
+    }
 }
