@@ -12,7 +12,8 @@ public class LevelReader {
 	private List<String> levels;
 	
 	private LevelReader(){
-		File folder = new File("C:\\Users\\gustav\\Documents\\MorfWorkspace\\Morf\\core\\assets\\levels");
+		String path = System.getProperty("user.dir") + "\\..\\core\\assets\\levels";
+		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> levels = new ArrayList<String>();
 
