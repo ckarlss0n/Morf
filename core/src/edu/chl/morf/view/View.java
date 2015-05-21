@@ -8,8 +8,12 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+
 import edu.chl.morf.backgrounds.BackgroundFactory;
 import edu.chl.morf.backgrounds.BackgroundGroup;
 import edu.chl.morf.main.Main;
@@ -117,6 +121,12 @@ public class View {
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         b2dr = new Box2DDebugRenderer();
+    }
+
+    public void changeLevel(Level level){
+    	this.level = level;
+    	playerCharacter = level.getPlayer();
+    	tiledMapRenderer.setMap(new TmxMapLoader().load(LEVEL_PATH + level.getName()));
     }
 
     public Animation generateAnimation(String[] textureNames, TextureAtlas textureAtlas, float frameDuration){
