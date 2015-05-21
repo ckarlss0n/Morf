@@ -14,6 +14,8 @@ public enum UserDataType {
     ACTIVE_BLOCK_LEFT,
     SPIKE,
     WATER,
+    ICE,
+    VAPOR,
     WATER_SENSOR,
     FLOWER,
     OTHER
