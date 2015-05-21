@@ -6,16 +6,20 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static edu.chl.morf.Constants.MAX_SPEED;
+import static edu.chl.morf.Constants.WORLD_GRAVITY;
 import static edu.chl.morf.handlers.Constants.*;
 
 /**
@@ -45,11 +49,26 @@ public class GameLogic {
 		player = level.getPlayer();
 		movementVector = new Vector2(0,0);
 		bodyFactory = new BodyFactory();
-		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
-		//bindWaterBlocks();
 		gamePaused = false;
+		setUpLevel();
+	}
+	
+	public void setUpLevel(){
+		Array<Body> bodies = new Array<Body>();
+		world.getBodies(bodies);
+		for(Body body : bodies){
+			world.destroyBody(body);
+		}
+		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
 		generateLevel();
 		initPressedKeys();
+	}
+	
+	public void changeLevel(Level level){
+		this.level = level;
+		player = level.getPlayer();
+		bodyBlockMap.clear();
+		setUpLevel();
 	}
 
 	public void pauseGame(){
@@ -261,9 +280,7 @@ public class GameLogic {
 	}
 
 	public void killPlayer(){
-		if(!level.isPlayerDead()){
-			soundHandler.playSoundEffect(soundHandler.getDie());
-		}
+		soundHandler.playSoundEffect(soundHandler.getDie());
 		level.killPlayer();
 	}
 
@@ -275,6 +292,8 @@ public class GameLogic {
 		waterBlock.setBottomBlock(bottomBlock);
 	}
 	public void setWaterTop(Body body, boolean topBlock){
+		System.out.println(body);
+		System.out.println(bodyBlockMap.get(body));
 		Water waterBlock = bodyBlockMap.get(body);
 		waterBlock.setTopBlock(topBlock);
 	}
