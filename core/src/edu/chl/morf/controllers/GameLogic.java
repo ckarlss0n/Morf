@@ -71,7 +71,7 @@ public class GameLogic {
 		generateLevel();
 		initPressedKeys();
 	}
-	
+
 	public void changeLevel(Level level){
 		this.level = level;
 		player = level.getPlayer();
@@ -104,7 +104,7 @@ public class GameLogic {
 	public World getWorld(){
 		return world;
 	}
-	
+
 	public void bindWaterToBody(Body body, Water water){
 		bodyBlockMap.put(body, water);
 	}
@@ -153,13 +153,13 @@ public class GameLogic {
 		setFlying(false);
 	}
 	public boolean isLevelWon(){
-        if(level.isLevelWon()){
-            HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
-            if(player.getWaterLevel() > highScoreHandler.getHighScore(level)) {
-                highScoreHandler.addHighScore(level, player.getWaterLevel());
-            }
-        }
-        return level.isLevelWon();
+		if(level.isLevelWon()){
+			HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
+			if(player.getWaterLevel() > highScoreHandler.getHighScore(level)) {
+				highScoreHandler.addHighScore(level, player.getWaterLevel());
+			}
+		}
+		return level.isLevelWon();
 	}
 	public WaterState getWaterState(Body body){
 		Water waterBlock = bodyBlockMap.get(body);
@@ -169,6 +169,11 @@ public class GameLogic {
 	public void resetGame(){
 
 	}
+
+	public boolean isFlyingEnabled(){
+		return level.isFlyingEnabled();
+	}
+
 	public void setFlyingEnabled(boolean flyingEnabled){level.setFlyingEnabled(flyingEnabled);}
 
 	public void fly(){
@@ -187,7 +192,7 @@ public class GameLogic {
 			soundHandler.playSoundEffect(soundHandler.getPour());
 		}
 	}
-	
+
 	public void heatBlock(){
 		Block activeBlock = level.getPlayer().getActiveBlock();
 		if(activeBlock instanceof EmptyBlock){
@@ -206,25 +211,25 @@ public class GameLogic {
 
 		level.heatBlock();
 
-        if(activeBlock instanceof Water) {
-            Water activeWater = (Water)activeBlock;
-            for (Body body : bodyBlockMap.keySet()) {
-                if (bodyBlockMap.get(body) == activeBlock) {
-                    body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
+		if(activeBlock instanceof Water) {
+			Water activeWater = (Water)activeBlock;
+			for (Body body : bodyBlockMap.keySet()) {
+				if (bodyBlockMap.get(body) == activeBlock) {
+					body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
 
-						//If water is heated and turns into gas
-						if (activeWater.getState() == WaterState.GAS) {
+					//If water is heated and turns into gas
+					if (activeWater.getState() == WaterState.GAS) {
 
 							/*
 							Bind the gas block to it's body, if not already existing in map.
 							Also apply flying and removal tasks if not already applied.
 							*/
-							if(!gasBlockBodyMap.containsKey(activeBlock) && !gasBodyTaskMap.containsKey(body)) {
-								gasBlockBodyMap.put(activeBlock, body);
-								flyAndRemove(body, 1, 3);	//Make body fly and disappear using tasks
-								body.setGravityScale(0f); //Body no longer affected by gravity
-							}
+						if(!gasBlockBodyMap.containsKey(activeBlock) && !gasBodyTaskMap.containsKey(body)) {
+							gasBlockBodyMap.put(activeBlock, body);
+							flyAndRemove(body, 1, 3);	//Make body fly and disappear using tasks
+							body.setGravityScale(0f); //Body no longer affected by gravity
 						}
+					}
 					break;
 				}
 			}
@@ -303,31 +308,31 @@ public class GameLogic {
 			}
 		}
 		level.coolBlock();
-        if(activeBlock instanceof Water) {
-            Water activeWater = (Water)activeBlock;
-            for (Body body : bodyBlockMap.keySet()) {
-                if (bodyBlockMap.get(body) == activeWater) {
-                    body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
-                    break;
-                }
-            }
-        }
+		if(activeBlock instanceof Water) {
+			Water activeWater = (Water)activeBlock;
+			for (Body body : bodyBlockMap.keySet()) {
+				if (bodyBlockMap.get(body) == activeWater) {
+					body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
+					break;
+				}
+			}
+		}
 	}
 
-    public Filter getFilter(Water water){
-        Filter filter = new Filter();
-        if(water.getState() == WaterState.GAS){
-            filter.categoryBits = BIT_GAS;
-            filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
-        }else if(water.getState() == WaterState.LIQUID){
-            filter.categoryBits = BIT_WATER;
-            filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
-        }else if(water.getState() == WaterState.SOLID){
-            filter.categoryBits = BIT_ICE;
-            filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS | BIT_PLAYER;
-        }
-        return filter;
-    }
+	public Filter getFilter(Water water){
+		Filter filter = new Filter();
+		if(water.getState() == WaterState.GAS){
+			filter.categoryBits = BIT_GAS;
+			filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
+		}else if(water.getState() == WaterState.LIQUID){
+			filter.categoryBits = BIT_WATER;
+			filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
+		}else if(water.getState() == WaterState.SOLID){
+			filter.categoryBits = BIT_ICE;
+			filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS | BIT_PLAYER;
+		}
+		return filter;
+	}
 
 	public void stop(){
 		stop(3); //Stop with normal slowFactor
@@ -397,7 +402,7 @@ public class GameLogic {
 	public void render(float delta){
 		world.step(delta,6,2);
 		if(Math.abs(playerCharacterBody.getLinearVelocity().x) < MAX_SPEED) {
-			if(flying) {
+			if(flying && isFlyingEnabled()) {
 				playerCharacterBody.setLinearVelocity(flyVector);
 			} else {
 				playerCharacterBody.applyForceToCenter(movementVector, true);
@@ -413,9 +418,9 @@ public class GameLogic {
 	//Update model with physics changes
 	public void updateLevel(){
 		Vector2 bodyPos = playerCharacterBody.getPosition();
-        Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
+		Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
 		player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
-        player.setSpeed(bodySpeed.x,bodySpeed.y);
+		player.setSpeed(bodySpeed.x,bodySpeed.y);
 
 		for(Body waterBody : bodyBlockMap.keySet()){
 			Water waterBlock = bodyBlockMap.get(waterBody);
