@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 
+import com.badlogic.gdx.utils.Timer;
 import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.controllers.MyContactListener;
@@ -25,11 +26,10 @@ public class PlayScreen extends GameScreen{
     private Level level;
     private View view;
     private World world;
-
     private MyContactListener cl;
     private GameController input;
-    
     private LevelFactory levelFactory;
+    private Timer.Task goToNextLevelTask;
 
     @Override
     public void setFocus(){
@@ -56,6 +56,13 @@ public class PlayScreen extends GameScreen{
         box2dCam.setToOrtho(false, Main.V_WIDTH / PPM, Main.V_HEIGHT / PPM);
 
         this.view = new View(level, cam, hudCam, box2dCam, spriteBatch, world);
+
+        goToNextLevelTask = new Timer.Task() {
+            @Override
+            public void run() {
+                nextLevel();
+            }
+        };
     }
     
     public void nextLevel(){
@@ -89,8 +96,8 @@ public class PlayScreen extends GameScreen{
         if(!gameLogic.isGamePaused()) {
             gameLogic.render(delta);
             view.render(delta);
-            if (gameLogic.isLevelWon()) {
-                nextLevel();
+            if (gameLogic.isLevelWon() && !goToNextLevelTask.isScheduled()) {
+                Timer.schedule(goToNextLevelTask, 2);
             }
             if (gameLogic.isPlayerDead()) {
                 resetLevel();
