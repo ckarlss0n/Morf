@@ -12,7 +12,7 @@ public class LevelReader {
 	private List<String> levels;
 	
 	private LevelReader(){
-        String path = System.getProperty("user.dir") + "\\levels";
+		String path = System.getProperty("user.dir") + File.separator + "levels";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> levels = new ArrayList<String>();
