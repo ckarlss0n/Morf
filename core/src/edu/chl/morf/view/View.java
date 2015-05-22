@@ -153,8 +153,8 @@ public class View {
         this.level = level;
         playerCharacter = level.getPlayer();
         tiledMapRenderer.setMap(new TmxMapLoader().load(LEVEL_PATH + level.getName()));
-        isNewLevel = true;
         initFadeValues();
+        isNewLevel = true;
     }
 
     public Animation generateAnimation(String[] textureNames, TextureAtlas textureAtlas, float frameDuration){
