@@ -1,5 +1,6 @@
 package edu.chl.morf.screens2.levelselection;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import edu.chl.morf.handlers.HighScoreHandler;
 import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
@@ -38,6 +39,14 @@ public class LevelPreview extends SelectionComponent{
             }
         }
 
+    }
+
+    @Override
+    public void draw(Batch batch,float parentAlpha) {
+        super.draw(batch,parentAlpha);
+        for(Star star : stars){
+            star.draw(batch,parentAlpha);
+        }
     }
 
     @Override
