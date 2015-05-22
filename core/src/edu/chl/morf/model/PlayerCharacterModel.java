@@ -218,26 +218,36 @@ public class PlayerCharacterModel {
 
     //Methods for manipulating active block
     public void heatActiveBlock(){
+        Water activeWater;
         if(activeBlock instanceof EmptyBlock){
             if(activeBlockBottom instanceof Water){
-                heatingWater = true;
+                activeWater = (Water)activeBlockBottom;
+                WaterState state = activeWater.getState();
+                heatingWater = state == WaterState.SOLID || state == WaterState.LIQUID;
             }
             activeBlockBottom.heat();
         }
         else if(activeBlock instanceof Water) {
-            heatingWater = true;
+            activeWater = (Water)activeBlock;
+            WaterState state = activeWater.getState();
+            heatingWater = state == WaterState.SOLID || state == WaterState.LIQUID;
             activeBlock.heat();
         }
     }
     public void coolActiveBlock(){
+        Water activeWater;
         if(activeBlock instanceof EmptyBlock){
             if (activeBlockBottom instanceof Water){
-                coolingWater = true;
+                activeWater = (Water)activeBlockBottom;
+                WaterState state = activeWater.getState();
+                coolingWater = state == WaterState.GAS || state == WaterState.LIQUID;
             }
             activeBlockBottom.cool();
         }
         else if(activeBlock instanceof Water) {
-            coolingWater = true;
+            activeWater = (Water)activeBlock;
+            WaterState state = activeWater.getState();
+            coolingWater = state == WaterState.GAS || state == WaterState.LIQUID;
             activeBlock.cool();
         }
     }
