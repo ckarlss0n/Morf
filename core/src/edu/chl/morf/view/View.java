@@ -1,6 +1,9 @@
 package edu.chl.morf.view;
 
+import box2dLight.DirectionalLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -73,11 +77,17 @@ public class View {
     private OrthographicCamera hudCam;
     private BitmapFont font;
 
-    private enum Action{
-        POUR,
-        COOL,
-        HEAT
-    }
+    private RayHandler rayHandler;
+    private box2dLight.DirectionalLight fadeOutLight;
+    private box2dLight.DirectionalLight fadeInLight;
+
+    private float timeToFadeOut;
+    private float timeToFadeIn;
+    private float timePassedDuringFadeOut;
+    private float timePassedDuringFadeIn;
+    private float fadeOutAlpha;
+    private float fadeInAlpha;
+    private boolean isNewLevel;
 
     public View(Level level, OrthographicCamera camera, OrthographicCamera hudCam, OrthographicCamera b2dCam, Batch batch, World world){
 
@@ -89,8 +99,8 @@ public class View {
         coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES,characterTextureAtlas,1);
         runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES,characterTextureAtlas,0.1f);
         pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES,characterTextureAtlas,1);
-        heatRightAnimation = generateAnimation(PLAYERCHARACTER_HEATRIGHT_REGION_NAMES,characterTextureAtlas,1);
-        coolRightAnimation = generateAnimation(PLAYERCHARACTER_COOLRIGHT_REGION_NAMES,characterTextureAtlas,1);
+        heatRightAnimation = generateAnimation(PLAYERCHARACTER_HEATRIGHT_REGION_NAMES, characterTextureAtlas, 1);
+        coolRightAnimation = generateAnimation(PLAYERCHARACTER_COOLRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         idleRightTexture = characterTextureAtlas.findRegion("idleRight");
         idleLeftTexture = characterTextureAtlas.findRegion("idleLeft");
 
@@ -121,12 +131,30 @@ public class View {
         TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         b2dr = new Box2DDebugRenderer();
+
+        rayHandler = new RayHandler(world);
+        fadeOutLight = new DirectionalLight(rayHandler, 50, new Color(255, 0, 0, 0), -90);
+        fadeInLight = new DirectionalLight(rayHandler, 50, new Color(255, 0, 0, 0), -90);
+        isNewLevel = true;
+
+        initFadeValues();
+    }
+
+    public void initFadeValues(){
+        timeToFadeOut = 2;
+        timeToFadeIn = 2;
+        timePassedDuringFadeOut = 0;
+        timePassedDuringFadeIn = 0;
+        fadeOutAlpha = 0;
+        fadeInAlpha = 0;
     }
 
     public void changeLevel(Level level){
-    	this.level = level;
-    	playerCharacter = level.getPlayer();
-    	tiledMapRenderer.setMap(new TmxMapLoader().load(LEVEL_PATH + level.getName()));
+        this.level = level;
+        playerCharacter = level.getPlayer();
+        tiledMapRenderer.setMap(new TmxMapLoader().load(LEVEL_PATH + level.getName()));
+        isNewLevel = true;
+        initFadeValues();
     }
 
     public Animation generateAnimation(String[] textureNames, TextureAtlas textureAtlas, float frameDuration){
@@ -141,6 +169,7 @@ public class View {
     public void render(float delta){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         updateCamera();
+
         batch.begin();
 
         //Render background layers
@@ -270,13 +299,43 @@ public class View {
         //Also show water level as text
         String waterLevelString = waterLevel + " / " + playerCharacter.getMaxWaterLevel();
         BitmapFont.TextBounds messageBounds = font.getBounds(waterLevelString); //Actual size of the drawn message
-        font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth()/2 - messageBounds.width/2, Main.V_HEIGHT - waterMeterTexture.getHeight()/2 - paddingTop + messageBounds.height/2);
-
-        if(level.isLevelWon()){
-            batch.draw(levelCompletedTexture, Main.V_WIDTH/2 - levelCompletedTexture.getWidth()/2, Main.V_HEIGHT/2 - levelCompletedTexture.getHeight()/2);
-        }
-
+        font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth() / 2 - messageBounds.width / 2, Main.V_HEIGHT - waterMeterTexture.getHeight() / 2 - paddingTop + messageBounds.height / 2);
         batch.end();
+
+        if(isNewLevel){
+            fadeIn(camera.combined, delta);
+        } else if (level.isLevelWon()){
+            fadeOut(camera.combined, delta);
+            batch.begin();
+            batch.draw(levelCompletedTexture, Main.V_WIDTH / 2 - levelCompletedTexture.getWidth() / 2, Main.V_HEIGHT / 2 - levelCompletedTexture.getHeight() / 2);
+            batch.end();
+        }
+    }
+
+    public void fadeOut(Matrix4 cameraCombined, float delta){
+        fadeInLight.setActive(false);
+        fadeOutLight.setActive(true);
+        if(timePassedDuringFadeOut < timeToFadeOut) {
+            fadeOutAlpha = 1 - timePassedDuringFadeOut/timeToFadeOut;
+            fadeOutLight.setColor(new Color(0, 0, 0, fadeOutAlpha)); //Alpha goes towards zero
+            rayHandler.setCombinedMatrix(cameraCombined);
+            rayHandler.updateAndRender();
+            timePassedDuringFadeOut += delta;
+        }
+    }
+
+    public void fadeIn(Matrix4 cameraCombined, float delta){
+        fadeOutLight.setActive(false);
+        fadeInLight.setActive(true);
+        if(timePassedDuringFadeIn < timeToFadeIn) {
+            fadeInAlpha = 1 - timePassedDuringFadeIn/timeToFadeIn;
+            fadeInLight.setColor(new Color(0, 0, 0, 1 - fadeInAlpha)); //Alpha goes towards one
+            rayHandler.setCombinedMatrix(cameraCombined);
+            rayHandler.updateAndRender();
+            timePassedDuringFadeIn += delta;
+        } else {
+            isNewLevel = false;
+        }
     }
 
     public void updateCamera() {
@@ -290,5 +349,11 @@ public class View {
 
     public void setBatch(SpriteBatch batch){
         this.batch = batch;
+    }
+
+    private enum Action{
+        POUR,
+        COOL,
+        HEAT
     }
 }
