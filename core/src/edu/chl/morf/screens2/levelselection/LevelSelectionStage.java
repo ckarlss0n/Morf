@@ -21,7 +21,6 @@ public class LevelSelectionStage extends Stage {
         LevelFactory levelFactory = LevelFactory.getInstace();
         String levelName;
         Level level;
-        Level previousLevel;
         LevelPreview levelPreview;
         float levelPreviewHeight = 0.25f * Main.V_HEIGHT;
         float levelPreviewWidth = 0.3f * Main.V_WIDTH;
@@ -42,8 +41,7 @@ public class LevelSelectionStage extends Stage {
                             Main.V_HEIGHT - (previewGapY + levelPreviewHeight) - 50 - y * (levelPreviewHeight + previewGapY));
                     this.addActor(levelPreview);
                     if(i > 0) {
-                        previousLevel = levelFactory.getLevel(levelNames.get(i-1), false);
-                        if (highScoreHandler.getHighScore(previousLevel) == 0) {
+                        if (highScoreHandler.getHighScore(levelNames.get(i-1)) == 0) {
                             Image notAvailableImage = new Image(notAvailableTexture);
                             notAvailableImage.setPosition(levelPreview.getX(),levelPreview.getY());
                             notAvailableImage.setSize(levelPreviewWidth,levelPreviewHeight);

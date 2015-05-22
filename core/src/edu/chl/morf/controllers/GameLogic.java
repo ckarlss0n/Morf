@@ -155,8 +155,8 @@ public class GameLogic {
 	public boolean isLevelWon(){
 		if(level.isLevelWon()){
 			HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
-			if(player.getWaterLevel() > highScoreHandler.getHighScore(level)) {
-				highScoreHandler.addHighScore(level, player.getWaterLevel());
+			if(player.getWaterLevel() > highScoreHandler.getHighScore(levelName)) {
+				highScoreHandler.addHighScore(levelName, player.getWaterLevel());
 			}
 		}
 		return level.isLevelWon();
@@ -255,7 +255,7 @@ public class GameLogic {
 	/*
 	Add two tasks to a body (normally the body of the active block)
 	 */
-	public void flyAndRemove(Body body, float flyDelay, float destroyDelay){
+	public void flyAndRemove(final Body body, float flyDelay, float destroyDelay){
 		List<Timer.Task> timerTaskList = new LinkedList<Timer.Task>();
 
 		//Make body fly

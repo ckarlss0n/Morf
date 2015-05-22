@@ -10,20 +10,20 @@ import java.util.Map;
  * Created by Lage on 2015-05-12.
  */
 public class HighScoreHandler extends FileHandler{
-    private Map<Level,Integer> highScores = new HashMap<Level, Integer>();
+    private Map<String,Integer> highScores = new HashMap<String, Integer>();
     private static final HighScoreHandler instance = new HighScoreHandler();
 
     public static HighScoreHandler getInstance(){
         return instance;
     }
 
-    public void addHighScore(Level level, int highScore){
-        highScores.put(level, highScore);
+    public void addHighScore(String levelName, int highScore){
+        highScores.put(levelName, highScore);
     }
 
-    public Integer getHighScore(Level level){
-        if(highScores.get(level) != null) {
-            return highScores.get(level);
+    public Integer getHighScore(String levelName){
+        if(highScores.get(levelName) != null) {
+            return highScores.get(levelName);
         } else {
             return 0;
         }
@@ -31,22 +31,20 @@ public class HighScoreHandler extends FileHandler{
 
     @Override
     public void write(PrintWriter printWriter) throws FileNotFoundException{
-        for(Level level : highScores.keySet()){
-            printWriter.println(level.getName() + ";" + highScores.get(level).toString());
+        for(String levelName : highScores.keySet()){
+            printWriter.println(levelName + ";" + highScores.get(levelName).toString());
         }
     }
 
     @Override
     public void read(BufferedReader bufferedReader) throws IOException{
-        LevelFactory levelFactory = LevelFactory.getInstace();
         String line = bufferedReader.readLine();
         while (line != null) {
             String[] lineSplit = line.split(";");
             String levelName = lineSplit[0];
             String highScoreString = lineSplit[1];
             Integer highScore = Integer.parseInt(highScoreString);
-            Level level = levelFactory.getLevel(levelName, false);
-            highScores.put(level, highScore);
+            highScores.put(levelName, highScore);
             line = bufferedReader.readLine();
         }
     }

@@ -24,7 +24,7 @@ public class LevelPreview extends SelectionComponent{
         this.setSize(0.3f * Main.V_WIDTH, 0.25f * Main.V_HEIGHT);
         this.setPosition(x, y);
         this.levelName = level.getName().split("\\.")[0];
-        Integer levelScore = HighScoreHandler.getInstance().getHighScore(this.level);
+        Integer levelScore = HighScoreHandler.getInstance().getHighScore(this.level.getName());
 
         stars = new ArrayList<Star>();
         if(levelScore != null) {
