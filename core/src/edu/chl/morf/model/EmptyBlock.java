@@ -1,16 +1,17 @@
 package edu.chl.morf.model;
 
+import java.awt.geom.Point2D;
+
 /**
  * Created by Harald Brorsson on 5/7/15.
  */
-public class EmptyBlock implements Block{
-    @Override
-    public void heat() {
+public class EmptyBlock extends AbstractBlock{
 
+    public EmptyBlock(){
+        this(new Point2D.Float(0,0));
     }
 
-    @Override
-    public void cool() {
-
+    public EmptyBlock(Point2D.Float position) {
+        super(position);
     }
 }

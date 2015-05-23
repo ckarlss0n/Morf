@@ -20,16 +20,15 @@ import java.awt.geom.Point2D;
  * <p>
  * @author Lage Bergman
  */
-public class Water implements Block{
+public class Water extends AbstractBlock{
 
-    private Point2D.Float position;
     private WaterState state;
     private boolean bottomBlock;
     private boolean topBlock;
 
     //Constructors
     public Water(Point2D.Float position, WaterState state){
-    	this.position = position;
+        super(position);
     	this.state = state;
     }
     public Water(int x, int y, WaterState state){
@@ -48,18 +47,8 @@ public class Water implements Block{
     	this(new Point2D.Float(0, 0), WaterState.LIQUID);
     }
 
-
-
-
-    public Point2D.Float getPosition(){
-        return this.position;
-    }
-
-    public void setPosition(Point2D.Float p){
-        position = p;
-    }
     public void setPosition(float x, float y){
-    	position.setLocation(x, y);
+        setPosition(new Point2D.Float(x,y));
     }
 
     public void heat(){
@@ -85,9 +74,6 @@ public class Water implements Block{
     }
     public void setTopBlock(boolean topBlock){
         this.topBlock=topBlock;
-    }
-    public boolean isTopBlock() {
-        return topBlock;
     }
 
     public WaterState getState(){

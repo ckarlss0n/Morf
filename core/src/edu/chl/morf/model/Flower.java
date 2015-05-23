@@ -5,25 +5,11 @@ import java.awt.geom.Point2D;
 /**
  * Created by Lage on 2015-04-29.
  */
-public class Flower implements Block{
-	
-	private Point2D.Float position;
-	
-	public Flower(Point2D.Float position){
-		this.position = position;
-	}
-	
-	public Point2D.Float getPosition(){
-		return position;
-	}
-	
-    @Override
-    public void heat() {
-
+public class Flower extends AbstractBlock{
+    public Flower(){
+        this(new Point2D.Float(0,0));
     }
-
-    @Override
-    public void cool() {
-
+    public Flower(Point2D.Float position) {
+        super(position);
     }
 }

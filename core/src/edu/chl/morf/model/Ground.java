@@ -1,17 +1,12 @@
 package edu.chl.morf.model;
 
-public class Ground implements Block{
+import java.awt.geom.Point2D;
 
-	@Override
-	public void heat() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void cool() {
-		// TODO Auto-generated method stub
-		
-	}
-
+public class Ground extends AbstractBlock{
+    public Ground(){
+        this(new Point2D.Float(0,0));
+    }
+    public Ground(Point2D.Float position) {
+        super(position);
+    }
 }
