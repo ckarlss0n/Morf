@@ -421,6 +421,9 @@ public class GameLogic {
 		Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
 		player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
 		player.setSpeed(bodySpeed.x,bodySpeed.y);
+        if(player.getPosition().y < 0){
+            killPlayer();
+        }
 
 		for(Body waterBody : bodyBlockMap.keySet()){
 			Water waterBlock = bodyBlockMap.get(waterBody);
