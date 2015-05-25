@@ -68,11 +68,11 @@ public class LevelGenerator {
 
 				ChainShape chainShape = new ChainShape();
 				Vector2[] v = new Vector2[5];
-				v[0] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-				v[1] = new Vector2(-TILE_SIZE / 2 / PPM, TILE_SIZE * 0.6f / 2 / PPM);
-				v[2] = new Vector2(TILE_SIZE / 2 / PPM, TILE_SIZE * 0.6f/ 2 / PPM);
-				v[3] = new Vector2(TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
-				v[4] = new Vector2(-TILE_SIZE / 2 / PPM, -TILE_SIZE / 2 / PPM);
+				v[0] = new Vector2(-TILE_SIZE*0.95f / 2 / PPM, -TILE_SIZE / 2 / PPM);
+				v[1] = new Vector2(-TILE_SIZE*0.95f / 2 / PPM, TILE_SIZE * 0.6f / 2 / PPM);
+				v[2] = new Vector2(TILE_SIZE*0.95f / 2 / PPM, TILE_SIZE * 0.6f/ 2 / PPM);
+				v[3] = new Vector2(TILE_SIZE*0.95f / 2 / PPM, -TILE_SIZE / 2 / PPM);
+				v[4] = new Vector2(-TILE_SIZE*0.95f / 2 / PPM, -TILE_SIZE / 2 / PPM);
 
 				chainShape.createChain(v);
 				fixDef.shape = chainShape;
