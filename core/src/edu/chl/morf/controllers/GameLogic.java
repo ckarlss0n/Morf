@@ -342,7 +342,7 @@ public class GameLogic {
 		if(!(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) || pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey())))) {
 			player.stop();
 			setFlying(false);
-			if(player.isOnGround()) {
+			if(player.isOnGround()&&!player.isOnIce()) {
 				playerCharacterBody.setLinearVelocity(playerCharacterBody.getLinearVelocity().x / slowFactor, playerCharacterBody.getLinearVelocity().y / slowFactor);
 			}
 			movementVector = new Vector2(0, 0);
@@ -351,6 +351,10 @@ public class GameLogic {
 		} else {
 			moveRight();
 		}
+	}
+
+	public void setOnIce(boolean onIce){
+		player.setOnIce(onIce);
 	}
 
 	public void setActiveBody(Body body, ActiveBlockPosition position){

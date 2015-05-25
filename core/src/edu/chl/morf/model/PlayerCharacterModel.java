@@ -22,6 +22,7 @@ public class PlayerCharacterModel {
     private boolean facingRight;
     private boolean moving;
     private boolean onGround;
+    private boolean onIce;
     private boolean dead;
     private boolean flyingEnabled;
     private int maxWaterLevel = 30;
@@ -93,6 +94,7 @@ public class PlayerCharacterModel {
     public boolean hasWater(){
         return waterLevel>0;
     }
+    public boolean isOnIce(){return onIce;}
 
 
     public int getMaxWaterLevel() {
@@ -125,6 +127,7 @@ public class PlayerCharacterModel {
         activeBlockBottom=activeBlockBottomRight;
     }
 
+    public void setOnIce(boolean onIce){this.onIce=onIce;}
     public void setOnGround(boolean onGround){
         this.onGround = onGround;
     }

@@ -9,6 +9,7 @@ public class MyContactListener implements ContactListener{
 	
     private GameLogic gameLogic;
     private boolean playerOnGround;
+
     
     public MyContactListener (GameLogic gameLogic) {
         this.gameLogic=gameLogic;
@@ -19,10 +20,10 @@ public class MyContactListener implements ContactListener{
     public void beginContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
-        
-        UserData userDataA = new UserData(UserDataType.OTHER);
-        UserData userDataB = new UserData(UserDataType.OTHER);
-        
+
+        UserData userDataA=new UserData(UserDataType.OTHER);
+        UserData userDataB=new UserData(UserDataType.OTHER);
+
         if(fa.getUserData()!=null){
             userDataA = (UserData)fa.getUserData();
         }
@@ -108,12 +109,10 @@ public class MyContactListener implements ContactListener{
                 gameLogic.setWaterTop(fa.getBody(),true);
             }
             else if(userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
-                if(userDataTypeA == UserDataType.GHOST_CORE){
-                    
-                } else{
-                    
-                }
                 gameLogic.setFlyingEnabled(true);
+            }
+            else if(userDataTypeA == UserDataType.GHOST_BOTTOM_ICE || userDataTypeB == UserDataType.GHOST_BOTTOM_ICE){
+                gameLogic.setOnIce(true);
             }
         }
     }
@@ -122,10 +121,10 @@ public class MyContactListener implements ContactListener{
     public void endContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
-        
-        UserData userDataA = new UserData(UserDataType.OTHER);
-        UserData userDataB = new UserData(UserDataType.OTHER);
-        
+
+        UserData userDataA=new UserData(UserDataType.OTHER);
+        UserData userDataB=new UserData(UserDataType.OTHER);
+
         if(fa.getUserData() != null){
             userDataA=(UserData)fa.getUserData();
         }
@@ -193,15 +192,19 @@ public class MyContactListener implements ContactListener{
             }
         }
         else if (userDataTypeA == UserDataType.ACTIVE_BLOCK_RIGHT){
-            
+            System.out.println("end");
+            System.out.println(""+fb.toString());
             if (userDataA.getNumOfContacts() == 0){
                 gameLogic.setActiveBody(null, ActiveBlockPosition.RIGHT);
+                System.out.println("no con");
             }
         }
         else if (userDataTypeB == UserDataType.ACTIVE_BLOCK_RIGHT){
-            
+            System.out.println("end");
+            System.out.println(""+fa.toString());
             if (userDataB.getNumOfContacts() == 0){
                 gameLogic.setActiveBody(null, ActiveBlockPosition.RIGHT);
+                System.out.println("no con");
             }
         }
         else if ((userDataTypeA == UserDataType.ACTIVE_BLOCK_BOTTOM_LEFT && userDataA.getNumOfContacts()==0) ||
@@ -243,6 +246,11 @@ public class MyContactListener implements ContactListener{
                 if (userDataB.getNumOfContacts()==0){
                     gameLogic.setFlyingEnabled(false);
                 }
+            }
+        }
+        else if (userDataTypeA == UserDataType.GHOST_BOTTOM_ICE || userDataTypeB == UserDataType.GHOST_BOTTOM_ICE){
+            if(userDataA.getNumOfContacts()==0 || userDataB.getNumOfContacts()==0){
+                gameLogic.setOnIce(false);
             }
         }
     }

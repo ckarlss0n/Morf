@@ -46,13 +46,13 @@ public class BodyFactory {
 		body.createFixture(fdef).setUserData(new UserData(GHOST_LEFT));
 
 		//Create active block right fixture
-		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((91-pS) / PPM, 0), 0);
+		shape.setAsBox(0.1f / PPM, 20 / PPM, new Vector2((90-pS) / PPM, 0), 0);
 		fdef.shape = shape;
 		fdef.filter.maskBits = BIT_WATER | BIT_ICE | BIT_GAS | BIT_FLOWER;
 		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_RIGHT));
 
 		//Create active block left fixture
-		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((-91+pS) / PPM, 0), 0);
+		shape.setAsBox(0.1f / PPM, 20 / PPM, new Vector2((-90+pS) / PPM, 0), 0);
 		fdef.shape = shape;
 		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_LEFT));
 
@@ -72,6 +72,13 @@ public class BodyFactory {
 		fdef.filter.maskBits = BIT_GROUND | BIT_SPIKES | BIT_ICE;
 		fdef.isSensor = true;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM));
+
+		//Create bottom ice ghost fixture
+		shape.setAsBox((29-pS) / PPM, 5 / PPM, new Vector2(0, -25 / PPM), 0);
+		fdef.shape=shape;
+		fdef.filter.maskBits = BIT_ICE;
+		fdef.isSensor = true;
+		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM_ICE));
 
 		//Create core ghost fixture
 		shape.setAsBox(15 / PPM, 15 / PPM, new Vector2(0, 0), 0);
