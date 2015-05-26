@@ -2,6 +2,7 @@ package edu.chl.morf.controllers;
 
 import com.badlogic.gdx.physics.box2d.*;
 import edu.chl.morf.model.ActiveBlockPosition;
+import edu.chl.morf.model.WaterState;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
@@ -94,8 +95,6 @@ public class MyContactListener implements ContactListener{
             }
             //Updates the Water isBottomBlock variable
             else if(userDataTypeA == UserDataType.WATER_SENSOR && userDataTypeB == UserDataType.WATER){
-                
-                
                 gameLogic.setWaterBottom(fa.getBody(), true);
                 gameLogic.setWaterTop(fb.getBody(),true);
                 //if(gameLogic.getWaterState(fa.getBody()) != WaterState.SOLID){
@@ -103,10 +102,22 @@ public class MyContactListener implements ContactListener{
                 //}
             }
             else if(userDataTypeA == UserDataType.WATER && userDataTypeB == UserDataType.WATER_SENSOR){
-                
-                
                 gameLogic.setWaterBottom(fb.getBody(), true);
                 gameLogic.setWaterTop(fa.getBody(),true);
+            }
+            else if(userDataTypeA == UserDataType.FLOWER && userDataTypeB == UserDataType.WATER_FLOWER_INTERSECTION){
+                if(gameLogic.getWaterState(fb.getBody()) == WaterState.LIQUID){
+                    gameLogic.setLevelWon(true);
+                }else {
+                    gameLogic.setIntersectsFlower(fb.getBody(), true);
+                }
+            }
+            else if(userDataTypeA == UserDataType.WATER_FLOWER_INTERSECTION && userDataTypeB == UserDataType.FLOWER){
+                if(gameLogic.getWaterState(fa.getBody()) == WaterState.LIQUID){
+                    gameLogic.setLevelWon(true);
+                }else {
+                    gameLogic.setIntersectsFlower(fa.getBody(), true);
+                }
             }
             else if(userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
                 gameLogic.setFlyingEnabled(true);
@@ -192,19 +203,13 @@ public class MyContactListener implements ContactListener{
             }
         }
         else if (userDataTypeA == UserDataType.ACTIVE_BLOCK_RIGHT){
-            System.out.println("end");
-            System.out.println(""+fb.toString());
             if (userDataA.getNumOfContacts() == 0){
                 gameLogic.setActiveBody(null, ActiveBlockPosition.RIGHT);
-                System.out.println("no con");
             }
         }
         else if (userDataTypeB == UserDataType.ACTIVE_BLOCK_RIGHT){
-            System.out.println("end");
-            System.out.println(""+fa.toString());
             if (userDataB.getNumOfContacts() == 0){
                 gameLogic.setActiveBody(null, ActiveBlockPosition.RIGHT);
-                System.out.println("no con");
             }
         }
         else if ((userDataTypeA == UserDataType.ACTIVE_BLOCK_BOTTOM_LEFT && userDataA.getNumOfContacts()==0) ||
@@ -252,6 +257,12 @@ public class MyContactListener implements ContactListener{
             if(userDataA.getNumOfContacts()==0 || userDataB.getNumOfContacts()==0){
                 gameLogic.setOnIce(false);
             }
+        }
+        else if(userDataTypeA == UserDataType.FLOWER && userDataTypeB == UserDataType.WATER_FLOWER_INTERSECTION){
+            gameLogic.setIntersectsFlower(fb.getBody(),false);
+        }
+        else if(userDataTypeA == UserDataType.WATER_FLOWER_INTERSECTION && userDataTypeB == UserDataType.FLOWER){
+            gameLogic.setIntersectsFlower(fa.getBody(), false);
         }
     }
     

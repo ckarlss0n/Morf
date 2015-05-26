@@ -50,6 +50,7 @@ public class Level {
 	public void setActiveBlock(Block block, ActiveBlockPosition position){
 		player.setActiveBlock(block, position);
 	}
+	public void setLevelWon(boolean levelWon){this.levelWon=levelWon;}
 
 	//Method for killing the player
 	public void killPlayer(){

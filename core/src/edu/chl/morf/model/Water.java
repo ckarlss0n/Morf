@@ -25,6 +25,7 @@ public class Water extends AbstractBlock{
     private WaterState state;
     private boolean bottomBlock;
     private boolean topBlock;
+    private boolean intersectsFlower = false;
 
     //Constructors
     public Water(Point2D.Float position, WaterState state){
@@ -50,6 +51,8 @@ public class Water extends AbstractBlock{
     public void setPosition(float x, float y){
         setPosition(new Point2D.Float(x,y));
     }
+    public void setIntersectsFlower(boolean intersectsFlower){this.intersectsFlower=intersectsFlower;}
+    public boolean getIntersectsFlower(){return intersectsFlower;}
 
     public void heat(){
         if(state == WaterState.SOLID) {

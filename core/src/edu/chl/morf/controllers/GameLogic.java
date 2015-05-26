@@ -152,6 +152,7 @@ public class GameLogic {
 		}
 		setFlying(false);
 	}
+	public void setLevelWon(boolean levelWon){level.setLevelWon(levelWon);}
 	public boolean isLevelWon(){
 		if(level.isLevelWon()){
 			HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
@@ -175,6 +176,11 @@ public class GameLogic {
 	}
 
 	public void setFlyingEnabled(boolean flyingEnabled){level.setFlyingEnabled(flyingEnabled);}
+	public void setIntersectsFlower(Body body, boolean intersectsFlower){
+		if (bodyBlockMap.get(body) != null){
+			bodyBlockMap.get(body).setIntersectsFlower(intersectsFlower);
+		}
+	}
 
 	public void fly(){
 		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < 0.01f && level.isFlyingEnabled()) {
@@ -204,6 +210,9 @@ public class GameLogic {
 			WaterState state = ((Water) activeBlock).getState();
 			if(state == WaterState.SOLID) {
 				soundHandler.playSoundEffect(soundHandler.getPour());
+				if(((Water) activeBlock).getIntersectsFlower()){
+					setLevelWon(true);
+				}
 			} else if(state == WaterState.LIQUID) {
 				soundHandler.playSoundEffect(soundHandler.getHeat());
 			}
@@ -296,7 +305,9 @@ public class GameLogic {
 			WaterState state = ((Water) activeBlock).getState();
 			if (state == WaterState.GAS) {
 				soundHandler.playSoundEffect(soundHandler.getPour());
-
+				if (((Water) activeBlock).getIntersectsFlower()){
+					setLevelWon(true);
+				}
 				//If the active block is of type gas, it should be reset upon cooling
 				if(gasBlockBodyMap.containsKey(activeBlock)){
 					resetBody(gasBlockBodyMap.get(activeBlock));

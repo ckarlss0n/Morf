@@ -48,7 +48,7 @@ public class BodyFactory {
 		//Create active block right fixture
 		shape.setAsBox(0.1f / PPM, 20 / PPM, new Vector2((90-pS) / PPM, 0), 0);
 		fdef.shape = shape;
-		fdef.filter.maskBits = BIT_WATER | BIT_ICE | BIT_GAS | BIT_FLOWER;
+		fdef.filter.maskBits = BIT_WATER | BIT_ICE | BIT_GAS;
 		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_RIGHT));
 
 		//Create active block left fixture
@@ -161,6 +161,12 @@ public class BodyFactory {
 		fdef.isSensor=true;
 		body.createFixture(fdef).setUserData(new UserData(WATER_SENSOR));
 
+		//Flower intersection fixture
+		shape.setAsBox((TILE_SIZE * 0.9f / 2)/PPM,(TILE_SIZE * 0.9f / 2)/PPM);
+		fdef.filter.maskBits=BIT_FLOWER;
+		fdef.shape=shape;
+		body.createFixture(fdef).setUserData(new UserData(WATER_FLOWER_INTERSECTION));
+
 		shape.dispose();
 		return body;
 	}
@@ -179,7 +185,7 @@ public class BodyFactory {
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_FLOWER;
-		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER;
+		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR;
 		body.createFixture(fdef).setUserData(new UserData(FLOWER));
 
 		shape.dispose();

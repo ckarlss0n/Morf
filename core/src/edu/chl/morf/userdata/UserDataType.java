@@ -20,6 +20,7 @@ public enum UserDataType {
     ICE,
     VAPOR,
     WATER_SENSOR,
+    WATER_FLOWER_INTERSECTION,
     FLOWER,
     OTHER
 }
