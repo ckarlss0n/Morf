@@ -147,7 +147,7 @@ public class GameLogic {
 	}
 
 	public void jump(){
-		if(player.isOnGround()) {   //If standing (could be improved, also 0 at top of jump)
+		if(player.isOnGround()) {
 			playerCharacterBody.applyForceToCenter(new Vector2(0, 300), true);
 		}
 		setFlying(false);
