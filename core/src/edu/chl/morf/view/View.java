@@ -361,9 +361,9 @@ public class View {
             fadeOutAlpha = 1 - timePassedDuringFadeOut/timeToFadeOut;
             fadeOutLight.setColor(new Color(0, 0, 0, fadeOutAlpha)); //Alpha goes towards zero
             rayHandler.setCombinedMatrix(cameraCombined);
-            rayHandler.updateAndRender();
             timePassedDuringFadeOut += delta;
         }
+        rayHandler.updateAndRender();
     }
 
     public void fadeIn(Matrix4 cameraCombined, float delta){
@@ -373,11 +373,11 @@ public class View {
             fadeInAlpha = 1 - timePassedDuringFadeIn/timeToFadeIn;
             fadeInLight.setColor(new Color(0, 0, 0, 1 - fadeInAlpha)); //Alpha goes towards one
             rayHandler.setCombinedMatrix(cameraCombined);
-            rayHandler.updateAndRender();
             timePassedDuringFadeIn += delta;
         } else {
             isNewLevel = false;
         }
+        rayHandler.updateAndRender();
     }
 
     public void updateCamera() {

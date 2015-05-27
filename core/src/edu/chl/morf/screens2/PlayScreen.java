@@ -30,6 +30,7 @@ public class PlayScreen extends GameScreen{
     private GameController input;
     private LevelFactory levelFactory;
     private Timer.Task goToNextLevelTask;
+    private boolean timerScheduled;
 
     @Override
     public void setFocus(){
@@ -40,7 +41,7 @@ public class PlayScreen extends GameScreen{
         super(sm);
 
         world = new World(WORLD_GRAVITY, true);
-        
+
         levelFactory = LevelFactory.getInstace();
 
         level = levelFactory.getLevel(levelName, true);
@@ -48,7 +49,7 @@ public class PlayScreen extends GameScreen{
 
         cl = new ContactListener(gameLogic);
         input = new GameController(gameLogic);
-        
+
         world.setContactListener(cl);
 
         //Set up box2d camera
@@ -61,21 +62,21 @@ public class PlayScreen extends GameScreen{
             @Override
             public void run() {
                 nextLevel();
+                timerScheduled = false;
             }
         };
     }
-    
+
     public void nextLevel(){
-    	List<String> levels = LevelReader.getInstance().getLevels();
+		List<String> levels = LevelReader.getInstance().getLevels();
     	int currentLevel = levels.indexOf(level.getName());
     	String name;
     	if(currentLevel == levels.size() - 1){
         	name = levels.get(0);
-    	}
-    	else{
+    	} else {
         	name = levels.get(currentLevel + 1);
     	}
-    	
+
     	level = levelFactory.getLevel(name, true);
 
     	gameLogic.changeLevel(level);
@@ -96,10 +97,11 @@ public class PlayScreen extends GameScreen{
         if(!gameLogic.isGamePaused()) {
             gameLogic.render(delta);
             view.render(delta);
-            if (gameLogic.isLevelWon() && !goToNextLevelTask.isScheduled()) {
+            if (gameLogic.isLevelWon() && !goToNextLevelTask.isScheduled() && !timerScheduled) {
                 Timer.schedule(goToNextLevelTask, 2);
+                timerScheduled = true;
             }
-            if (gameLogic.isPlayerDead()) {
+            if (gameLogic.isPlayerDead() && !goToNextLevelTask.isScheduled() && !timerScheduled) {
                 resetLevel();
             }
         } else {
