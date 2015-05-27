@@ -1,4 +1,4 @@
-package edu.chl.morf.backgrounds;
+package edu.chl.morf.view.backgrounds;
 
 import static edu.chl.morf.Constants.*;
 

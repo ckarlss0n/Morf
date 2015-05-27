@@ -1,4 +1,4 @@
-package edu.chl.morf.backgrounds;
+package edu.chl.morf.view.backgrounds;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
