@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
-import edu.chl.morf.controllers.MyContactListener;
+import edu.chl.morf.controllers.ContactListener;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.LevelReader;
 import edu.chl.morf.handlers.ScreenManager;
@@ -26,7 +26,7 @@ public class PlayScreen extends GameScreen{
     private Level level;
     private View view;
     private World world;
-    private MyContactListener cl;
+    private ContactListener cl;
     private GameController input;
     private LevelFactory levelFactory;
     private Timer.Task goToNextLevelTask;
@@ -46,7 +46,7 @@ public class PlayScreen extends GameScreen{
         level = levelFactory.getLevel(levelName, true);
         gameLogic = new GameLogic(level, world);
 
-        cl = new MyContactListener(gameLogic);
+        cl = new ContactListener(gameLogic);
         input = new GameController(gameLogic);
         
         world.setContactListener(cl);
