@@ -183,8 +183,8 @@ public class GameLogic {
 	}
 
 	public void fly(){
-		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < 0.01f && level.isFlyingEnabled()) {
-            player.setFlying();
+		if (level.isFlyingEnabled()) {
+			player.setFlying();
 			flying = true;
 			movementVector = new Vector2(0, 0);
 		}
