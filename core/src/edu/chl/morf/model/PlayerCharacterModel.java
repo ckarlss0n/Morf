@@ -39,6 +39,8 @@ public class PlayerCharacterModel {
     private boolean pouringWater;
     private boolean coolingWater;
     private boolean heatingWater;
+    private boolean flying;
+    private boolean stoppedFlying;
 
     private Point2D.Float position;
     private Point2D.Float speed;
@@ -159,6 +161,18 @@ public class PlayerCharacterModel {
     public void stopHeating(){
         heatingWater = false;
     }
+    public void setFlying(){
+        this.flying = true;
+    }
+    public void stopFlying(){
+        if(flying == true){
+            this.stoppedFlying = true;
+        }
+        this.flying = false;
+    }
+    public void doneFlying(){
+        this.stoppedFlying = false;
+    }
     public boolean isPouringWater(){
         return this.pouringWater;
     }
@@ -167,6 +181,12 @@ public class PlayerCharacterModel {
     }
     public boolean isCoolingWater(){
         return this.coolingWater;
+    }
+    public boolean isFlying(){
+        return this.flying;
+    }
+    public boolean stoppedFlying(){
+        return this.stoppedFlying;
     }
 
     public Water pourWater(){

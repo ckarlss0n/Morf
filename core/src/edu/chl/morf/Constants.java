@@ -63,6 +63,16 @@ public final class Constants {
             "coolLeft2", "coolLeft2", "coolLeft3", "coolLeft3", "coolLeft3", "coolLeft2", "coolLeft2", "coolLeft2", "coolLeft1", "coolLeft1", "idleLeftEmpty"};
     public static final String[] PLAYERCHARACTER_HEATLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "heatLeft1", "heatLeft1", "heatLeft2", "heatLeft2",
             "heatLeft2", "heatLeft3", "heatLeft3", "heatLeft3", "heatLeft2", "heatLeft2", "heatLeft2", "heatLeft1", "heatLeft1", "idleLeftEmpty"};
+    public static final String[] PLAYERCHARACTER_FLYLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "flyingLeft1", "flyingLeft1", "flyingLeft2", "flyingLeft2",
+            "flyingLeft3", "flyingLeft3", "flyingLeft4", "flyingLeft4"};
+    public static final String[] PLAYERCHARACTER_DEATHLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "deathLeft1", "deathLeft1", "deathLeft2", "deathLeft2",
+            "deathLeft3", "deathLeft3", "deathLeft4", "deathLeft4", "deathLeft4"};
+    public static final String[] PLAYERCHARACTER_FLYRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "flyingRight1", "flyingRight1", "flyingRight2", "flyingRight2",
+            "flyingRight3", "flyingRight3", "flyingRight4", "flyingRight4"};
+    public static final String[] PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "deathRight1", "deathRight1", "deathRight2", "deathRight2",
+            "deathRight3", "deathRight3", "deathRight4", "deathRight4", "deathRight4"};
+
+
 
     //Button constants
     public static final String BUTTONS_ATLAS_PATH = "spritesheets/Buttons";

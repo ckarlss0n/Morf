@@ -41,15 +41,20 @@ public class View {
 
     //PlayerCharacter render variables
     private TextureRegion idleRightTexture;
+    private TextureRegion flyingRightTexture;
     private Animation runningRightAnimation;
     private Animation pourRightAnimation;
     private Animation coolRightAnimation;
     private Animation heatRightAnimation;
+    private Animation flyingRightAnimation;
+    private Animation deathLeftAnimation;
     private TextureRegion idleLeftTexture;
+    private TextureRegion flyingLeftTexture;
     private Animation runningLeftAnimation;
     private Animation pourLeftAnimation;
     private Animation coolLeftAnimation;
     private Animation heatLeftAnimation;
+    private Animation flyingLeftAnimation;
     private int currentAnimationTime;
 
     private Texture waterTexture;
@@ -97,12 +102,18 @@ public class View {
         pourLeftAnimation = generateAnimation(PLAYERCHARACTER_POURLEFT_REGION_NAMES,characterTextureAtlas,1);
         heatLeftAnimation = generateAnimation(PLAYERCHARACTER_HEATLEFT_REGION_NAMES,characterTextureAtlas,1);
         coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES,characterTextureAtlas,1);
+        flyingLeftAnimation = generateAnimation(PLAYERCHARACTER_FLYLEFT_REGION_NAMES,characterTextureAtlas,1);
+
         runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES,characterTextureAtlas,0.1f);
         pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES,characterTextureAtlas,1);
         heatRightAnimation = generateAnimation(PLAYERCHARACTER_HEATRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         coolRightAnimation = generateAnimation(PLAYERCHARACTER_COOLRIGHT_REGION_NAMES, characterTextureAtlas, 1);
+        flyingRightAnimation = generateAnimation(PLAYERCHARACTER_FLYRIGHT_REGION_NAMES,characterTextureAtlas,1);
+
         idleRightTexture = characterTextureAtlas.findRegion("idleRight");
+        flyingRightTexture  = characterTextureAtlas.findRegion("flyingRight5");
         idleLeftTexture = characterTextureAtlas.findRegion("idleLeft");
+        flyingLeftTexture  = characterTextureAtlas.findRegion("flyingLeft5");
 
         waterTexture = new Texture("Tiles/waterTile.png");
         waterTextureBottom = new Texture("Tiles/waterTile-Middle.png");
@@ -197,8 +208,25 @@ public class View {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
                         playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
 
+            } else if(playerCharacter.isFlying()){
+                if(currentAnimationTime < flyingRightAnimation.getKeyFrames().length) {
+                    batch.draw(flyingRightAnimation.getKeyFrame(currentAnimationTime, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+                    currentAnimationTime++;
+                }else{
+                    batch.draw(flyingRightTexture, playerCharPos.x - TILE_SIZE / 2,
+                            playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+                }
+            } else if(playerCharacter.stoppedFlying()){
+                if(currentAnimationTime > 0) {
+                    batch.draw(flyingRightAnimation.getKeyFrame(currentAnimationTime, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+                    currentAnimationTime--;
+                }else{
+                    playerCharacter.doneFlying();
+                }
             } else if(playerCharacter.isPouringWater()){
-                if(currentAnimationTime != pourRightAnimation.getKeyFrames().length * 2) {
+                if(currentAnimationTime < pourRightAnimation.getKeyFrames().length * 2) {
                     batch.draw(pourRightAnimation.getKeyFrame(currentAnimationTime/2, true),
                             playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                     currentAnimationTime++;
@@ -207,7 +235,7 @@ public class View {
                     currentAnimationTime = 0;
                 }
             } else if(playerCharacter.isCoolingWater()){
-                if(currentAnimationTime != coolRightAnimation.getKeyFrames().length * 2) {
+                if(currentAnimationTime < coolRightAnimation.getKeyFrames().length * 2) {
                     batch.draw(coolRightAnimation.getKeyFrame(currentAnimationTime/2, true),
                             playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                     currentAnimationTime++;
@@ -216,7 +244,7 @@ public class View {
                     currentAnimationTime = 0;
                 }
             } else if(playerCharacter.isHeatingWater()){
-                if(currentAnimationTime != heatRightAnimation.getKeyFrames().length * 2) {
+                if(currentAnimationTime < heatRightAnimation.getKeyFrames().length * 2) {
                     batch.draw(heatRightAnimation.getKeyFrame(currentAnimationTime/2, true),
                             playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                     currentAnimationTime++;
@@ -231,8 +259,25 @@ public class View {
             if(playerCharacter.isMoving()){
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
                         playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
+            } else if(playerCharacter.isFlying()){
+                if(currentAnimationTime < flyingLeftAnimation.getKeyFrames().length) {
+                    batch.draw(flyingLeftAnimation.getKeyFrame(currentAnimationTime, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+                    currentAnimationTime++;
+                }else{
+                    batch.draw(flyingLeftTexture, playerCharPos.x - TILE_SIZE / 2,
+                            playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+                }
+            } else if(playerCharacter.stoppedFlying()){
+                if(currentAnimationTime > 0) {
+                    batch.draw(flyingLeftAnimation.getKeyFrame(currentAnimationTime, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+                    currentAnimationTime--;
+                }else{
+                    playerCharacter.doneFlying();
+                }
             } else if(playerCharacter.isPouringWater()){
-                if(currentAnimationTime != pourLeftAnimation.getKeyFrames().length * 2) {
+                if(currentAnimationTime < pourLeftAnimation.getKeyFrames().length * 2) {
                     batch.draw(pourLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
                             playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                     currentAnimationTime++;
@@ -241,7 +286,7 @@ public class View {
                     currentAnimationTime = 0;
                 }
             } else if(playerCharacter.isCoolingWater()){
-                if(currentAnimationTime != coolLeftAnimation.getKeyFrames().length * 2) {
+                if(currentAnimationTime < coolLeftAnimation.getKeyFrames().length * 2) {
                     batch.draw(coolLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
                             playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                     currentAnimationTime++;
@@ -250,7 +295,7 @@ public class View {
                     currentAnimationTime = 0;
                 }
             } else if(playerCharacter.isHeatingWater()){
-                if(currentAnimationTime != heatLeftAnimation.getKeyFrames().length * 2) {
+                if(currentAnimationTime < heatLeftAnimation.getKeyFrames().length * 2) {
                     batch.draw(heatLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
                             playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                     currentAnimationTime++;
@@ -345,15 +390,5 @@ public class View {
         camera.update();
         box2dCam.position.set(playerCharPos.x / PPM, Main.V_HEIGHT/2 / PPM, 0f);
         box2dCam.update();
-    }
-
-    public void setBatch(SpriteBatch batch){
-        this.batch = batch;
-    }
-
-    private enum Action{
-        POUR,
-        COOL,
-        HEAT
     }
 }

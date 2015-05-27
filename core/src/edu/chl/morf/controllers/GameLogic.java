@@ -184,6 +184,7 @@ public class GameLogic {
 
 	public void fly(){
 		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < 0.01f && level.isFlyingEnabled()) {
+            player.setFlying();
 			flying = true;
 			movementVector = new Vector2(0, 0);
 		}
@@ -346,6 +347,7 @@ public class GameLogic {
 	}
 
 	public void stop(){
+        player.stopFlying();
 		stop(3); //Stop with normal slowFactor
 	}
 
@@ -418,7 +420,7 @@ public class GameLogic {
 		world.step(delta,6,2);
 		if(Math.abs(playerCharacterBody.getLinearVelocity().x) < MAX_SPEED) {
 			if(flying && isFlyingEnabled()) {
-				playerCharacterBody.setLinearVelocity(flyVector);
+                playerCharacterBody.setLinearVelocity(flyVector);
 			} else {
 				playerCharacterBody.applyForceToCenter(movementVector, true);
 			}
@@ -439,7 +441,6 @@ public class GameLogic {
         if(player.getPosition().y < 0){
             killPlayer();
         }
-
 		for(Body waterBody : bodyBlockMap.keySet()){
 			Water waterBlock = bodyBlockMap.get(waterBody);
 			Vector2 waterPos = waterBody.getPosition();
