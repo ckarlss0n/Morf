@@ -63,6 +63,9 @@ public class Level {
 			if(player.getActiveBlock() instanceof Flower){
 				levelWon = true;
 			}
+			else if(player.isInsideFlower()){
+				levelWon = true;
+			}
 			else if(player.isGhostEmpty()){
 				addWater(player.pourWater());
 			}
@@ -76,6 +79,7 @@ public class Level {
 		player.setGhostEmptyRight(ghostEmptyRight);
 	}
 	public void setFlyingEnabled(boolean flyingEnabled){player.setFlyingEnabled(flyingEnabled);}
+	public void setPlayerInsideFlower(boolean playerInsideFlower){player.setInsideFlower(playerInsideFlower);}
 
 	public boolean isLevelWon(){
 		return levelWon;
@@ -84,6 +88,7 @@ public class Level {
 		return player.isDead();
 	}
 	public boolean isFlyingEnabled(){return player.isFlyingEnabled();}
+	public boolean isPlayerInsideFlower(){return player.isInsideFlower();}
 	
 	//Methods for heating and cooling blocks
 	public void heatBlock(){

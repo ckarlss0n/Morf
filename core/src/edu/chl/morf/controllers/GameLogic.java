@@ -369,6 +369,7 @@ public class GameLogic {
 	public void setOnIce(boolean onIce){
 		player.setOnIce(onIce);
 	}
+	public void setPlayerInsideFlower(boolean playerInsideFlower){level.setPlayerInsideFlower(playerInsideFlower);}
 
 	public void setActiveBody(Body body, ActiveBlockPosition position){
 		if (body == null){

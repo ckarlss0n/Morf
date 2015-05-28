@@ -119,7 +119,12 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
                     gameLogic.setIntersectsFlower(fa.getBody(), true);
                 }
             }
-            else if(userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
+            else if(userDataTypeA == UserDataType.GHOST_CORE && userDataTypeB == UserDataType.FLOWER){
+                gameLogic.setPlayerInsideFlower(true);
+            }else if(userDataTypeA == UserDataType.FLOWER && userDataTypeB == UserDataType.GHOST_CORE){
+                gameLogic.setPlayerInsideFlower(true);
+            }
+            else if(userDataTypeA == UserDataType.GHOST_CORE){
                 gameLogic.setFlyingEnabled(true);
             }
             else if(userDataTypeA == UserDataType.GHOST_BOTTOM_ICE || userDataTypeB == UserDataType.GHOST_BOTTOM_ICE){
@@ -240,17 +245,18 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
                 }
             }
         }
+        else if(userDataTypeA == UserDataType.GHOST_CORE && userDataTypeB == UserDataType.FLOWER){
+            gameLogic.setPlayerInsideFlower(false);
+        }else if(userDataTypeA == UserDataType.FLOWER && userDataTypeB == UserDataType.GHOST_CORE){
+            gameLogic.setPlayerInsideFlower(false);
+        }
         else if (userDataTypeA == UserDataType.GHOST_CORE || userDataTypeB == UserDataType.GHOST_CORE){
             if(userDataTypeA == UserDataType.GHOST_CORE){
-                
                 if(userDataA.getNumOfContacts()==0){
                     gameLogic.setFlyingEnabled(false);
                 }
-            }else{
-                
-                if (userDataB.getNumOfContacts()==0){
-                    gameLogic.setFlyingEnabled(false);
-                }
+            }else if (userDataB.getNumOfContacts()==0){
+                gameLogic.setFlyingEnabled(false);
             }
         }
         else if (userDataTypeA == UserDataType.GHOST_BOTTOM_ICE || userDataTypeB == UserDataType.GHOST_BOTTOM_ICE){

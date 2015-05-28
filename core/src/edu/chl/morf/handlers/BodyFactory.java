@@ -83,7 +83,7 @@ public class BodyFactory {
 		//Create core ghost fixture
 		shape.setAsBox(15 / PPM, 15 / PPM, new Vector2(0, 0), 0);
 		fdef.shape=shape;
-		fdef.filter.maskBits = BIT_GAS;
+		fdef.filter.maskBits = BIT_GAS | BIT_FLOWER;
 		body.createFixture(fdef).setUserData(new UserData(GHOST_CORE));
 
 		shape.dispose();

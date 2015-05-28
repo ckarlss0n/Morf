@@ -41,6 +41,7 @@ public class PlayerCharacterModel {
     private boolean heatingWater;
     private boolean flying;
     private boolean stoppedFlying;
+    private boolean insideFlower;
 
     private Point2D.Float position;
     private Point2D.Float speed;
@@ -97,6 +98,7 @@ public class PlayerCharacterModel {
         return waterLevel>0;
     }
     public boolean isOnIce(){return onIce;}
+    public boolean isInsideFlower(){return insideFlower;}
 
 
     public int getMaxWaterLevel() {
@@ -152,6 +154,7 @@ public class PlayerCharacterModel {
     public void setGhostEmptyLeft(boolean ghostEmptyLeft){this.ghostEmptyLeft=ghostEmptyLeft;}
     public void setGhostEmptyRight(boolean ghostEmptyRight){this.ghostEmptyRight=ghostEmptyRight;}
     public void setGhostEmpty(boolean ghostEmpty){this.ghostEmpty=ghostEmpty;}
+    public void setInsideFlower(boolean insideFlower){this.insideFlower=insideFlower;}
     public void stopPouring(){
         pouringWater = false;
     }
@@ -165,7 +168,7 @@ public class PlayerCharacterModel {
         this.flying = true;
     }
     public void stopFlying(){
-        if(flying == true){
+        if(flying){
             this.stoppedFlying = true;
         }
         this.flying = false;
