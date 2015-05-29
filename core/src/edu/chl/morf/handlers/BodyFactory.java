@@ -140,7 +140,9 @@ public class BodyFactory {
 		shape.dispose();
 		*/
 		Body body = createWaterBody(world,position);
-
+		Filter filter = new Filter();
+		filter.categoryBits = BIT_GAS;
+		filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
 		return body;
 	}
 	

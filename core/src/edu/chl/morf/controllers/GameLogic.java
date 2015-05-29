@@ -70,6 +70,7 @@ public class GameLogic {
 		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
 		generateLevel();
 		initPressedKeys();
+		player.setOnGround(false);
 	}
 
 	public void changeLevel(Level level){
