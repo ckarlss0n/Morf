@@ -91,7 +91,7 @@ public class BodyFactory {
 	}
 
 	public Body createIceBody(World world, Vector2 position){
-
+/*
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(position.x / PPM, position.y / PPM);
 		bdef.type = BodyType.DynamicBody;
@@ -109,12 +109,19 @@ public class BodyFactory {
 		body.createFixture(fdef).setUserData(new UserData(ICE));
 
 		shape.dispose();
+		*/
+		Body body = createWaterBody(world, position);
+		Filter filter = new Filter();
+		filter.categoryBits = BIT_ICE;
+		filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS | BIT_PLAYER;
+		body.getFixtureList().get(0).setFilterData(filter);
+
 		return body;
 	}
 	
 	public Body createVaporBody(World world, Vector2 position){
 
-		BodyDef bdef = new BodyDef();
+		/*BodyDef bdef = new BodyDef();
 		bdef.position.set(position.x / PPM, position.y / PPM);
 		bdef.type = BodyType.DynamicBody;
 		bdef.fixedRotation = true;
@@ -131,6 +138,9 @@ public class BodyFactory {
 		body.createFixture(fdef).setUserData(new UserData(VAPOR));
 
 		shape.dispose();
+		*/
+		Body body = createWaterBody(world,position);
+
 		return body;
 	}
 	

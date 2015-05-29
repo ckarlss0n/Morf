@@ -92,10 +92,12 @@ public class LevelGenerator {
 			else if (water.getState() == WaterState.SOLID){
 				Body body = bodyFactory.createIceBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
 				bodyBlockMap.put(body, water);
+				bodyBlockMap.get(body).cool();
 			}
 			else if (water.getState() == WaterState.GAS){
 				Body body = bodyFactory.createVaporBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
 				bodyBlockMap.put(body, water);
+				bodyBlockMap.get(body).heat();
 			}
 		}
 		
