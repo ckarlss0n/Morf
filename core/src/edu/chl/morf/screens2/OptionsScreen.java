@@ -124,7 +124,7 @@ public class OptionsScreen extends GameScreen{
 			});
 
 			Label musicVolumeTitle = new Label("Music volume", skin);
-			musicVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
+			musicVolumeSlider = new Slider(0f, 1f, 0.01f, false, skin);
 			musicVolumeSlider.setValue(soundHandler.getMusicVolume());
 			musicVolumeSlider.addListener(new ChangeListener() {
 				@Override
@@ -151,7 +151,7 @@ public class OptionsScreen extends GameScreen{
 			});
 
 			Label soundEffectsVolumeTitle = new Label("Sound effects volume", skin);
-			soundEffectsVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
+			soundEffectsVolumeSlider = new Slider(0f, 1f, 0.01f, false, skin);
 			soundEffectsVolumeSlider.setValue(soundHandler.getSoundEffectsVolume());
 			soundEffectsVolumeSlider.addListener(new ChangeListener() {
 				@Override
