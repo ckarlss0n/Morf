@@ -20,7 +20,7 @@ import edu.chl.morf.model.Flower;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.LevelObject;
 import edu.chl.morf.model.Matrix;
-import edu.chl.morf.model.PlayerCharacterModel;
+import edu.chl.morf.model.PlayerCharacter;
 import edu.chl.morf.model.TileType;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
@@ -133,7 +133,7 @@ public class LevelFactory {
 			flower = null;
 		}
 
-		PlayerCharacterModel player = new PlayerCharacterModel(500, 500);
+		PlayerCharacter player = new PlayerCharacter(500, 500);
 
         if(nameLevelMap.containsKey(name) && reset == false){
             return nameLevelMap.get(name);

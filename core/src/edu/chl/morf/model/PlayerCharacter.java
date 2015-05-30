@@ -18,7 +18,7 @@ import java.awt.geom.Point2D;
  * <p>
  * @author Harald
  */
-public class PlayerCharacterModel {
+public class PlayerCharacter {
     private boolean facingRight;
     private boolean moving;
     private boolean onGround;
@@ -47,7 +47,7 @@ public class PlayerCharacterModel {
     private Point2D.Float speed;
 
     //Constructors
-    public PlayerCharacterModel(){
+    public PlayerCharacter(){
         facingRight = true;
         moving = false;
         onGround = true;
@@ -63,11 +63,11 @@ public class PlayerCharacterModel {
         ghostEmptyLeft = true;
         ghostEmpty = true;
     }
-    public PlayerCharacterModel(Point2D.Float position){
+    public PlayerCharacter(Point2D.Float position){
         this();
         this.position = position;
     }
-    public PlayerCharacterModel(int x, int y){
+    public PlayerCharacter(int x, int y){
         this(new Point2D.Float(x, y));
     }
 
@@ -75,11 +75,12 @@ public class PlayerCharacterModel {
     //Getters
     public boolean isOnGround(){return onGround;}
     public boolean isGhostEmpty(){
-        if(facingRight){
-            return ghostEmptyRight;
-        } else {
-            return ghostEmptyLeft;
-        }
+    	return ghostEmpty;
+//        if(facingRight){
+//            return ghostEmptyRight;
+//        } else {
+//            return ghostEmptyLeft;
+//        }
     }
     public Point2D.Float getPosition(){
         return position;
@@ -206,11 +207,12 @@ public class PlayerCharacterModel {
 
     //WaterLevel setters
     public void decreaseWaterLevel(){
-        waterLevel=waterLevel-1;
-        if(waterLevel==0){
-            setDead(true);
+        waterLevel = waterLevel - 1;
+        if(waterLevel < 1){
+            dead = true;
         }
     }
+    
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
     }

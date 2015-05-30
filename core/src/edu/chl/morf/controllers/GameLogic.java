@@ -38,7 +38,7 @@ public class GameLogic {
 	private World world;                                                            //Box2D world
 	private Map<Body, Water> bodyBlockMap;                                          //Each body has a corresponding water block
 	private Body playerCharacterBody;                                               //The body of the player character
-	private PlayerCharacterModel player;                                            //The model of the player character
+	private PlayerCharacter player;                                            //The model of the player character
 	private Vector2 movementVector;                                                 //The movement vector applied at every tick
 	private Vector2 flyVector;                                                      //The vector applied when flying
 	private BodyFactory bodyFactory;
@@ -158,7 +158,7 @@ public class GameLogic {
 
 	//Method used to make the player character fly
 	public void fly() {
-		if (level.isFlyingEnabled()) {
+		if (level.isPlayerFlyingEnabled()) {
 			player.setFlying();
 			movementVector = new Vector2(0, 0);
 		}
@@ -211,11 +211,11 @@ public class GameLogic {
 	}
 
 	public boolean isFlyingEnabled() {
-		return level.isFlyingEnabled();
+		return level.isPlayerFlyingEnabled();
 	}
 
 	public void setFlyingEnabled(boolean flyingEnabled) {
-		level.setFlyingEnabled(flyingEnabled);
+		level.setPlayerFlyingEnabled(flyingEnabled);
 	}
 
 	public void setIntersectsFlower(Body body, boolean intersectsFlower) {
@@ -406,11 +406,11 @@ public class GameLogic {
 	}
 
 	public void setGhostEmptyLeft(boolean ghostEmptyLeft) {
-		level.setGhostEmptyLeft(ghostEmptyLeft);
+		level.setPlayerGhostEmptyLeft(ghostEmptyLeft);
 	}
 
 	public void setGhostEmptyRight(boolean ghostEmptyRight) {
-		level.setGhostEmptyRight(ghostEmptyRight);
+		level.setPlayerGhostEmptyRight(ghostEmptyRight);
 	}
 
 	public void killPlayer() {

@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
-import edu.chl.morf.model.PlayerCharacterModel;
+import edu.chl.morf.model.PlayerCharacter;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
 import edu.chl.morf.view.backgrounds.BackgroundFactory;
@@ -64,7 +64,7 @@ public class View {
     private Texture levelCompletedTexture;
     private float stateTime;
 
-    private PlayerCharacterModel playerCharacter;
+    private PlayerCharacter playerCharacter;
 
     private OrthographicCamera camera;
     private OrthographicCamera box2dCam;
@@ -325,7 +325,7 @@ public class View {
     }
 
     public void updateCamera() {
-        PlayerCharacterModel playerCharacter = level.getPlayer();
+        PlayerCharacter playerCharacter = level.getPlayer();
         Point2D.Float playerCharPos = playerCharacter.getPosition();
         camera.position.set(playerCharPos.x, Main.V_HEIGHT/2, 0f);
         camera.update();
