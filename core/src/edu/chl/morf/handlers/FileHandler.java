@@ -3,6 +3,10 @@ package edu.chl.morf.handlers;
 import java.io.*;
 
 /**
+ * An abstract class for reading from and writing to text files.
+ * The class uses the user home directory as the directory for the text files.
+ * This makes it possible to store the text files in a known place on different computers and operating systems.
+ *
  * Created by Lage on 2015-05-17.
  */
 public abstract class FileHandler {
