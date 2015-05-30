@@ -1,96 +1,87 @@
 package edu.chl.morf.model;
 
-import static edu.chl.morf.Constants.GROUND_FRICTION;
-import static edu.chl.morf.Constants.PPM;
-
-import java.util.ArrayList;
-
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-
+import java.util.List;
 
 /*
  * Class for representing a level.
- * A level consists of a matrix containing solid tiles and a list containing the water in the level.
+ * A level consists of a matrix containing the static tiles in a level,
+ * a list containing all the water objects in the level and a flower object.
+ * A level also contains a PlayerCharacter that moves around in the level.
  */
 public class Level {
 
 	private String name;
-	private ArrayList<Water> waterBlocks;
-	private PlayerCharacterModel player;
+	private List<Water> waterBlocks;
+	private PlayerCharacter player;
 	private Matrix levelMatrix;
-	private boolean levelWon = false;
+	private boolean levelWon;
 	private Flower flower;
 
-	public Level(Matrix matrix, String name, PlayerCharacterModel player, ArrayList<Water> waterBlocks, Flower flower){
+	public Level(Matrix matrix, String name, PlayerCharacter player, List<Water> waterBlocks, Flower flower){
 		this.name = name;
 		levelMatrix = matrix;
 		this.waterBlocks = waterBlocks;
 		this.player = player;
 		this.flower = flower;
+		levelWon = false;
 	}
-	
+
 	//Getters
+	public String getName(){
+		return name;
+	}
 	public Matrix getMatrix(){
 		return levelMatrix;
 	}
-	public ArrayList<Water> getWaterBlocks(){
+	public List<Water> getWaterBlocks(){
 		return waterBlocks;
 	}
-	public PlayerCharacterModel getPlayer(){
+	public PlayerCharacter getPlayer(){
 		return player;
 	}
 	public Flower getFlower(){
 		return flower;
 	}
-
-	//Setters
-	public void setActiveBlock(Block block, ActiveBlockPosition position){
-		player.setActiveBlock(block, position);
+	public boolean isLevelWon(){
+		return levelWon;
 	}
-	public void setLevelWon(boolean levelWon){this.levelWon=levelWon;}
+
+	//Setter for levelWon
+	public void setLevelWon(boolean levelWon){
+		this.levelWon=levelWon;
+	}
+
+	//Methods for adding and removing Water in Level
+	public void addWater(Water w){
+		waterBlocks.add(w);
+	}
+	//////////////////////////////////////////////////
+	//Method never called, should be called when vapor disappears?
+	public void removeWater(Water w){
+		waterBlocks.remove(w);
+	}
+	
+	//Method for pouring water in Level
+	public void pourWater(){
+		//Level is won if player pours water on flower
+		if(player.getActiveBlock() instanceof Flower){
+			levelWon = true;
+		}
+		else if(player.isInsideFlower()){
+			levelWon = true;
+		}
+		//Make player pour water and add it to level if empty space in front of player
+		else if(player.isGhostEmpty()){
+			addWater(player.pourWater());
+		}
+	}
 
 	//Method for killing the player
 	public void killPlayer(){
 		player.setDead(true);
 	}
-
-	//Method for pouring water
-	public void pourWater(){
-		if (player.getWaterLevel()!=0){
-			if(player.getActiveBlock() instanceof Flower){
-				levelWon = true;
-			}
-			else if(player.isInsideFlower()){
-				levelWon = true;
-			}
-			else if(player.isGhostEmpty()){
-				addWater(player.pourWater());
-			}
-		}
-
-	}
-	public void setGhostEmptyLeft(boolean ghostEmptyLeft){
-		player.setGhostEmptyLeft(ghostEmptyLeft);
-	}
-	public void setGhostEmptyRight(boolean ghostEmptyRight){
-		player.setGhostEmptyRight(ghostEmptyRight);
-	}
-	public void setFlyingEnabled(boolean flyingEnabled){player.setFlyingEnabled(flyingEnabled);}
-	public void setPlayerInsideFlower(boolean playerInsideFlower){player.setInsideFlower(playerInsideFlower);}
-
-	public boolean isLevelWon(){
-		return levelWon;
-	}
-	public boolean isPlayerDead(){
-		return player.isDead();
-	}
-	public boolean isFlyingEnabled(){return player.isFlyingEnabled();}
-	public boolean isPlayerInsideFlower(){return player.isInsideFlower();}
 	
-	//Methods for heating and cooling blocks
+	//Methods for making player heat and cool its active block
 	public void heatBlock(){
 		player.heatActiveBlock();
 	}
@@ -98,14 +89,33 @@ public class Level {
 		player.coolActiveBlock();
 	}
 	
-	//Methods for adding and removing Water
-	public void addWater(Water w){
-		waterBlocks.add(w);
+	//Getters for booleans in PlayerCharacter
+	public boolean isPlayerDead(){
+		return player.isDead();
 	}
-	public void removeWater(Water w){
-		waterBlocks.remove(w);
+	public boolean isPlayerFlyingEnabled(){
+		return player.isFlyingEnabled();
 	}
-    public String getName(){
-        return this.name;
-    }
+	//////////////////////////////////////////////////////////////
+	//method never called
+	public boolean isPlayerInsideFlower(){
+		return player.isInsideFlower();
+	}
+	
+	//Setters for booleans in PlayerCharacter
+	public void setActiveBlock(Block block, ActiveBlockPosition position){
+		player.setActiveBlock(block, position);
+	}
+	public void setPlayerGhostEmptyLeft(boolean ghostEmptyLeft){
+		player.setGhostEmptyLeft(ghostEmptyLeft);
+	}
+	public void setPlayerGhostEmptyRight(boolean ghostEmptyRight){
+		player.setGhostEmptyRight(ghostEmptyRight);
+	}
+	public void setPlayerFlyingEnabled(boolean flyingEnabled){
+		player.setFlyingEnabled(flyingEnabled);
+	}
+	public void setPlayerInsideFlower(boolean playerInsideFlower){
+		player.setInsideFlower(playerInsideFlower);
+	}
 }
