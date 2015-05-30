@@ -46,7 +46,6 @@ public class View {
     private Animation flyingRightAnimation;
     private Animation deathLeftAnimation;
     private TextureRegion idleLeftTexture;
-    private TextureRegion flyingLeftTexture;
     private Animation runningLeftAnimation;
     private Animation pourLeftAnimation;
     private Animation coolLeftAnimation;
@@ -102,6 +101,7 @@ public class View {
         coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES,characterTextureAtlas,1);
         flyingLeftAnimation = generateAnimation(PLAYERCHARACTER_FLYLEFT_REGION_NAMES,characterTextureAtlas,1);
         deathLeftAnimation = generateAnimation(PLAYERCHARACTER_DEATHLEFT_REGION_NAMES,characterTextureAtlas,1);
+        flyingRightTexture = characterTextureAtlas.findRegion("flyingRight5");
 
         runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES,characterTextureAtlas,0.1f);
         pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES,characterTextureAtlas,1);
@@ -111,9 +111,7 @@ public class View {
         deathRightAnimation = generateAnimation(PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES,characterTextureAtlas,1);
 
         idleRightTexture = characterTextureAtlas.findRegion("idleRight");
-        flyingRightTexture  = characterTextureAtlas.findRegion("flyingRight5");
         idleLeftTexture = characterTextureAtlas.findRegion("idleLeft");
-        flyingLeftTexture  = characterTextureAtlas.findRegion("flyingLeft5");
 
         waterTexture = new Texture("Tiles/waterTile.png");
         waterTextureBottom = new Texture("Tiles/waterTile-Middle.png");
@@ -205,123 +203,47 @@ public class View {
         Point2D.Float playerCharPos = playerCharacter.getPosition();
 
         if(playerCharacter.isFacingRight()) {
-            if(playerCharacter.isDead()){
-                if(currentAnimationTime < deathRightAnimation.getKeyFrames().length * 2) {
-                    batch.draw(deathRightAnimation.getKeyFrame(currentAnimationTime / 2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    currentAnimationTime = 0;
+            if(playerCharacter.isFlying()){
+                runFlyingAnimation(flyingRightAnimation, batch);
+            } else if(playerCharacter.stoppedFlying()){
+                runFlyingStoppedAnimation(flyingRightAnimation, batch);
+            }else if(playerCharacter.isDead()){
+                runCharacterAnimation(deathRightAnimation,batch);
+                if(!(currentAnimationTime < deathRightAnimation.getKeyFrames().length * 2)){
                     deathAnimationDone = true;
                 }
             } else if (playerCharacter.isMoving()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
                         playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
 
-            } else if(playerCharacter.isFlying()){
-                if(currentAnimationTime < flyingRightAnimation.getKeyFrames().length * 2) {
-                    batch.draw(flyingRightAnimation.getKeyFrame(currentAnimationTime / 2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
-                    currentAnimationTime++;
-                }else{
-                    batch.draw(flyingRightTexture, playerCharPos.x - TILE_SIZE / 2,
-                            playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
-                }
-            } else if(playerCharacter.stoppedFlying()){
-                if(currentAnimationTime > 0) {
-                    batch.draw(flyingRightAnimation.getKeyFrame(currentAnimationTime, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
-                    currentAnimationTime--;
-                }else{
-                    playerCharacter.doneFlying();
-                }
             } else if(playerCharacter.isPouringWater()){
-                if(currentAnimationTime < pourRightAnimation.getKeyFrames().length * 2) {
-                    batch.draw(pourRightAnimation.getKeyFrame(currentAnimationTime/2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    playerCharacter.stopPouring();
-                    currentAnimationTime = 0;
-                }
+                runCharacterAnimation(pourRightAnimation,batch);
             } else if(playerCharacter.isCoolingWater()){
-                if(currentAnimationTime < coolRightAnimation.getKeyFrames().length * 2) {
-                    batch.draw(coolRightAnimation.getKeyFrame(currentAnimationTime/2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    playerCharacter.stopCooling();
-                    currentAnimationTime = 0;
-                }
+                runCharacterAnimation(coolRightAnimation,batch);
             } else if(playerCharacter.isHeatingWater()){
-                if(currentAnimationTime < heatRightAnimation.getKeyFrames().length * 2) {
-                    batch.draw(heatRightAnimation.getKeyFrame(currentAnimationTime/2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    playerCharacter.stopHeating();
-                    currentAnimationTime = 0;
-                }
+                runCharacterAnimation(heatRightAnimation,batch);
             } else{
                 batch.draw(idleRightTexture, playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
             }
         }else{
-            if(playerCharacter.isDead()){
-                if(currentAnimationTime < deathLeftAnimation.getKeyFrames().length * 2) {
-                    batch.draw(deathLeftAnimation.getKeyFrame(currentAnimationTime / 2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    currentAnimationTime = 0;
+            if(playerCharacter.isFlying()){
+                runFlyingAnimation(flyingLeftAnimation,batch);
+            } else if(playerCharacter.stoppedFlying()){
+                runFlyingStoppedAnimation(flyingLeftAnimation,batch);
+            } else if(playerCharacter.isDead()){
+                runCharacterAnimation(deathLeftAnimation,batch);
+                if(!(currentAnimationTime < deathLeftAnimation.getKeyFrames().length * 2)){
                     deathAnimationDone = true;
                 }
             } else if(playerCharacter.isMoving()){
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x - TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
-            } else if(playerCharacter.isFlying()){
-                if(currentAnimationTime < flyingLeftAnimation.getKeyFrames().length) {
-                    batch.draw(flyingLeftAnimation.getKeyFrame(currentAnimationTime, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
-                    currentAnimationTime++;
-                }else{
-                    batch.draw(flyingLeftTexture, playerCharPos.x - TILE_SIZE / 2,
-                            playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
-                }
-            } else if(playerCharacter.stoppedFlying()){
-                if(currentAnimationTime > 0) {
-                    batch.draw(flyingLeftAnimation.getKeyFrame(currentAnimationTime, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
-                    currentAnimationTime--;
-                }else{
-                    playerCharacter.doneFlying();
-                }
+                        playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
             } else if(playerCharacter.isPouringWater()){
-                if(currentAnimationTime < pourLeftAnimation.getKeyFrames().length * 2) {
-                    batch.draw(pourLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    playerCharacter.stopPouring();
-                    currentAnimationTime = 0;
-                }
+                runCharacterAnimation(pourLeftAnimation,batch);
             } else if(playerCharacter.isCoolingWater()){
-                if(currentAnimationTime < coolLeftAnimation.getKeyFrames().length * 2) {
-                    batch.draw(coolLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    playerCharacter.stopCooling();
-                    currentAnimationTime = 0;
-                }
+                runCharacterAnimation(coolLeftAnimation,batch);
             } else if(playerCharacter.isHeatingWater()){
-                if(currentAnimationTime < heatLeftAnimation.getKeyFrames().length * 2) {
-                    batch.draw(heatLeftAnimation.getKeyFrame(currentAnimationTime/2, true),
-                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
-                    currentAnimationTime++;
-                }else{
-                    playerCharacter.stopHeating();
-                    currentAnimationTime = 0;
-                }
+                runCharacterAnimation(heatLeftAnimation,batch);
             } else{
                 batch.draw(idleLeftTexture, playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
             }
@@ -413,5 +335,41 @@ public class View {
 
     public boolean isDeathAnimationDone(){
         return deathAnimationDone;
+    }
+
+    public void runCharacterAnimation(Animation animation, Batch batch){
+        Point2D.Float playerCharPos = playerCharacter.getPosition();
+        if(currentAnimationTime < animation.getKeyFrames().length * 2) {
+            batch.draw(animation.getKeyFrame(currentAnimationTime / 2, true),
+                    playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+            currentAnimationTime++;
+        }else{
+            playerCharacter.stopHeating();
+            playerCharacter.stopPouring();
+            playerCharacter.stopCooling();
+            currentAnimationTime = 0;
+        }
+    }
+    public void runFlyingAnimation(Animation animation, Batch batch){
+        Point2D.Float playerCharPos = playerCharacter.getPosition();
+        if(currentAnimationTime < animation.getKeyFrames().length * 2- 1) {
+            currentAnimationTime++;
+        }
+        batch.draw(animation.getKeyFrame(currentAnimationTime / 2, true),
+                playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+    }
+
+    public void runFlyingStoppedAnimation(Animation animation, Batch batch){
+        Point2D.Float playerCharPos = playerCharacter.getPosition();
+        if(currentAnimationTime > 0) {
+            currentAnimationTime--;
+        }else{
+            playerCharacter.doneFlying();
+            playerCharacter.stopCooling();
+            playerCharacter.stopHeating();
+            playerCharacter.stopPouring();
+        }
+        batch.draw(animation.getKeyFrame(currentAnimationTime / 2, true),
+                playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
     }
 }
