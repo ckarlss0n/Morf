@@ -6,13 +6,13 @@ import edu.chl.morf.model.WaterState;
 import edu.chl.morf.userdata.UserData;
 import edu.chl.morf.userdata.UserDataType;
 
-public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
+public class CollisionListener implements com.badlogic.gdx.physics.box2d.ContactListener {
 	
     private GameLogic gameLogic;
     private boolean playerOnGround;
 
     
-    public ContactListener(GameLogic gameLogic) {
+    public CollisionListener(GameLogic gameLogic) {
         this.gameLogic=gameLogic;
         playerOnGround = true;
     }
