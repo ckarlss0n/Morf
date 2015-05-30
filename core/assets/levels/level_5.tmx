@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="64" tileheight="64" nextobjectid="58">
+ <tileset firstgid="1" name="Morf" tilewidth="64" tileheight="64">
+  <tile id="0">
+   <image width="64" height="64" source="../Tiles/flower.png"/>
+  </tile>
+  <tile id="1">
+   <image width="64" height="64" source="../Tiles/grassTile.png"/>
+  </tile>
+  <tile id="2">
+   <image width="64" height="64" source="../Tiles/grassTile-All.png"/>
+  </tile>
+  <tile id="3">
+   <image width="64" height="64" source="../Tiles/grassTile-Both-Left.png"/>
+  </tile>
+  <tile id="4">
+   <image width="64" height="64" source="../Tiles/grassTile-Both-Right.png"/>
+  </tile>
+  <tile id="5">
+   <image width="64" height="64" source="../Tiles/grassTile-Bottom-Left.png"/>
+  </tile>
+  <tile id="6">
+   <image width="64" height="64" source="../Tiles/grassTile-Bottom-Right.png"/>
+  </tile>
+  <tile id="7">
+   <image width="64" height="64" source="../Tiles/grassTile-Middle.png"/>
+  </tile>
+  <tile id="8">
+   <image width="64" height="64" source="../Tiles/grassTile-Top-Left.png"/>
+  </tile>
+  <tile id="9">
+   <image width="64" height="64" source="../Tiles/grassTile-Top-Right.png"/>
+  </tile>
+  <tile id="10">
+   <image width="64" height="64" source="../Tiles/ice.png"/>
+  </tile>
+  <tile id="11">
+   <image width="64" height="64" source="../Tiles/sandTile-Bottom-Left.png"/>
+  </tile>
+  <tile id="12">
+   <image width="64" height="64" source="../Tiles/sandTile-Bottom-Right.png"/>
+  </tile>
+  <tile id="13">
+   <image width="64" height="64" source="../Tiles/spikes.png"/>
+  </tile>
+  <tile id="14">
+   <image width="64" height="64" source="../Tiles/steam.png"/>
+  </tile>
+  <tile id="15">
+   <image width="64" height="64" source="../Tiles/waterTile.png"/>
+  </tile>
+  <tile id="16">
+   <image width="64" height="64" source="../Tiles/waterTile-Middle.png"/>
+  </tile>
+ </tileset>
+ <layer name="Ground" width="40" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztkzsOACEIBQk23P/ENlsQ4nP5aGLBJK/Z6DKCDiIaD0foXdqvRvvVaD8f0nkm0fkgbtTeEXHL+Hn+o+EvHuw6LvixCfLz9Ei7rPZG/VA/sn4M1p26e6imrovmvOu9xeNn50qLb5l7c+OtSGGf9/wnztz5zwSKLwub
+  </data>
+ </layer>
+ <objectgroup name="Ice">
+  <object id="25" gid="11" x="576" y="960" width="64" height="64"/>
+  <object id="55" gid="11" x="1664" y="768" width="64" height="64"/>
+  <object id="56" gid="11" x="1728" y="768" width="64" height="64"/>
+  <object id="57" gid="11" x="1792" y="768" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="Water">
+  <object id="28" gid="16" x="832" y="896" width="64" height="64"/>
+  <object id="38" gid="16" x="1152" y="960" width="64" height="64"/>
+  <object id="39" gid="16" x="1216" y="960" width="64" height="64"/>
+  <object id="40" gid="16" x="1280" y="960" width="64" height="64"/>
+  <object id="41" gid="16" x="1344" y="960" width="64" height="64"/>
+  <object id="42" gid="16" x="1664" y="832" width="64" height="64"/>
+  <object id="43" gid="16" x="1728" y="832" width="64" height="64"/>
+  <object id="44" gid="16" x="1664" y="896" width="64" height="64"/>
+  <object id="45" gid="16" x="1728" y="896" width="64" height="64"/>
+  <object id="46" gid="16" x="1792" y="832" width="64" height="64"/>
+  <object id="47" gid="16" x="1792" y="896" width="64" height="64"/>
+  <object id="48" gid="16" x="1792" y="960" width="64" height="64"/>
+  <object id="49" gid="16" x="1664" y="960" width="64" height="64"/>
+  <object id="50" gid="16" x="1728" y="960" width="64" height="64"/>
+  <object id="51" gid="16" x="1664" y="1024" width="64" height="64"/>
+  <object id="52" gid="16" x="1728" y="1024" width="64" height="64"/>
+  <object id="53" gid="16" x="1792" y="1024" width="64" height="64"/>
+ </objectgroup>
+ <layer name="Spikes" width="40" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGwSgYBYMR8KHhkQ5Gw2B4AADDYABH
+  </data>
+ </layer>
+ <objectgroup name="Flower">
+  <object id="54" gid="1" x="2048" y="1024" width="64" height="64"/>
+ </objectgroup>
+</map>
