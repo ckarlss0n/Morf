@@ -1,17 +1,22 @@
 package edu.chl.morf.handlers;
 
-import edu.chl.morf.model.Level;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * A singleton class for handling high scores for each playable level.
+ * Extends the abstract class FileHandler.
+ *
  * Created by Lage on 2015-05-12.
  */
 public class HighScoreHandler extends FileHandler{
-    private Map<String,Integer> highScores = new HashMap<String, Integer>();
+    private Map<String,Integer> highScores = new HashMap<String, Integer>(); //Level name and score
     private static final HighScoreHandler instance = new HighScoreHandler();
+    public static final String FILE_PATH = "/.morf/.highscore.txt";
 
     public static HighScoreHandler getInstance(){
         return instance;
@@ -21,6 +26,7 @@ public class HighScoreHandler extends FileHandler{
         highScores.put(levelName, highScore);
     }
 
+    //Get the high score for a specific level
     public Integer getHighScore(String levelName){
         if(highScores.get(levelName) != null) {
             return highScores.get(levelName);
@@ -29,6 +35,9 @@ public class HighScoreHandler extends FileHandler{
         }
     }
 
+    /* Method used to write high scores to a text file.
+     * Each row contains a level name and a score separated by a semicolon.
+     */
     @Override
     public void write(PrintWriter printWriter) throws FileNotFoundException{
         for(String levelName : highScores.keySet()){
@@ -36,6 +45,7 @@ public class HighScoreHandler extends FileHandler{
         }
     }
 
+    //Method used to read high scores from a text file.
     @Override
     public void read(BufferedReader bufferedReader) throws IOException{
         String line = bufferedReader.readLine();
@@ -51,6 +61,6 @@ public class HighScoreHandler extends FileHandler{
 
     @Override
     public String getFilePath() {
-        return "/.morf/.highscore.txt";
+        return FILE_PATH;
     }
 }
