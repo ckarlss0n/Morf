@@ -6,6 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * A singleton class taking care of the key bindings used in the game.
+ * The class contains methods to get and set keys.
+ * The class is used by OptionsScreen, where key bindings are set.
+ * The class is also used by GameController, which asks for the current key bindings.
+ *
  * Created by Christoffer on 2015-05-17.
  */
 public class KeyBindings {
@@ -72,7 +77,7 @@ public class KeyBindings {
 		usedKeys.add(COOL_KEY);
 		usedKeys.add(HEAT_KEY);
 		usedKeys.add(PAUSE_KEY);
-		if(usedKeys.contains(null)){
+		if(usedKeys.contains(null)){ //Reset to default if null is currently used as a key
 			resetDefaults();
 		}
 	}
@@ -139,10 +144,12 @@ public class KeyBindings {
 		}
 	}
 
+	//A method to see if a keyCode matches the name of a key
 	public boolean isKey(int keyCode, String keyName){
 		return keyCode == Input.Keys.valueOf(keyName);
 	}
 
+	//A method to get the keyCode from the name of a key
 	public int getValue(String key){
 		return Input.Keys.valueOf(key);
 	}
@@ -183,6 +190,7 @@ public class KeyBindings {
 		return PAUSE_KEY;
 	}
 
+	//Used to reset the keys to their default values
 	public void resetDefaults(){
 		setMoveLeftKey(MOVE_LEFT_KEY_DEFAULT);
 		setMoveRightKey(MOVE_RIGHT_KEY_DEFAULT);
