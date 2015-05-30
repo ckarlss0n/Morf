@@ -5,6 +5,10 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 /**
+ * A singleton class taking care of sound effects and music.
+ * It contains paths to all sound files, and methods to play them.
+ * The class also contains methods to change the volume of music and sound effects.
+ * <p>
  * Created by Christoffer on 2015-05-12.
  */
 public class SoundHandler {
@@ -32,7 +36,7 @@ public class SoundHandler {
 	private boolean isMusicEnabled = true;
 	private boolean isSoundEffectsEnabled = true;
 
-	private SoundHandler(){
+	private SoundHandler() {
 		//Game sounds
 		hit = bindPath("hit.mp3");
 		die = bindPath("die.mp3");
@@ -56,72 +60,72 @@ public class SoundHandler {
 		setMusicVolume(musicVolume);
 	}
 
-	public static synchronized SoundHandler getInstance(){
-		if(instance == null){
+	public static synchronized SoundHandler getInstance() {
+		if (instance == null) {
 			instance = new SoundHandler();
 		}
 		return instance;
 	}
 
-	public void enableMusic(){
+	public void enableMusic() {
 		isMusicEnabled = true;
 		playMusic();
 	}
 
-	public void enabledSoundEffects(){
+	public void enabledSoundEffects() {
 		isSoundEffectsEnabled = true;
 	}
 
-	public boolean isMusicEnabled(){
+	public boolean isMusicEnabled() {
 		return isMusicEnabled;
 	}
 
-	public boolean isSoundEffectsEnabled(){
+	public boolean isSoundEffectsEnabled() {
 		return isSoundEffectsEnabled;
 	}
 
-	public float getMusicVolume(){
+	public float getMusicVolume() {
 		return music.getVolume();
 	}
 
-	public float getSoundEffectsVolume(){
-		return soundEffectsVolume;
-	}
-
-	private Sound bindPath(String path){
-		return Gdx.audio.newSound(Gdx.files.internal("sfx/"+path));
-	}
-
-	public void setMusicVolume(float volume){
+	public void setMusicVolume(float volume) {
 		music.setVolume(volume);
+	}
+
+	public float getSoundEffectsVolume() {
+		return soundEffectsVolume;
 	}
 
 	public void setSoundEffectsVolume(float volume) {
 		soundEffectsVolume = volume;
 	}
 
+	private Sound bindPath(String path) {
+		return Gdx.audio.newSound(Gdx.files.internal("sfx/" + path));
+	}
+
 	public void muteSoundEffects() {
 		isSoundEffectsEnabled = false;
 	}
 
-	public void muteMusic(){
+	public void muteMusic() {
 		isMusicEnabled = false;
 		music.pause();
 	}
 
-	public void playSoundEffect(Sound sound){
-		if(isSoundEffectsEnabled) {
+	public void playSoundEffect(Sound sound) {
+		if (isSoundEffectsEnabled) {
 			sound.play(soundEffectsVolume);
 		}
 	}
 
-	public void playMusic(){
-		if(isMusicEnabled) {
+	public void playMusic() {
+		if (isMusicEnabled) {
 			music.play();
 		}
 	}
 
-	public void stopMusic(){
+	public void stopMusic() {
 		music.stop();
 	}
 
