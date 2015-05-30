@@ -9,6 +9,9 @@ import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 import static edu.chl.morf.userdata.UserDataType.*;
 
+/**
+ * A factory class for creating bodies for the Box2D-world used in GameLogic.
+ */
 public class BodyFactory {
 
 	private int pS = 15;
