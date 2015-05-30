@@ -118,6 +118,7 @@ public class PlayerCharacterModel {
     //Move setters
     public void moveLeft(){
         moving = true;
+        stopFlying();
         facingRight = false;
         setActiveBlock(activeBlockLeft);
         setGhostEmpty(ghostEmptyLeft);
@@ -125,6 +126,7 @@ public class PlayerCharacterModel {
     }
     public void moveRight(){
         moving = true;
+        stopFlying();
         facingRight = true;
         setActiveBlock(activeBlockRight);
         setGhostEmpty(ghostEmptyRight);

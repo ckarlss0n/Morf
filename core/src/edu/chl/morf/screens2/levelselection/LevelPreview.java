@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import edu.chl.morf.handlers.HighScoreHandler;
 import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
-import edu.chl.morf.model.Level;
 
 import java.util.ArrayList;
 
@@ -13,19 +12,19 @@ import java.util.ArrayList;
  */
 public class LevelPreview extends SelectionComponent{
     ArrayList<Star> stars;
-    private Level level;
     String levelName;
     ScreenManager screenManager = ScreenManager.getInstance();
 
-    public LevelPreview(Level level, float x, float y) {
-        //super("levelselection/" + level.getName().split("\\.")[0]+ "_Thumb.png","levelselection/Level_1_Thumb_Focus.png");
-        super("levelselection/Level_1_Thumb.png","levelselection/Level_1_Thumb_Focus.png");
-        this.level = level;
+    public LevelPreview(String levelName, float x, float y) {
+
+        //Change when new textures are added
+        //super("levelselection/" + levelName + "_Thumb.png","levelselection/" + levelName + "_Thumb_Focus.png");
+        super("levelselection/" + "Level_1" + "_Thumb.png","levelselection/" + "Level_1" + "_Thumb_Focus.png");
+
         this.setSize(0.3f * Main.V_WIDTH, 0.25f * Main.V_HEIGHT);
         this.setPosition(x, y);
-        this.levelName = level.getName().split("\\.")[0];
-        Integer levelScore = HighScoreHandler.getInstance().getHighScore(this.level.getName());
-
+        this.levelName = levelName;
+        Integer levelScore = HighScoreHandler.getInstance().getHighScore(this.levelName + ".tmx");
         stars = new ArrayList<Star>();
         if(levelScore != null) {
             for (int i = 0; i < 8; i++) {
@@ -38,7 +37,6 @@ public class LevelPreview extends SelectionComponent{
                 }
             }
         }
-
     }
 
     @Override

@@ -83,9 +83,11 @@ public class PlayScreen extends GameScreen{
     	view.changeLevel(level);
     }
     public void resetLevel(){
-    	level = levelFactory.getLevel(level.getName(), true);
-    	gameLogic.changeLevel(level);
-    	view.changeLevel(level);
+        if(view.isDeathAnimationDone()) {
+            level = levelFactory.getLevel(level.getName(), true);
+            gameLogic.changeLevel(level);
+            view.changeLevel(level);
+        }
     }
 
     public void resumeGame(){
