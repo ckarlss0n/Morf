@@ -133,7 +133,7 @@ public class GameLogic {
 	//Method used to move the player character to the left
 	public void moveLeft() {
 		player.moveLeft();
-		if (playerCharacterBody.getLinearVelocity().x >= 0) {    //If moving right
+		if (playerCharacterBody.getLinearVelocity().x > 0) {    //If moving right
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
 		movementVector = new Vector2(-MOVEMENT_SPEED, 0);
@@ -142,7 +142,7 @@ public class GameLogic {
 	//Method used to move the player character to the right
 	public void moveRight() {
 		player.moveRight();
-		if (playerCharacterBody.getLinearVelocity().x <= 0) {    //If moving left
+		if (playerCharacterBody.getLinearVelocity().x < 0) {    //If moving left
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
 		movementVector = new Vector2(MOVEMENT_SPEED, 0);
@@ -181,7 +181,7 @@ public class GameLogic {
 			movementVector = new Vector2(0, 0);
 		} else if (pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) && !pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey()))) {
 			moveLeft();
-		} else {
+		} else if (!pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) && pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey()))) {
 			moveRight();
 		}
 	}

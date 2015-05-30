@@ -53,11 +53,9 @@ public class GameController extends InputAdapter {
 	public boolean keyUp(int keycode) {
 		if (keyBindings.isKey(keycode, keyBindings.getMoveLeftKey())) {
 			gameLogic.setKeyState(Input.Keys.valueOf(keyBindings.getMoveLeftKey()), false);
-			gameLogic.moveLeft();
 			gameLogic.stop();
 		} else if (keyBindings.isKey(keycode, keyBindings.getMoveRightKey())) {
 			gameLogic.setKeyState(Input.Keys.valueOf(keyBindings.getMoveRightKey()), false);
-			gameLogic.moveRight();
 			gameLogic.stop();
 		} else if (keyBindings.isKey(keycode, keyBindings.getJumpKey())) {
 			gameLogic.setKeyState(Input.Keys.valueOf(keyBindings.getJumpKey()), false);
