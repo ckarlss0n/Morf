@@ -25,8 +25,8 @@ public class PlayerCharacter {
     private boolean onIce;
     private boolean dead;
     private boolean flyingEnabled;
-    private int maxWaterLevel = 30;
-    private int waterLevel= maxWaterLevel;
+    private int maxWaterLevel;
+    private int waterLevel;
     private Block activeBlockRight;
     private Block activeBlockLeft;
     private Block activeBlockBottomRight;
@@ -62,6 +62,11 @@ public class PlayerCharacter {
         ghostEmptyRight = true;
         ghostEmptyLeft = true;
         ghostEmpty = true;
+        
+        //////////////////////////////////////////////
+        //remove maxwaterlevel, view should check level max water level
+        maxWaterLevel = 30;
+        waterLevel = 30;
     }
     public PlayerCharacter(Point2D.Float position){
         this();
@@ -73,19 +78,18 @@ public class PlayerCharacter {
 
 
     //Getters
-    public boolean isOnGround(){return onGround;}
+    public boolean isOnGround(){
+    	return onGround;
+    }
     public boolean isGhostEmpty(){
     	return ghostEmpty;
-//        if(facingRight){
-//            return ghostEmptyRight;
-//        } else {
-//            return ghostEmptyLeft;
-//        }
     }
     public Point2D.Float getPosition(){
         return position;
     }
-    public boolean isFlyingEnabled(){return flyingEnabled;}
+    public boolean isFlyingEnabled(){
+    	return flyingEnabled;
+    }
     public boolean isMoving(){
         return moving;
     }
@@ -98,8 +102,12 @@ public class PlayerCharacter {
     public boolean hasWater(){
         return waterLevel>0;
     }
-    public boolean isOnIce(){return onIce;}
-    public boolean isInsideFlower(){return insideFlower;}
+    public boolean isOnIce(){
+    	return onIce;
+    }
+    public boolean isInsideFlower(){
+    	return insideFlower;
+    }
 
 
     public int getMaxWaterLevel() {
@@ -111,7 +119,9 @@ public class PlayerCharacter {
     public Block getActiveBlock(){
         return activeBlock;
     }
-    public Block getActiveBlockBottom(){return activeBlockBottom;}
+    public Block getActiveBlockBottom(){
+    	return activeBlockBottom;
+    }
     public Point2D.Float getSpeed(){
         return speed;
     }
@@ -134,14 +144,18 @@ public class PlayerCharacter {
         activeBlockBottom=activeBlockBottomRight;
     }
 
-    public void setOnIce(boolean onIce){this.onIce=onIce;}
+    public void setOnIce(boolean onIce){
+    	this.onIce=onIce;
+    }
     public void setOnGround(boolean onGround){
         this.onGround = onGround;
     }
     public void setDead(boolean dead){
         this.dead = dead;
     }
-    public void setFlyingEnabled(boolean flyingEnabled){this.flyingEnabled=flyingEnabled;}
+    public void setFlyingEnabled(boolean flyingEnabled){
+    	this.flyingEnabled=flyingEnabled;
+    }
     public void stop(){
         moving = false;
     }
@@ -154,10 +168,24 @@ public class PlayerCharacter {
     public void setSpeed(float x, float y){
         speed.setLocation(x, y);
     }
-    public void setGhostEmptyLeft(boolean ghostEmptyLeft){this.ghostEmptyLeft=ghostEmptyLeft;}
-    public void setGhostEmptyRight(boolean ghostEmptyRight){this.ghostEmptyRight=ghostEmptyRight;}
-    public void setGhostEmpty(boolean ghostEmpty){this.ghostEmpty=ghostEmpty;}
-    public void setInsideFlower(boolean insideFlower){this.insideFlower=insideFlower;}
+    public void setGhostEmptyLeft(boolean ghostEmptyLeft){
+    	this.ghostEmptyLeft = ghostEmptyLeft;
+    	if(!facingRight){
+    		ghostEmpty = ghostEmptyLeft;
+    	}
+    }
+    public void setGhostEmptyRight(boolean ghostEmptyRight){
+    	this.ghostEmptyRight = ghostEmptyRight;
+    	if(facingRight){
+    		ghostEmpty = ghostEmptyRight;
+    	}
+    }
+    public void setGhostEmpty(boolean ghostEmpty){
+    	this.ghostEmpty = ghostEmpty;
+    }
+    public void setInsideFlower(boolean insideFlower){
+    	this.insideFlower = insideFlower;
+    }
     public void stopPouring(){
         pouringWater = false;
     }
