@@ -1,5 +1,8 @@
 package edu.chl.morf.handlers;
 
+/**
+ * A class containing globally accessed constants used within the game.
+ */
 public class Constants {
 	
 	//Pixels per meter
