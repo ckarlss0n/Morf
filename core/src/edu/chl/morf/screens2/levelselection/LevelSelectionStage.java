@@ -33,7 +33,6 @@ public class LevelSelectionStage extends Stage {
                             Main.V_HEIGHT - (previewGapY + levelPreviewHeight) - 50 - y * (levelPreviewHeight + previewGapY));
                     this.addActor(levelPreview);
                     if(i > 0) {
-                        System.out.println("Level: " + levelNames.get(i-1) + " high score: " + highScoreHandler.getHighScore(levelNames.get(i-1)));
                         if (highScoreHandler.getHighScore(levelNames.get(i-1)) == 0) {
 
                             //Change when new textures are added

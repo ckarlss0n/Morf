@@ -14,14 +14,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-
-import edu.chl.morf.view.backgrounds.BackgroundFactory;
-import edu.chl.morf.view.backgrounds.BackgroundGroup;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacterModel;
 import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+import edu.chl.morf.view.backgrounds.BackgroundFactory;
+import edu.chl.morf.view.backgrounds.BackgroundGroup;
 
 import java.awt.geom.Point2D;
 
@@ -39,6 +38,7 @@ public class View {
     //PlayerCharacter render variables
     private TextureRegion idleRightTexture;
     private TextureRegion flyingRightTexture;
+    private Animation deathRightAnimation;
     private Animation runningRightAnimation;
     private Animation pourRightAnimation;
     private Animation coolRightAnimation;
@@ -53,6 +53,7 @@ public class View {
     private Animation heatLeftAnimation;
     private Animation flyingLeftAnimation;
     private int currentAnimationTime;
+    private boolean deathAnimationDone;
 
     private Texture waterTexture;
     private Texture waterTextureBottom;
@@ -100,12 +101,14 @@ public class View {
         heatLeftAnimation = generateAnimation(PLAYERCHARACTER_HEATLEFT_REGION_NAMES,characterTextureAtlas,1);
         coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES,characterTextureAtlas,1);
         flyingLeftAnimation = generateAnimation(PLAYERCHARACTER_FLYLEFT_REGION_NAMES,characterTextureAtlas,1);
+        deathLeftAnimation = generateAnimation(PLAYERCHARACTER_DEATHLEFT_REGION_NAMES,characterTextureAtlas,1);
 
         runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES,characterTextureAtlas,0.1f);
         pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES,characterTextureAtlas,1);
         heatRightAnimation = generateAnimation(PLAYERCHARACTER_HEATRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         coolRightAnimation = generateAnimation(PLAYERCHARACTER_COOLRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         flyingRightAnimation = generateAnimation(PLAYERCHARACTER_FLYRIGHT_REGION_NAMES,characterTextureAtlas,1);
+        deathRightAnimation = generateAnimation(PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES,characterTextureAtlas,1);
 
         idleRightTexture = characterTextureAtlas.findRegion("idleRight");
         flyingRightTexture  = characterTextureAtlas.findRegion("flyingRight5");
@@ -158,6 +161,7 @@ public class View {
     }
 
     public void changeLevel(Level level){
+        deathAnimationDone = false;
         this.level = level;
         playerCharacter = level.getPlayer();
         tiledMapRenderer.setMap(new TmxMapLoader().load(LEVEL_PATH + level.getName()));
@@ -201,13 +205,22 @@ public class View {
         Point2D.Float playerCharPos = playerCharacter.getPosition();
 
         if(playerCharacter.isFacingRight()) {
-            if (playerCharacter.isMoving()) {
+            if(playerCharacter.isDead()){
+                if(currentAnimationTime < deathRightAnimation.getKeyFrames().length * 2) {
+                    batch.draw(deathRightAnimation.getKeyFrame(currentAnimationTime / 2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    currentAnimationTime = 0;
+                    deathAnimationDone = true;
+                }
+            } else if (playerCharacter.isMoving()) {
                 batch.draw(runningRightAnimation.getKeyFrame(stateTime, true),
                         playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
 
             } else if(playerCharacter.isFlying()){
-                if(currentAnimationTime < flyingRightAnimation.getKeyFrames().length) {
-                    batch.draw(flyingRightAnimation.getKeyFrame(currentAnimationTime, true),
+                if(currentAnimationTime < flyingRightAnimation.getKeyFrames().length * 2) {
+                    batch.draw(flyingRightAnimation.getKeyFrame(currentAnimationTime / 2, true),
                             playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
                     currentAnimationTime++;
                 }else{
@@ -253,9 +266,18 @@ public class View {
                 batch.draw(idleRightTexture, playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
             }
         }else{
-            if(playerCharacter.isMoving()){
+            if(playerCharacter.isDead()){
+                if(currentAnimationTime < deathLeftAnimation.getKeyFrames().length * 2) {
+                    batch.draw(deathLeftAnimation.getKeyFrame(currentAnimationTime / 2, true),
+                            playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    currentAnimationTime++;
+                }else{
+                    currentAnimationTime = 0;
+                    deathAnimationDone = true;
+                }
+            } else if(playerCharacter.isMoving()){
                 batch.draw(runningLeftAnimation.getKeyFrame(stateTime, true),
-                        playerCharPos.x-TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
+                        playerCharPos.x - TILE_SIZE/2, playerCharPos.y-TILE_SIZE/2, TILE_SIZE ,TILE_SIZE);
             } else if(playerCharacter.isFlying()){
                 if(currentAnimationTime < flyingLeftAnimation.getKeyFrames().length) {
                     batch.draw(flyingLeftAnimation.getKeyFrame(currentAnimationTime, true),
@@ -387,5 +409,9 @@ public class View {
         camera.update();
         box2dCam.position.set(playerCharPos.x / PPM, Main.V_HEIGHT/2 / PPM, 0f);
         box2dCam.update();
+    }
+
+    public boolean isDeathAnimationDone(){
+        return deathAnimationDone;
     }
 }
