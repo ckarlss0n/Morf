@@ -10,7 +10,7 @@ public class ScreenManager {
 	private Stack<GameScreen> screens;
     private static ScreenManager instance = new ScreenManager();
 
-	public static enum ScreenType{
+	public enum ScreenType{
 		PLAY,
 		MAIN_MENU,
 		LEVEL_SELECTION,
