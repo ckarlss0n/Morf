@@ -1,4 +1,4 @@
-package edu.chl.morf.screens2;
+package edu.chl.morf.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.screens.ScreenManager;
 import edu.chl.morf.screens.ScreenManager.ScreenType;
+import edu.chl.morf.screens2.GameScreen;
 
 import java.awt.*;
 import java.net.URI;
@@ -23,7 +24,7 @@ import java.net.URI;
  * Responsible for showing the main menu screen on start-up.
  * Created by Harald Brorsson on 5/11/15.
  */
-public class MainMenuScreen extends GameScreen{
+public class MainMenuScreen extends GameScreen {
     MainMenuStage stage;
     private SoundHandler soundHandler = SoundHandler.getInstance();
     public MainMenuScreen(ScreenManager sm){
