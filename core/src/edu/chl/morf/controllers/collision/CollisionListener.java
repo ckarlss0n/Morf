@@ -137,11 +137,9 @@ public class CollisionListener implements com.badlogic.gdx.physics.box2d.Contact
                 These if cases set the waterBottom and waterTop variables to true. */
             else if(collisionTypeA == CollisionType.WATER_SENSOR && collisionTypeB == CollisionType.WATER){
                 gameLogic.setWaterBottom(fa.getBody(), true);
-                gameLogic.setWaterTop(fb.getBody(),true);
             }
             else if(collisionTypeA == CollisionType.WATER && collisionTypeB == CollisionType.WATER_SENSOR){
                 gameLogic.setWaterBottom(fb.getBody(), true);
-                gameLogic.setWaterTop(fa.getBody(),true);
             }
 
             /*  WATER_FLOWER_INTERSECTION is a fixture on every water block. If it comes in contact with the flower
@@ -293,18 +291,12 @@ public class CollisionListener implements com.badlogic.gdx.physics.box2d.Contact
                 if (collisionDataA.getNumOfContacts() == 0) {
                     gameLogic.setWaterBottom(fa.getBody(), false);
                 }
-                if (collisionDataB.getNumOfContacts() == 0) {
-                    gameLogic.setWaterTop(fb.getBody(), false);
-                }
             }
         }
         else if (collisionTypeB == CollisionType.WATER_SENSOR && collisionTypeA == CollisionType.WATER){
             if(!(fb.getBody() == null) && !(fa.getBody() == null)){
                 if(collisionDataB.getNumOfContacts() == 0){
                     gameLogic.setWaterBottom(fb.getBody(), false);
-                }
-                if (collisionDataA.getNumOfContacts() == 0){
-                    gameLogic.setWaterTop(fa.getBody(), false);
                 }
             }
         }
