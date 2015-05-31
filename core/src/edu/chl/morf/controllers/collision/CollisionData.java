@@ -1,14 +1,18 @@
 package edu.chl.morf.controllers.collision;
 
 /**
- * Created by Christoffer on 2015-04-17.
+ * All fixtures (Box2D) are assigned an instance of CollisionData upon creation.
+ * The instance contains information about what type of fixture that
+ * holds it (CollisionType).
+ * CollisionData also stores how many other world objects it's fixture
+ * is in contact with.
+ *
+ * @author Harald Brorsson
  */
 public class CollisionData {
     private CollisionType collisionType;
     private int numOfContacts;
-    public CollisionData(){
 
-    }
     public CollisionData(CollisionType collisionType){
         this.collisionType = collisionType;
     }

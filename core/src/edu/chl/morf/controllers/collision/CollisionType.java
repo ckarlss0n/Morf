@@ -1,7 +1,12 @@
 package edu.chl.morf.controllers.collision;
 
 /**
- * Created by Christoffer on 2015-04-17.
+ * This Enum is used in CollisionData and is used to keep track of
+ * what type of fixture (Box2D) the CollisionData is attached to.
+ * The CollisionType is checked in CollisionListener to determine
+ * what should be done.
+ *
+ * @author Harald Brorsson
  */
 public enum CollisionType {
     PLAYERCHARACTER,
