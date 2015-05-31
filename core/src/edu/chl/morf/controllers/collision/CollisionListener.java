@@ -18,7 +18,7 @@ public class CollisionListener implements com.badlogic.gdx.physics.box2d.Contact
     }
 
 
-    /*
+    /**
      * Whenever anything collides in the game world, a contact is sent to
      * the CollisionListeners beginContact method.
      * Whenever two bodies stop being in contact with each other, a contact

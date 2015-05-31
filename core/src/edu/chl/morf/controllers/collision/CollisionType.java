@@ -4,7 +4,6 @@ package edu.chl.morf.controllers.collision;
  * Created by Christoffer on 2015-04-17.
  */
 public enum CollisionType {
-    GROUND,
     PLAYERCHARACTER,
     GHOST_LEFT,
     GHOST_RIGHT,
@@ -17,8 +16,6 @@ public enum CollisionType {
     ACTIVE_BLOCK_BOTTOM_LEFT,
     SPIKE,
     WATER,
-    ICE,
-    VAPOR,
     WATER_SENSOR,
     WATER_FLOWER_INTERSECTION,
     FLOWER,
