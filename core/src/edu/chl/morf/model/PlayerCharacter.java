@@ -25,7 +25,6 @@ public class PlayerCharacter {
     private boolean onIce;
     private boolean dead;
     private boolean flyingEnabled;
-    private int maxWaterLevel;
     private int waterLevel;
     private Block activeBlockRight;
     private Block activeBlockLeft;
@@ -62,11 +61,7 @@ public class PlayerCharacter {
         ghostEmptyRight = true;
         ghostEmptyLeft = true;
         ghostEmpty = true;
-        
-        //////////////////////////////////////////////
-        //remove maxwaterlevel, view should check level max water level
-        maxWaterLevel = 30;
-        waterLevel = 30;
+        waterLevel = 10;
     }
     public PlayerCharacter(Point2D.Float position){
         this();
@@ -109,10 +104,6 @@ public class PlayerCharacter {
     	return insideFlower;
     }
 
-
-    public int getMaxWaterLevel() {
-        return maxWaterLevel;
-    }
     public int getWaterLevel(){
         return waterLevel;
     }
