@@ -1,6 +1,12 @@
 package edu.chl.morf.view.backgrounds;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
+ * A class used for creating backgrounds.
+ * The class creates BackGroundLayers from textures in assets and
+ * adds them to a single BackGroundGroup.
  * Created by Lage on 2015-05-07.
  */
 public class BackgroundFactory {
@@ -13,20 +19,21 @@ public class BackgroundFactory {
     public static final String BOTTOM_CLOUDS_IMAGE_PATH = "cloudsBottom.png";
     public static final String TOP_CLOUDS_IMAGE_PATH = "cloudsTop.png";
 
-    public BackgroundGroup createBackgroundGroup(){
-        BackgroundGroup backgroundGroup = new BackgroundGroup();
+    
+    public List<BackgroundLayer> createBackgroundGroup(){
+        List<BackgroundLayer> backgroundGroup = new ArrayList<BackgroundLayer>();
         BackgroundLayer background = new BackgroundLayer(BACKGROUND_IMAGE_PATH, 0, 0);
-        backgroundGroup.addBackgroundLayer(background);
+        backgroundGroup.add(background);
         BackgroundLayer mountains = new BackgroundLayer(MOUNTAINS_IMAGE_PATH, -10, 0);
-        backgroundGroup.addBackgroundLayer(mountains);
+        backgroundGroup.add(mountains);
         BackgroundLayer backgroundBottom = new BackgroundLayer(BACKGROUND_BOTTOM_IMAGE_PATH, -30, 0);
-        backgroundGroup.addBackgroundLayer(backgroundBottom);
+        backgroundGroup.add(backgroundBottom);
         BackgroundLayer backgroundTop = new BackgroundLayer(BACKGROUND_TOP_IMAGE_PATH, -50, 0);
-        backgroundGroup.addBackgroundLayer(backgroundTop);
+        backgroundGroup.add(backgroundTop);
         BackgroundLayer bottomClouds = new BackgroundLayer(BOTTOM_CLOUDS_IMAGE_PATH, -10, 5);
-        backgroundGroup.addBackgroundLayer(bottomClouds);
+        backgroundGroup.add(bottomClouds);
         BackgroundLayer topClouds = new BackgroundLayer(TOP_CLOUDS_IMAGE_PATH, -10, 20);
-        backgroundGroup.addBackgroundLayer(topClouds);
+        backgroundGroup.add(topClouds);
         return backgroundGroup;
     }
 }

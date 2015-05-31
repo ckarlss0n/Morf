@@ -19,9 +19,10 @@ import edu.chl.morf.model.PlayerCharacter;
 import edu.chl.morf.model.WaterState;
 import edu.chl.morf.model.blocks.Water;
 import edu.chl.morf.view.backgrounds.BackgroundFactory;
-import edu.chl.morf.view.backgrounds.BackgroundGroup;
+import edu.chl.morf.view.backgrounds.BackgroundLayer;
 
 import java.awt.geom.Point2D;
+import java.util.List;
 
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
@@ -101,7 +102,7 @@ public class View {
     private OrthographicCamera camera;
 
     private BackgroundFactory backgroundFactory;
-    private BackgroundGroup backgroundGroup;
+    private List<BackgroundLayer> backgroundGroup;
 
     private OrthographicCamera hudCam;
     private BitmapFont font;
@@ -209,11 +210,16 @@ public class View {
         //Render background layers
         batch.setProjectionMatrix(hudCam.combined);
         try {
-            backgroundGroup.setBackgroundSpeeds(playerCharacter.getMovementVector().x); //Make background move as player character does
+            //Make background move as player character does
+            for(BackgroundLayer backgroundLayer: backgroundGroup){
+                backgroundLayer.setSpeed(playerCharacter.getMovementVector().x);
+            }
         } catch (NullPointerException e) {
             System.out.println(e.getCause());
         }
-        backgroundGroup.renderLayers(batch, delta);
+        for(BackgroundLayer backgroundLayer: backgroundGroup){
+            backgroundLayer.draw(batch,delta);
+        }
         batch.end();
 
         //Render map
