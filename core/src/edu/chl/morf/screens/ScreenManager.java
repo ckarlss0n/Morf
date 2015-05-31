@@ -1,6 +1,5 @@
-package edu.chl.morf.handlers;
+package edu.chl.morf.screens;
 
-import edu.chl.morf.screens.LevelSelectionScreen;
 import edu.chl.morf.screens2.*;
 
 import java.util.Stack;

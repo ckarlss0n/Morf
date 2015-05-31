@@ -1,4 +1,4 @@
-package edu.chl.morf.screens2;
+package edu.chl.morf.screens;
 
 import java.util.List;
 
@@ -6,16 +6,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-
 import com.badlogic.gdx.utils.Timer;
+
 import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.controllers.CollisionListener;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.LevelReader;
-import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
+import edu.chl.morf.screens2.GameScreen;
 import edu.chl.morf.view.View;
 import static edu.chl.morf.handlers.Constants.PPM;
 

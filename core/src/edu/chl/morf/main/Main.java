@@ -2,9 +2,10 @@ package edu.chl.morf.main;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+
 import edu.chl.morf.handlers.HighScoreHandler;
-import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.handlers.SettingsHandler;
+import edu.chl.morf.screens.ScreenManager;
 
 public class Main extends Game{
 

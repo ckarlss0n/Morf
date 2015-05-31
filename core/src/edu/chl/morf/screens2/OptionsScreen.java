@@ -13,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import edu.chl.morf.handlers.KeyBindings;
-import edu.chl.morf.handlers.ScreenManager;
-import edu.chl.morf.handlers.ScreenManager.ScreenType;
 import edu.chl.morf.handlers.SoundHandler;
+import edu.chl.morf.screens.ScreenManager;
+import edu.chl.morf.screens.ScreenManager.ScreenType;
 
 /**
  * Created by Christoffer on 2015-05-14.

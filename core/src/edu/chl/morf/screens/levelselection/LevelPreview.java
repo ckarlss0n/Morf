@@ -1,9 +1,10 @@
 package edu.chl.morf.screens.levelselection;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+
 import edu.chl.morf.handlers.HighScoreHandler;
-import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
+import edu.chl.morf.screens.ScreenManager;
 
 import java.util.ArrayList;
 

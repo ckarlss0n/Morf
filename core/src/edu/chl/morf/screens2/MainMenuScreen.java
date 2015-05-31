@@ -12,9 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import edu.chl.morf.handlers.ScreenManager;
-import edu.chl.morf.handlers.ScreenManager.ScreenType;
 import edu.chl.morf.handlers.SoundHandler;
+import edu.chl.morf.screens.ScreenManager;
+import edu.chl.morf.screens.ScreenManager.ScreenType;
 
 /**
  * Responsible for showing the main menu screen on start-up.

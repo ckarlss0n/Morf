@@ -4,8 +4,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
+import edu.chl.morf.screens.ScreenManager;
 
 public abstract class GameScreen implements Screen{
 	
