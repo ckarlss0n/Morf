@@ -10,6 +10,12 @@ import edu.chl.morf.model.LevelObject;
 import edu.chl.morf.model.Matrix;
 import edu.chl.morf.model.TileType;
 
+/**
+ * Class for testing Matrix.
+ * 
+ * @author gustav
+ */
+
 public class TestMatrix {
 
 	@Test

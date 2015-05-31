@@ -14,55 +14,64 @@ import java.awt.geom.Point2D;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Christoffer on 2015-05-04.
+ * Class for testing PlayerCharacter.
+ * 
+ * @author gustav
  */
+
 public class TestPlayerCharacter {
+	private PlayerCharacter player;
+	private Water water;
+	
+	@Before
+	public void initialize(){
+		//Create player character with waterAmount 2
+		player = new PlayerCharacter(0, 0, 2);
+
+		//Set active block to a Water for testing of heating and cooling
+		water = new Water(0, 0, WaterState.LIQUID);
+		player.setActiveBlock(water);
+	}
 
 	@Test
 	public void testMoveLeft(){
-		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
 		player.moveLeft();
 		assertTrue(player.isMoving() && !player.isFacingRight());
 	}
 
 	@Test
 	public void testMoveRight(){
-		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
 		player.moveRight();
 		assertTrue(player.isMoving() && player.isFacingRight());
 	}
 
 	@Test
 	public void testPourWater(){
-		PlayerCharacter player = new PlayerCharacter(10, 10, 10);
 		Water water = player.pourWater();
-		assertTrue(water != null && player.getWaterAmount() == 9);
+		//Check that a Water was returned and used by player.
+		assertTrue(water != null && player.getWaterAmount() == 1);
 	}
 	
 	@Test
 	public void testDecreaseWaterLevel(){
-		PlayerCharacter player = new PlayerCharacter(10, 10, 2);
 		player.decreaseWaterAmount();
 		assertTrue(player.getWaterAmount() == 1);
 		player.decreaseWaterAmount();
+		//Check that player dies when water amount is decreased to 0.
 		assertTrue(player.isDead());
 	}
 	
 	@Test
 	public void testHeatActiveBlock(){
-		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
-		Water water = new Water(0, 0, WaterState.LIQUID);
-		player.setActiveBlock(water);
 		player.heatActiveBlock();
+		//Check that liquid water was vaporized.
 		assertTrue(water.getState() == WaterState.GAS);
 	}
 	
 	@Test
 	public void testCoolActiveBlock(){
-		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
-		Water water = new Water(0, 0, WaterState.LIQUID);
-		player.setActiveBlock(water);
 		player.coolActiveBlock();
+		//Check that liquid water was frozen.
 		assertTrue(water.getState() == WaterState.SOLID);
 	}
 }
