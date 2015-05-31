@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Timer;
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
 import edu.chl.morf.model.blocks.Block;
-import edu.chl.morf.model.blocks.Ground;
+import edu.chl.morf.model.blocks.EmptyBlock;
 import edu.chl.morf.model.blocks.Water;
 import edu.chl.morf.handlers.controllers.collision.CollisionData;
 import edu.chl.morf.handlers.controllers.collision.CollisionType;
@@ -389,7 +389,7 @@ public class GameLogic {
 				level.setActiveBlock(block, position);
 			}
 		} else {
-			level.setActiveBlock(new Ground(0, 0), position);
+			level.setActiveBlock(EmptyBlock.getEmptyBlock(), position);
 		}
 	}
 

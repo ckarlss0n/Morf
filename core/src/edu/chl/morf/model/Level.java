@@ -57,10 +57,6 @@ public class Level {
 	public int getStartingWaterAmount(){
 		return startingWaterAmount;
 	}
-	public Point2D.Float getPlayerPosition(){return player.getPosition();}
-	public int getPlayerWaterAmount(){return player.getWaterAmount();}
-	public Block getPlayerActiveBlock(){return player.getActiveBlock();}
-	public Block getPlayerActiveBlockBottom(){return player.getActiveBlockBottom();}
 
 	//Setter for levelWon
 	public void setLevelWon(boolean levelWon){
@@ -71,8 +67,6 @@ public class Level {
 	public void addWater(Water w){
 		waterBlocks.add(w);
 	}
-	//////////////////////////////////////////////////
-	//Method never called, should be called when vapor disappears?
 	public void removeWater(Water w){
 		waterBlocks.remove(w);
 	}
@@ -101,24 +95,55 @@ public class Level {
 	public void coolBlock(){
 		player.coolActiveBlock();
 	}
-	//Voids
-	public void stopPlayer(){player.stop();}
-	public void movePlayerRight(){player.moveRight();}
-	public void movePLayerLeft(){player.moveLeft();}
-	public void stopPlayerFlying(){player.stopFlying();}
-	public void setPlayerFlying(){player.setFlying();}
+	
+	//Methods for player movement
+	public void stopPlayer(){
+		player.stop();
+	}
+	public void movePlayerRight(){
+		player.moveRight();
+	}
+	public void movePLayerLeft(){
+		player.moveLeft();
+	}
+	public void stopPlayerFlying(){
+		player.stopFlying();
+	}
+	public void setPlayerFlying(){
+		player.setFlying();
+	}
 
 	
-	//Getters for booleans in PlayerCharacter
+	//Call chain getters PlayerCharacter
 	public boolean isPlayerDead(){
 		return player.isDead();
 	}
-	public boolean isPlayerFlyingEnabled(){return player.isFlyingEnabled();}
-	public boolean isPlayerOnIce(){return player.isOnIce();}
-	public boolean isPlayerOnGround(){return player.isOnGround();}
-	public boolean isPlayerFlying(){return player.isFlying();}
+	public boolean isPlayerFlyingEnabled(){
+		return player.isFlyingEnabled();
+	}
+	public boolean isPlayerOnIce(){
+		return player.isOnIce();
+	}
+	public boolean isPlayerOnGround(){
+		return player.isOnGround();
+	}
+	public boolean isPlayerFlying(){
+		return player.isFlying();
+	}
+	public Point2D.Float getPlayerPosition(){
+		return player.getPosition();
+	}
+	public int getPlayerWaterAmount(){
+		return player.getWaterAmount();
+	}
+	public Block getPlayerActiveBlock(){
+		return player.getActiveBlock();
+	}
+	public Block getPlayerActiveBlockBottom(){
+		return player.getActiveBlockBottom();
+	}
 	
-	//Setters for booleans in PlayerCharacter
+	//Call chain setters for PlayerCharacter
 	public void setActiveBlock(Block block, ActiveBlockPosition position){
 		player.setActiveBlock(block, position);
 	}
@@ -134,8 +159,17 @@ public class Level {
 	public void setPlayerInsideFlower(boolean playerInsideFlower){
 		player.setInsideFlower(playerInsideFlower);
 	}
-	public void setPlayerOnIce(boolean playerOnIce){player.setOnIce(playerOnIce);}
-	public void setPlayerOnGround(boolean playerOnGround){player.setOnGround(playerOnGround);}
-	public void setPlayerPosition(float x, float y){player.setPosition(x, y);}
-	public void setPlayerSpeed(float x, float y){player.setSpeed(x, y);}
+	public void setPlayerOnIce(boolean playerOnIce){
+		player.setOnIce(playerOnIce);
+	}
+	public void setPlayerOnGround(boolean playerOnGround){
+		player.setOnGround(playerOnGround);
+	}
+	public void setPlayerPosition(float x, float y){
+		player.setPosition(x, y);
+	}
+	public void setPlayerSpeed(float x, float y){
+		player.setSpeed(x, y);
+	}
+	
 }

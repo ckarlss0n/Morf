@@ -3,6 +3,7 @@ package edu.chl.morf.model;
 import java.awt.geom.Point2D;
 
 import edu.chl.morf.model.blocks.Block;
+import edu.chl.morf.model.blocks.EmptyBlock;
 import edu.chl.morf.model.blocks.Water;
 
 /**
@@ -148,16 +149,12 @@ public class PlayerCharacter {
     public void setSpeed(float x, float y){
         movementVector.setLocation(x, y);
     }
-    
-    ////////////////////////////////////////////////////////////
-    //Should be chain called from level
     public void setOnGround(boolean onGround){
         this.onGround = onGround;
     }
     public void setOnIce(boolean onIce){
     	this.onIce=onIce;
     }
-    //////////////////////////////////////////////////////////////
     public void setInsideFlower(boolean insideFlower){
     	this.insideFlower = insideFlower;
     }
@@ -233,9 +230,6 @@ public class PlayerCharacter {
     public void stop(){
         moving = false;
     }
-    
-    ////////////////////////////////////////////////////
-    //should be chain called from level
     public void setFlying(){
         flying = true;
     }
@@ -245,12 +239,11 @@ public class PlayerCharacter {
         }
         this.flying = false;
     }
-    ///////////////////////////////////////////////////////
     public void doneFlying(){
         this.stoppedFlying = false;
     }
     
-    //Action setters
+    //Method for pouring water
     public Water pourWater(){
         pouringWater = true;
         Point2D.Float point=new Point2D.Float(position.x - 64+15, position.y);
@@ -297,6 +290,7 @@ public class PlayerCharacter {
         }
     }
     
+    //Methods for stopping with actions
     public void stopPouring(){
         pouringWater = false;
     }

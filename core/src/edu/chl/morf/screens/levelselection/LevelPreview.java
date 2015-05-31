@@ -3,6 +3,7 @@ package edu.chl.morf.screens.levelselection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import edu.chl.morf.handlers.HighScores;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.main.Main;
@@ -10,6 +11,7 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.screens.ScreenManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class representing a small preview of a level.
@@ -33,9 +35,9 @@ public class LevelPreview extends SelectionComponent{
         }
     }
 
-    ArrayList<Star> stars;
-    String levelName;
-    ScreenManager screenManager = ScreenManager.getInstance();
+    private List<Star> stars;
+    private String levelName;
+    private ScreenManager screenManager = ScreenManager.getInstance();
 
     public LevelPreview(String levelName, float x, float y) {
         super("levelselection/" + levelName + "_Thumb.png","levelselection/" + levelName + "_Thumb_Focus.png"); //Get level texture

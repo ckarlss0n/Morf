@@ -5,7 +5,8 @@ import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.screens.ScreenManager;
 
 /**
- *
+ * Class representing the back button LevelSelectionScreen
+ * 
  * Created by Lage on 2015-05-21.
  */
 public class BackButton extends SelectionComponent {
