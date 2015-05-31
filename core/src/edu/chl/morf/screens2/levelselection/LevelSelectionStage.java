@@ -29,7 +29,7 @@ public class LevelSelectionStage extends Stage {
             for(int x = 0; x < 3; x++){
                 if(i < nbrOfLevels) {
                     String levelName = levelNames.get(i).split("\\.")[0];
-                    if(levelName.equals("Level_8") || levelName.equals("level_5")){
+                    if(levelName.equals("Level_8") || levelName.equals("level_5") || levelName.equals("Level_7")){
                         levelName = "Level_1";
                     }
                     LevelPreview levelPreview = new LevelPreview(levelName, previewGapX + x * (previewGapX + levelPreviewWidth),
