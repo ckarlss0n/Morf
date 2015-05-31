@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl.morf.handlers.HighScores;
+import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.main.Main;
+import edu.chl.morf.model.Level;
 import edu.chl.morf.screens.ScreenManager;
 
 import java.util.ArrayList;
@@ -41,11 +43,16 @@ public class LevelPreview extends SelectionComponent{
         this.setPosition(x, y);
         this.levelName = levelName;
         Integer levelScore = HighScores.getInstance().getHighScore(this.levelName + ".tmx");                    //Get high score
+
+        //Set score required per star
+        Level level = LevelFactory.getInstance().getLevel(levelName + ".tmx",false);
+        int starScore = level.getStartingWaterAmount();
+
         stars = new ArrayList<Star>();
         //Add stars representing the level high score
         if(levelScore != null) {
             for (int i = 0; i < 8; i++) {
-                if (levelScore >= (i+1) * (30 / 8)) {
+                if (levelScore >= (i+1) * (starScore / 8)) {
                     Star star = new Star();
                     float starSize = 71f / 1920f * Main.V_WIDTH;
                     star.setSize(starSize, starSize);
