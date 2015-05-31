@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import com.badlogic.gdx.utils.Timer;
@@ -16,11 +17,11 @@ import edu.chl.morf.handlers.ScreenManager;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.view.View;
-import static edu.chl.morf.Constants.WORLD_GRAVITY;
 import static edu.chl.morf.handlers.Constants.PPM;
 
 public class PlayScreen extends GameScreen{
 
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0,-15);
     private GameLogic gameLogic;
     private OrthographicCamera box2dCam;
     private Level level;

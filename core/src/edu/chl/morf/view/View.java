@@ -21,10 +21,7 @@ import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
 import edu.chl.morf.view.backgrounds.BackgroundFactory;
 import edu.chl.morf.view.backgrounds.BackgroundGroup;
-
 import java.awt.geom.Point2D;
-
-import static edu.chl.morf.Constants.*;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
 /**
@@ -53,6 +50,35 @@ public class View {
     private Animation flyingLeftAnimation;
     private int currentAnimationTime;
     private boolean deathAnimationDone;
+
+    public static final float PPM = 100f; //Pixels per meter
+
+    //Character animation constants
+    public static final String CHARACTERS_ATLAS_PATH = "spritesheets/Character_Sprite_Sheet";
+    public static final String[] PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES = new String[] {"runningLeft1", "runningLeft2", "runningLeft3",
+            "runningLeft4", "runningLeft5", "runningLeft6", "runningLeft7"};
+    public static final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[] {"runningRight1", "runningRight2", "runningRight3",
+            "runningRight4", "runningRight5", "runningRight6", "runningRight7",};
+    public static final String[] PLAYERCHARACTER_POURRIGHT_REGION_NAMES = new String[] {"pourRight1", "pourRight1", "pourRight2", "pourRight2", "pourRight2",
+            "pourRight3", "pourRight3", "pourRight3", "pourRight2", "pourRight2", "pourRight2", "pourRight1", "pourRight1"};
+    public static final String[] PLAYERCHARACTER_COOLRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "coolRight1", "coolRight1", "coolRight2",
+            "coolRight2", "coolRight2", "coolRight3", "coolRight3", "coolRight3", "coolRight2", "coolRight2", "coolRight2", "coolRight1", "coolRight1", "idleRightEmpty"};
+    public static final String[] PLAYERCHARACTER_HEATRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "heatRight1", "heatRight1", "heatRight2", "heatRight2",
+            "heatRight2", "heatRight3", "heatRight3", "heatRight3", "heatRight2", "heatRight2", "heatRight2", "heatRight1", "heatRight1", "idleRightEmpty"};
+    public static final String[] PLAYERCHARACTER_POURLEFT_REGION_NAMES = new String[] {"pourLeft1", "pourLeft1", "pourLeft2", "pourLeft2", "pourLeft2",
+            "pourLeft3", "pourLeft3", "pourLeft3", "pourLeft2", "pourLeft2", "pourLeft2", "pourLeft1", "pourLeft1"};
+    public static final String[] PLAYERCHARACTER_COOLLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "coolLeft1", "coolLeft1", "coolLeft2",
+            "coolLeft2", "coolLeft2", "coolLeft3", "coolLeft3", "coolLeft3", "coolLeft2", "coolLeft2", "coolLeft2", "coolLeft1", "coolLeft1", "idleLeftEmpty"};
+    public static final String[] PLAYERCHARACTER_HEATLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "heatLeft1", "heatLeft1", "heatLeft2", "heatLeft2",
+            "heatLeft2", "heatLeft3", "heatLeft3", "heatLeft3", "heatLeft2", "heatLeft2", "heatLeft2", "heatLeft1", "heatLeft1", "idleLeftEmpty"};
+    public static final String[] PLAYERCHARACTER_FLYLEFT_REGION_NAMES = new String[] {"flyingLeft1", "flyingLeft1", "flyingLeft2", "flyingLeft2",
+            "flyingLeft3", "flyingLeft3", "flyingLeft4", "flyingLeft4", "flyingLeft5", "flyingLeft5"};
+    public static final String[] PLAYERCHARACTER_DEATHLEFT_REGION_NAMES = new String[] {"idleLeftEmpty", "deathLeft1", "deathLeft1", "deathLeft2", "deathLeft2",
+            "deathLeft3", "deathLeft3", "deathLeft4", "deathLeft4", "deathLeft4"};
+    public static final String[] PLAYERCHARACTER_FLYRIGHT_REGION_NAMES = new String[] {"flyingRight1", "flyingRight1", "flyingRight2", "flyingRight2",
+            "flyingRight3", "flyingRight3", "flyingRight4", "flyingRight4", "flyingRight5", "flyingRight5"};
+    public static final String[] PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "deathRight1", "deathRight1", "deathRight2", "deathRight2",
+            "deathRight3", "deathRight3", "deathRight4", "deathRight4", "deathRight4"};
 
     private Texture waterTexture;
     private Texture waterTextureBottom;
@@ -137,7 +163,7 @@ public class View {
         this.hudCam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
         font = new BitmapFont();
 
-        TiledMap tileMap = new TmxMapLoader().load(LEVEL_PATH + level.getName());
+        TiledMap tileMap = new TmxMapLoader().load("levels/" + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
         b2dr = new Box2DDebugRenderer();
 
@@ -162,7 +188,7 @@ public class View {
         deathAnimationDone = false;
         this.level = level;
         playerCharacter = level.getPlayer();
-        tiledMapRenderer.setMap(new TmxMapLoader().load(LEVEL_PATH + level.getName()));
+        tiledMapRenderer.setMap(new TmxMapLoader().load("levels/" + level.getName()));
         initFadeValues();
         isNewLevel = true;
     }
