@@ -24,7 +24,7 @@ public class TestLevel {
 	
 	@Test
 	public void testPourWater(){
-		Level level = new Level(null, null, new PlayerCharacter(10, 10), new ArrayList<Water>(), null, 0);
+		Level level = new Level(null, null, new PlayerCharacter(10, 10, 10), new ArrayList<Water>(), null, 0);
 		level.getPlayer().setGhostEmpty(false);
 		level.pourWater();
 		assertTrue(level.getWaterBlocks().isEmpty());

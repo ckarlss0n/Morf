@@ -211,7 +211,7 @@ public class View {
         //Render background layers
         batch.setProjectionMatrix(hudCam.combined);
         try {
-            backgroundGroup.setBackgroundSpeeds(playerCharacter.getSpeed().x);
+            backgroundGroup.setBackgroundSpeeds(playerCharacter.getMovementVector().x);
         }catch (NullPointerException e){
             System.out.println(e.getCause());
         }
@@ -299,8 +299,8 @@ public class View {
         batch.setProjectionMatrix(hudCam.combined);
         float deltaWidth = (waterMeterTexture.getWidth()- waterLevelTexture.getWidth())/2;
         float deltaHeight = (waterMeterTexture.getHeight()- waterLevelTexture.getHeight())/2;
-        int currentWaterLevel = playerCharacter.getWaterLevel();
-        float computedWidth = (float) waterLevelTexture.getWidth()/level.getMaxWaterLevel()*currentWaterLevel;
+        int currentWaterLevel = playerCharacter.getWaterAmount();
+        float computedWidth = (float) waterLevelTexture.getWidth()/level.getStartingWaterAmount()*currentWaterLevel;
         float paddingTop = 20;
         float paddingLeft = 20;
 
@@ -311,7 +311,7 @@ public class View {
         batch.draw(waterLevelTexture, paddingLeft + deltaWidth, Main.V_HEIGHT - waterMeterTexture.getHeight() - paddingTop + deltaHeight, computedWidth, waterLevelTexture.getHeight());
 
         //Also show water level as text
-        String waterLevelString = currentWaterLevel + " / " + level.getMaxWaterLevel();
+        String waterLevelString = currentWaterLevel + " / " + level.getStartingWaterAmount();
         BitmapFont.TextBounds messageBounds = font.getBounds(waterLevelString); //Actual size of the drawn message
         font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth() / 2 - messageBounds.width / 2, Main.V_HEIGHT - waterMeterTexture.getHeight() / 2 - paddingTop + messageBounds.height / 2);
         batch.end();

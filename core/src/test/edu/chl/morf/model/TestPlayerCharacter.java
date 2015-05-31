@@ -20,38 +20,37 @@ public class TestPlayerCharacter {
 
 	@Test
 	public void testMoveLeft(){
-		PlayerCharacter player = new PlayerCharacter();
+		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
 		player.moveLeft();
 		assertTrue(player.isMoving() && !player.isFacingRight());
 	}
 
 	@Test
 	public void testMoveRight(){
-		PlayerCharacter player = new PlayerCharacter();
+		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
 		player.moveRight();
 		assertTrue(player.isMoving() && player.isFacingRight());
 	}
 
 	@Test
 	public void testPourWater(){
-		PlayerCharacter player = new PlayerCharacter(10, 10);
+		PlayerCharacter player = new PlayerCharacter(10, 10, 10);
 		Water water = player.pourWater();
-		assertTrue(water != null && player.getWaterLevel() == 29);
+		assertTrue(water != null && player.getWaterAmount() == 9);
 	}
 	
 	@Test
 	public void testDecreaseWaterLevel(){
-		PlayerCharacter player = new PlayerCharacter(10, 10);
-		player.setWaterLevel(2);
-		player.decreaseWaterLevel();
-		assertTrue(player.getWaterLevel() == 1);
-		player.decreaseWaterLevel();
-		assertTrue(player.isDead() == true);
+		PlayerCharacter player = new PlayerCharacter(10, 10, 2);
+		player.decreaseWaterAmount();
+		assertTrue(player.getWaterAmount() == 1);
+		player.decreaseWaterAmount();
+		assertTrue(player.isDead());
 	}
 	
 	@Test
 	public void testHeatActiveBlock(){
-		PlayerCharacter player = new PlayerCharacter();
+		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
 		Water water = new Water(WaterState.LIQUID);
 		player.setActiveBlock(water);
 		player.heatActiveBlock();
@@ -60,7 +59,7 @@ public class TestPlayerCharacter {
 	
 	@Test
 	public void testCoolActiveBlock(){
-		PlayerCharacter player = new PlayerCharacter();
+		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
 		Water water = new Water(WaterState.LIQUID);
 		player.setActiveBlock(water);
 		player.coolActiveBlock();

@@ -3,29 +3,33 @@ package edu.chl.morf.model;
 import java.awt.geom.Point2D;
 
 /**
- * This class is used to keep track of information about the player character.
- * The PlayerCharacter class updates the information stored here.
- * The Act method in GameScreen will use the information.
- * <p>
- * <li><b>Responsible for: </b>
- * Storing and keeping track of information about the player character.
- * <p>
- * <li><b>Used by: </b>
- * None.
- * <p>
- * <li><b>Using: </b>
- * <li>{@link edu.chl.morf.Constants}
- * <p>
+ * Class for representing a player character.
+ * A PlayerCharacter has a position, movement and an amount of remaining water.
+ * A PlayerCharacter also has information of how it's moving, 
+ * what it's doing and the surrounding environment.
+ * 
  * @author Harald
  */
 public class PlayerCharacter {
-    private boolean facingRight;
+    private Point2D.Float position;
+    private Point2D.Float movementVector;
+    private int waterAmount;
+	
     private boolean moving;
+    private boolean facingRight;
     private boolean onGround;
     private boolean onIce;
-    private boolean dead;
+    private boolean insideFlower;
     private boolean flyingEnabled;
-    private int waterLevel;
+    private boolean dead;
+    
+    private boolean flying;
+    private boolean stoppedFlying;
+    
+    private boolean pouringWater;
+    private boolean coolingWater;
+    private boolean heatingWater;
+    
     private Block activeBlockRight;
     private Block activeBlockLeft;
     private Block activeBlockBottomRight;
@@ -35,67 +39,66 @@ public class PlayerCharacter {
     private boolean ghostEmptyRight;
     private boolean ghostEmptyLeft;
     private boolean ghostEmpty;
-    private boolean pouringWater;
-    private boolean coolingWater;
-    private boolean heatingWater;
-    private boolean flying;
-    private boolean stoppedFlying;
-    private boolean insideFlower;
 
-    private Point2D.Float position;
-    private Point2D.Float speed;
 
     //Constructors
-    public PlayerCharacter(){
+    public PlayerCharacter(Point2D.Float position, int waterAmount){
+    	this.position = position;
+    	movementVector = new Point2D.Float(0,0);
+    	this.waterAmount = waterAmount;
+    	
+    	moving = false;
         facingRight = true;
-        moving = false;
-        onGround = true;
+        onGround = false;
+        onIce = false;
+        insideFlower = false;
+        flyingEnabled = false;
         dead = false;
+        
+        flying = false;
+        stoppedFlying = false;
+        
+        pouringWater = false;
+        coolingWater = false;
+        heatingWater = false;
+        
+        /////////////////////////////////////////////////////////
+        //should have only one instance of empty, if empty is even needed
         activeBlockRight = new EmptyBlock();
         activeBlockLeft = new EmptyBlock();
         activeBlockBottomLeft = new EmptyBlock();
         activeBlockBottomRight = new EmptyBlock();
         activeBlockBottom = new EmptyBlock();
         activeBlock = new EmptyBlock();
-        speed = new Point2D.Float(0,0);
+        
         ghostEmptyRight = true;
         ghostEmptyLeft = true;
         ghostEmpty = true;
-        waterLevel = 10;
-    }
-    public PlayerCharacter(Point2D.Float position){
-        this();
-        this.position = position;
-    }
-    public PlayerCharacter(int x, int y){
-        this(new Point2D.Float(x, y));
     }
 
+    public PlayerCharacter(int x, int y, int waterAmount){
+        this(new Point2D.Float(x, y), waterAmount);
+    }
 
     //Getters
-    public boolean isOnGround(){
-    	return onGround;
-    }
-    public boolean isGhostEmpty(){
-    	return ghostEmpty;
-    }
     public Point2D.Float getPosition(){
         return position;
     }
-    public boolean isFlyingEnabled(){
-    	return flyingEnabled;
+    public Point2D.Float getMovementVector(){
+        return movementVector;
     }
+    public int getWaterAmount(){
+        return waterAmount;
+    }
+    
     public boolean isMoving(){
         return moving;
-    }
-    public boolean isDead(){
-        return dead;
     }
     public boolean isFacingRight(){
         return facingRight;
     }
-    public boolean hasWater(){
-        return waterLevel>0;
+    public boolean isOnGround(){
+    	return onGround;
     }
     public boolean isOnIce(){
     	return onIce;
@@ -103,139 +106,67 @@ public class PlayerCharacter {
     public boolean isInsideFlower(){
     	return insideFlower;
     }
-
-    public int getWaterLevel(){
-        return waterLevel;
+    public boolean isFlyingEnabled(){
+    	return flyingEnabled;
     }
-    public Block getActiveBlock(){
-        return activeBlock;
+    public boolean isDead(){
+        return dead;
     }
-    public Block getActiveBlockBottom(){
-    	return activeBlockBottom;
-    }
-    public Point2D.Float getSpeed(){
-        return speed;
-    }
-
-    //Move setters
-    public void moveLeft(){
-        moving = true;
-        stopFlying();
-        facingRight = false;
-        setActiveBlock(activeBlockLeft);
-        setGhostEmpty(ghostEmptyLeft);
-        activeBlockBottom=activeBlockBottomLeft;
-    }
-    public void moveRight(){
-        moving = true;
-        stopFlying();
-        facingRight = true;
-        setActiveBlock(activeBlockRight);
-        setGhostEmpty(ghostEmptyRight);
-        activeBlockBottom=activeBlockBottomRight;
-    }
-
-    public void setOnIce(boolean onIce){
-    	this.onIce=onIce;
-    }
-    public void setOnGround(boolean onGround){
-        this.onGround = onGround;
-    }
-    public void setDead(boolean dead){
-        this.dead = dead;
-    }
-    public void setFlyingEnabled(boolean flyingEnabled){
-    	this.flyingEnabled=flyingEnabled;
-    }
-    public void stop(){
-        moving = false;
-    }
-    public void setPosition(Point2D.Float position){
-        position.setLocation(position);
-    }
-    public void setPosition(float x, float y){
-        position.setLocation(x, y);
-    }
-    public void setSpeed(float x, float y){
-        speed.setLocation(x, y);
-    }
-    public void setGhostEmptyLeft(boolean ghostEmptyLeft){
-    	this.ghostEmptyLeft = ghostEmptyLeft;
-    	if(!facingRight){
-    		ghostEmpty = ghostEmptyLeft;
-    	}
-    }
-    public void setGhostEmptyRight(boolean ghostEmptyRight){
-    	this.ghostEmptyRight = ghostEmptyRight;
-    	if(facingRight){
-    		ghostEmpty = ghostEmptyRight;
-    	}
-    }
-    public void setGhostEmpty(boolean ghostEmpty){
-    	this.ghostEmpty = ghostEmpty;
-    }
-    public void setInsideFlower(boolean insideFlower){
-    	this.insideFlower = insideFlower;
-    }
-    public void stopPouring(){
-        pouringWater = false;
-    }
-    public void stopCooling(){
-        coolingWater = false;
-    }
-    public void stopHeating(){
-        heatingWater = false;
-    }
-    public void setFlying(){
-        this.flying = true;
-    }
-    public void stopFlying(){
-        if(flying){
-            this.stoppedFlying = true;
-        }
-        this.flying = false;
-    }
-    public void doneFlying(){
-        this.stoppedFlying = false;
-    }
-    public boolean isPouringWater(){
-        return this.pouringWater;
-    }
-    public boolean isHeatingWater(){
-        return this.heatingWater;
-    }
-    public boolean isCoolingWater(){
-        return this.coolingWater;
-    }
+    
     public boolean isFlying(){
         return this.flying;
     }
     public boolean stoppedFlying(){
         return this.stoppedFlying;
     }
-
-    public Water pourWater(){
-        pouringWater = true;
-        Point2D.Float point=new Point2D.Float(position.x - 64+15, position.y);
-        if(facingRight){
-            point = new Point2D.Float(position.x + 64-15, position.y);
-        }
-        decreaseWaterLevel();
-        return new Water(point);
+    
+    public boolean isPouringWater(){
+        return this.pouringWater;
     }
-
-    //WaterLevel setters
-    public void decreaseWaterLevel(){
-        waterLevel = waterLevel - 1;
-        if(waterLevel < 1){
-            dead = true;
-        }
+    public boolean isCoolingWater(){
+        return this.coolingWater;
+    }
+    public boolean isHeatingWater(){
+        return this.heatingWater;
     }
     
-    public void setWaterLevel(int waterLevel) {
-        this.waterLevel = waterLevel;
+    public Block getActiveBlockBottom(){
+    	return activeBlockBottom;
     }
-
+    public Block getActiveBlock(){
+        return activeBlock;
+    }
+    public boolean isGhostEmpty(){
+    	return ghostEmpty;
+    }
+    
+    //Setters
+    public void setPosition(float x, float y){
+        position.setLocation(x, y);
+    }
+    public void setSpeed(float x, float y){
+        movementVector.setLocation(x, y);
+    }
+    
+    ////////////////////////////////////////////////////////////
+    //Should be chain called from level
+    public void setOnGround(boolean onGround){
+        this.onGround = onGround;
+    }
+    public void setOnIce(boolean onIce){
+    	this.onIce=onIce;
+    }
+    //////////////////////////////////////////////////////////////
+    public void setInsideFlower(boolean insideFlower){
+    	this.insideFlower = insideFlower;
+    }
+    public void setFlyingEnabled(boolean flyingEnabled){
+    	this.flyingEnabled=flyingEnabled;
+    }
+    public void setDead(boolean dead){
+        this.dead = dead;
+    }
+    
     public void setActiveBlock(Block block){
         activeBlock = block;
     }
@@ -264,7 +195,71 @@ public class PlayerCharacter {
             activeBlockBottom = block;
         }
     }
+    
+    public void setGhostEmptyLeft(boolean ghostEmptyLeft){
+    	this.ghostEmptyLeft = ghostEmptyLeft;
+    	if(!facingRight){
+    		ghostEmpty = ghostEmptyLeft;
+    	}
+    }
+    public void setGhostEmptyRight(boolean ghostEmptyRight){
+    	this.ghostEmptyRight = ghostEmptyRight;
+    	if(facingRight){
+    		ghostEmpty = ghostEmptyRight;
+    	}
+    }
+    public void setGhostEmpty(boolean ghostEmpty){
+    	this.ghostEmpty = ghostEmpty;
+    }
 
+    //Move setters
+    public void moveLeft(){
+        moving = true;
+        stopFlying();
+        facingRight = false;
+        setActiveBlock(activeBlockLeft);
+        setGhostEmpty(ghostEmptyLeft);
+        activeBlockBottom = activeBlockBottomLeft;
+    }
+    public void moveRight(){
+        moving = true;
+        stopFlying();
+        facingRight = true;
+        setActiveBlock(activeBlockRight);
+        setGhostEmpty(ghostEmptyRight);
+        activeBlockBottom = activeBlockBottomRight;
+    }
+    public void stop(){
+        moving = false;
+    }
+    
+    ////////////////////////////////////////////////////
+    //should be chain called from level
+    public void setFlying(){
+        flying = true;
+    }
+    public void stopFlying(){
+        if(flying){
+            stoppedFlying = true;
+        }
+        this.flying = false;
+    }
+    ///////////////////////////////////////////////////////
+    public void doneFlying(){
+        this.stoppedFlying = false;
+    }
+    
+    //Action setters
+    public Water pourWater(){
+        pouringWater = true;
+        Point2D.Float point=new Point2D.Float(position.x - 64+15, position.y);
+        if(facingRight){
+            point = new Point2D.Float(position.x + 64-15, position.y);
+        }
+        decreaseWaterAmount();
+        return new Water(point);
+    }
+    
     //Methods for manipulating active block
     public void heatActiveBlock(){
         Water activeWater;
@@ -298,6 +293,24 @@ public class PlayerCharacter {
             WaterState state = activeWater.getState();
             coolingWater = state == WaterState.GAS || state == WaterState.LIQUID;
             activeBlock.cool();
+        }
+    }
+    
+    public void stopPouring(){
+        pouringWater = false;
+    }
+    public void stopCooling(){
+        coolingWater = false;
+    }
+    public void stopHeating(){
+        heatingWater = false;
+    }
+
+    //Water amount decrease
+    public void decreaseWaterAmount(){
+        waterAmount = waterAmount - 1;
+        if(waterAmount < 1){
+            dead = true;
         }
     }
 }

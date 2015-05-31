@@ -194,8 +194,8 @@ public class GameLogic {
 	public boolean isLevelWon() {
 		if (level.isLevelWon()) {
             HighScores highScores = HighScores.getInstance();
-			if (player.getWaterLevel() > highScores.getHighScore(level.getName())) {
-				highScores.addHighScore(level.getName(), player.getWaterLevel());
+			if (player.getWaterAmount() > highScores.getHighScore(level.getName())) {
+				highScores.addHighScore(level.getName(), player.getWaterAmount());
 			}
 		}
 		return level.isLevelWon();
@@ -355,6 +355,9 @@ public class GameLogic {
 			}
 		}
 		level.coolBlock();
+		
+		/////////////////////////////////////////////////////////
+		//if-statement similar to previous one
 		if (activeBlock instanceof Water) {
 			Water activeWater = (Water) activeBlock;
 			for (Body body : bodyBlockMap.keySet()) {
@@ -439,6 +442,8 @@ public class GameLogic {
 	public void render(float delta) {
 		world.step(delta, 6, 2);
 		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < MAX_SPEED) {
+			/////////////////////////////////////////////////////////////
+			//isflyingenabled check needed?
 			if (player.isFlying() && isFlyingEnabled()) {
 				playerCharacterBody.setLinearVelocity(flyVector);
 			} else {

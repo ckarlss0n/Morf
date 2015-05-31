@@ -141,7 +141,7 @@ public class LevelFactory {
 			}
 		}
 
-		PlayerCharacter player = new PlayerCharacter(playerStartPosX, playerStartPosY);
+		PlayerCharacter player = new PlayerCharacter(playerStartPosX, playerStartPosY, waterLevel);
 
         if(nameLevelMap.containsKey(name) && !reset){
             return nameLevelMap.get(name);

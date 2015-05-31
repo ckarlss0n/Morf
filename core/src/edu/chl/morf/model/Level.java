@@ -2,11 +2,13 @@ package edu.chl.morf.model;
 
 import java.util.List;
 
-/*
+/**
  * Class for representing a level.
  * A level consists of a matrix containing the static tiles in a level,
  * a list containing all the water objects in the level and a flower object.
  * A level also contains a PlayerCharacter that moves around in the level.
+ * 
+ * @author gustav
  */
 public class Level {
 
@@ -16,17 +18,16 @@ public class Level {
 	private Matrix levelMatrix;
 	private boolean levelWon;
 	private Flower flower;
-	private int maxWaterLevel;
+	private int startingWaterAmount;
 
-	public Level(Matrix matrix, String name, PlayerCharacter player, List<Water> waterBlocks, Flower flower, int maxWaterLevel){
+	public Level(Matrix matrix, String name, PlayerCharacter player, List<Water> waterBlocks, Flower flower, int startingWaterAmount){
 		this.name = name;
 		levelMatrix = matrix;
 		this.waterBlocks = waterBlocks;
 		this.player = player;
 		this.flower = flower;
-		this.maxWaterLevel = maxWaterLevel;
+		this.startingWaterAmount = startingWaterAmount;
 		levelWon = false;
-		player.setWaterLevel(maxWaterLevel);
 	}
 
 	//Getters
@@ -48,8 +49,8 @@ public class Level {
 	public boolean isLevelWon(){
 		return levelWon;
 	}
-	public int getMaxWaterLevel(){
-		return maxWaterLevel;
+	public int getStartingWaterAmount(){
+		return startingWaterAmount;
 	}
 
 	//Setter for levelWon
@@ -70,7 +71,7 @@ public class Level {
 	//Method for pouring water in Level
 	public void pourWater(){
 		if(player.isInsideFlower()){
-			player.decreaseWaterLevel();
+			player.decreaseWaterAmount();
 			levelWon = true;
 		}
 		//Make player pour water and add it to level if empty space in front of player
@@ -98,11 +99,6 @@ public class Level {
 	}
 	public boolean isPlayerFlyingEnabled(){
 		return player.isFlyingEnabled();
-	}
-	//////////////////////////////////////////////////////////////
-	//method never called
-	public boolean isPlayerInsideFlower(){
-		return player.isInsideFlower();
 	}
 	
 	//Setters for booleans in PlayerCharacter
