@@ -1,22 +1,18 @@
 package edu.chl.morf.screens;
 
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
-
 import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.controllers.collision.CollisionListener;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.LevelReader;
-import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.view.View;
-import static edu.chl.morf.handlers.Constants.PPM;
+
+import java.util.List;
 
 /**
  * This class represents the screen that is shown when playing a level.
@@ -25,7 +21,6 @@ public class PlayScreen extends GameScreen{
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0,-15);
     private GameLogic gameLogic;
-    private OrthographicCamera box2dCam;
     private Level level;
     private View view;
     private World world;
@@ -55,11 +50,7 @@ public class PlayScreen extends GameScreen{
 
         world.setContactListener(cl);
 
-        //Set up box2d camera
-        box2dCam = new OrthographicCamera();
-        box2dCam.setToOrtho(false, Main.V_WIDTH / PPM, Main.V_HEIGHT / PPM);
-
-        this.view = new View(level, cam, hudCam, box2dCam, spriteBatch, world);
+        this.view = new View(level, cam, hudCam, spriteBatch, world);
 
         //Make nextLevel run inside a timer task, in order to change level after chosen delay
         goToNextLevelTask = new Timer.Task() {

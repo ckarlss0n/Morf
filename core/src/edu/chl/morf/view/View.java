@@ -2,7 +2,6 @@ package edu.chl.morf.view;
 
 import box2dLight.DirectionalLight;
 import box2dLight.RayHandler;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,9 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacter;
@@ -26,7 +23,6 @@ import edu.chl.morf.view.backgrounds.BackgroundGroup;
 
 import java.awt.geom.Point2D;
 
-import static edu.chl.morf.handlers.Constants.PPM;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
 /**
@@ -103,11 +99,6 @@ public class View {
     private Batch batch; //Used to draw textures
 
     private OrthographicCamera camera;
-    private OrthographicCamera box2dCam;
-
-    private Box2DDebugRenderer b2dr; //DELETE
-
-    private World world; //Holds Box2D physics components
 
     private BackgroundFactory backgroundFactory;
     private BackgroundGroup backgroundGroup;
@@ -128,7 +119,7 @@ public class View {
     private float fadeInAlpha;
     private boolean isNewLevel; //Used to know when to fade in
 
-    public View(Level level, OrthographicCamera camera, OrthographicCamera hudCam, OrthographicCamera b2dCam, Batch batch, World world) {
+    public View(Level level, OrthographicCamera camera, OrthographicCamera hudCam, Batch batch, World world) {
 
         //Load PayerCharacter sprite sheet from assets
         TextureAtlas characterTextureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
@@ -166,8 +157,6 @@ public class View {
 
         this.camera = camera;
         this.batch = batch;
-        this.box2dCam = b2dCam;
-        this.world = world;
         this.hudCam = hudCam;
         this.hudCam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
         font = new BitmapFont();
@@ -175,8 +164,6 @@ public class View {
         //Load level's tiled map .tmx file
         TiledMap tileMap = new TmxMapLoader().load("levels/" + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
-
-        b2dr = new Box2DDebugRenderer(); //DELETE
 
         rayHandler = new RayHandler(world);
         fadeOutLight = new DirectionalLight(rayHandler, 50, new Color(255, 0, 0, 0), -90);
@@ -232,8 +219,6 @@ public class View {
         //Render map
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-
-        b2dr.render(world, box2dCam.combined); //DELETE
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined); //Tells the batch to render according to camera
@@ -377,8 +362,6 @@ public class View {
         Point2D.Float playerCharPos = playerCharacter.getPosition();
         camera.position.set(playerCharPos.x, Main.V_HEIGHT / 2, 0f);  //Camera follows x-axis of player character, but has fixed y-axis
         camera.update();
-        box2dCam.position.set(playerCharPos.x / PPM, Main.V_HEIGHT / 2 / PPM, 0f);
-        box2dCam.update();
     }
 
     public boolean isDeathAnimationDone() {
