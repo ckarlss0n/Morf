@@ -300,7 +300,7 @@ public class GameLogic {
 		Timer.Task waitAndRemoveTask = new Timer.Task() {
 			@Override
 			public void run() {
-				level.getWaterBlocks().remove(bodyBlockMap.get(body));
+				level.removeWater(bodyBlockMap.get(body));
 				gasBlockBodyMap.remove(bodyBlockMap.get(body));
 				bodyBlockMap.remove(body);
 				gasBodyTaskMap.remove(body);
