@@ -3,9 +3,10 @@ package edu.chl.morf.screens.levelselection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import edu.chl.morf.file.HighScoreHandler;
+import edu.chl.morf.handlers.HighScores;
 import edu.chl.morf.handlers.LevelReader;
 import edu.chl.morf.main.Main;
+
 import java.io.File;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class LevelSelectionStage extends Stage {
         float previewGapY = (Main.V_HEIGHT - 2 * levelPreviewHeight)/3;
         LevelReader levelReader = LevelReader.getInstance();
         List<String> levelNames = levelReader.getLevels();
-        HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
+        HighScores highScores = HighScores.getInstance();
         int nbrOfLevels = levelNames.size();
         int i = 0;
         for(int y = 0; y < 2; y ++) {
@@ -36,7 +37,7 @@ public class LevelSelectionStage extends Stage {
                             Main.V_HEIGHT - (previewGapY + levelPreviewHeight) - 50 - y * (levelPreviewHeight + previewGapY));
                     this.addActor(levelPreview);
                     if(i > 0) {
-                        if (highScoreHandler.getHighScore(levelNames.get(i-1)) == 0) {
+                        if (highScores.getHighScore(levelNames.get(i - 1)) == 0) {
                             Texture notAvailableTexture = new Texture("levelselection" + File.separator + levelName + "_Thumb_Disabled.png");
                             Image notAvailableImage = new Image(notAvailableTexture);
                             notAvailableImage.setPosition(levelPreview.getX(),levelPreview.getY());

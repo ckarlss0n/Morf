@@ -2,7 +2,7 @@ package edu.chl.morf.main;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-
+import edu.chl.morf.file.FileHandler;
 import edu.chl.morf.file.HighScoreHandler;
 import edu.chl.morf.file.SettingsHandler;
 import edu.chl.morf.screens.ScreenManager;
@@ -23,18 +23,22 @@ public class Main extends Game {
 	private float accum;
 
 	private ScreenManager screenManager;
+    private FileHandler settingsHandler;
+    private FileHandler highScoreHandler;
 
 	@Override
 	public void create() {
-		HighScoreHandler.getInstance().load();
-		SettingsHandler.getInstance().load();
+        settingsHandler = new SettingsHandler();
+		settingsHandler.load();
+        highScoreHandler = new HighScoreHandler();
+        highScoreHandler.load();
 		screenManager = ScreenManager.getInstance();
 	}
 
 	@Override
 	public void dispose() {
-		HighScoreHandler.getInstance().save();
-		SettingsHandler.getInstance().save();
+		highScoreHandler.save();
+		settingsHandler.save();
 	}
 
 	public void render() {

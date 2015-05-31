@@ -1,11 +1,12 @@
 package edu.chl.morf.file;
 
+import edu.chl.morf.handlers.HighScores;
+import edu.chl.morf.handlers.LevelReader;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A singleton class for handling high scores for each playable level.
@@ -13,35 +14,18 @@ import java.util.Map;
  *
  * Created by Lage on 2015-05-12.
  */
-public class HighScoreHandler extends FileHandler{
-    private Map<String,Integer> highScores = new HashMap<String, Integer>(); //Level name and score
-    private static final HighScoreHandler instance = new HighScoreHandler();
+public class HighScoreHandler extends AbstractFileHandler implements FileHandler{
     public static final String FILE_PATH = "/.morf/.highscore.txt";
-
-    public static HighScoreHandler getInstance(){
-        return instance;
-    }
-
-    public void addHighScore(String levelName, int highScore){
-        highScores.put(levelName, highScore);
-    }
-
-    //Get the high score for a specific level
-    public Integer getHighScore(String levelName){
-        if(highScores.get(levelName) != null) {
-            return highScores.get(levelName);
-        } else {
-            return 0;
-        }
-    }
+    private HighScores highScores = HighScores.getInstance();
+    private LevelReader levelReader = LevelReader.getInstance();
 
     /* Method used to write high scores to a text file.
      * Each row contains a level name and a score separated by a semicolon.
      */
     @Override
     public void write(PrintWriter printWriter) throws FileNotFoundException{
-        for(String levelName : highScores.keySet()){
-            printWriter.println(levelName + ";" + highScores.get(levelName).toString());
+        for(String levelName : levelReader.getLevels()){
+            printWriter.println(levelName + ";" + highScores.getHighScore(levelName).toString());
         }
     }
 
@@ -54,7 +38,7 @@ public class HighScoreHandler extends FileHandler{
             String levelName = lineSplit[0];
             String highScoreString = lineSplit[1];
             Integer highScore = Integer.parseInt(highScoreString);
-            highScores.put(levelName, highScore);
+            highScores.addHighScore(levelName,highScore);
             line = bufferedReader.readLine();
         }
     }

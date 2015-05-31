@@ -1,8 +1,7 @@
 package edu.chl.morf.screens.levelselection;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-
-import edu.chl.morf.file.HighScoreHandler;
+import edu.chl.morf.handlers.HighScores;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.screens.ScreenManager;
 
@@ -23,7 +22,7 @@ public class LevelPreview extends SelectionComponent{
         this.setSize(0.3f * Main.V_WIDTH, 0.25f * Main.V_HEIGHT);
         this.setPosition(x, y);
         this.levelName = levelName;
-        Integer levelScore = HighScoreHandler.getInstance().getHighScore(this.levelName + ".tmx");
+        Integer levelScore = HighScores.getInstance().getHighScore(this.levelName + ".tmx");
         stars = new ArrayList<Star>();
         if(levelScore != null) {
             for (int i = 0; i < 8; i++) {

@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
-import edu.chl.morf.file.HighScoreHandler;
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
 import edu.chl.morf.controllers.collision.CollisionData;
@@ -194,9 +193,9 @@ public class GameLogic {
 
 	public boolean isLevelWon() {
 		if (level.isLevelWon()) {
-			HighScoreHandler highScoreHandler = HighScoreHandler.getInstance();
-			if (player.getWaterLevel() > highScoreHandler.getHighScore(level.getName())) {
-				highScoreHandler.addHighScore(level.getName(), player.getWaterLevel());
+            HighScores highScores = HighScores.getInstance();
+			if (player.getWaterLevel() > highScores.getHighScore(level.getName())) {
+				highScores.addHighScore(level.getName(), player.getWaterLevel());
 			}
 		}
 		return level.isLevelWon();

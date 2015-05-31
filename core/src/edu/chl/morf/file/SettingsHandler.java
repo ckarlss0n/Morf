@@ -13,13 +13,8 @@ import java.io.PrintWriter;
  * <p>
  * Created by Lage on 2015-05-17.
  */
-public class SettingsHandler extends FileHandler {
+public class SettingsHandler extends AbstractFileHandler implements FileHandler{
 	public static final String FILE_PATH = "/.morf/.settings.txt";
-	private static final SettingsHandler instance = new SettingsHandler();
-
-	public static synchronized SettingsHandler getInstance() {
-		return instance;
-	}
 
 	/*
 	Each setting value is written to the settings text file, on a separate row, in a known order.
