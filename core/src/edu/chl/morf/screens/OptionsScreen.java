@@ -13,8 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.SoundHandler;
-import edu.chl.morf.screens.ScreenManager;
-import edu.chl.morf.screens.ScreenManager.ScreenType;
+import static edu.chl.morf.main.Main.SCALING;
 
 /**
  * This class represents the options screen.
@@ -46,7 +45,6 @@ public class OptionsScreen extends GameScreen {
 	}
 
 	private class OptionsScreenStage extends Stage {
-		float scaling = 0.666f;
 		private Image background;
 		private Table table;
 		private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -60,7 +58,7 @@ public class OptionsScreen extends GameScreen {
 			soundHandler.playMusic();
 			//Background
 			background = new Image(new Texture("levelselection/Level_Selection_Background.png"));
-			background.setScale(scaling);
+			background.setScale(SCALING);
 			background.setPosition(0, 0);
 			addActor(background);
 

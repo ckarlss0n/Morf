@@ -11,11 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
 import edu.chl.morf.handlers.SoundHandler;
-import edu.chl.morf.screens.ScreenManager;
 import edu.chl.morf.screens.ScreenManager.ScreenType;
-
+import static edu.chl.morf.main.Main.SCALING;
 import java.awt.*;
 import java.net.URI;
 
@@ -33,7 +31,6 @@ public class MainMenuScreen extends GameScreen {
     }
 
     public class MainMenuStage extends Stage{
-        float scaling=0.666f;
         Image background;
         ImageButton settingsButton;
         ImageButton playButton;
@@ -47,7 +44,7 @@ public class MainMenuScreen extends GameScreen {
             soundHandler.playMusic();
             //background
             background=new Image(new Texture("menu/MainMenu_Background.png"));
-            background.setScale(scaling);
+            background.setScale(SCALING);
             background.setPosition(0, 0);
             this.addActor(background);
 
@@ -57,8 +54,8 @@ public class MainMenuScreen extends GameScreen {
             playButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_LevelSelection_Focus.png")));
             playButtonStyle.over= playButtonStyle.down;
             playButton = new ImageButton(playButtonStyle);
-            playButton.setPosition(557 * scaling, (89 + (146 + 16) * 3) * scaling);
-            playButton.setSize(806 * scaling, 146 * scaling);
+            playButton.setPosition(557 * SCALING, (89 + (146 + 16) * 3) * SCALING);
+            playButton.setSize(806 * SCALING, 146 * SCALING);
             playButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -80,8 +77,8 @@ public class MainMenuScreen extends GameScreen {
             exitButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Exit_Focus.png")));
             exitButtonStyle.over = exitButtonStyle.down;
             exitButton=new ImageButton(exitButtonStyle);
-            exitButton.setPosition(557 * scaling, 89 * scaling);
-            exitButton.setSize(806 * scaling, 146 * scaling);
+            exitButton.setPosition(557 * SCALING, 89 * SCALING);
+            exitButton.setSize(806 * SCALING, 146 * SCALING);
             exitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -102,8 +99,8 @@ public class MainMenuScreen extends GameScreen {
             settingsButtonStyle.down=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Settings_Focus.png")));
             settingsButtonStyle.over=settingsButtonStyle.down;
             settingsButton=new ImageButton(settingsButtonStyle);
-            settingsButton.setPosition(557 * scaling, (89 + (146 + 16) * 2) * scaling);
-            settingsButton.setSize(806 * scaling, 146 * scaling);
+            settingsButton.setPosition(557 * SCALING, (89 + (146 + 16) * 2) * SCALING);
+            settingsButton.setSize(806 * SCALING, 146 * SCALING);
             settingsButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -124,8 +121,8 @@ public class MainMenuScreen extends GameScreen {
             aboutButtonStyle.down=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_About_Focus.png")));
             aboutButtonStyle.over= aboutButtonStyle.down;
             aboutButton =new ImageButton(aboutButtonStyle);
-            aboutButton.setPosition(557 * scaling, (89 + 146 + 16) * scaling);
-            aboutButton.setSize(806 * scaling, 146 * scaling);
+            aboutButton.setPosition(557 * SCALING, (89 + 146 + 16) * SCALING);
+            aboutButton.setSize(806 * SCALING, 146 * SCALING);
             aboutButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

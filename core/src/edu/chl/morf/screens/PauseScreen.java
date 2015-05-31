@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.main.Main;
+import static edu.chl.morf.main.Main.SCALING;
 
 /**
  * This class represents the pause screen which is shown upon pausing the game.
@@ -53,7 +54,6 @@ public class PauseScreen extends GameScreen {
 	}
 
 	private class PauseStage extends Stage {
-		float scaling = 0.666f;
 		private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 		private Image background;
 		private Table table;
@@ -105,7 +105,7 @@ public class PauseScreen extends GameScreen {
 			});
 
 			table = new Table(skin);
-			table.setSize(background.getWidth() * scaling, background.getHeight() * scaling);
+			table.setSize(background.getWidth() * SCALING, background.getHeight() * SCALING);
 			table.setPosition(Main.V_WIDTH / 2 - table.getWidth() / 2, Main.V_HEIGHT / 2 - table.getHeight() / 2);
 			table.setBackground(background.getDrawable());
 			table.defaults().padBottom(45).expandX().fillX().padLeft(30).padRight(30).height(50);

@@ -18,6 +18,7 @@ public class Main extends Game {
 	public static final int V_HEIGHT = 720;
 	public static final boolean FULLSCREEN = false;
 	public static final boolean RESIZABLE = false;
+	public static final float SCALING = V_WIDTH/1920f;
 
 	public static final float STEP = 1 / 60f;
 	private float accum;
