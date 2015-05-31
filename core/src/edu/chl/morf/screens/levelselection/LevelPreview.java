@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class LevelPreview extends SelectionComponent{
 
     //Class representing each star of the preview
-    private class Star extends Image {
+    private static class Star extends Image {
         private Texture texture;
         public Star(){
             this.texture = new Texture("levelselection/level_selection_star.png");
