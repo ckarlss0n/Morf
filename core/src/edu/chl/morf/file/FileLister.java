@@ -20,9 +20,11 @@ public class FileLister implements IFileLister{
         File[] listOfFiles = folder.listFiles();
         List<String> files = new ArrayList<String>();
 
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                files.add(file.getName());
+        if(listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    files.add(file.getName());
+                }
             }
         }
 
