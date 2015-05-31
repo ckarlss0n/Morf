@@ -8,6 +8,23 @@ import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.model.ActiveBlockPosition;
 import edu.chl.morf.model.WaterState;
 
+/**
+ * Whenever anything collides in the game world, a contact is sent to
+ * the CollisionListeners beginContact method.
+ * Whenever two bodies stop being in contact with each other, a contact
+ * is sent to the endContact method.
+ * A contact consists of the two fixtures that collided or stopped
+ * being in contact with each other.
+ * The beginContact and endContact methods check which fixtures collided
+ * and forwards the information to gameLogic through for example setting
+ * relevant variables.
+ *
+ * The CollisionListener is only responsible for "extraordinary" events.
+ * The box2D physics engine handles things like two objects bouncing off each other
+ * on contact automatically.
+ *
+ */
+
 public class CollisionListener implements com.badlogic.gdx.physics.box2d.ContactListener {
 	
     private GameLogic gameLogic;

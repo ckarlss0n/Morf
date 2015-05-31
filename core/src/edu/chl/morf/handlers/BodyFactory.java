@@ -94,25 +94,7 @@ public class BodyFactory {
 	}
 
 	public Body createIceBody(World world, Vector2 position){
-/*
-		BodyDef bdef = new BodyDef();
-		bdef.position.set(position.x / PPM, position.y / PPM);
-		bdef.type = BodyType.DynamicBody;
-		bdef.fixedRotation = true;
 
-		Body body = world.createBody(bdef);
-
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox((TILE_SIZE / 2) / PPM, (TILE_SIZE / 2) / PPM);
-
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		fdef.filter.categoryBits = BIT_ICE;
-		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS | BIT_PLAYER;
-		body.createFixture(fdef).setUserData(new CollisionData(ICE));
-
-		shape.dispose();
-		*/
 		Body body = createWaterBody(world, position);
 		Filter filter = new Filter();
 		filter.categoryBits = BIT_ICE;
@@ -124,24 +106,6 @@ public class BodyFactory {
 	
 	public Body createVaporBody(World world, Vector2 position){
 
-		/*BodyDef bdef = new BodyDef();
-		bdef.position.set(position.x / PPM, position.y / PPM);
-		bdef.type = BodyType.DynamicBody;
-		bdef.fixedRotation = true;
-
-		Body body = world.createBody(bdef);
-
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox((TILE_SIZE / 2) / PPM, (TILE_SIZE / 2) / PPM);
-
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		fdef.filter.categoryBits = BIT_WATER;
-		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
-		body.createFixture(fdef).setUserData(new CollisionData(VAPOR));
-
-		shape.dispose();
-		*/
 		Body body = createWaterBody(world,position);
 		Filter filter = new Filter();
 		filter.categoryBits = BIT_GAS;
