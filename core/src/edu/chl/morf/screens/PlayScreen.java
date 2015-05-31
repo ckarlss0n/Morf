@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * This class represents the screen that is shown when playing a level.
+ * 
+ * @author gustav
  */
 public class PlayScreen extends GameScreen{
 
@@ -50,7 +52,7 @@ public class PlayScreen extends GameScreen{
 
         world.setContactListener(cl);
 
-        this.view = new View(level, cam, hudCam, spriteBatch, world);
+        view = new View(level, cam, hudCam, spriteBatch, world);
 
         //Make nextLevel run inside a timer task, in order to change level after chosen delay
         goToNextLevelTask = new Timer.Task() {
@@ -62,6 +64,7 @@ public class PlayScreen extends GameScreen{
         };
     }
 
+    //Change to next level when a level is completed
     public void nextLevel(){
 		List<String> levels = LevelList.getInstance().getLevels();
     	int currentLevel = levels.indexOf(level.getName());

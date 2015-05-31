@@ -38,19 +38,19 @@ public class GameLogic {
 	public static final float JUMP_HEIGHT = 300;
 	public static final float FLYING_SPEED = 2.3f;
     public static final int MAX_SPEED = 2;
-	private Level level;                                                            //Model
-	private World world;                                                            //Box2D world
-	private Map<Body, Water> bodyBlockMap;                                          //Each body has a corresponding water block
-	private Body playerCharacterBody;                                               //The body of the player character
-	private Vector2 movementVector;                                                 //The movement vector applied at every tick
-	private Vector2 flyVector;                                                      //The vector applied when flying
+	private Level level;
+	private World world;
+	private Map<Body, Water> bodyBlockMap;
+	private Body playerCharacterBody;
+	private Vector2 movementVector;
+	private Vector2 flyVector;
 	private BodyFactory bodyFactory;
-	private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();    //Know which keys are pressed
+	private Map<Integer, Boolean> pressedKeys = new HashMap<Integer, Boolean>();
 	private SoundHandler soundHandler = SoundHandler.getInstance();
 	private KeyBindings keyBindings = KeyBindings.getInstance();
 	private boolean gamePaused;
-	private Map<Block, Body> gasBlockBodyMap;                                       //Each gas block has a body
-	private Map<Body, List<Timer.Task>> gasBodyTaskMap;                             //Each gas body has two countdown timers
+	private Map<Block, Body> gasBlockBodyMap;
+	private Map<Body, List<Timer.Task>> gasBodyTaskMap;
 
 	public GameLogic(Level level, World world) {
 		this.level = level;
@@ -85,10 +85,10 @@ public class GameLogic {
 		setUpLevel();
 	}
 
+	//Methods for pausing and resuming game
 	public void pauseGame() {
 		gamePaused = true;
 	}
-
 	public void resumeGame() {
 		gamePaused = false;
 		movementVector = new Vector2(0, 0);
@@ -113,8 +113,7 @@ public class GameLogic {
 		pressedKeys.put(keyCode, bool);
 	}
 
-	//START OF METHODS USED FOR PLAYER CHARACTER MOVEMENT
-	//Method used to move the player character to the left
+	//Methods used to make player character move
 	public void moveLeft() {
 		level.movePLayerLeft();
 		if (playerCharacterBody.getLinearVelocity().x > 0) {    //If moving right
@@ -122,8 +121,6 @@ public class GameLogic {
 		}
 		movementVector = new Vector2(-MOVEMENT_SPEED, 0);
 	}
-
-	//Method used to move the player character to the right
 	public void moveRight() {
 		level.movePlayerRight();
 		if (playerCharacterBody.getLinearVelocity().x < 0) {    //If moving left
@@ -131,30 +128,22 @@ public class GameLogic {
 		}
 		movementVector = new Vector2(MOVEMENT_SPEED, 0);
 	}
-
-	//Method used to make the player character jump
 	public void jump() {
 		level.stopPlayerFlying();
 		if (level.isPlayerOnGround()) {
 			playerCharacterBody.applyForceToCenter(new Vector2(0, JUMP_HEIGHT), true);
 		}
 	}
-
-	//Method used to make the player character fly
 	public void fly() {
 		if (level.isPlayerFlyingEnabled()) {
 			level.setPlayerFlying();
 			movementVector = new Vector2(0, 0);
 		}
 	}
-
-	//Method used to make the player character stop. Runs the stop method with the normal slowFactor.
 	public void stop() {
 		level.stopPlayerFlying();
 		stop(3); //Stop with normal slowFactor
 	}
-
-	//Method used to make the player character stop (used to prevent sliding)
 	public void stop(float slowFactor) {
 		if (!(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) || pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey())))) {
 			level.stopPlayer();
@@ -169,44 +158,6 @@ public class GameLogic {
 			moveRight();
 		}
 	}
-	//END OF METHODS USED FOR PLAYER CHARACTER MOVEMENT
-
-	public void setOnGround(boolean isOnGround) {
-		level.setPlayerOnGround(isOnGround);
-	}
-
-	public boolean isLevelWon() {
-		if (level.isLevelWon()) {
-            HighScores highScores = HighScores.getInstance();
-			if (level.getPlayerWaterAmount() > highScores.getHighScore(level.getName())) {
-				highScores.addHighScore(level.getName(), level.getPlayerWaterAmount());
-			}
-		}
-		return level.isLevelWon();
-	}
-
-	public void setLevelWon(boolean levelWon) {
-		level.setLevelWon(levelWon);
-	}
-
-	public WaterState getWaterState(Body body) {
-		Water waterBlock = bodyBlockMap.get(body);
-		return waterBlock.getState();
-	}
-
-	public boolean isFlyingEnabled() {
-		return level.isPlayerFlyingEnabled();
-	}
-
-	public void setFlyingEnabled(boolean flyingEnabled) {
-		level.setPlayerFlyingEnabled(flyingEnabled);
-	}
-
-	public void setIntersectsFlower(Body body, boolean intersectsFlower) {
-		if (bodyBlockMap.get(body) != null) {
-			bodyBlockMap.get(body).setIntersectingWithFlower(intersectsFlower);
-		}
-	}
 
 	//Method used to place a water block in the world
 	public void placeWater() {
@@ -217,52 +168,6 @@ public class GameLogic {
             Body waterBody = bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
             bodyBlockMap.put(waterBody, water);
             soundHandler.playSoundEffect(soundHandler.getPour());
-		}
-	}
-
-	public void heatBlock() {
-		Block activeBlock = level.getPlayerActiveBlock();
-		if (activeBlock instanceof EmptyBlock) {    //If normal active block is empty, get active block below
-			activeBlock = level.getPlayerActiveBlockBottom();
-		}
-
-		//Sound effects
-		if (activeBlock instanceof Water) {
-			WaterState state = ((Water) activeBlock).getState();
-			if (state == WaterState.SOLID) {
-				soundHandler.playSoundEffect(soundHandler.getPour());
-				if (((Water) activeBlock).isIntersectingWithFlower()) {
-					setLevelWon(true);
-				}
-			} else if (state == WaterState.LIQUID) {
-				soundHandler.playSoundEffect(soundHandler.getHeat());
-			}
-		}
-
-		level.heatBlock();
-
-		if (activeBlock instanceof Water) {
-			Water activeWater = (Water) activeBlock;
-			for (Map.Entry<Body, Water> bodyWaterEntry : bodyBlockMap.entrySet()) {
-				if (bodyWaterEntry.getValue() == activeBlock) {
-					bodyWaterEntry.getKey().getFixtureList().get(0).setFilterData(getFilter(activeWater));
-
-					//If water is heated and turns into gas
-					if (activeWater.getState() == WaterState.GAS) {
-
-							/*
-							Bind the gas block to it's body, if not already existing in map.
-							Also apply flying and removal tasks if not already applied.
-							*/
-						if (!gasBlockBodyMap.containsKey(activeBlock) && !gasBodyTaskMap.containsKey(bodyWaterEntry.getKey())) {
-							gasBlockBodyMap.put(activeBlock, bodyWaterEntry.getKey());
-							flyAndRemove(bodyWaterEntry.getKey(), 1, 3);    //Make body fly and disappear using tasks
-							bodyWaterEntry.getKey().setGravityScale(0f); //Body no longer affected by gravity
-						}
-					}
-					break;
-				}
-			}
 		}
 	}
 
@@ -317,6 +222,7 @@ public class GameLogic {
 		gasBodyTaskMap.put(body, timerTaskList);
 	}
 
+	//Methods for heating and cooling block
 	public void coolBlock() {
 		Block activeBlock = level.getPlayerActiveBlock();
 		if (activeBlock instanceof EmptyBlock) {
@@ -340,20 +246,59 @@ public class GameLogic {
 			}
 		}
 		level.coolBlock();
-		
-		/////////////////////////////////////////////////////////
-		//if-statement similar to previous one
+		Water activeWater = (Water) activeBlock;
+		for (Map.Entry<Body, Water> bodyWaterEntry : bodyBlockMap.entrySet()) {
+			if (bodyWaterEntry.getValue() == activeWater) {
+				bodyWaterEntry.getKey().getFixtureList().get(0).setFilterData(getFilter(activeWater));
+				break;
+			}
+		}
+	}
+	public void heatBlock() {
+		Block activeBlock = level.getPlayerActiveBlock();
+		if (activeBlock instanceof EmptyBlock) {    //If normal active block is empty, get active block below
+			activeBlock = level.getPlayerActiveBlockBottom();
+		}
+
+		//Sound effects
 		if (activeBlock instanceof Water) {
-			Water activeWater = (Water) activeBlock;
-			for (Map.Entry<Body, Water> bodyWaterEntry : bodyBlockMap.entrySet()) {
-				if (bodyWaterEntry.getValue() == activeWater) {
-					bodyWaterEntry.getKey().getFixtureList().get(0).setFilterData(getFilter(activeWater));
-					break;
+			WaterState state = ((Water) activeBlock).getState();
+			if (state == WaterState.SOLID) {
+				soundHandler.playSoundEffect(soundHandler.getPour());
+				if (((Water) activeBlock).isIntersectingWithFlower()) {
+					setLevelWon(true);
 				}
+			} else if (state == WaterState.LIQUID) {
+				soundHandler.playSoundEffect(soundHandler.getHeat());
+			}
+		}
+
+		level.heatBlock();
+		
+		Water activeWater = (Water) activeBlock;
+		for (Map.Entry<Body, Water> bodyWaterEntry : bodyBlockMap.entrySet()) {
+			if (bodyWaterEntry.getValue() == activeBlock) {
+				bodyWaterEntry.getKey().getFixtureList().get(0).setFilterData(getFilter(activeWater));
+
+				//If water is heated and turns into gas
+				if (activeWater.getState() == WaterState.GAS) {
+
+						/*
+						Bind the gas block to it's body, if not already existing in map.
+						Also apply flying and removal tasks if not already applied.
+						*/
+					if (!gasBlockBodyMap.containsKey(activeBlock) && !gasBodyTaskMap.containsKey(bodyWaterEntry.getKey())) {
+						gasBlockBodyMap.put(activeBlock, bodyWaterEntry.getKey());
+						flyAndRemove(bodyWaterEntry.getKey(), 1, 3);    //Make body fly and disappear using tasks
+						bodyWaterEntry.getKey().setGravityScale(0f); //Body no longer affected by gravity
+					}
+				}
+				break;
 			}
 		}
 	}
 
+	//Method for returning a filter given a water's state
 	public Filter getFilter(Water water) {
 		Filter filter = new Filter();
 		if (water.getState() == WaterState.GAS) {
@@ -369,14 +314,26 @@ public class GameLogic {
 		return filter;
 	}
 
+	//Call chain setters for level
 	public void setOnIce(boolean onIce) {
 		level.setPlayerOnIce(onIce);
 	}
-
+	public void setOnGround(boolean isOnGround) {
+		level.setPlayerOnGround(isOnGround);
+	}
+	public void setFlyingEnabled(boolean flyingEnabled) {
+		level.setPlayerFlyingEnabled(flyingEnabled);
+	}
 	public void setPlayerInsideFlower(boolean playerInsideFlower) {
 		level.setPlayerInsideFlower(playerInsideFlower);
 	}
-
+	public void killPlayer() {
+		soundHandler.playSoundEffect(soundHandler.getDie());
+		level.killPlayer();
+	}
+	public void setLevelWon(boolean levelWon) {
+		level.setLevelWon(levelWon);
+	}
 	public void setActiveBody(Body body, ActiveBlockPosition position) {
 		if (body == null) {
 			level.setActiveBlock(EmptyBlock.getEmptyBlock(), position);
@@ -392,32 +349,51 @@ public class GameLogic {
 			level.setActiveBlock(EmptyBlock.getEmptyBlock(), position);
 		}
 	}
-
 	public void setGhostEmptyLeft(boolean ghostEmptyLeft) {
 		level.setPlayerGhostEmptyLeft(ghostEmptyLeft);
 	}
-
 	public void setGhostEmptyRight(boolean ghostEmptyRight) {
 		level.setPlayerGhostEmptyRight(ghostEmptyRight);
 	}
 
-	public void killPlayer() {
-		soundHandler.playSoundEffect(soundHandler.getDie());
-		level.killPlayer();
-	}
 
+	//Call chain getters for level
 	public boolean isPlayerDead() {
 		return level.isPlayerDead();
 	}
+	public boolean isLevelWon() {
+		if (level.isLevelWon()) {
+            HighScores highScores = HighScores.getInstance();
+			if (level.getPlayerWaterAmount() > highScores.getHighScore(level.getName())) {
+				highScores.addHighScore(level.getName(), level.getPlayerWaterAmount());
+			}
+		}
+		return level.isLevelWon();
+	}
+	public WaterState getWaterState(Body body) {
+		Water waterBlock = bodyBlockMap.get(body);
+		return waterBlock.getState();
+	}
+	public boolean isFlyingEnabled() {
+		return level.isPlayerFlyingEnabled();
+	}
 
+	//Method for setting a bottom block to a water
 	public void setWaterBottom(Body body, boolean bottomBlock) {
 		if (bodyBlockMap.get(body) != null) {
 			Water waterBlock = bodyBlockMap.get(body);
 			waterBlock.setBottomBlock(bottomBlock);
 		}
 	}
+	//Method for setting if a water intersects with a flower
+	public void setIntersectsFlower(Body body, boolean intersectsFlower) {
+		if (bodyBlockMap.get(body) != null) {
+			bodyBlockMap.get(body).setIntersectingWithFlower(intersectsFlower);
+		}
+	}
 
 	public void render(float delta) {
+		//Update Box2D world
 		world.step(delta, 6, 2);
 		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < MAX_SPEED) {
 			if (level.isPlayerFlying() && isFlyingEnabled()) {

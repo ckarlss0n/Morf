@@ -40,7 +40,7 @@ public class LevelFactory {
         nameLevelMap = new HashMap<String, Level>();
     }
 
-    public static LevelFactory getInstance(){
+    public static synchronized LevelFactory getInstance(){
         return instance;
     }
 
@@ -118,7 +118,8 @@ public class LevelFactory {
 			}
 		}
 
-		int waterLevel = 10;
+		//Default starting water amount is 10
+		int waterAmount = 10;
 
 		//Add flower block to level
 		if (flowerLayer != null){
@@ -126,13 +127,14 @@ public class LevelFactory {
 				Point2D.Float position = new Point2D.Float(
 						(Float)flowerObject.getProperties().get("x") + TILE_SIZE / 2,
 						(Float)flowerObject.getProperties().get("y") + TILE_SIZE / 2);
-				waterLevel = Integer.parseInt(flowerObject.getProperties().get("waterLevel").toString()); //The unique flower object has got a custom waterLevel property
+				waterAmount = Integer.parseInt(flowerObject.getProperties().get("waterLevel").toString()); //The unique flower object has got a custom waterLevel property
 				flower = new Flower(position);
 			}
 		} else {
 			flower = null;
 		}
 
+		//Default player starting position is set to (500, 500) 
 		int playerStartPosX = 500;
 		int playerStartPosY = 500;
 
@@ -144,12 +146,14 @@ public class LevelFactory {
 			}
 		}
 
-		PlayerCharacter player = new PlayerCharacter(playerStartPosX, playerStartPosY, waterLevel);
+		//Player character is created
+		PlayerCharacter player = new PlayerCharacter(playerStartPosX, playerStartPosY, waterAmount);
 
+		//Return level if existing in nameLevelMap and no reset wanted, else return new level and put in map.
         if(nameLevelMap.containsKey(name) && !reset){
             return nameLevelMap.get(name);
         }else {
-            Level level = new Level(matrix, name, player, waterBlocks, flower, waterLevel);
+            Level level = new Level(matrix, name, player, waterBlocks, flower, waterAmount);
             nameLevelMap.put(name,level);
             return level;
         }

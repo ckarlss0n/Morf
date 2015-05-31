@@ -16,6 +16,7 @@ public class ScreenManager {
 	private Stack<GameScreen> screens;
     private static ScreenManager instance = new ScreenManager();
 
+    //Enum for different types of screens
 	public enum ScreenType{
 		PLAY,
 		MAIN_MENU,
@@ -26,6 +27,7 @@ public class ScreenManager {
 	
 	private ScreenManager(){
 		screens = new Stack<GameScreen>();
+		//Start the game with a main menu screen
 		pushScreen(ScreenType.MAIN_MENU, null);
 	}
 
@@ -37,6 +39,7 @@ public class ScreenManager {
 		screens.peek().render(dt);
 	}
 	
+	//Return a screen depending on the wanted screen type
 	private GameScreen getScreen(ScreenType screen, String levelName){
 		if(screen == ScreenType.PLAY){
 			return new PlayScreen(this, levelName);
@@ -56,12 +59,13 @@ public class ScreenManager {
 		return null;
 	}
 
-	//TODO Remove?
+	//Method for clearing the stack and pushing a new screen
 	public void setScreen(ScreenType screen, String levelName){
 		clearScreens();
 		pushScreen(screen, levelName);
 	}
 	
+	//Method for pushing a screen to the stack
 	public void pushScreen(ScreenType screen, String levelName){
 		screens.push(getScreen(screen, levelName));
 	}
@@ -76,8 +80,8 @@ public class ScreenManager {
 			((PlayScreen)screens.peek()).resumeGame();
 		}
 	}
-
-	//TODO Remove?
+	
+	//Method for clearing the stack of screens
 	public void clearScreens(){
 		screens.clear();
 	}

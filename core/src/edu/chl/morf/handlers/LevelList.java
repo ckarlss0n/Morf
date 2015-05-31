@@ -12,7 +12,7 @@ public class LevelList {
 	private static LevelList instance;
 	private List<String> levels;
 	
-    public static LevelList getInstance(){
+    public static synchronized LevelList getInstance(){
     	if(instance == null){
     		instance = new LevelList();
     	}
