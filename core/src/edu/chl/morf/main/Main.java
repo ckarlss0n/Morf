@@ -3,8 +3,8 @@ package edu.chl.morf.main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
-import edu.chl.morf.handlers.HighScoreHandler;
-import edu.chl.morf.handlers.SettingsHandler;
+import edu.chl.morf.file.HighScoreHandler;
+import edu.chl.morf.file.SettingsHandler;
 import edu.chl.morf.screens.ScreenManager;
 
 /**

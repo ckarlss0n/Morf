@@ -1,4 +1,4 @@
-package edu.chl.morf.handlers;
+package edu.chl.morf.file;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

@@ -3,7 +3,7 @@ package edu.chl.morf.screens.levelselection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import edu.chl.morf.handlers.HighScoreHandler;
+import edu.chl.morf.file.HighScoreHandler;
 import edu.chl.morf.handlers.LevelReader;
 import edu.chl.morf.main.Main;
 import java.io.File;

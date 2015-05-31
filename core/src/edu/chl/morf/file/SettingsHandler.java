@@ -1,4 +1,7 @@
-package edu.chl.morf.handlers;
+package edu.chl.morf.file;
+
+import edu.chl.morf.handlers.KeyBindings;
+import edu.chl.morf.handlers.SoundHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import edu.chl.morf.file.HighScoreHandler;
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
 import edu.chl.morf.controllers.collision.CollisionData;
