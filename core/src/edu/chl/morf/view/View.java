@@ -38,29 +38,29 @@ public class View {
 
     //Character animation constants
     public static final String CHARACTERS_ATLAS_PATH = "spritesheets/Character_Sprite_Sheet";
-    public static final String[] PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES = new String[]{"runningLeft1", "runningLeft2", "runningLeft3",
+    protected final String[] PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES = new String[]{"runningLeft1", "runningLeft2", "runningLeft3",
             "runningLeft4", "runningLeft5", "runningLeft6", "runningLeft7"};
-    public static final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[]{"runningRight1", "runningRight2", "runningRight3",
+    protected final String[] PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES = new String[]{"runningRight1", "runningRight2", "runningRight3",
             "runningRight4", "runningRight5", "runningRight6", "runningRight7",};
-    public static final String[] PLAYERCHARACTER_POURRIGHT_REGION_NAMES = new String[]{"pourRight1", "pourRight1", "pourRight2", "pourRight2", "pourRight2",
+    protected final String[] PLAYERCHARACTER_POURRIGHT_REGION_NAMES = new String[]{"pourRight1", "pourRight1", "pourRight2", "pourRight2", "pourRight2",
             "pourRight3", "pourRight3", "pourRight3", "pourRight2", "pourRight2", "pourRight2", "pourRight1", "pourRight1"};
-    public static final String[] PLAYERCHARACTER_COOLRIGHT_REGION_NAMES = new String[]{"idleRightEmpty", "coolRight1", "coolRight1", "coolRight2",
+    protected final String[] PLAYERCHARACTER_COOLRIGHT_REGION_NAMES = new String[]{"idleRightEmpty", "coolRight1", "coolRight1", "coolRight2",
             "coolRight2", "coolRight2", "coolRight3", "coolRight3", "coolRight3", "coolRight2", "coolRight2", "coolRight2", "coolRight1", "coolRight1", "idleRightEmpty"};
-    public static final String[] PLAYERCHARACTER_HEATRIGHT_REGION_NAMES = new String[]{"idleRightEmpty", "heatRight1", "heatRight1", "heatRight2", "heatRight2",
+    protected final String[] PLAYERCHARACTER_HEATRIGHT_REGION_NAMES = new String[]{"idleRightEmpty", "heatRight1", "heatRight1", "heatRight2", "heatRight2",
             "heatRight2", "heatRight3", "heatRight3", "heatRight3", "heatRight2", "heatRight2", "heatRight2", "heatRight1", "heatRight1", "idleRightEmpty"};
-    public static final String[] PLAYERCHARACTER_POURLEFT_REGION_NAMES = new String[]{"pourLeft1", "pourLeft1", "pourLeft2", "pourLeft2", "pourLeft2",
+    protected final String[] PLAYERCHARACTER_POURLEFT_REGION_NAMES = new String[]{"pourLeft1", "pourLeft1", "pourLeft2", "pourLeft2", "pourLeft2",
             "pourLeft3", "pourLeft3", "pourLeft3", "pourLeft2", "pourLeft2", "pourLeft2", "pourLeft1", "pourLeft1"};
-    public static final String[] PLAYERCHARACTER_COOLLEFT_REGION_NAMES = new String[]{"idleLeftEmpty", "coolLeft1", "coolLeft1", "coolLeft2",
+    protected final String[] PLAYERCHARACTER_COOLLEFT_REGION_NAMES = new String[]{"idleLeftEmpty", "coolLeft1", "coolLeft1", "coolLeft2",
             "coolLeft2", "coolLeft2", "coolLeft3", "coolLeft3", "coolLeft3", "coolLeft2", "coolLeft2", "coolLeft2", "coolLeft1", "coolLeft1", "idleLeftEmpty"};
-    public static final String[] PLAYERCHARACTER_HEATLEFT_REGION_NAMES = new String[]{"idleLeftEmpty", "heatLeft1", "heatLeft1", "heatLeft2", "heatLeft2",
+    protected final String[] PLAYERCHARACTER_HEATLEFT_REGION_NAMES = new String[]{"idleLeftEmpty", "heatLeft1", "heatLeft1", "heatLeft2", "heatLeft2",
             "heatLeft2", "heatLeft3", "heatLeft3", "heatLeft3", "heatLeft2", "heatLeft2", "heatLeft2", "heatLeft1", "heatLeft1", "idleLeftEmpty"};
-    public static final String[] PLAYERCHARACTER_FLYLEFT_REGION_NAMES = new String[]{"flyingLeft1", "flyingLeft1", "flyingLeft2", "flyingLeft2",
+    protected final String[] PLAYERCHARACTER_FLYLEFT_REGION_NAMES = new String[]{"flyingLeft1", "flyingLeft1", "flyingLeft2", "flyingLeft2",
             "flyingLeft3", "flyingLeft3", "flyingLeft4", "flyingLeft4", "flyingLeft5", "flyingLeft5"};
-    public static final String[] PLAYERCHARACTER_DEATHLEFT_REGION_NAMES = new String[]{"idleLeftEmpty", "deathLeft1", "deathLeft1", "deathLeft2", "deathLeft2",
+    protected final String[] PLAYERCHARACTER_DEATHLEFT_REGION_NAMES = new String[]{"idleLeftEmpty", "deathLeft1", "deathLeft1", "deathLeft2", "deathLeft2",
             "deathLeft3", "deathLeft3", "deathLeft4", "deathLeft4", "deathLeft4"};
-    public static final String[] PLAYERCHARACTER_FLYRIGHT_REGION_NAMES = new String[]{"flyingRight1", "flyingRight1", "flyingRight2", "flyingRight2",
+    protected final String[] PLAYERCHARACTER_FLYRIGHT_REGION_NAMES = new String[]{"flyingRight1", "flyingRight1", "flyingRight2", "flyingRight2",
             "flyingRight3", "flyingRight3", "flyingRight4", "flyingRight4", "flyingRight5", "flyingRight5"};
-    public static final String[] PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES = new String[]{"idleRightEmpty", "deathRight1", "deathRight1", "deathRight2", "deathRight2",
+    protected final String[] PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES = new String[]{"idleRightEmpty", "deathRight1", "deathRight1", "deathRight2", "deathRight2",
             "deathRight3", "deathRight3", "deathRight4", "deathRight4", "deathRight4"};
 
     //PlayerCharacter render variables
@@ -298,8 +298,8 @@ public class View {
 
         //Render HUD (Water level)
         batch.setProjectionMatrix(hudCam.combined);
-        float deltaWidth = (waterMeterTexture.getWidth() - waterLevelTexture.getWidth()) / 2;
-        float deltaHeight = (waterMeterTexture.getHeight() - waterLevelTexture.getHeight()) / 2;
+        float deltaWidth = (waterMeterTexture.getWidth() - waterLevelTexture.getWidth()) / 2f;
+        float deltaHeight = (waterMeterTexture.getHeight() - waterLevelTexture.getHeight()) / 2f;
         int currentWaterLevel = playerCharacter.getWaterAmount();
         float computedWidth = (float) waterLevelTexture.getWidth() / level.getStartingWaterAmount() * currentWaterLevel;
         float paddingTop = 20;
@@ -314,7 +314,7 @@ public class View {
         //Also show water level as text
         String waterLevelString = currentWaterLevel + " / " + level.getStartingWaterAmount();
         BitmapFont.TextBounds messageBounds = font.getBounds(waterLevelString); //Actual size of the drawn message
-        font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth() / 2 - messageBounds.width / 2, Main.V_HEIGHT - waterMeterTexture.getHeight() / 2 - paddingTop + messageBounds.height / 2);
+        font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth() / 2f - messageBounds.width / 2f, Main.V_HEIGHT - waterMeterTexture.getHeight() / 2f - paddingTop + messageBounds.height / 2f);
         batch.end();
 
         if (isNewLevel) {
@@ -377,8 +377,8 @@ public class View {
     public void runCharacterAnimation(Animation animation, Batch batch) {
         Point2D.Float playerCharPos = playerCharacter.getPosition();
         if (currentAnimationTime < animation.getKeyFrames().length * 2) {
-            batch.draw(animation.getKeyFrame(currentAnimationTime / 2, true),
-                    playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+            batch.draw(animation.getKeyFrame(currentAnimationTime / 2f, true),
+                    playerCharPos.x - TILE_SIZE / 2f, playerCharPos.y - TILE_SIZE / 2f, TILE_SIZE, TILE_SIZE);
             currentAnimationTime++;
         } else {
             playerCharacter.stopHeating();
@@ -393,8 +393,8 @@ public class View {
         if (currentAnimationTime < animation.getKeyFrames().length * 2 - 1) {
             currentAnimationTime++;
         }
-        batch.draw(animation.getKeyFrame(currentAnimationTime / 2, true),
-                playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+        batch.draw(animation.getKeyFrame(currentAnimationTime / 2f, true),
+                playerCharPos.x - TILE_SIZE / 2f, playerCharPos.y - TILE_SIZE / 2f, TILE_SIZE, TILE_SIZE * 1.5f);
     }
 
     public void runFlyingStoppedAnimation(Animation animation, Batch batch) {
@@ -407,7 +407,7 @@ public class View {
             playerCharacter.stopHeating();
             playerCharacter.stopPouring();
         }
-        batch.draw(animation.getKeyFrame(currentAnimationTime / 2, true),
-                playerCharPos.x - TILE_SIZE / 2, playerCharPos.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE * 1.5f);
+        batch.draw(animation.getKeyFrame(currentAnimationTime / 2f, true),
+                playerCharPos.x - TILE_SIZE / 2f, playerCharPos.y - TILE_SIZE / 2f, TILE_SIZE, TILE_SIZE * 1.5f);
     }
 }
