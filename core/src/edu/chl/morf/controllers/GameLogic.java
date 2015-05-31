@@ -17,7 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static edu.chl.morf.Constants.MAX_SPEED;
 import static edu.chl.morf.handlers.Constants.*;
 
 /**
@@ -34,6 +33,7 @@ public class GameLogic {
 	public static final float MOVEMENT_SPEED = 15;
 	public static final float JUMP_HEIGHT = 300;
 	public static final float FLYING_SPEED = 2.3f;
+    public static final int MAX_SPEED = 2;
 	private Level level;                                                            //Model
 	private World world;                                                            //Box2D world
 	private Map<Body, Water> bodyBlockMap;                                          //Each body has a corresponding water block
