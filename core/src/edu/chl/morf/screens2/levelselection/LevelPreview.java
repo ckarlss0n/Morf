@@ -17,9 +17,7 @@ public class LevelPreview extends SelectionComponent{
 
     public LevelPreview(String levelName, float x, float y) {
 
-        //Change when new textures are added
-        //super("levelselection/" + levelName + "_Thumb.png","levelselection/" + levelName + "_Thumb_Focus.png");
-        super("levelselection/" + "Level_1" + "_Thumb.png","levelselection/" + "Level_1" + "_Thumb_Focus.png");
+        super("levelselection/" + levelName + "_Thumb.png","levelselection/" + levelName + "_Thumb_Focus.png");
 
         this.setSize(0.3f * Main.V_WIDTH, 0.25f * Main.V_HEIGHT);
         this.setPosition(x, y);

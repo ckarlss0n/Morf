@@ -29,16 +29,15 @@ public class LevelSelectionStage extends Stage {
             for(int x = 0; x < 3; x++){
                 if(i < nbrOfLevels) {
                     String levelName = levelNames.get(i).split("\\.")[0];
+                    if(levelName.equals("Level_8") || levelName.equals("level_5")){
+                        levelName = "Level_1";
+                    }
                     LevelPreview levelPreview = new LevelPreview(levelName, previewGapX + x * (previewGapX + levelPreviewWidth),
                             Main.V_HEIGHT - (previewGapY + levelPreviewHeight) - 50 - y * (levelPreviewHeight + previewGapY));
                     this.addActor(levelPreview);
                     if(i > 0) {
                         if (highScoreHandler.getHighScore(levelNames.get(i-1)) == 0) {
-
-                            //Change when new textures are added
-                            //Texture notAvailableTexture = new Texture("levelselection" + File.separator + levelName + "_Thumb_Disabled.png");
-                            Texture notAvailableTexture = new Texture("levelselection" + File.separator + "Level_1" + "_Thumb_Disabled.png");
-
+                            Texture notAvailableTexture = new Texture("levelselection" + File.separator + levelName + "_Thumb_Disabled.png");
                             Image notAvailableImage = new Image(notAvailableTexture);
                             notAvailableImage.setPosition(levelPreview.getX(),levelPreview.getY());
                             notAvailableImage.setSize(levelPreviewWidth,levelPreviewHeight);
