@@ -1,13 +1,13 @@
 package edu.chl.morf.screens;
 
-import edu.chl.morf.screens2.*;
-
 import java.util.Stack;
 
 /**
  * A singleton class managing the different screens of the game.
  * All screens are stored in a stack.
  * The screen on top of the stack is the one to get rendered.
+ * 
+ * @author gustav
  */
 public class ScreenManager {
 

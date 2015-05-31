@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.screens.ScreenManager;
 import edu.chl.morf.screens.ScreenManager.ScreenType;
-import edu.chl.morf.screens2.GameScreen;
 
 import java.awt.*;
 import java.net.URI;

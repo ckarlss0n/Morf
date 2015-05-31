@@ -15,7 +15,6 @@ import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.LevelReader;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
-import edu.chl.morf.screens2.GameScreen;
 import edu.chl.morf.view.View;
 import static edu.chl.morf.handlers.Constants.PPM;
 

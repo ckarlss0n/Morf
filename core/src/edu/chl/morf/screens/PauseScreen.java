@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.main.Main;
-import edu.chl.morf.screens2.GameScreen;
 
 /**
  * This class represents the pause screen which is shown upon pausing the game.
