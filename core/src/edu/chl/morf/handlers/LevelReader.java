@@ -2,6 +2,7 @@ package edu.chl.morf.handlers;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -22,6 +23,7 @@ public class LevelReader {
 				levels.add(listOfFiles[i].getName());
 			}
 		}
+        Collections.sort(levels);
 		this.levels = levels;
 	}
 	
