@@ -29,12 +29,8 @@ import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
  */
 public class View {
 
-    private Level level;
-    private Batch batch;
-
     //PlayerCharacter render variables
     private TextureRegion idleRightTexture;
-    private TextureRegion flyingRightTexture;
     private Animation deathRightAnimation;
     private Animation runningRightAnimation;
     private Animation pourRightAnimation;
@@ -50,7 +46,6 @@ public class View {
     private Animation flyingLeftAnimation;
     private int currentAnimationTime;
     private boolean deathAnimationDone;
-
     public static final float PPM = 100f; //Pixels per meter
 
     //Character animation constants
@@ -80,6 +75,8 @@ public class View {
     public static final String[] PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES = new String[] {"idleRightEmpty", "deathRight1", "deathRight1", "deathRight2", "deathRight2",
             "deathRight3", "deathRight3", "deathRight4", "deathRight4", "deathRight4"};
 
+    //Environment render variables
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
     private Texture waterTexture;
     private Texture waterTextureBottom;
     private Texture iceTexture;
@@ -90,18 +87,22 @@ public class View {
     private Texture levelCompletedTexture;
     private float stateTime;
 
+    //Model variables
     private PlayerCharacter playerCharacter;
+    private Level level;
+
+    private Batch batch; //Used to draw textures
 
     private OrthographicCamera camera;
     private OrthographicCamera box2dCam;
 
-    private OrthogonalTiledMapRenderer tiledMapRenderer;
+    private Box2DDebugRenderer b2dr; //DELETE
 
-    private Box2DDebugRenderer b2dr;
-    private World world;
+    private World world; //Holds Box2D physics components
 
     private BackgroundFactory backgroundFactory;
     private BackgroundGroup backgroundGroup;
+
     private OrthographicCamera hudCam;
     private BitmapFont font;
 
@@ -127,18 +128,16 @@ public class View {
         coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES, characterTextureAtlas, 1);
         flyingLeftAnimation = generateAnimation(PLAYERCHARACTER_FLYLEFT_REGION_NAMES, characterTextureAtlas, 1);
         deathLeftAnimation = generateAnimation(PLAYERCHARACTER_DEATHLEFT_REGION_NAMES, characterTextureAtlas, 1);
-        flyingRightTexture = characterTextureAtlas.findRegion("flyingRight5");
-
         runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES, characterTextureAtlas, 0.1f);
         pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         heatRightAnimation = generateAnimation(PLAYERCHARACTER_HEATRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         coolRightAnimation = generateAnimation(PLAYERCHARACTER_COOLRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         flyingRightAnimation = generateAnimation(PLAYERCHARACTER_FLYRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         deathRightAnimation = generateAnimation(PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES, characterTextureAtlas, 1);
-
         idleRightTexture = characterTextureAtlas.findRegion("idleRight");
         idleLeftTexture = characterTextureAtlas.findRegion("idleLeft");
 
+        //Load remaining textures
         waterTexture = new Texture("Tiles/waterTile.png");
         waterTextureBottom = new Texture("Tiles/waterTile-Middle.png");
         iceTexture = new Texture("Tiles/ice.png");
@@ -153,7 +152,7 @@ public class View {
         playerCharacter = level.getPlayer();
 
         backgroundFactory = new BackgroundFactory();
-        backgroundGroup = backgroundFactory.createBackgroundGroup(level.getName());
+        backgroundGroup = backgroundFactory.createBackgroundGroup();
 
         this.camera = camera;
         this.batch =  batch;
@@ -163,9 +162,11 @@ public class View {
         this.hudCam.setToOrtho(false, Main.V_WIDTH, Main.V_HEIGHT);
         font = new BitmapFont();
 
+        //Load level's tiled map .tmx file
         TiledMap tileMap = new TmxMapLoader().load("levels/" + level.getName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
-        b2dr = new Box2DDebugRenderer();
+
+        b2dr = new Box2DDebugRenderer(); //DELETE
 
         rayHandler = new RayHandler(world);
         fadeOutLight = new DirectionalLight(rayHandler, 50, new Color(255, 0, 0, 0), -90);
@@ -205,12 +206,15 @@ public class View {
     public void render(float delta){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
         updateCamera();
-
         batch.begin();
 
         //Render background layers
         batch.setProjectionMatrix(hudCam.combined);
-        backgroundGroup.setBackgroundSpeeds(playerCharacter.getSpeed().x);
+        try {
+            backgroundGroup.setBackgroundSpeeds(playerCharacter.getSpeed().x);
+        }catch (NullPointerException e){
+            System.out.println(e.getCause());
+        }
         backgroundGroup.renderLayers(batch, delta);
         batch.end();
 
@@ -218,16 +222,14 @@ public class View {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        b2dr.render(world, box2dCam.combined);
+        b2dr.render(world, box2dCam.combined); //DELETE
 
         batch.begin();
-
-        batch.setProjectionMatrix(camera.combined);                 //Tells the spritebatch to render according to camera
+        batch.setProjectionMatrix(camera.combined);                 //Tells the batch to render according to camera
         stateTime += Gdx.graphics.getDeltaTime();
 
         //Render character animation
         Point2D.Float playerCharPos = playerCharacter.getPosition();
-
         if(playerCharacter.isFacingRight()) {
             if(playerCharacter.isFlying()){
                 runFlyingAnimation(flyingRightAnimation, batch);
