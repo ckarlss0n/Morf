@@ -1,8 +1,8 @@
 package test.edu.chl.morf.model;
 
 import edu.chl.morf.model.PlayerCharacter;
-import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+import edu.chl.morf.model.blocks.Water;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -51,7 +51,7 @@ public class TestPlayerCharacter {
 	@Test
 	public void testHeatActiveBlock(){
 		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
-		Water water = new Water(WaterState.LIQUID);
+		Water water = new Water(0, 0, WaterState.LIQUID);
 		player.setActiveBlock(water);
 		player.heatActiveBlock();
 		assertTrue(water.getState() == WaterState.GAS);
@@ -60,7 +60,7 @@ public class TestPlayerCharacter {
 	@Test
 	public void testCoolActiveBlock(){
 		PlayerCharacter player = new PlayerCharacter(0, 0, 10);
-		Water water = new Water(WaterState.LIQUID);
+		Water water = new Water(0, 0, WaterState.LIQUID);
 		player.setActiveBlock(water);
 		player.coolActiveBlock();
 		assertTrue(water.getState() == WaterState.SOLID);

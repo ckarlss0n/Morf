@@ -6,8 +6,8 @@ import java.awt.geom.Point2D;
 
 import org.junit.Test;
 
-import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+import edu.chl.morf.model.blocks.Water;
 
 public class TestWater {
 
@@ -24,7 +24,7 @@ public class TestWater {
 	@Test
 	public void testHeat() {
 		//Create solid Water (ice)
-		Water water = new Water(WaterState.SOLID);
+		Water water = new Water(0, 0, WaterState.SOLID);
 		water.heat();
 		//Check that ice has melted to liquid water
 		assertTrue(water.getState() == WaterState.LIQUID);
@@ -36,7 +36,7 @@ public class TestWater {
 	@Test
 	public void testCool(){
 		//Create Water in gas form (vapor)
-		Water water = new Water(WaterState.GAS);
+		Water water = new Water(0, 0, WaterState.GAS);
 		water.cool();
 		//Check that vapor has condensed
 		assertTrue(water.getState() == WaterState.LIQUID);

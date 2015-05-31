@@ -2,6 +2,10 @@ package edu.chl.morf.model;
 
 import java.util.List;
 
+import edu.chl.morf.model.blocks.Block;
+import edu.chl.morf.model.blocks.Flower;
+import edu.chl.morf.model.blocks.Water;
+
 /**
  * Class for representing a level.
  * A level consists of a matrix containing the static tiles in a level,

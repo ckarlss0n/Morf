@@ -2,6 +2,9 @@ package edu.chl.morf.model;
 
 import java.awt.geom.Point2D;
 
+import edu.chl.morf.model.blocks.Block;
+import edu.chl.morf.model.blocks.Water;
+
 /**
  * Class for representing a player character.
  * A PlayerCharacter has a position, movement and an amount of remaining water.
@@ -255,7 +258,7 @@ public class PlayerCharacter {
             point = new Point2D.Float(position.x + 64-15, position.y);
         }
         decreaseWaterAmount();
-        return new Water(point);
+        return new Water(point, WaterState.LIQUID);
     }
     
     //Methods for manipulating active block

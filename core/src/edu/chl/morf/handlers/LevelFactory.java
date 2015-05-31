@@ -5,7 +5,10 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+
 import edu.chl.morf.model.*;
+import edu.chl.morf.model.blocks.Flower;
+import edu.chl.morf.model.blocks.Water;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;

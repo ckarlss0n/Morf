@@ -2,6 +2,8 @@ package edu.chl.morf.model;
 
 import java.awt.geom.Point2D;
 
+import edu.chl.morf.model.blocks.AbstractBlock;
+
 /**
  * The EmptyBlock class represents that there is no block.
  * This is relevant regarding the activeBlock. If the activeBlock was

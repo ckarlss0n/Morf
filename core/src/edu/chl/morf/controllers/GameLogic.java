@@ -7,8 +7,12 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
+import edu.chl.morf.model.blocks.Block;
+import edu.chl.morf.model.blocks.Ground;
+import edu.chl.morf.model.blocks.Water;
 import edu.chl.morf.controllers.collision.CollisionData;
 import edu.chl.morf.controllers.collision.CollisionType;
 
@@ -203,7 +207,7 @@ public class GameLogic {
 
 	public void setIntersectsFlower(Body body, boolean intersectsFlower) {
 		if (bodyBlockMap.get(body) != null) {
-			bodyBlockMap.get(body).setIntersectsFlower(intersectsFlower);
+			bodyBlockMap.get(body).setIntersectingWithFlower(intersectsFlower);
 		}
 	}
 
@@ -230,7 +234,7 @@ public class GameLogic {
 			WaterState state = ((Water) activeBlock).getState();
 			if (state == WaterState.SOLID) {
 				soundHandler.playSoundEffect(soundHandler.getPour());
-				if (((Water) activeBlock).getIntersectsFlower()) {
+				if (((Water) activeBlock).isIntersectingWithFlower()) {
 					setLevelWon(true);
 				}
 			} else if (state == WaterState.LIQUID) {
@@ -325,7 +329,7 @@ public class GameLogic {
 			WaterState state = ((Water) activeBlock).getState();
 			if (state == WaterState.GAS) {
 				soundHandler.playSoundEffect(soundHandler.getPour());
-				if (((Water) activeBlock).getIntersectsFlower()) {
+				if (((Water) activeBlock).isIntersectingWithFlower()) {
 					setLevelWon(true);
 				}
 				//If the active block is of type gas, it should be reset upon cooling
@@ -388,7 +392,7 @@ public class GameLogic {
 				level.setActiveBlock(block, position);
 			}
 		} else {
-			level.setActiveBlock(new Ground(), position);
+			level.setActiveBlock(new Ground(0, 0), position);
 		}
 	}
 
@@ -419,7 +423,7 @@ public class GameLogic {
 	public void setWaterTop(Body body, boolean topBlock) {
 		if (bodyBlockMap.get(body) != null) {
 			Water waterBlock = bodyBlockMap.get(body);
-			waterBlock.setTopBlock(topBlock);
+			//waterBlock.setTopBlock(topBlock);
 		}
 	}
 

@@ -2,6 +2,7 @@ package edu.chl.morf.view;
 
 import box2dLight.DirectionalLight;
 import box2dLight.RayHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,14 +15,17 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+
 import edu.chl.morf.main.Main;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacter;
-import edu.chl.morf.model.Water;
 import edu.chl.morf.model.WaterState;
+import edu.chl.morf.model.blocks.Water;
 import edu.chl.morf.view.backgrounds.BackgroundFactory;
 import edu.chl.morf.view.backgrounds.BackgroundGroup;
+
 import java.awt.geom.Point2D;
+
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
 /**
