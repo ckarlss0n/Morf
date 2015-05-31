@@ -1,5 +1,6 @@
 package edu.chl.morf.model;
 
+import java.awt.geom.Point2D;
 import java.util.List;
 
 import edu.chl.morf.model.blocks.Block;
@@ -56,6 +57,8 @@ public class Level {
 	public int getStartingWaterAmount(){
 		return startingWaterAmount;
 	}
+	public Point2D.Float getPlayerPosition(){return player.getPosition();}
+	public int getPlayerWaterAmount(){return player.getWaterAmount();}
 
 	//Setter for levelWon
 	public void setLevelWon(boolean levelWon){
@@ -96,14 +99,22 @@ public class Level {
 	public void coolBlock(){
 		player.coolActiveBlock();
 	}
+	//Voids
+	public void stopPlayer(){player.stop();}
+	public void movePlayerRight(){player.moveRight();}
+	public void movePLayerLeft(){player.moveLeft();}
+	public void stopPlayerFlying(){player.stopFlying();}
+	public void setPlayerFlying(){player.setFlying();}
+
 	
 	//Getters for booleans in PlayerCharacter
 	public boolean isPlayerDead(){
 		return player.isDead();
 	}
-	public boolean isPlayerFlyingEnabled(){
-		return player.isFlyingEnabled();
-	}
+	public boolean isPlayerFlyingEnabled(){return player.isFlyingEnabled();}
+	public boolean isPlayerOnIce(){return player.isOnIce();}
+	public boolean isPlayerOnGround(){return player.isOnGround();}
+	public boolean isPlayerFlying(){return player.isFlying();}
 	
 	//Setters for booleans in PlayerCharacter
 	public void setActiveBlock(Block block, ActiveBlockPosition position){
@@ -121,4 +132,8 @@ public class Level {
 	public void setPlayerInsideFlower(boolean playerInsideFlower){
 		player.setInsideFlower(playerInsideFlower);
 	}
+	public void setPlayerOnIce(boolean playerOnIce){player.setOnIce(playerOnIce);}
+	public void setPlayerOnGround(boolean playerOnGround){player.setOnGround(playerOnGround);}
+	public void setPlayerPosition(float x, float y){player.setPosition(x, y);}
+	public void setPlayerSpeed(float x, float y){player.setSpeed(x, y);}
 }

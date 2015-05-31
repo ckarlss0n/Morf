@@ -42,7 +42,6 @@ public class GameLogic {
 	private World world;                                                            //Box2D world
 	private Map<Body, Water> bodyBlockMap;                                          //Each body has a corresponding water block
 	private Body playerCharacterBody;                                               //The body of the player character
-	private PlayerCharacter player;                                            //The model of the player character
 	private Vector2 movementVector;                                                 //The movement vector applied at every tick
 	private Vector2 flyVector;                                                      //The vector applied when flying
 	private BodyFactory bodyFactory;
@@ -57,7 +56,6 @@ public class GameLogic {
 		this.level = level;
 		this.world = world;
 		bodyBlockMap = new HashMap<Body, Water>();
-		player = level.getPlayer();
 		movementVector = new Vector2(0, 0);
 		flyVector = new Vector2(0, FLYING_SPEED);
 		bodyFactory = new BodyFactory();
@@ -74,16 +72,15 @@ public class GameLogic {
 		for (Body body : bodies) {
 			world.destroyBody(body);
 		}
-		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
+		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(level.getPlayerPosition().x, level.getPlayerPosition().y));
         new LevelGenerator().generateLevel(level, world, bodyBlockMap);
 		initPressedKeys();
-		player.setOnGround(false);
+		level.setPlayerOnGround(false);
 	}
 
 	//Method used to update and change the current level being played
 	public void changeLevel(Level level) {
 		this.level = level;
-		player = level.getPlayer();
 		bodyBlockMap.clear();
 		setUpLevel();
 	}
@@ -95,7 +92,7 @@ public class GameLogic {
 	public void resumeGame() {
 		gamePaused = false;
 		movementVector = new Vector2(0, 0);
-		player.stop();
+		level.stopPlayer();
 		initPressedKeys();
 	}
 
@@ -119,7 +116,7 @@ public class GameLogic {
 	//START OF METHODS USED FOR PLAYER CHARACTER MOVEMENT
 	//Method used to move the player character to the left
 	public void moveLeft() {
-		player.moveLeft();
+		level.movePLayerLeft();
 		if (playerCharacterBody.getLinearVelocity().x > 0) {    //If moving right
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
@@ -128,7 +125,7 @@ public class GameLogic {
 
 	//Method used to move the player character to the right
 	public void moveRight() {
-		player.moveRight();
+		level.movePlayerRight();
 		if (playerCharacterBody.getLinearVelocity().x < 0) {    //If moving left
 			playerCharacterBody.setLinearVelocity(new Vector2(0, playerCharacterBody.getLinearVelocity().y));
 		}
@@ -137,8 +134,8 @@ public class GameLogic {
 
 	//Method used to make the player character jump
 	public void jump() {
-		player.stopFlying();
-		if (player.isOnGround()) {
+		level.stopPlayerFlying();
+		if (level.isPlayerOnGround()) {
 			playerCharacterBody.applyForceToCenter(new Vector2(0, JUMP_HEIGHT), true);
 		}
 	}
@@ -146,23 +143,23 @@ public class GameLogic {
 	//Method used to make the player character fly
 	public void fly() {
 		if (level.isPlayerFlyingEnabled()) {
-			player.setFlying();
+			level.setPlayerFlying();
 			movementVector = new Vector2(0, 0);
 		}
 	}
 
 	//Method used to make the player character stop. Runs the stop method with the normal slowFactor.
 	public void stop() {
-		player.stopFlying();
+		level.stopPlayerFlying();
 		stop(3); //Stop with normal slowFactor
 	}
 
 	//Method used to make the player character stop (used to prevent sliding)
 	public void stop(float slowFactor) {
 		if (!(pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveLeftKey())) || pressedKeys.get(Input.Keys.valueOf(keyBindings.getMoveRightKey())))) {
-			player.stop();
-			player.stopFlying();
-			if (player.isOnGround() && !player.isOnIce()) {
+			level.stopPlayer();
+			level.stopPlayerFlying();
+			if (level.isPlayerOnGround() && !level.isPlayerOnIce()) {
 				playerCharacterBody.setLinearVelocity(playerCharacterBody.getLinearVelocity().x / slowFactor, playerCharacterBody.getLinearVelocity().y / slowFactor);
 			}
 			movementVector = new Vector2(0, 0);
@@ -175,14 +172,14 @@ public class GameLogic {
 	//END OF METHODS USED FOR PLAYER CHARACTER MOVEMENT
 
 	public void setOnGround(boolean isOnGround) {
-		player.setOnGround(isOnGround);
+		level.setPlayerOnGround(isOnGround);
 	}
 
 	public boolean isLevelWon() {
 		if (level.isLevelWon()) {
             HighScores highScores = HighScores.getInstance();
-			if (player.getWaterAmount() > highScores.getHighScore(level.getName())) {
-				highScores.addHighScore(level.getName(), player.getWaterAmount());
+			if (level.getPlayerWaterAmount() > highScores.getHighScore(level.getName())) {
+				highScores.addHighScore(level.getName(), level.getPlayerWaterAmount());
 			}
 		}
 		return level.isLevelWon();
@@ -373,7 +370,7 @@ public class GameLogic {
 	}
 
 	public void setOnIce(boolean onIce) {
-		player.setOnIce(onIce);
+		level.setPlayerOnIce(onIce);
 	}
 
 	public void setPlayerInsideFlower(boolean playerInsideFlower) {
@@ -432,7 +429,7 @@ public class GameLogic {
 		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < MAX_SPEED) {
 			/////////////////////////////////////////////////////////////
 			//isflyingenabled check needed?
-			if (player.isFlying() && isFlyingEnabled()) {
+			if (level.isPlayerFlying() && isFlyingEnabled()) {
 				playerCharacterBody.setLinearVelocity(flyVector);
 			} else {
 				playerCharacterBody.applyForceToCenter(movementVector, true);
@@ -442,9 +439,9 @@ public class GameLogic {
         //Update model with physics changes
         Vector2 bodyPos = playerCharacterBody.getPosition();
         Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
-        player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
-        player.setSpeed(bodySpeed.x, bodySpeed.y);
-        if (player.getPosition().y < 0 && !player.isDead()) { //If below screen/out of map
+		level.setPlayerPosition(bodyPos.x * PPM, bodyPos.y * PPM);
+		level.setPlayerSpeed(bodySpeed.x, bodySpeed.y);
+        if (level.getPlayerPosition().y < 0 && !level.isPlayerDead()) { //If below screen/out of map
             killPlayer();
         }
         for (Body waterBody : bodyBlockMap.keySet()) {
