@@ -1,30 +1,25 @@
 package edu.chl.morf.handlers;
 
-import static edu.chl.morf.Constants.LEVEL_PATH;
-import static edu.chl.morf.Constants.PPM;
-
-import java.awt.Point;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import edu.chl.morf.model.*;
 
-import edu.chl.morf.model.Flower;
-import edu.chl.morf.model.Level;
-import edu.chl.morf.model.LevelObject;
-import edu.chl.morf.model.Matrix;
-import edu.chl.morf.model.PlayerCharacter;
-import edu.chl.morf.model.TileType;
-import edu.chl.morf.model.Water;
-import edu.chl.morf.model.WaterState;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import static edu.chl.morf.Constants.LEVEL_PATH;
+
+/**
+ * A singleton class used for creating new levels.
+ * The class reads different layers from a map created in Tiled Map Editor.
+ * Each layer is converted to level objects and placed in a matrix, which is used when creating a new level.
+ * The class also creates water blocks, the flower block, and the player character.
+ */
 public class LevelFactory {
 
 	private TiledMap tileMap;
@@ -34,6 +29,7 @@ public class LevelFactory {
 	private MapLayer iceLayer;
 	private MapLayer vaporLayer;
 	private MapLayer flowerLayer;
+	private MapLayer playerLayer;
     private static LevelFactory instance = new LevelFactory();
     private Map<String,Level> nameLevelMap;
 	
@@ -43,7 +39,7 @@ public class LevelFactory {
         nameLevelMap = new HashMap<String, Level>();
     }
 
-    public static LevelFactory getInstace(){
+    public static LevelFactory getInstance(){
         return instance;
     }
 
@@ -56,6 +52,7 @@ public class LevelFactory {
 		iceLayer = tileMap.getLayers().get("Ice");
 		vaporLayer = tileMap.getLayers().get("Vapor");
 		flowerLayer = tileMap.getLayers().get("Flower");
+		playerLayer = tileMap.getLayers().get("Player"); //Used to get the starting position of the player character
 		TILE_SIZE = groundLayer.getTileHeight();
 
 		Matrix matrix = new Matrix(groundLayer.getHeight(), groundLayer.getWidth());
@@ -119,26 +116,39 @@ public class LevelFactory {
 				waterBlocks.add(new Water(position, WaterState.GAS));
 			}
 		}
-		
+
+		int waterLevel = 10;
+
 		//Add flower block to level
 		if (flowerLayer != null){
 			for (MapObject flowerObject : flowerLayer.getObjects()) {
 				Point2D.Float position = new Point2D.Float(
 						(Float)flowerObject.getProperties().get("x") + TILE_SIZE / 2,
 						(Float)flowerObject.getProperties().get("y") + TILE_SIZE / 2);
+				waterLevel = Integer.parseInt(flowerObject.getProperties().get("waterLevel").toString()); //The unique flower object has got a custom waterLevel property
 				flower = new Flower(position);
 			}
-		}
-		else {
+		} else {
 			flower = null;
 		}
 
-		PlayerCharacter player = new PlayerCharacter(500, 500);
+		int playerStartPosX = 500;
+		int playerStartPosY = 500;
 
-        if(nameLevelMap.containsKey(name) && reset == false){
+		if(playerLayer != null){
+			MapObject playerPos = playerLayer.getObjects().get(0);
+			if(playerPos != null) {
+				playerStartPosX = (int) ((Float) playerPos.getProperties().get("x") + TILE_SIZE / 2);
+				playerStartPosY = (int) ((Float) playerPos.getProperties().get("y") + TILE_SIZE / 2);
+			}
+		}
+
+		PlayerCharacter player = new PlayerCharacter(playerStartPosX, playerStartPosY);
+
+        if(nameLevelMap.containsKey(name) && !reset){
             return nameLevelMap.get(name);
         }else {
-            Level level = new Level(matrix, name, player, waterBlocks, flower);
+            Level level = new Level(matrix, name, player, waterBlocks, flower, waterLevel);
             nameLevelMap.put(name,level);
             return level;
         }
