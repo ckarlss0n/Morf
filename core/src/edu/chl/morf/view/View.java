@@ -138,11 +138,11 @@ public class View {
         idleLeftTexture = characterTextureAtlas.findRegion("idleLeft");
 
         //Load remaining textures
-        waterTexture = new Texture("Tiles/waterTile.png");
-        waterTextureBottom = new Texture("Tiles/waterTile-Middle.png");
-        iceTexture = new Texture("Tiles/ice.png");
-        vaporTexture = new Texture("Tiles/steam.png");
-        flowerTexture = new Texture("Tiles/flower.png");
+        waterTexture = new Texture("tiles/waterTile.png");
+        waterTextureBottom = new Texture("tiles/waterTile-Middle.png");
+        iceTexture = new Texture("tiles/ice.png");
+        vaporTexture = new Texture("tiles/steam.png");
+        flowerTexture = new Texture("tiles/flower.png");
         waterMeterTexture = new Texture("waterMeter.png");
         waterLevelTexture = new Texture("waterLevel.png");
         levelCompletedTexture = new Texture("levelCompleted.png");
