@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-import edu.chl.morf.controllers.GameLogic;
+import edu.chl.morf.handlers.controllers.GameLogic;
 import edu.chl.morf.model.ActiveBlockPosition;
 import edu.chl.morf.model.WaterState;
 

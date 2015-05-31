@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import edu.chl.morf.handlers.KeyBindings;
+import edu.chl.morf.handlers.controllers.GameLogic;
 
 /**
  * This class is listening for keystrokes.

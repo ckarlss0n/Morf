@@ -1,4 +1,4 @@
-package edu.chl.morf.controllers;
+package edu.chl.morf.handlers.controllers;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;

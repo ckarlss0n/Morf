@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import edu.chl.morf.controllers.GameController;
-import edu.chl.morf.controllers.GameLogic;
+import edu.chl.morf.handlers.controllers.GameLogic;
 import edu.chl.morf.controllers.collision.CollisionListener;
 import edu.chl.morf.handlers.LevelFactory;
 import edu.chl.morf.handlers.LevelList;
