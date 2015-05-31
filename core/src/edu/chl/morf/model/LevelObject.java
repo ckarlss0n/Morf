@@ -1,6 +1,5 @@
 package edu.chl.morf.model;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 /**

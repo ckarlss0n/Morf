@@ -5,11 +5,7 @@ import edu.chl.morf.model.WaterState;
 import edu.chl.morf.model.blocks.Water;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
 
 import static org.junit.Assert.assertTrue;
 

@@ -10,7 +10,6 @@ import org.junit.Test;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.model.PlayerCharacter;
 import edu.chl.morf.model.WaterState;
-import edu.chl.morf.model.blocks.Flower;
 import edu.chl.morf.model.blocks.Water;
 
 /**

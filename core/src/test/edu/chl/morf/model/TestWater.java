@@ -2,8 +2,6 @@ package test.edu.chl.morf.model;
 
 import static org.junit.Assert.*;
 
-import java.awt.geom.Point2D;
-
 import org.junit.Before;
 import org.junit.Test;
 
