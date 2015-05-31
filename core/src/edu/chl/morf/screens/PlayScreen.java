@@ -18,6 +18,9 @@ import edu.chl.morf.model.Level;
 import edu.chl.morf.view.View;
 import static edu.chl.morf.handlers.Constants.PPM;
 
+/**
+ * This class represents the screen that is shown when playing a level.
+ */
 public class PlayScreen extends GameScreen{
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0,-15);
@@ -58,11 +61,12 @@ public class PlayScreen extends GameScreen{
 
         this.view = new View(level, cam, hudCam, box2dCam, spriteBatch, world);
 
+        //Make nextLevel run inside a timer task, in order to change level after chosen delay
         goToNextLevelTask = new Timer.Task() {
             @Override
             public void run() {
                 nextLevel();
-                timerScheduled = false;
+                timerScheduled = false; //The timer is no longer scheduled
             }
         };
     }
@@ -71,10 +75,10 @@ public class PlayScreen extends GameScreen{
 		List<String> levels = LevelReader.getInstance().getLevels();
     	int currentLevel = levels.indexOf(level.getName());
     	String name;
-    	if(currentLevel == levels.size() - 1){
-        	name = levels.get(0);
+    	if(currentLevel == levels.size() - 1){ //If is last level
+        	name = levels.get(0);   //Wrap around, return to first level
     	} else {
-        	name = levels.get(currentLevel + 1);
+        	name = levels.get(currentLevel + 1);    //Go to next level
     	}
 
     	level = levelFactory.getLevel(name, true);
@@ -82,6 +86,8 @@ public class PlayScreen extends GameScreen{
     	gameLogic.changeLevel(level);
     	view.changeLevel(level);
     }
+
+    //Reset level upon dying etc.
     public void resetLevel(){
         if(view.isDeathAnimationDone()) {
             level = levelFactory.getLevel(level.getName(), true);
@@ -90,6 +96,7 @@ public class PlayScreen extends GameScreen{
         }
     }
 
+    //Resume the game upon closing the pause screen
     public void resumeGame(){
         gameLogic.resumeGame();
     }
@@ -100,14 +107,14 @@ public class PlayScreen extends GameScreen{
             gameLogic.render(delta);
             view.render(delta);
             if (gameLogic.isLevelWon() && !goToNextLevelTask.isScheduled() && !timerScheduled) {
-                Timer.schedule(goToNextLevelTask, 2);
-                timerScheduled = true;
+                Timer.schedule(goToNextLevelTask, 2);   //Go to next level after two seconds
+                timerScheduled = true;                  //The timer is scheduled
             }
             if (gameLogic.isPlayerDead() && !goToNextLevelTask.isScheduled() && !timerScheduled) {
                 resetLevel();
             }
         } else {
-            screenManager.pushScreen(ScreenManager.ScreenType.PAUSE_SCREEN, null);
+            screenManager.pushScreen(ScreenManager.ScreenType.PAUSE_SCREEN, null); //Show pause screen if game is paused
             resumeGame();
         }
     }
