@@ -146,8 +146,10 @@ public class CollisionListener implements com.badlogic.gdx.physics.box2d.Contact
             //When the playerCharacter is inside the flower, the level can be won by pouring water.
             else if(collisionTypeA == CollisionType.GHOST_CORE && collisionTypeB == CollisionType.FLOWER){
                 gameLogic.setPlayerInsideFlower(true);
+                collisionDataA.decrement();
             }else if(collisionTypeA == CollisionType.FLOWER && collisionTypeB == CollisionType.GHOST_CORE){
                 gameLogic.setPlayerInsideFlower(true);
+                collisionDataB.decrement();
             }
 
             /*  The GHOST_CORE fixture is a player fixture that only senses the flower and water blocks in
@@ -301,8 +303,10 @@ public class CollisionListener implements com.badlogic.gdx.physics.box2d.Contact
         //When the playerCharacter is inside the flower, the level can be won by pouring water.
         else if(collisionTypeA == CollisionType.GHOST_CORE && collisionTypeB == CollisionType.FLOWER){
             gameLogic.setPlayerInsideFlower(false);
+            collisionDataA.increment();
         }else if(collisionTypeA == CollisionType.FLOWER && collisionTypeB == CollisionType.GHOST_CORE){
             gameLogic.setPlayerInsideFlower(false);
+            collisionDataB.increment();
         }
 
         /*  The GHOST_CORE fixture is a player fixture that only senses the flower and water blocks in
