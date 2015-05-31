@@ -95,20 +95,20 @@ public class View {
 
         //Load PayerCharacter sprite sheet from assets
         TextureAtlas characterTextureAtlas = new TextureAtlas(CHARACTERS_ATLAS_PATH);
-        runningLeftAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES,characterTextureAtlas,0.1f);
-        pourLeftAnimation = generateAnimation(PLAYERCHARACTER_POURLEFT_REGION_NAMES,characterTextureAtlas,1);
-        heatLeftAnimation = generateAnimation(PLAYERCHARACTER_HEATLEFT_REGION_NAMES,characterTextureAtlas,1);
-        coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES,characterTextureAtlas,1);
-        flyingLeftAnimation = generateAnimation(PLAYERCHARACTER_FLYLEFT_REGION_NAMES,characterTextureAtlas,1);
-        deathLeftAnimation = generateAnimation(PLAYERCHARACTER_DEATHLEFT_REGION_NAMES,characterTextureAtlas,1);
+        runningLeftAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGLEFT_REGION_NAMES, characterTextureAtlas, 0.1f);
+        pourLeftAnimation = generateAnimation(PLAYERCHARACTER_POURLEFT_REGION_NAMES, characterTextureAtlas, 1);
+        heatLeftAnimation = generateAnimation(PLAYERCHARACTER_HEATLEFT_REGION_NAMES, characterTextureAtlas, 1);
+        coolLeftAnimation = generateAnimation(PLAYERCHARACTER_COOLLEFT_REGION_NAMES, characterTextureAtlas, 1);
+        flyingLeftAnimation = generateAnimation(PLAYERCHARACTER_FLYLEFT_REGION_NAMES, characterTextureAtlas, 1);
+        deathLeftAnimation = generateAnimation(PLAYERCHARACTER_DEATHLEFT_REGION_NAMES, characterTextureAtlas, 1);
         flyingRightTexture = characterTextureAtlas.findRegion("flyingRight5");
 
-        runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES,characterTextureAtlas,0.1f);
-        pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES,characterTextureAtlas,1);
+        runningRightAnimation = generateAnimation(PLAYERCHARACTER_RUNNINGRIGHT_REGION_NAMES, characterTextureAtlas, 0.1f);
+        pourRightAnimation = generateAnimation(PLAYERCHARACTER_POURRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         heatRightAnimation = generateAnimation(PLAYERCHARACTER_HEATRIGHT_REGION_NAMES, characterTextureAtlas, 1);
         coolRightAnimation = generateAnimation(PLAYERCHARACTER_COOLRIGHT_REGION_NAMES, characterTextureAtlas, 1);
-        flyingRightAnimation = generateAnimation(PLAYERCHARACTER_FLYRIGHT_REGION_NAMES,characterTextureAtlas,1);
-        deathRightAnimation = generateAnimation(PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES,characterTextureAtlas,1);
+        flyingRightAnimation = generateAnimation(PLAYERCHARACTER_FLYRIGHT_REGION_NAMES, characterTextureAtlas, 1);
+        deathRightAnimation = generateAnimation(PLAYERCHARACTER_DEATHRIGHT_REGION_NAMES, characterTextureAtlas, 1);
 
         idleRightTexture = characterTextureAtlas.findRegion("idleRight");
         idleLeftTexture = characterTextureAtlas.findRegion("idleLeft");
@@ -271,8 +271,8 @@ public class View {
         batch.setProjectionMatrix(hudCam.combined);
         float deltaWidth = (waterMeterTexture.getWidth()- waterLevelTexture.getWidth())/2;
         float deltaHeight = (waterMeterTexture.getHeight()- waterLevelTexture.getHeight())/2;
-        int waterLevel = playerCharacter.getWaterLevel();
-        float computedWidth = (float) waterLevelTexture.getWidth()/playerCharacter.getMaxWaterLevel()*waterLevel;
+        int currentWaterLevel = playerCharacter.getWaterLevel();
+        float computedWidth = (float) waterLevelTexture.getWidth()/level.getMaxWaterLevel()*currentWaterLevel;
         float paddingTop = 20;
         float paddingLeft = 20;
 
@@ -283,7 +283,7 @@ public class View {
         batch.draw(waterLevelTexture, paddingLeft + deltaWidth, Main.V_HEIGHT - waterMeterTexture.getHeight() - paddingTop + deltaHeight, computedWidth, waterLevelTexture.getHeight());
 
         //Also show water level as text
-        String waterLevelString = waterLevel + " / " + playerCharacter.getMaxWaterLevel();
+        String waterLevelString = currentWaterLevel + " / " + level.getMaxWaterLevel();
         BitmapFont.TextBounds messageBounds = font.getBounds(waterLevelString); //Actual size of the drawn message
         font.draw(batch, waterLevelString, paddingLeft + waterMeterTexture.getWidth() / 2 - messageBounds.width / 2, Main.V_HEIGHT - waterMeterTexture.getHeight() / 2 - paddingTop + messageBounds.height / 2);
         batch.end();

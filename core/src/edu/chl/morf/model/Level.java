@@ -16,17 +16,17 @@ public class Level {
 	private Matrix levelMatrix;
 	private boolean levelWon;
 	private Flower flower;
-	private int waterLevel;
+	private int maxWaterLevel;
 
-	public Level(Matrix matrix, String name, PlayerCharacter player, List<Water> waterBlocks, Flower flower, int waterLevel){
+	public Level(Matrix matrix, String name, PlayerCharacter player, List<Water> waterBlocks, Flower flower, int maxWaterLevel){
 		this.name = name;
 		levelMatrix = matrix;
 		this.waterBlocks = waterBlocks;
 		this.player = player;
 		this.flower = flower;
-		this.waterLevel = waterLevel;
+		this.maxWaterLevel = maxWaterLevel;
 		levelWon = false;
-		player.setWaterLevel(waterLevel);
+		player.setWaterLevel(maxWaterLevel);
 	}
 
 	//Getters
@@ -48,8 +48,8 @@ public class Level {
 	public boolean isLevelWon(){
 		return levelWon;
 	}
-	public int getWaterLevel(){
-		return waterLevel;
+	public int getMaxWaterLevel(){
+		return maxWaterLevel;
 	}
 
 	//Setter for levelWon
