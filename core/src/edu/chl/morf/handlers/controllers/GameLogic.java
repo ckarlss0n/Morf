@@ -13,8 +13,8 @@ import edu.chl.morf.model.*;
 import edu.chl.morf.model.blocks.Block;
 import edu.chl.morf.model.blocks.Ground;
 import edu.chl.morf.model.blocks.Water;
-import edu.chl.morf.controllers.collision.CollisionData;
-import edu.chl.morf.controllers.collision.CollisionType;
+import edu.chl.morf.handlers.controllers.collision.CollisionData;
+import edu.chl.morf.handlers.controllers.collision.CollisionType;
 
 import java.util.HashMap;
 import java.util.LinkedList;

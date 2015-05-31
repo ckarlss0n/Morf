@@ -1,4 +1,4 @@
-package edu.chl.morf.controllers.collision;
+package edu.chl.morf.handlers.controllers.collision;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;

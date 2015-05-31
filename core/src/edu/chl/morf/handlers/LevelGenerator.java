@@ -7,8 +7,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import edu.chl.morf.model.*;
 import edu.chl.morf.model.blocks.Flower;
 import edu.chl.morf.model.blocks.Water;
-import edu.chl.morf.controllers.collision.CollisionData;
-import edu.chl.morf.controllers.collision.CollisionType;
+import edu.chl.morf.handlers.controllers.collision.CollisionData;
+import edu.chl.morf.handlers.controllers.collision.CollisionType;
 
 import java.util.Map;
 

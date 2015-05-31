@@ -1,4 +1,4 @@
-package edu.chl.morf.controllers.collision;
+package edu.chl.morf.handlers.controllers.collision;
 
 /**
  * This Enum is used in CollisionData and is used to keep track of

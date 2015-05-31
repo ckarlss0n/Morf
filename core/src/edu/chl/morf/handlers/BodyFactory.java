@@ -4,11 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-import edu.chl.morf.controllers.collision.CollisionData;
+import edu.chl.morf.handlers.controllers.collision.CollisionData;
 import edu.chl.morf.model.WaterState;
 import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
-import static edu.chl.morf.controllers.collision.CollisionType.*;
+import static edu.chl.morf.handlers.controllers.collision.CollisionType.*;
 
 /**
  * A factory class for creating bodies for a Box2D-world.
