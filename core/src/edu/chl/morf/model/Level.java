@@ -69,11 +69,8 @@ public class Level {
 	
 	//Method for pouring water in Level
 	public void pourWater(){
-		//Level is won if player pours water on flower
-		if(player.getActiveBlock() instanceof Flower){
-			levelWon = true;
-		}
-		else if(player.isInsideFlower()){
+		if(player.isInsideFlower()){
+			player.decreaseWaterLevel();
 			levelWon = true;
 		}
 		//Make player pour water and add it to level if empty space in front of player
