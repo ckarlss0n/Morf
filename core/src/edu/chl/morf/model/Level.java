@@ -59,6 +59,8 @@ public class Level {
 	}
 	public Point2D.Float getPlayerPosition(){return player.getPosition();}
 	public int getPlayerWaterAmount(){return player.getWaterAmount();}
+	public Block getPlayerActiveBlock(){return player.getActiveBlock();}
+	public Block getPlayerActiveBlockBottom(){return player.getActiveBlockBottom();}
 
 	//Setter for levelWon
 	public void setLevelWon(boolean levelWon){

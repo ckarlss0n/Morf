@@ -221,9 +221,9 @@ public class GameLogic {
 	}
 
 	public void heatBlock() {
-		Block activeBlock = level.getPlayer().getActiveBlock();
+		Block activeBlock = level.getPlayerActiveBlock();
 		if (activeBlock instanceof EmptyBlock) {    //If normal active block is empty, get active block below
-			activeBlock = level.getPlayer().getActiveBlockBottom();
+			activeBlock = level.getPlayerActiveBlockBottom();
 		}
 
 		//Sound effects
@@ -318,9 +318,9 @@ public class GameLogic {
 	}
 
 	public void coolBlock() {
-		Block activeBlock = level.getPlayer().getActiveBlock();
+		Block activeBlock = level.getPlayerActiveBlock();
 		if (activeBlock instanceof EmptyBlock) {
-			activeBlock = level.getPlayer().getActiveBlockBottom();
+			activeBlock = level.getPlayerActiveBlockBottom();
 		}
 		if (activeBlock instanceof Water) {
 			WaterState state = ((Water) activeBlock).getState();
