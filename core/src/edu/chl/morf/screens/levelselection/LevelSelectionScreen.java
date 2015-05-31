@@ -23,7 +23,7 @@ import java.util.List;
 public class LevelSelectionScreen extends GameScreen {
 
     //Stage holding all components shown in the screen
-    private class LevelSelectionStage extends Stage {
+    private static class LevelSelectionStage extends Stage {
 
         private LevelSelectionStage(){
             super();
