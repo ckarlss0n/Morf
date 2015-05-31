@@ -1,4 +1,4 @@
-package edu.chl.morf.screens2.levelselection;
+package edu.chl.morf.screens.levelselection;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;

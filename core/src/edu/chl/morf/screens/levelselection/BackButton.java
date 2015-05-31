@@ -1,4 +1,4 @@
-package edu.chl.morf.screens2.levelselection;
+package edu.chl.morf.screens.levelselection;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import edu.chl.morf.handlers.ScreenManager;
