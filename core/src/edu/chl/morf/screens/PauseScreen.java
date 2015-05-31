@@ -1,4 +1,4 @@
-package edu.chl.morf.screens2;
+package edu.chl.morf.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,11 +14,12 @@ import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.screens.ScreenManager;
+import edu.chl.morf.screens2.GameScreen;
 
 /**
  * Created by Christoffer on 2015-05-19.
  */
-public class PauseScreen extends GameScreen{
+public class PauseScreen extends GameScreen {
 	private PauseStage stage;
 	private GameScreen backgroundScreen;
 	private SoundHandler soundHandler = SoundHandler.getInstance();
