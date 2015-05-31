@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static edu.chl.morf.Constants.LEVEL_PATH;
-
 /**
  * A singleton class used for creating new levels.
  * The class reads different layers from a map created in Tiled Map Editor.
@@ -45,7 +43,7 @@ public class LevelFactory {
 
 	public Level getLevel(String name, boolean reset){
 
-		tileMap = new TmxMapLoader().load(LEVEL_PATH + name);
+		tileMap = new TmxMapLoader().load("levels/" + name);
 		groundLayer = (TiledMapTileLayer) tileMap.getLayers().get("Ground");
 		spikeLayer = (TiledMapTileLayer) tileMap.getLayers().get("Spikes");
 		waterLayer = tileMap.getLayers().get("Water");
