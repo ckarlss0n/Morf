@@ -16,6 +16,9 @@ import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.screens.ScreenManager;
 import edu.chl.morf.screens.ScreenManager.ScreenType;
 
+import java.awt.*;
+import java.net.URI;
+
 /**
  * Responsible for showing the main menu screen on start-up.
  * Created by Harald Brorsson on 5/11/15.
@@ -35,8 +38,8 @@ public class MainMenuScreen extends GameScreen{
         ImageButton settingsButton;
         ImageButton playButton;
         ImageButton exitButton;
-        ImageButton highScoreButton;
-        ImageButton.ImageButtonStyle highScoreButtonStyle;
+        ImageButton aboutButton;
+        ImageButton.ImageButtonStyle aboutButtonStyle;
         ImageButton.ImageButtonStyle settingsButtonStyle;
         ImageButton.ImageButtonStyle playButtonStyle;
         ImageButton.ImageButtonStyle exitButtonStyle;
@@ -99,7 +102,7 @@ public class MainMenuScreen extends GameScreen{
             settingsButtonStyle.down=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_Settings_Focus.png")));
             settingsButtonStyle.over=settingsButtonStyle.down;
             settingsButton=new ImageButton(settingsButtonStyle);
-            settingsButton.setPosition(557 * scaling, (89 + 146 + 16) * scaling);
+            settingsButton.setPosition(557 * scaling, (89 + (146 + 16) * 2) * scaling);
             settingsButton.setSize(806 * scaling, 146 * scaling);
             settingsButton.addListener(new ChangeListener() {
                 @Override
@@ -115,27 +118,33 @@ public class MainMenuScreen extends GameScreen{
             });
             this.addActor(settingsButton);
 
-            //highScoreButton
-            highScoreButtonStyle =new ImageButton.ImageButtonStyle();
-            highScoreButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_HighScores.png")));
-            highScoreButtonStyle.down=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_HighScores_Focus.png")));
-            highScoreButtonStyle.over= highScoreButtonStyle.down;
-            highScoreButton =new ImageButton(highScoreButtonStyle);
-            highScoreButton.setPosition(557 * scaling, (89 + (146 + 16) * 2) * scaling);
-            highScoreButton.setSize(806 * scaling, 146 * scaling);
-            highScoreButton.addListener(new ChangeListener() {
+            //aboutButton
+            aboutButtonStyle =new ImageButton.ImageButtonStyle();
+            aboutButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_About.png")));
+            aboutButtonStyle.down=new TextureRegionDrawable(new TextureRegion(new Texture("menu/Btn_About_Focus.png")));
+            aboutButtonStyle.over= aboutButtonStyle.down;
+            aboutButton =new ImageButton(aboutButtonStyle);
+            aboutButton.setPosition(557 * scaling, (89 + 146 + 16) * scaling);
+            aboutButton.setSize(806 * scaling, 146 * scaling);
+            aboutButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    Gdx.app.exit();
+                    try {
+                        Desktop desktop = java.awt.Desktop.getDesktop();
+                        URI oURL = new URI("https://github.com/ckarlss0n/Morf");
+                        desktop.browse(oURL);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
-            highScoreButton.addListener(new ClickListener(){
+            aboutButton.addListener(new ClickListener() {
                 @Override
-                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                     soundHandler.playSoundEffect(soundHandler.getButtonHover());
                 }
             });
-            this.addActor(highScoreButton);
+            this.addActor(aboutButton);
         }
     }
     @Override
