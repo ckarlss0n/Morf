@@ -4,12 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import edu.chl.morf.model.*;
-import edu.chl.morf.userdata.UserData;
-import edu.chl.morf.userdata.UserDataType;
+import edu.chl.morf.userdata.CollisionData;
+import edu.chl.morf.userdata.CollisionType;
 
 import java.util.Map;
 
-import static edu.chl.morf.Constants.GROUND_FRICTION;
 import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
 
@@ -46,7 +45,7 @@ public class LevelGenerator {
 				v[4] = new Vector2(-tileSide, -tileSide); //Bottom left corner of fixture
 
 				chainShape.createChain(v); //Create a shape from all vertices
-				fixDef.friction = GROUND_FRICTION;
+				fixDef.friction = 0.1f;
 				fixDef.shape = chainShape;
 				fixDef.filter.categoryBits = BIT_GROUND;
 				fixDef.filter.maskBits = -1;
@@ -69,7 +68,7 @@ public class LevelGenerator {
 				fixDef.filter.categoryBits = BIT_SPIKES;
 				fixDef.filter.maskBits = BIT_SENSOR;
 				fixDef.isSensor = false;
-				world.createBody(bodyDef).createFixture(fixDef).setUserData(new UserData(UserDataType.SPIKE));
+				world.createBody(bodyDef).createFixture(fixDef).setUserData(new CollisionData(CollisionType.SPIKE));
 			}
 		}
 

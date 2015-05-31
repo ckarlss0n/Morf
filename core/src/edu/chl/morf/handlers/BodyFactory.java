@@ -3,11 +3,11 @@ package edu.chl.morf.handlers;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import edu.chl.morf.userdata.UserData;
+import edu.chl.morf.userdata.CollisionData;
 
 import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
-import static edu.chl.morf.userdata.UserDataType.*;
+import static edu.chl.morf.userdata.CollisionType.*;
 
 /**
  * A factory class for creating bodies for the Box2D-world used in GameLogic.
@@ -33,7 +33,7 @@ public class BodyFactory {
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_PLAYER;
 		fdef.filter.maskBits = BIT_GROUND | BIT_ICE | BIT_FLOWER;
-		body.createFixture(fdef).setUserData(new UserData(PLAYERCHARACTER));
+		body.createFixture(fdef).setUserData(new CollisionData(PLAYERCHARACTER));
 
 		//Create right ghost fixture 
 		shape.setAsBox(31 / PPM, 20 / PPM, new Vector2((62-pS) / PPM, 0), 0);
@@ -41,53 +41,53 @@ public class BodyFactory {
 		fdef.filter.categoryBits = BIT_SENSOR;
 		fdef.filter.maskBits = BIT_GROUND | BIT_WATER | BIT_ICE | BIT_GAS;
 		fdef.isSensor = true;
-		body.createFixture(fdef).setUserData(new UserData(GHOST_RIGHT));
+		body.createFixture(fdef).setUserData(new CollisionData(GHOST_RIGHT));
 
 		//Create left ghost fixture
 		shape.setAsBox(31 / PPM, 20 / PPM, new Vector2((-62+pS) / PPM, 0), 0);
 		fdef.shape = shape;
-		body.createFixture(fdef).setUserData(new UserData(GHOST_LEFT));
+		body.createFixture(fdef).setUserData(new CollisionData(GHOST_LEFT));
 
 		//Create active block right fixture
 		shape.setAsBox(0.1f / PPM, 20 / PPM, new Vector2((90-pS) / PPM, 0), 0);
 		fdef.shape = shape;
 		fdef.filter.maskBits = BIT_WATER | BIT_ICE | BIT_GAS;
-		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_RIGHT));
+		body.createFixture(fdef).setUserData(new CollisionData(ACTIVE_BLOCK_RIGHT));
 
 		//Create active block left fixture
 		shape.setAsBox(0.1f / PPM, 20 / PPM, new Vector2((-90+pS) / PPM, 0), 0);
 		fdef.shape = shape;
-		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_LEFT));
+		body.createFixture(fdef).setUserData(new CollisionData(ACTIVE_BLOCK_LEFT));
 
 		//Create active block bottom right fixture
 		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((60-pS) / PPM, -64 / PPM), 0);
 		fdef.shape = shape;
-		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_BOTTOM_RIGHT));
+		body.createFixture(fdef).setUserData(new CollisionData(ACTIVE_BLOCK_BOTTOM_RIGHT));
 
 		//Create active block bottom left fixture
 		shape.setAsBox(1 / PPM, 20 / PPM, new Vector2((-60+pS) / PPM, -64 / PPM), 0);
 		fdef.shape = shape;
-		body.createFixture(fdef).setUserData(new UserData(ACTIVE_BLOCK_BOTTOM_LEFT));
+		body.createFixture(fdef).setUserData(new CollisionData(ACTIVE_BLOCK_BOTTOM_LEFT));
 
 		//Create bottom ghost fixture
 		shape.setAsBox((29-pS) / PPM, 5 / PPM, new Vector2(0, -25 / PPM), 0);
 		fdef.shape=shape;
 		fdef.filter.maskBits = BIT_GROUND | BIT_SPIKES | BIT_ICE;
 		fdef.isSensor = true;
-		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM));
+		body.createFixture(fdef).setUserData(new CollisionData(GHOST_BOTTOM));
 
 		//Create bottom ice ghost fixture
 		shape.setAsBox((29-pS) / PPM, 5 / PPM, new Vector2(0, -25 / PPM), 0);
 		fdef.shape=shape;
 		fdef.filter.maskBits = BIT_ICE;
 		fdef.isSensor = true;
-		body.createFixture(fdef).setUserData(new UserData(GHOST_BOTTOM_ICE));
+		body.createFixture(fdef).setUserData(new CollisionData(GHOST_BOTTOM_ICE));
 
 		//Create core ghost fixture
 		shape.setAsBox(15 / PPM, 15 / PPM, new Vector2(0, 0), 0);
 		fdef.shape=shape;
 		fdef.filter.maskBits = BIT_GAS | BIT_FLOWER;
-		body.createFixture(fdef).setUserData(new UserData(GHOST_CORE));
+		body.createFixture(fdef).setUserData(new CollisionData(GHOST_CORE));
 
 		shape.dispose();
 		return body;
@@ -109,7 +109,7 @@ public class BodyFactory {
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_ICE;
 		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS | BIT_PLAYER;
-		body.createFixture(fdef).setUserData(new UserData(ICE));
+		body.createFixture(fdef).setUserData(new CollisionData(ICE));
 
 		shape.dispose();
 		*/
@@ -138,7 +138,7 @@ public class BodyFactory {
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_WATER;
 		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
-		body.createFixture(fdef).setUserData(new UserData(VAPOR));
+		body.createFixture(fdef).setUserData(new CollisionData(VAPOR));
 
 		shape.dispose();
 		*/
@@ -165,7 +165,7 @@ public class BodyFactory {
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_WATER;
 		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR | BIT_WATER | BIT_ICE | BIT_GAS;
-		body.createFixture(fdef).setUserData(new UserData(WATER));
+		body.createFixture(fdef).setUserData(new CollisionData(WATER));
 
 
 		//ghostFixture
@@ -174,13 +174,13 @@ public class BodyFactory {
 		shape.setAsBox((TILE_SIZE * 0.9f / 2) / PPM,(TILE_SIZE / 20) / PPM,new Vector2(0, (TILE_SIZE / 2) / PPM),0);
 		fdef.shape = shape;
 		fdef.isSensor=true;
-		body.createFixture(fdef).setUserData(new UserData(WATER_SENSOR));
+		body.createFixture(fdef).setUserData(new CollisionData(WATER_SENSOR));
 
 		//Flower intersection fixture
 		shape.setAsBox((TILE_SIZE * 0.9f / 2)/PPM,(TILE_SIZE * 0.9f / 2)/PPM);
 		fdef.filter.maskBits=BIT_FLOWER;
 		fdef.shape=shape;
-		body.createFixture(fdef).setUserData(new UserData(WATER_FLOWER_INTERSECTION));
+		body.createFixture(fdef).setUserData(new CollisionData(WATER_FLOWER_INTERSECTION));
 
 		shape.dispose();
 		return body;
@@ -201,7 +201,7 @@ public class BodyFactory {
 		fdef.shape = shape;
 		fdef.filter.categoryBits = BIT_FLOWER;
 		fdef.filter.maskBits = BIT_GROUND | BIT_SENSOR;
-		body.createFixture(fdef).setUserData(new UserData(FLOWER));
+		body.createFixture(fdef).setUserData(new CollisionData(FLOWER));
 
 		shape.dispose();
 		return body;

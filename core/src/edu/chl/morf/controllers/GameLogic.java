@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
-import edu.chl.morf.userdata.UserData;
-import edu.chl.morf.userdata.UserDataType;
+import edu.chl.morf.userdata.CollisionData;
+import edu.chl.morf.userdata.CollisionType;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -396,7 +396,7 @@ public class GameLogic {
 			Block block = bodyBlockMap.get(body);
 			level.setActiveBlock(block, position);
 		} else if (body.getFixtureList().get(0).getUserData() != null) {
-			if (((UserData) body.getFixtureList().get(0).getUserData()).getUserDataType() == UserDataType.FLOWER) {
+			if (((CollisionData) body.getFixtureList().get(0).getUserData()).getCollisionType() == CollisionType.FLOWER) {
 				Block block = level.getFlower();
 				level.setActiveBlock(block, position);
 			}

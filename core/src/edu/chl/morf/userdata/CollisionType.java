@@ -3,7 +3,7 @@ package edu.chl.morf.userdata;
 /**
  * Created by Christoffer on 2015-04-17.
  */
-public enum UserDataType {
+public enum CollisionType {
     GROUND,
     PLAYERCHARACTER,
     GHOST_LEFT,
