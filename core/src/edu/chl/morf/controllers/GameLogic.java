@@ -440,7 +440,7 @@ public class GameLogic {
         Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
         player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
         player.setSpeed(bodySpeed.x, bodySpeed.y);
-        if (player.getPosition().y < 0) { //If below screen/out of map
+        if (player.getPosition().y < 0 && !player.isDead()) { //If below screen/out of map
             killPlayer();
         }
         for (Body waterBody : bodyBlockMap.keySet()) {
