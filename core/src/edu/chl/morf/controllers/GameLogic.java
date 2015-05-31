@@ -243,9 +243,9 @@ public class GameLogic {
 
 		if (activeBlock instanceof Water) {
 			Water activeWater = (Water) activeBlock;
-			for (Body body : bodyBlockMap.keySet()) {
-				if (bodyBlockMap.get(body) == activeBlock) {
-					body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
+			for (Map.Entry<Body, Water> bodyWaterEntry : bodyBlockMap.entrySet()) {
+				if (bodyWaterEntry.getValue() == activeBlock) {
+					bodyWaterEntry.getKey().getFixtureList().get(0).setFilterData(getFilter(activeWater));
 
 					//If water is heated and turns into gas
 					if (activeWater.getState() == WaterState.GAS) {
@@ -254,10 +254,10 @@ public class GameLogic {
 							Bind the gas block to it's body, if not already existing in map.
 							Also apply flying and removal tasks if not already applied.
 							*/
-						if (!gasBlockBodyMap.containsKey(activeBlock) && !gasBodyTaskMap.containsKey(body)) {
-							gasBlockBodyMap.put(activeBlock, body);
-							flyAndRemove(body, 1, 3);    //Make body fly and disappear using tasks
-							body.setGravityScale(0f); //Body no longer affected by gravity
+						if (!gasBlockBodyMap.containsKey(activeBlock) && !gasBodyTaskMap.containsKey(bodyWaterEntry.getKey())) {
+							gasBlockBodyMap.put(activeBlock, bodyWaterEntry.getKey());
+							flyAndRemove(bodyWaterEntry.getKey(), 1, 3);    //Make body fly and disappear using tasks
+							bodyWaterEntry.getKey().setGravityScale(0f); //Body no longer affected by gravity
 						}
 					}
 					break;
@@ -345,9 +345,9 @@ public class GameLogic {
 		//if-statement similar to previous one
 		if (activeBlock instanceof Water) {
 			Water activeWater = (Water) activeBlock;
-			for (Body body : bodyBlockMap.keySet()) {
-				if (bodyBlockMap.get(body) == activeWater) {
-					body.getFixtureList().get(0).setFilterData(getFilter(activeWater));
+			for (Map.Entry<Body, Water> bodyWaterEntry : bodyBlockMap.entrySet()) {
+				if (bodyWaterEntry.getValue() == activeWater) {
+					bodyWaterEntry.getKey().getFixtureList().get(0).setFilterData(getFilter(activeWater));
 					break;
 				}
 			}
@@ -417,18 +417,9 @@ public class GameLogic {
 		}
 	}
 
-	public void setWaterTop(Body body, boolean topBlock) {
-		if (bodyBlockMap.get(body) != null) {
-			Water waterBlock = bodyBlockMap.get(body);
-			//waterBlock.setTopBlock(topBlock);
-		}
-	}
-
 	public void render(float delta) {
 		world.step(delta, 6, 2);
 		if (Math.abs(playerCharacterBody.getLinearVelocity().x) < MAX_SPEED) {
-			/////////////////////////////////////////////////////////////
-			//isflyingenabled check needed?
 			if (level.isPlayerFlying() && isFlyingEnabled()) {
 				playerCharacterBody.setLinearVelocity(flyVector);
 			} else {
@@ -444,9 +435,9 @@ public class GameLogic {
         if (level.getPlayerPosition().y < 0 && !level.isPlayerDead()) { //If below screen/out of map
             killPlayer();
         }
-        for (Body waterBody : bodyBlockMap.keySet()) {
-            Water waterBlock = bodyBlockMap.get(waterBody);
-            Vector2 waterPos = waterBody.getPosition();
+        for (Map.Entry<Body, Water> bodyWaterEntry : bodyBlockMap.entrySet()) {
+            Water waterBlock = bodyWaterEntry.getValue();
+            Vector2 waterPos = bodyWaterEntry.getKey().getPosition();
             waterBlock.setPosition(waterPos.x * PPM, waterPos.y * PPM);
         }
 	}
