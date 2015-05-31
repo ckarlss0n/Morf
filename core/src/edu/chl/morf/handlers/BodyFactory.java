@@ -3,11 +3,11 @@ package edu.chl.morf.handlers;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import edu.chl.morf.userdata.CollisionData;
+import edu.chl.morf.controllers.collision.CollisionData;
 
 import static edu.chl.morf.handlers.Constants.*;
 import static edu.chl.morf.handlers.LevelFactory.TILE_SIZE;
-import static edu.chl.morf.userdata.CollisionType.*;
+import static edu.chl.morf.controllers.collision.CollisionType.*;
 
 /**
  * A factory class for creating bodies for the Box2D-world used in GameLogic.

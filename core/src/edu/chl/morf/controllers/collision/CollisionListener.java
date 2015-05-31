@@ -1,10 +1,12 @@
-package edu.chl.morf.controllers;
+package edu.chl.morf.controllers.collision;
 
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.model.ActiveBlockPosition;
 import edu.chl.morf.model.WaterState;
-import edu.chl.morf.userdata.CollisionData;
-import edu.chl.morf.userdata.CollisionType;
 
 public class CollisionListener implements com.badlogic.gdx.physics.box2d.ContactListener {
 	

@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import edu.chl.morf.model.*;
-import edu.chl.morf.userdata.CollisionData;
-import edu.chl.morf.userdata.CollisionType;
+import edu.chl.morf.controllers.collision.CollisionData;
+import edu.chl.morf.controllers.collision.CollisionType;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package edu.chl.morf.userdata;
+package edu.chl.morf.controllers.collision;
 
 /**
  * Created by Christoffer on 2015-04-17.

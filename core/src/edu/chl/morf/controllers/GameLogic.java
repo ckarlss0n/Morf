@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import edu.chl.morf.handlers.*;
 import edu.chl.morf.model.*;
-import edu.chl.morf.userdata.CollisionData;
-import edu.chl.morf.userdata.CollisionType;
+import edu.chl.morf.controllers.collision.CollisionData;
+import edu.chl.morf.controllers.collision.CollisionType;
 
 import java.util.HashMap;
 import java.util.LinkedList;
