@@ -391,7 +391,7 @@ public class GameLogic {
 
 	public void setActiveBody(Body body, ActiveBlockPosition position) {
 		if (body == null) {
-			level.setActiveBlock(new EmptyBlock(), position);
+			level.setActiveBlock(EmptyBlock.getEmptyBlock(), position);
 		} else if (bodyBlockMap.get(body) != null) {
 			Block block = bodyBlockMap.get(body);
 			level.setActiveBlock(block, position);
