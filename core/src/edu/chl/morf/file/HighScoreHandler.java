@@ -1,7 +1,7 @@
 package edu.chl.morf.file;
 
 import edu.chl.morf.handlers.HighScores;
-import edu.chl.morf.handlers.LevelReader;
+import edu.chl.morf.handlers.LevelList;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,14 +17,14 @@ import java.io.PrintWriter;
 public class HighScoreHandler extends AbstractFileHandler implements FileHandler{
     public static final String FILE_PATH = "/.morf/.highscore.txt";
     private HighScores highScores = HighScores.getInstance();
-    private LevelReader levelReader = LevelReader.getInstance();
+    private LevelList levelList = LevelList.getInstance();
 
     /* Method used to write high scores to a text file.
      * Each row contains a level name and a score separated by a semicolon.
      */
     @Override
     public void write(PrintWriter printWriter) throws FileNotFoundException{
-        for(String levelName : levelReader.getLevels()){
+        for(String levelName : levelList.getLevels()){
             printWriter.println(levelName + ";" + highScores.getHighScore(levelName).toString());
         }
     }

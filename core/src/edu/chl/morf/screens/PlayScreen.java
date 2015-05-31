@@ -8,7 +8,7 @@ import edu.chl.morf.controllers.GameController;
 import edu.chl.morf.controllers.GameLogic;
 import edu.chl.morf.controllers.collision.CollisionListener;
 import edu.chl.morf.handlers.LevelFactory;
-import edu.chl.morf.handlers.LevelReader;
+import edu.chl.morf.handlers.LevelList;
 import edu.chl.morf.model.Level;
 import edu.chl.morf.view.View;
 
@@ -63,7 +63,7 @@ public class PlayScreen extends GameScreen{
     }
 
     public void nextLevel(){
-		List<String> levels = LevelReader.getInstance().getLevels();
+		List<String> levels = LevelList.getInstance().getLevels();
     	int currentLevel = levels.indexOf(level.getName());
     	String name;
     	if(currentLevel == levels.size() - 1){ //If is last level

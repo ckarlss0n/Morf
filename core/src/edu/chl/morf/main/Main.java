@@ -2,10 +2,11 @@ package edu.chl.morf.main;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import edu.chl.morf.file.FileHandler;
-import edu.chl.morf.file.HighScoreHandler;
-import edu.chl.morf.file.SettingsHandler;
+import edu.chl.morf.file.*;
+import edu.chl.morf.handlers.LevelList;
 import edu.chl.morf.screens.ScreenManager;
+
+import java.util.List;
 
 /**
  * This class starts the game.
@@ -29,11 +30,20 @@ public class Main extends Game {
 
 	@Override
 	public void create() {
+        //Load saved settings
         settingsHandler = new SettingsHandler();
 		settingsHandler.load();
+
+        //Load saved high scores
         highScoreHandler = new HighScoreHandler();
         highScoreHandler.load();
+
 		screenManager = ScreenManager.getInstance();
+
+        //List all available levels in the LevelList class
+        IFileLister fileLister = new FileLister();
+        List<String> levels = fileLister.getFileNames("levels");
+        LevelList.getInstance().setLevels(levels);
 	}
 
 	@Override

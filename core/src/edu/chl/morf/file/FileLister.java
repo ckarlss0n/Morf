@@ -15,8 +15,8 @@ public class FileLister implements IFileLister{
       them in alphabetical order.
      */
     @Override
-    public List<String> getFileNames(String path) {
-        File folder = new File(path);
+    public List<String> getFileNames(String directory) {
+        File folder = new File(directory);
         File[] listOfFiles = folder.listFiles();
         List<String> files = new ArrayList<String>();
 

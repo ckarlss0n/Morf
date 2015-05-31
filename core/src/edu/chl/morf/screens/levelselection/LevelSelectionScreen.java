@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl.morf.handlers.HighScores;
-import edu.chl.morf.handlers.LevelReader;
+import edu.chl.morf.handlers.LevelList;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.screens.GameScreen;
 import edu.chl.morf.screens.ScreenManager;
@@ -34,8 +34,8 @@ public class LevelSelectionScreen extends GameScreen {
             float previewGapX = (Main.V_WIDTH - 3 * levelPreviewWidth)/4;
             float previewGapY = (Main.V_HEIGHT - 2 * levelPreviewHeight)/3;
 
-            LevelReader levelReader = LevelReader.getInstance();
-            List<String> levelNames = levelReader.getLevels();
+            LevelList levelList = LevelList.getInstance();
+            List<String> levelNames = levelList.getLevels();
             HighScores highScores = HighScores.getInstance();
             int nbrOfLevels = levelNames.size();
             int i = 0;
