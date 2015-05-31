@@ -15,16 +15,10 @@ public class SoundHandler {
 
 	private static SoundHandler instance = null;
 
-	private Sound hit;
 	private Sound die;
-	private Sound jump;
-	private Sound walkLeft;
-	private Sound walkRight;
-	private Sound swim;
 	private Sound pour;
 	private Sound freeze;
 	private Sound heat;
-	private Sound unfreeze;
 	private Sound buttonForward;
 	private Sound buttonReturn;
 	private Sound saveSettings;
@@ -38,16 +32,10 @@ public class SoundHandler {
 
 	private SoundHandler() {
 		//Game sounds
-		hit = bindPath("hit.mp3");
 		die = bindPath("die.mp3");
-		//jump = bindPath("jump.mp3");
-		walkLeft = bindPath("walkLeft.mp3");
-		walkRight = bindPath("walkRight.mp3");
-		swim = bindPath("swim.mp3");
 		pour = bindPath("pour.mp3");
 		freeze = bindPath("freeze.wav");
 		heat = bindPath("heat.wav");
-		unfreeze = bindPath("unfreeze.wav");
 
 		//UI sounds
 		buttonForward = bindPath("buttonForward.ogg");
@@ -125,32 +113,8 @@ public class SoundHandler {
 		}
 	}
 
-	public void stopMusic() {
-		music.stop();
-	}
-
-	public Sound getHit() {
-		return hit;
-	}
-
 	public Sound getDie() {
 		return die;
-	}
-
-	public Sound getJump() {
-		return jump;
-	}
-
-	public Sound getWalkLeft() {
-		return walkLeft;
-	}
-
-	public Sound getWalkRight() {
-		return walkRight;
-	}
-
-	public Sound getSwim() {
-		return swim;
 	}
 
 	public Sound getPour() {
@@ -163,10 +127,6 @@ public class SoundHandler {
 
 	public Sound getHeat() {
 		return heat;
-	}
-
-	public Sound getUnfreeze() {
-		return unfreeze;
 	}
 
 	public Sound getButtonForward() {
