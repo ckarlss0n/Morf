@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * A singleton class for handling high scores for each playable level.
- * Extends the abstract class FileHandler.
+ * A class for writing and reading high scores. Read high scores are put
+ * in a Map in the singleton class HighScores.
  *
  * Created by Lage on 2015-05-12.
  */

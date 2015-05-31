@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * Interface for reading from and writing to text files.
  * Created by Lage on 2015-05-31.
  */
 public interface FileHandler {
