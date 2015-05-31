@@ -7,11 +7,11 @@ import java.awt.geom.Point2D;
  */
 public class EmptyBlock extends AbstractBlock{
 
-    public EmptyBlock(){
-        this(new Point2D.Float(0,0));
-    }
+    private static EmptyBlock emptyBlock = new EmptyBlock(new Point2D.Float(0,0));
 
-    public EmptyBlock(Point2D.Float position) {
+    private EmptyBlock(Point2D.Float position) {
         super(position);
     }
+
+    public static EmptyBlock getEmptyBlock(){return emptyBlock;}
 }

@@ -61,15 +61,13 @@ public class PlayerCharacter {
         pouringWater = false;
         coolingWater = false;
         heatingWater = false;
-        
-        /////////////////////////////////////////////////////////
-        //should have only one instance of empty, if empty is even needed
-        activeBlockRight = new EmptyBlock();
-        activeBlockLeft = new EmptyBlock();
-        activeBlockBottomLeft = new EmptyBlock();
-        activeBlockBottomRight = new EmptyBlock();
-        activeBlockBottom = new EmptyBlock();
-        activeBlock = new EmptyBlock();
+
+        activeBlockRight = EmptyBlock.getEmptyBlock();
+        activeBlockLeft = EmptyBlock.getEmptyBlock();
+        activeBlockBottomLeft = EmptyBlock.getEmptyBlock();
+        activeBlockBottomRight = EmptyBlock.getEmptyBlock();
+        activeBlockBottom = EmptyBlock.getEmptyBlock();
+        activeBlock = EmptyBlock.getEmptyBlock();
         
         ghostEmptyRight = true;
         ghostEmptyLeft = true;
