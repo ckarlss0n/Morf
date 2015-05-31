@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * A class used for creating backgrounds.
- * The class creates BackGroundLayers from textures in assets and
- * adds them to a single BackGroundGroup.
  * Created by Lage on 2015-05-07.
  */
 public class BackgroundFactory {
@@ -19,7 +17,7 @@ public class BackgroundFactory {
     public static final String BOTTOM_CLOUDS_IMAGE_PATH = "cloudsBottom.png";
     public static final String TOP_CLOUDS_IMAGE_PATH = "cloudsTop.png";
 
-    
+    //Create backgrounds and return them as a list
     public List<BackgroundLayer> createBackgroundGroup(){
         List<BackgroundLayer> backgroundGroup = new ArrayList<BackgroundLayer>();
         BackgroundLayer background = new BackgroundLayer(BACKGROUND_IMAGE_PATH, 0, 0);
