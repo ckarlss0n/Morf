@@ -1,8 +1,8 @@
 package edu.chl.morf.handlers;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
+import edu.chl.morf.file.FileLister;
+import edu.chl.morf.file.IFileLister;
+
 import java.util.List;
 
 /**
@@ -16,21 +16,11 @@ public class LevelReader {
 	
 	private static LevelReader instance;
 	private List<String> levels;
+    private IFileLister fileLister;
 	
 	private LevelReader(){
-		String path = System.getProperty("user.dir") + File.separator + "levels";
-		File folder = new File(path);
-		File[] listOfFiles = folder.listFiles();
-		List<String> levels = new ArrayList<String>();
-
-		for(File file : listOfFiles){
-			if(file.isFile()){
-				levels.add(file.getName());
-			}
-		}
-
-        Collections.sort(levels); //Sort the list alphabetically
-		this.levels = levels;
+        fileLister = new FileLister();
+		this.levels = fileLister.getFileNames("levels");
 	}
 	
     public static LevelReader getInstance(){
