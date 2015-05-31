@@ -1,7 +1,10 @@
 package edu.chl.morf.model;
 
 /**
- * Created by Lage on 2015-04-29.
+ * Is used in the Water class. Every instance of Water has a WaterState.
+ * The WaterState is whether the water block is solid (ice), liquid (water)
+ * or gas (water vapor).
+ * @author Lage
  */
 public enum WaterState {
     SOLID,

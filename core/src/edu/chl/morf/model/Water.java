@@ -16,7 +16,7 @@ import java.awt.geom.Point2D;
  * <p>
  * <li><b>Using: </b>
  * <li>{@link Block}
- * <li>{@link LiquidState}
+ * <li>{@link WaterState}
  * <p>
  * @author Lage Bergman
  */
