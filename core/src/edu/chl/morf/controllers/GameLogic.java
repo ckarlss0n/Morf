@@ -71,7 +71,7 @@ public class GameLogic {
 			world.destroyBody(body);
 		}
 		playerCharacterBody = bodyFactory.createPlayerBody(world, new Vector2(player.getPosition().x, player.getPosition().y));
-		generateLevel();
+        new LevelGenerator().generateLevel(level, world, bodyBlockMap);
 		initPressedKeys();
 		player.setOnGround(false);
 	}
@@ -110,23 +110,6 @@ public class GameLogic {
 	//Update the pressedKeys hashMap, setting a boolean value for a special keyCode
 	public void setKeyState(int keyCode, boolean bool) {
 		pressedKeys.put(keyCode, bool);
-	}
-
-	//Store a water block with its corresponding body in the bodyBlockMap hashMap
-	public void bindWaterToBody(Body body, Water water) {
-		bodyBlockMap.put(body, water);
-	}
-
-	public Body createWaterBody(Water water) {
-		if (water.getState() == WaterState.LIQUID) {
-			return bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
-		}
-		return null;
-	}
-
-	//Convert level to a body
-	public void generateLevel() {
-		new LevelGenerator().generateLevel(level, world, bodyBlockMap);
 	}
 
 	//START OF METHODS USED FOR PLAYER CHARACTER MOVEMENT
@@ -230,8 +213,9 @@ public class GameLogic {
 		level.pourWater();
 		if (level.getWaterBlocks().size() > size) {
 			Water water = level.getWaterBlocks().get(size);
-			bindWaterToBody(createWaterBody(water), water);
-			soundHandler.playSoundEffect(soundHandler.getPour());
+            Body waterBody = bodyFactory.createWaterBody(world, new Vector2(water.getPosition().x, water.getPosition().y));
+            bodyBlockMap.put(waterBody, water);
+            soundHandler.playSoundEffect(soundHandler.getPour());
 		}
 	}
 
@@ -450,22 +434,19 @@ public class GameLogic {
 				playerCharacterBody.applyForceToCenter(movementVector, true);
 			}
 		}
-		updateLevel();
-	}
 
-	//Update model with physics changes
-	public void updateLevel() {
-		Vector2 bodyPos = playerCharacterBody.getPosition();
-		Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
-		player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
-		player.setSpeed(bodySpeed.x, bodySpeed.y);
-		if (player.getPosition().y < 0 && !player.isDead()) { //If below screen/out of map
-			killPlayer();
-		}
-		for (Body waterBody : bodyBlockMap.keySet()) {
-			Water waterBlock = bodyBlockMap.get(waterBody);
-			Vector2 waterPos = waterBody.getPosition();
-			waterBlock.setPosition(waterPos.x * PPM, waterPos.y * PPM);
-		}
+        //Update model with physics changes
+        Vector2 bodyPos = playerCharacterBody.getPosition();
+        Vector2 bodySpeed = playerCharacterBody.getLinearVelocity();
+        player.setPosition(bodyPos.x * PPM, bodyPos.y * PPM);
+        player.setSpeed(bodySpeed.x, bodySpeed.y);
+        if (player.getPosition().y < 0) { //If below screen/out of map
+            killPlayer();
+        }
+        for (Body waterBody : bodyBlockMap.keySet()) {
+            Water waterBlock = bodyBlockMap.get(waterBody);
+            Vector2 waterPos = waterBody.getPosition();
+            waterBlock.setPosition(waterPos.x * PPM, waterPos.y * PPM);
+        }
 	}
 }
