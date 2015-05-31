@@ -11,28 +11,41 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
 import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.SoundHandler;
-import edu.chl.morf.screens.ScreenManager;
-import edu.chl.morf.screens.ScreenManager.ScreenType;
 import edu.chl.morf.screens2.GameScreen;
 
 /**
+ * This class represents the options screen.
+ * The options screen contains methods and controls to change volume of music and sound effects.
+ * The class also contains methods and controls to change key bindings.
+ * <p>
  * Created by Christoffer on 2015-05-14.
  */
 public class OptionsScreen extends GameScreen {
 	private SoundHandler soundHandler = SoundHandler.getInstance();
 	private Stage stage;
 
-	public OptionsScreen(ScreenManager screenManager){
+	public OptionsScreen(ScreenManager screenManager) {
 		super(screenManager);
 		stage = new OptionsScreenStage();
 		setFocus();
 	}
 
-    private class OptionsScreenStage extends Stage{
-		float scaling= 0.666f;
+	@Override
+	public void render(float delta) {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
+		stage.act(delta);
+		stage.draw();
+	}
+
+	@Override
+	public void setFocus() {
+		Gdx.input.setInputProcessor(stage);
+	}
+
+	private class OptionsScreenStage extends Stage {
+		float scaling = 0.666f;
 		private Image background;
 		private Table table;
 		private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -42,43 +55,10 @@ public class OptionsScreen extends GameScreen {
 		private Slider soundEffectsVolumeSlider;
 		private KeyBindings keyBindings = KeyBindings.getInstance();
 
-		private void bindListener(final TextField textField, final String keyName){
-			textField.addListener(new ClickListener(){
-				@Override
-				public boolean keyDown(InputEvent event, int keycode) {
-					String oldKey = textField.getText();
-					String newKey = Input.Keys.toString(keycode);
-					if(!keyBindings.isUsed(newKey)) {
-						keyBindings.removeKey(oldKey);
-						keyBindings.addKey(newKey);
-						textField.setText(newKey);
-						keyBindings.setKey(keyName, newKey);
-						textField.setColor(Color.GREEN);
-					} else {
-						textField.setColor(Color.RED);
-					}
-					textField.setDisabled(true);
-					return super.keyDown(event, keycode);
-				}
-
-				@Override
-				public boolean keyUp(InputEvent event, int keycode) {
-					textField.setColor(Color.WHITE);
-					return super.keyUp(event, keycode);
-				}
-
-				@Override
-				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-					textField.setDisabled(false);
-					super.enter(event, x, y, pointer, fromActor);
-				}
-			});
-		}
-
-		private OptionsScreenStage(){
+		private OptionsScreenStage() {
 			soundHandler.playMusic();
 			//Background
-			background=new Image(new Texture("levelselection/Level_Selection_Background.png"));
+			background = new Image(new Texture("levelselection/Level_Selection_Background.png"));
 			background.setScale(scaling);
 			background.setPosition(0, 0);
 			addActor(background);
@@ -93,12 +73,12 @@ public class OptionsScreen extends GameScreen {
 			Label heatLabel = new Label("Heat: ", skin);
 
 			final TextField moveLeftField = new TextField(keyBindings.getMoveLeftKey(), skin);
-            final TextField moveRightField = new TextField(keyBindings.getMoveRightKey(), skin);
-            final TextField jumpField = new TextField(keyBindings.getJumpKey(), skin);
-            final TextField flyField = new TextField(keyBindings.getFlyKey(), skin);
-            final TextField pourField = new TextField(keyBindings.getPourKey(), skin);
-            final TextField coolField = new TextField(keyBindings.getCoolKey(), skin);
-            final TextField heatField = new TextField(keyBindings.getHeatKey(), skin);
+			final TextField moveRightField = new TextField(keyBindings.getMoveRightKey(), skin);
+			final TextField jumpField = new TextField(keyBindings.getJumpKey(), skin);
+			final TextField flyField = new TextField(keyBindings.getFlyKey(), skin);
+			final TextField pourField = new TextField(keyBindings.getPourKey(), skin);
+			final TextField coolField = new TextField(keyBindings.getCoolKey(), skin);
+			final TextField heatField = new TextField(keyBindings.getHeatKey(), skin);
 
 			bindListener(moveLeftField, "MOVE_LEFT_KEY");
 			bindListener(moveRightField, "MOVE_RIGHT_KEY");
@@ -130,7 +110,7 @@ public class OptionsScreen extends GameScreen {
 			musicVolumeSlider.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					if(!musicCheckBox.isChecked()){
+					if (!musicCheckBox.isChecked()) {
 						musicCheckBox.setChecked(true);
 					}
 					soundHandler.setMusicVolume(musicVolumeSlider.getValue());
@@ -165,9 +145,9 @@ public class OptionsScreen extends GameScreen {
 			});
 
 			TextButton returnButton = new TextButton("Return", skin);
-			returnButton.addListener(new ClickListener(){
+			returnButton.addListener(new ClickListener() {
 				@Override
-				public void clicked(InputEvent event, float x, float y){
+				public void clicked(InputEvent event, float x, float y) {
 					screenManager.popScreen();
 					soundHandler.playSoundEffect(soundHandler.getButtonReturn());
 					soundHandler.playSoundEffect(soundHandler.getSaveSettings());
@@ -178,6 +158,8 @@ public class OptionsScreen extends GameScreen {
 					soundHandler.playSoundEffect(soundHandler.getButtonHover());
 				}
 			});
+
+			//This button is used for restoring the settings to default values
 			TextButton resetButton = new TextButton("Restore Defaults", skin);
 			resetButton.addListener(new ClickListener() {
 				@Override
@@ -262,20 +244,43 @@ public class OptionsScreen extends GameScreen {
 			table.add(heatField).padLeft(10).left();
 			table.row();
 
-			table.add(returnButton).size(returnButton.getWidth()+20, returnButton.getHeight()+10).bottom().expandX().left();
-			table.add(resetButton).size(resetButton.getWidth() + 20, resetButton.getHeight()+10).bottom().right().colspan(2);
+			table.add(returnButton).size(returnButton.getWidth() + 20, returnButton.getHeight() + 10).bottom().expandX().left();
+			table.add(resetButton).size(resetButton.getWidth() + 20, resetButton.getHeight() + 10).bottom().right().colspan(2);
 			addActor(table);
 		}
 
-	}
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                   //Clears the screen.
-		stage.act(delta);
-		stage.draw();
-	}
-	@Override
-	public void setFocus() {
-		Gdx.input.setInputProcessor(stage);
+		private void bindListener(final TextField textField, final String keyName) {
+			textField.addListener(new ClickListener() {
+				@Override
+				public boolean keyDown(InputEvent event, int keycode) {
+					String oldKey = textField.getText();            //The key currently used
+					String newKey = Input.Keys.toString(keycode);    //The pressed key
+					if (!keyBindings.isUsed(newKey)) {                //If the pressed key is not in use
+						keyBindings.removeKey(oldKey);
+						keyBindings.addKey(newKey);
+						textField.setText(newKey);
+						keyBindings.setKey(keyName, newKey);
+						textField.setColor(Color.GREEN);            //Show color feedback
+					} else {
+						textField.setColor(Color.RED);                //Show color feedback
+					}
+					textField.setDisabled(true);                    //Disable text field after keyDown (we only want one key stroke at a time)
+					return super.keyDown(event, keycode);
+				}
+
+				@Override
+				public boolean keyUp(InputEvent event, int keycode) {
+					textField.setColor(Color.WHITE);                //Reset color on keyUp
+					return super.keyUp(event, keycode);
+				}
+
+				@Override
+				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+					textField.setDisabled(false);                    //Enable text field upon hover
+					super.enter(event, x, y, pointer, fromActor);
+				}
+			});
+		}
+
 	}
 }
