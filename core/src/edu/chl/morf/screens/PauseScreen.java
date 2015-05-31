@@ -9,34 +9,51 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
 import edu.chl.morf.handlers.KeyBindings;
 import edu.chl.morf.handlers.SoundHandler;
 import edu.chl.morf.main.Main;
-import edu.chl.morf.screens.ScreenManager;
 import edu.chl.morf.screens2.GameScreen;
 
 /**
+ * This class represents the pause screen which is shown upon pausing the game.
+ * The pause screen overlays the background screen, which in Morf is the PlayScreen.
+ * The pause screen can be seen as a minimized version of the main menu.
+ * <p>
  * Created by Christoffer on 2015-05-19.
  */
 public class PauseScreen extends GameScreen {
 	private PauseStage stage;
-	private GameScreen backgroundScreen;
+	private GameScreen backgroundScreen; //The background screen needs to be rendered as well
 	private SoundHandler soundHandler = SoundHandler.getInstance();
 	private KeyBindings keyBindings = KeyBindings.getInstance();
 
-	public PauseScreen(ScreenManager sm, GameScreen backgroundScreen){
+	public PauseScreen(ScreenManager sm, GameScreen backgroundScreen) {
 		super(sm);
-		this.stage=new PauseStage();
+		this.stage = new PauseStage();
 		this.backgroundScreen = backgroundScreen;
 	}
 
-	public void setFocus(){
+	public void setFocus() {
 		Gdx.input.setInputProcessor(stage);
 	}
 
+	//Return to the screen shown behind the pause screen, and close the pause screen
+	public void returnToParentScreen() {
+		screenManager.popScreen();
+	}
+
+	@Override
+	public void render(float delta) {
+		backgroundScreen.render(0); //Delta zero makes the background screen render without flickering
+		stage.act(delta);
+		stage.draw();
+		if (Gdx.input.isKeyJustPressed(keyBindings.getValue(keyBindings.getPauseKey()))) {
+			returnToParentScreen();
+		}
+	}
+
 	private class PauseStage extends Stage {
-		float scaling= 0.666f;
+		float scaling = 0.666f;
 		private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 		private Image background;
 		private Table table;
@@ -58,7 +75,7 @@ public class PauseScreen extends GameScreen {
 			resumeButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					returnToParentScreen();
+					returnToParentScreen();    //Close the pause screen, and return to the screen in the background (PlayScreen)
 					super.clicked(event, x, y);
 				}
 			});
@@ -66,7 +83,7 @@ public class PauseScreen extends GameScreen {
 			levelSelectionButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					screenManager.pushScreen(ScreenManager.ScreenType.LEVEL_SELECTION, null);
+					screenManager.pushScreen(ScreenManager.ScreenType.LEVEL_SELECTION, null); //Go to level selection
 					super.clicked(event, x, y);
 				}
 			});
@@ -74,7 +91,7 @@ public class PauseScreen extends GameScreen {
 			settingsButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					screenManager.pushScreen(ScreenManager.ScreenType.OPTIONS, null);
+					screenManager.pushScreen(ScreenManager.ScreenType.OPTIONS, null); //Go to options
 					super.clicked(event, x, y);
 				}
 			});
@@ -82,7 +99,7 @@ public class PauseScreen extends GameScreen {
 			mainMenuButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					screenManager.pushScreen(ScreenManager.ScreenType.MAIN_MENU, null);
+					screenManager.pushScreen(ScreenManager.ScreenType.MAIN_MENU, null); //Go to main menu
 					super.clicked(event, x, y);
 				}
 			});
@@ -99,20 +116,6 @@ public class PauseScreen extends GameScreen {
 			table.add(mainMenuButton).padBottom(0).row();
 
 			this.addActor(table);
-		}
-	}
-
-	public void returnToParentScreen(){
-		screenManager.popScreen();
-	}
-
-	@Override
-	public void render (float delta){
-		backgroundScreen.render(0); //Render the background screen without flickering
-		stage.act(delta);
-		stage.draw();
-		if(Gdx.input.isKeyJustPressed(keyBindings.getValue(keyBindings.getPauseKey()))){
-			returnToParentScreen();
 		}
 	}
 }
