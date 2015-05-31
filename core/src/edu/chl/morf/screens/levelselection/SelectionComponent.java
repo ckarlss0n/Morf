@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl.morf.handlers.SoundHandler;
 
 /**
+ * Abstract class extended by all components in LevelSelectionScreen.
+ * Contains methods for hovering the component with the mouse
+ * and delegates click event to extending classes.
  * Created by Lage on 2015-05-21.
  */
 public abstract class SelectionComponent extends Image {

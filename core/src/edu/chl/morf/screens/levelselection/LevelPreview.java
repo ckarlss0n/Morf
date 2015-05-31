@@ -1,6 +1,8 @@
 package edu.chl.morf.screens.levelselection;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl.morf.handlers.HighScores;
 import edu.chl.morf.main.Main;
 import edu.chl.morf.screens.ScreenManager;
@@ -8,22 +10,39 @@ import edu.chl.morf.screens.ScreenManager;
 import java.util.ArrayList;
 
 /**
+ * A class representing a small preview of a level.
+ * When preview is clicked the level is started.
+ * The stars on the preview represent level high score.
+ *
  * Created by Lage on 2015-05-21.
  */
 public class LevelPreview extends SelectionComponent{
+
+    //Class representing each star of the preview
+    private class Star extends Image {
+        private Texture texture;
+        public Star(){
+            this.texture = new Texture("levelselection/level_selection_star.png");
+        }
+        @Override
+        public void draw(Batch batch, float parentAlpha){
+            super.draw(batch,parentAlpha);
+            batch.draw(texture,this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        }
+    }
+
     ArrayList<Star> stars;
     String levelName;
     ScreenManager screenManager = ScreenManager.getInstance();
 
     public LevelPreview(String levelName, float x, float y) {
-
-        super("levelselection/" + levelName + "_Thumb.png","levelselection/" + levelName + "_Thumb_Focus.png");
-
+        super("levelselection/" + levelName + "_Thumb.png","levelselection/" + levelName + "_Thumb_Focus.png"); //Get level texture
         this.setSize(0.3f * Main.V_WIDTH, 0.25f * Main.V_HEIGHT);
         this.setPosition(x, y);
         this.levelName = levelName;
-        Integer levelScore = HighScores.getInstance().getHighScore(this.levelName + ".tmx");
+        Integer levelScore = HighScores.getInstance().getHighScore(this.levelName + ".tmx");                    //Get high score
         stars = new ArrayList<Star>();
+        //Add stars representing the level high score
         if(levelScore != null) {
             for (int i = 0; i < 8; i++) {
                 if (levelScore >= (i+1) * (30 / 8)) {
@@ -39,7 +58,8 @@ public class LevelPreview extends SelectionComponent{
 
     @Override
     public void draw(Batch batch,float parentAlpha) {
-        super.draw(batch,parentAlpha);
+        super.draw(batch,parentAlpha);      //Draw preview texture
+        //Draw stars
         for(Star star : stars){
             star.draw(batch,parentAlpha);
         }
@@ -47,6 +67,6 @@ public class LevelPreview extends SelectionComponent{
 
     @Override
     public void clickAction() {
-        screenManager.pushScreen(ScreenManager.ScreenType.PLAY, levelName + ".tmx");
+        screenManager.pushScreen(ScreenManager.ScreenType.PLAY, levelName + ".tmx");    //Play previewed level
     }
 }
