@@ -25,6 +25,8 @@ import static edu.chl.morf.Constants.MAX_SPEED;
  */
 public class PlayerCharacter extends Image {
 
+    private boolean emptyRight=true;
+    private boolean emptyLeft=true;
     private boolean facingRight=true;
     private boolean moving=false;
     private Body body;
@@ -153,6 +155,13 @@ public class PlayerCharacter extends Image {
         if(body.getLinearVelocity().y == 0) {   //If standing (could be improved, also 0 at top of jump)
             movementVector = new Vector2(0, 100);
         }
+    }
+    public void setEmptyRight(boolean b){
+        emptyRight=b;
+    }
+
+    public void setEmptyLeft(boolean b){
+        emptyLeft=b;
     }
 
     public void doAction(){

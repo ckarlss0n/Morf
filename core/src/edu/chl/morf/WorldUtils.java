@@ -1,8 +1,15 @@
 package edu.chl.morf;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.utils.Array;
 import edu.chl.morf.Actors.PlayerCharacter;
+import edu.chl.morf.Screens.PauseScreen;
+import edu.chl.morf.UserData.UserData;
+import edu.chl.morf.UserData.UserDataType;
 
 import static edu.chl.morf.Constants.WORLD_GRAVITY;
 
@@ -19,6 +26,7 @@ public class WorldUtils {
         //Create PlayerCharacter body
         Body body = createBody(new Vector2(1,1),0.5f,15/100f,15/100f,2f,(short)2,(short)4, world);
         body.setType(BodyDef.BodyType.DynamicBody);
+        body.setUserData(new UserData(UserDataType.PLAYERCHARACTER));
         return new PlayerCharacter(body);
     }
 
@@ -26,6 +34,7 @@ public class WorldUtils {
         //Create Ground body
         Body body = createBody(new Vector2(0,0),0.5f,500/100f,2/100f,0.1f,(short)4,(short)2, world);
         body.setType(BodyDef.BodyType.StaticBody);
+        body.setUserData(new UserData(UserDataType.GROUND));
         Body block = createBody(new Vector2(0,3),1,4,1,0.1f,(short)4,(short)2,world);
         block.setType(BodyDef.BodyType.StaticBody);
     }
@@ -35,8 +44,10 @@ public class WorldUtils {
         if(playerCharacter.isFacingRight()){
             facingRight = 1;
         }
+
         Body block = createBody(new Vector2(position.x+blockWidth*2*facingRight+1/40f*facingRight,position.y),1,32/100f,32/100f,0.1f,(short)4,(short)2,playerCharacter.getBody().getWorld());
         block.setType(BodyDef.BodyType.StaticBody);
+
     }
 
     public static Body createBody(Vector2 position, float density, float width, float height,
