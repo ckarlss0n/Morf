@@ -27,21 +27,59 @@ public class WorldUtils {
         Body body = createBody(new Vector2(1,1),0.5f,15/100f,15/100f,2f,(short)2,(short)4, world);
         body.setType(BodyDef.BodyType.DynamicBody);
         body.setUserData(new UserData(UserDataType.PLAYERCHARACTER));
-        for(int i = -1; i < 2; i += 2) {
-            PolygonShape shape = new PolygonShape();
-            shape.setAsBox(15/100f,15/100f,new Vector2(i * 0.3f,0),0);
-            FixtureDef fixDef = new FixtureDef();
-            fixDef.shape = shape;
-            fixDef.filter.categoryBits = 2;
-            fixDef.filter.maskBits = 4;
-            fixDef.isSensor = true;
-            /*Fixture fixture = */body.createFixture(fixDef);
-            //fixture.setUserData(new UserData());
-            shape.dispose();
-        }
+        PolygonShape shapeLeft = new PolygonShape();
+        shapeLeft.setAsBox(14/100f,14/100f,new Vector2(-1 * 0.3f,0),0);
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = shapeLeft;
+        fixDef.filter.categoryBits = 2;
+        fixDef.filter.maskBits = 4;
+        fixDef.isSensor = true;
+        Fixture fixtureLeft = body.createFixture(fixDef);
+        PolygonShape shapeRight = new PolygonShape();
+        shapeRight.setAsBox(14/100f,14/100f,new Vector2(1 * 0.3f,0),0);
+        fixDef.shape=shapeRight;
+        Fixture fixtureRight = body.createFixture(fixDef);
 
+        shapeLeft.dispose();
+        shapeRight.dispose();
+
+        fixtureLeft.setUserData(new UserData(UserDataType.GHOST_LEFT));
+        fixtureRight.setUserData(new UserData(UserDataType.GHOST_RIGHT));
         return new PlayerCharacter(body);
     }
+    /*
+        BodyDef bodyDef=new BodyDef();
+        bodyDef.position.set(position.x+blockWidth*2*facingRight,position.y);
+        bodyDef.fixedRotation=true;
+        Body body= playerCharacter.getBody().getWorld().createBody(bodyDef);
+        body.setUserData(new UserData(UserDataType.GHOSTBLOCK));
+
+        FixtureDef fixtureDef=new FixtureDef();
+        fixtureDef.isSensor=false;
+        PolygonShape shape=new PolygonShape();
+        shape.setAsBox(blockWidth,blockHeight);
+        fixtureDef.shape=shape;
+        Fixture fixture=body.createFixture(fixtureDef);
+        fixture.setUserData(playerCharacter);
+        Array<Contact> contactList=playerCharacter.getBody().getWorld().getContactList();
+        Boolean createBlock=false;
+        System.out.println("hej");
+        for(Contact c : contactList) {
+            System.out.println("for");
+            System.out.println(""+c.getFixtureB().getBody().getPosition()+"   "+c.getFixtureA().getBody().getPosition());
+            if(c.getFixtureA().getUserData()!=null||c.getFixtureB().getUserData()!=null){
+                System.out.println("hej");
+                if(c.isTouching()){
+                    createBlock=false;
+                }
+            }
+        }
+
+        if(createBlock) {
+            Body block = createBody(new Vector2(position.x + blockWidth * 2 * facingRight, position.y), 1, blockWidth, blockHeight, 0.1f, (short) 4, (short) 2, playerCharacter.getBody().getWorld());
+            block.setType(BodyDef.BodyType.StaticBody);
+        }
+    */
 
     public static void createGround(World world){
         //Create Ground body

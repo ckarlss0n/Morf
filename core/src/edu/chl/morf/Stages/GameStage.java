@@ -31,6 +31,7 @@ public class GameStage extends Stage implements ContactListener{
         playerCharacter = WorldUtils.createPlayerCharacter(world);
         WorldUtils.createGround(world);
         Gdx.input.setInputProcessor(this);
+        world.setContactListener(this);
         addActor(playerCharacter);
         setKeyboardFocus(playerCharacter);
         renderer = new Box2DDebugRenderer();
@@ -49,7 +50,7 @@ public class GameStage extends Stage implements ContactListener{
     @Override
     public void act(float delta) {
         super.act(delta);
-        background.setSpeed(playerCharacter.getBody().getLinearVelocity().x*-10+20);
+        background.setSpeed(playerCharacter.getBody().getLinearVelocity().x * -10 + 20);
         // Fixed timestep
         float TIME_STEP = 1 / 300f;
         accumulator += delta;
@@ -71,15 +72,34 @@ public class GameStage extends Stage implements ContactListener{
         Body a=contact.getFixtureA().getBody();
         Body b=contact.getFixtureB().getBody();
 
-        if((a.getUserData())!=null&&((UserData)a.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT ||
-           (b.getUserData())!=null&&((UserData)b.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
-            System.out.println("123hej");
+        Fixture fa=contact.getFixtureA();
+        Fixture fb=contact.getFixtureB();
+        System.out.println("contact");
+        if(contact.isTouching()==true){
+            System.out.println("touch");
+        }
+        else {
+            System.out.println("no touch");
+        }
+        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT ||
+           (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
+            playerCharacter.setEmptyLeft(false);
+            System.out.println("full Left");
+
         }
     }
 
     @Override
     public void endContact(Contact contact) {
+        Fixture fa=contact.getFixtureA();
+        Fixture fb=contact.getFixtureB();
+        System.out.println("end contact");
 
+        if((fa.getUserData())!=null&&((UserData)fa.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT ||
+                (fb.getUserData())!=null&&((UserData)fb.getUserData()).getUserDataType()== UserDataType.GHOST_LEFT){
+            playerCharacter.setEmptyLeft(false);
+            System.out.println("empty Left");
+        }
     }
 
     @Override
